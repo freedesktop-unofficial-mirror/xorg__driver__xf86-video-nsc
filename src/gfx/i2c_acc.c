@@ -1,4 +1,4 @@
-/* $XFree86: xc/programs/Xserver/hw/xfree86/drivers/nsc/gfx/i2c_acc.c,v 1.1 2002/12/10 15:12:26 alanh Exp $ */
+/* $XFree86: xc/programs/Xserver/hw/xfree86/drivers/nsc/gfx/i2c_acc.c,v 1.1tsi Exp $ */
 /*
  * $Workfile: i2c_acc.c $
  *
@@ -300,9 +300,9 @@ sio_read_reg(unsigned char reg)
  *	gfx_i2c_reset
  *
  *	This routine resets the I2C bus as follows :
- *	· Sets the base address of the ACCESS.bus
- *	· Sets the frequency of the ACCESS.bus
- *	· Resets the ACCESS.bus
+ *	Â· Sets the base address of the ACCESS.bus
+ *	Â· Sets the frequency of the ACCESS.bus
+ *	Â· Resets the ACCESS.bus
  *
  * 	If 'adr'  is -1 the address is read from the hardware.
  *	If 'freq' is -1 the frequency is set to 56 clock cycles.
@@ -937,7 +937,7 @@ acc_i2c_set_freq(unsigned char busnum, char freq)
 
    OUTB((unsigned short)(bus_base_address + ACBCTL2), 0x0);
 
-   if (freq == -1)
+   if (freq == (char)(-1))
       freq = 0x71;
    else {
       freq = freq << 1;
