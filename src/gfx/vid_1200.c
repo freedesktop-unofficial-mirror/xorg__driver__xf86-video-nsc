@@ -1,4 +1,4 @@
-/* $XFree86$ */
+/* $XFree86: xc/programs/Xserver/hw/xfree86/drivers/nsc/gfx/vid_1200.c,v 1.2 2003/01/14 09:34:34 alanh Exp $ */
 /*
  * $Workfile: vid_1200.c $
  *

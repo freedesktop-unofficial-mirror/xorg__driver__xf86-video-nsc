@@ -1,4 +1,4 @@
-/* $XFree86$ */
+/* $XFree86: xc/programs/Xserver/hw/xfree86/drivers/nsc/nsc_regacc.c,v 1.2 2003/01/14 09:34:32 alanh Exp $ */
 /*
  * $Workfile: nsc_regacc.c $
  * $Revision$

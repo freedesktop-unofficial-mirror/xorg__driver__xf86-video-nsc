@@ -1,4 +1,4 @@
-/* $XFree86$ */
+/* $XFree86: xc/programs/Xserver/hw/xfree86/drivers/nsc/gfx/gfx_regs.h,v 1.2 2003/02/05 18:38:43 alanh Exp $ */
 /*
  * $Workfile: gfx_regs.h $
  *

@@ -1,4 +1,4 @@
-/* $XFree86$ */
+/* $XFree86: xc/programs/Xserver/hw/xfree86/drivers/nsc/durango.c,v 1.5 2003/01/24 17:16:52 tsi Exp $ */
 /*
  * $Workfile: durango.c $
  * $Revision$

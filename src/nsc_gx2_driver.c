@@ -1,4 +1,4 @@
-/* $XFree86$ */
+/* $XFree86: xc/programs/Xserver/hw/xfree86/drivers/nsc/nsc_gx2_driver.c,v 1.10 2003/11/03 05:11:20 tsi Exp $ */
 /*
  * $Workfile: nsc_gx2_driver.c $
  * $Revision$
