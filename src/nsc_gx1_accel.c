@@ -1,4 +1,4 @@
-/* $XdotOrg: xc/programs/Xserver/hw/xfree86/drivers/nsc/nsc_gx1_accel.c,v 1.1.4.3.4.2 2004/03/04 20:16:28 kaleb Exp $ */
+/* $XdotOrg: xc/programs/Xserver/hw/xfree86/drivers/nsc/nsc_gx1_accel.c,v 1.3 2004/07/30 20:30:53 ajax Exp $ */
 /* $XFree86: xc/programs/Xserver/hw/xfree86/drivers/nsc/nsc_gx1_accel.c,v 1.7 2003/12/07 22:40:38 alanh Exp $ */
 /*
  * $Workfile: nsc_gx1_accel.c $
@@ -339,11 +339,11 @@ GX1SetupForFillRectSolid(ScrnInfoPtr pScreenInfo,
    /* CHECK IF PLANEMASK IS NOT USED (ALL PLANES ENABLED) */
    if (planemask == 0xFFFFFFFF) {
       /* USE NORMAL PATTERN ROPs IF ALL PLANES ARE ENABLED */
-      GFX(set_raster_operation(XAAPatternROP[rop]));
+      GFX(set_raster_operation(XAAGetPatternROP(rop)));
    } else {
       /* SELECT ROP THAT USES SOURCE DATA FOR PLANEMASK */
       GFX(set_solid_source((unsigned long)planemask));
-      GFX(set_raster_operation(XAAPatternROP_PM[rop]));
+      GFX(set_raster_operation(XAAGetPatternROP_PM(rop)));
    }
 }
 
@@ -414,11 +414,11 @@ GX1SetupFor8x8PatternColorExpand(ScrnInfoPtr pScreenInfo,
    /* CHECK IF PLANEMASK IS NOT USED (ALL PLANES ENABLED) */
    if (planemask == 0xFFFFFFFF) {
       /* USE NORMAL PATTERN ROPs IF ALL PLANES ARE ENABLED */
-      GFX(set_raster_operation(XAAPatternROP[rop]));
+      GFX(set_raster_operation(XAAGetPatternROP(rop)));
    } else {
       /* SELECT ROP THAT USES SOURCE DATA FOR PLANEMASK */
       GFX(set_solid_source((unsigned int)planemask));
-      GFX(set_raster_operation(XAAPatternROP_PM[rop]));
+      GFX(set_raster_operation(XAAGetPatternROP_PM(rop)));
    }
 }
 
@@ -503,11 +503,11 @@ GX1SetupFor8x8PatternMonoExpand(ScrnInfoPtr pScreenInfo,
    /* CHECK IF PLANEMASK IS NOT USED (ALL PLANES ENABLED) */
    if (planemask == 0xFFFFFFFF) {
       /* USE NORMAL PATTERN ROPs IF ALL PLANES ARE ENABLED */
-      GFX(set_raster_operation(XAAPatternROP[rop]));
+      GFX(set_raster_operation(XAAGetPatternROP(rop)));
    } else {
       /* SELECT ROP THAT USES SOURCE DATA FOR PLANEMASK */
       GFX(set_solid_source((unsigned int)planemask));
-      GFX(set_raster_operation(XAAPatternROP_PM[rop]));
+      GFX(set_raster_operation(XAAGetPatternROP_PM(rop)));
    }
 }
 
@@ -578,7 +578,7 @@ GX1SetupForScreenToScreenCopy(ScrnInfoPtr pScreenInfo,
 {
    GFX(set_solid_pattern(planemask));
    /* SET RASTER OPERATION FOR USING PATTERN AS PLANE MASK */
-   GFX(set_raster_operation(XAACopyROP[rop]));
+   GFX(set_raster_operation(XAAGetCopyROP(rop)));
    /* SAVE TRANSPARENCY FLAG */
    GeodeTransparent = (transparency_color == -1) ? 0 : 1;
    GeodeTransColor = transparency_color;
@@ -672,7 +672,7 @@ GX1SetupForScanlineImageWrite(ScrnInfoPtr pScreenInfo,
 {
    GFX(set_solid_pattern((unsigned int)planemask));
    /* SET RASTER OPERATION FOR USING PATTERN AS PLANE MASK */
-   GFX(set_raster_operation(XAACopyROP_PM[rop]));
+   GFX(set_raster_operation(XAAGetCopyROP_PM(rop)));
    /* SAVE TRANSPARENCY FLAG */
    GeodeTransparent = (transparency_color == -1) ? 0 : 1;
    GeodeTransColor = transparency_color;
@@ -817,7 +817,7 @@ GX1SetupForSolidLine(ScrnInfoPtr pScreenInfo,
    GFX(set_solid_pattern((unsigned int)color));
 
    /* USE NORMAL PATTERN ROPs IF ALL PLANES ARE ENABLED */
-   GFX(set_raster_operation(XAAPatternROP[rop]));
+   GFX(set_raster_operation(XAAGetPatternROP(rop)));
 }
 
 /*---------------------------------------------------------------------------
@@ -971,12 +971,12 @@ GX1SetupForDashedLine(ScrnInfoPtr pScrn, int fg, int bg, int rop,
    if (planemask == (unsigned int)-1) {
       /* USE NORMAL PATTERN ROPs IF ALL PLANES ARE ENABLED */
 
-      GFX(set_raster_operation(XAAPatternROP[rop]));
+      GFX(set_raster_operation(XAAGetPatternROP(rop)));
    } else {
       /* SELECT ROP THAT USES SOURCE DATA FOR PLANEMASK */
 
       GFX(set_solid_source((unsigned long)planemask));
-      GFX(set_raster_operation(XAAPatternROP_PM[rop]));
+      GFX(set_raster_operation(XAAGetPatternROP_PM(rop)));
    }
 }
 
@@ -990,7 +990,7 @@ GX1SetupForScreenToScreenColorExpandFill(ScrnInfoPtr pScrn,
    GFX(set_mono_source(bg, fg, (bg == -1)));
 
    /* USE NORMAL PATTERN ROPs IF ALL PLANES ARE ENABLED */
-   GFX(set_raster_operation(XAACopyROP_PM[rop & 0x0F]));
+   GFX(set_raster_operation(XAAGetCopyROP_PM(rop & 0x0F)));
 
    DEBUGMSG(0, (0, X_NONE, "%x %x %x %x\n", fg, bg, rop, planemask));
 }
@@ -1049,14 +1049,14 @@ OPTGX1SetupForFillRectSolid(ScrnInfoPtr pScreenInfo,
 	 planemask |= (planemask << 8);
       }
 
-      rop16 = XAAPatternROP[rop];
+      rop16 = XAAGetPatternROP(rop);
 
       /* POLL UNTIL ABLE TO WRITE THE SOURCE COLOR */
 
       GFX_WAIT_PENDING;
       WRITE_REG32(GP_SRC_COLOR_0, (planemask << 16) | planemask);
    } else {
-      rop16 = XAAPatternROP_PM[rop];
+      rop16 = XAAGetPatternROP_PM(rop);
    }
 
    Geode_blt_mode = 0;
@@ -1166,7 +1166,7 @@ OPTGX1SetupForScreenToScreenCopy(ScrnInfoPtr pScreenInfo,
 				 int transparency_color)
 {
    int GFXusesDstData;
-   unsigned short rop16 = XAACopyROP[rop];
+   unsigned short rop16 = XAAGetCopyROP(rop);
 
    /* FORMAT 8 BPP COLOR */
    /* GX requires 8BPP color data be duplicated into bits [15:8]. */
@@ -1488,7 +1488,7 @@ OPTGX1SetupForSolidLine(ScrnInfoPtr pScreenInfo,
       color |= (color << 8);
    }
 
-   GeodeROP = XAAPatternROP[rop];
+   GeodeROP = XAAGetPatternROP(rop);
 
    /* POLL UNTIL ABLE TO WRITE THE PATTERN COLOR */
    GFX_WAIT_PENDING;
