@@ -1,4 +1,4 @@
-/* $XFree86: xc/programs/Xserver/hw/xfree86/drivers/nsc/nsc_gx2_cursor.c,v 1.5tsi Exp $ */
+/* $XFree86: xc/programs/Xserver/hw/xfree86/drivers/nsc/nsc_gx2_cursor.c,v 1.5 2003/02/21 16:51:09 alanh Exp $ */
 /*
  * $Workfile: nsc_gx2_cursor.c $
  * $Revision$
@@ -295,13 +295,14 @@ GX2SetCursorPosition(ScrnInfoPtr pScreenInfo, int x, int y)
 void
 GX2LoadCursorImage(ScrnInfoPtr pScreenInfo, unsigned char *src)
 {
-   int i;
+   int i, j;
    unsigned long shape;
    unsigned long mask;
    unsigned long andMask[32] = { 0, };
    unsigned long xorMask[32] = { 0, };
    GeodePtr pGeode = GEODEPTR(pScreenInfo);
 
+   j = 0;
    for (i = 0; i < 32; i++) {
       if (src) {
 	 shape = ((unsigned long)src[i * 4] << 24) |

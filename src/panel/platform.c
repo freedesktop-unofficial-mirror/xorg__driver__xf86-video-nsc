@@ -1,4 +1,4 @@
-/* $XFree86: xc/programs/Xserver/hw/xfree86/drivers/nsc/panel/platform.c,v 1.3tsi Exp $ */
+/* $XFree86: xc/programs/Xserver/hw/xfree86/drivers/nsc/panel/platform.c,v 1.3 2003/01/14 09:34:36 alanh Exp $ */
 /*
  * $Workfile: platform.c $
  * $Revision$
@@ -153,7 +153,7 @@
 #define PLT_READ_WORDS   5
 #define PLT_WRITE_DWORDS 6
 #define PLT_READ_DWORDS  7
-#define PLT_UNKNOWN	 ((SYS_BOARD) 0xFFFF)
+#define PLT_UNKNOWN 		0xFFFF
 
 typedef struct
 {
@@ -295,7 +295,7 @@ FindStringInSeg(unsigned int segment_address, char *string_ptr)
    char *psegment_buf;
    unsigned long mem_ptr = (unsigned long)segment_address << 16;
    char segment_buffer[SEGMENT_LENGTH + 1];
-   int i, cursor = 0;
+   int i, cursor;
 
    /* silence compiler */
    (void)cursor;

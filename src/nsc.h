@@ -1,4 +1,4 @@
-/* $XFree86: xc/programs/Xserver/hw/xfree86/drivers/nsc/nsc.h,v 1.5tsi Exp $ */
+/* $XFree86: xc/programs/Xserver/hw/xfree86/drivers/nsc/nsc.h,v 1.5 2003/02/21 16:51:09 alanh Exp $ */
 /*
  * $Workfile: nsc.h $
  * $Revision$
@@ -409,7 +409,7 @@ typedef struct
 GeodeRec, *GeodePtr;
 
 /* option flags are self-explanatory */
-typedef enum
+enum
 {
    OPTION_SW_CURSOR,
    OPTION_HW_CURSOR,
