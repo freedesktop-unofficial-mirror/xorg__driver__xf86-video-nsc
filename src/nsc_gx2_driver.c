@@ -1,4 +1,4 @@
-/* $XFree86: xc/programs/Xserver/hw/xfree86/drivers/nsc/nsc_gx2_driver.c,v 1.8 2003/08/23 15:03:09 dawes Exp $ */
+/* $XFree86: xc/programs/Xserver/hw/xfree86/drivers/nsc/nsc_gx2_driver.c,v 1.9tsi Exp $ */
 /*
  * $Workfile: nsc_gx2_driver.c $
  * $Revision$
@@ -145,7 +145,6 @@
 
 #define DEBUG(x)
 #define GEODE_TRACE 0
-#define CFB 0
 
 /* Includes that are used by all drivers */
 #include "xf86.h"
@@ -168,20 +167,7 @@
 #define RC_MAX_DEPTH 24
 
 /* Frame buffer stuff */
-#if CFB
-/*
- * If using cfb, cfb.h is required.  Select the others for the bpp values
- * the driver supports.
- */
-#define PSZ 8				/* needed for cfb.h */
-#include "cfb.h"
-#undef PSZ
-#include "cfb16.h"
-#include "cfb24.h"
-#include "cfb32.h"
-#else
 #include "fb.h"
-#endif
 
 #include "shadowfb.h"
 
@@ -230,7 +216,7 @@ static void GX2LeaveVT(int, int);
 static void GX2FreeScreen(int, int);
 void GX2AdjustFrame(int, int, int, int);
 Bool GX2SwitchMode(int, DisplayModePtr, int);
-static int GX2ValidMode(int, DisplayModePtr, Bool, int);
+static ModeStatus GX2ValidMode(int, DisplayModePtr, Bool, int);
 static void GX2LoadPalette(ScrnInfoPtr pScreenInfo,
 			   int numColors, int *indizes,
 			   LOCO * colors, VisualPtr pVisual);
@@ -269,11 +255,7 @@ extern const char *nscVgahwSymbols[];
 extern const char *nscVbeSymbols[];
 extern const char *nscInt10Symbols[];
 
-#if CFB
-extern const char *nscCfbSymbols[];
-#else
 extern const char *nscFbSymbols[];
-#endif
 extern const char *nscXaaSymbols[];
 extern const char *nscRamdacSymbols[];
 extern const char *nscShadowSymbols[];
@@ -474,11 +456,6 @@ GX2PreInit(ScrnInfoPtr pScreenInfo, int flags)
    MessageType from;
    int i = 0;
    GeodePtr pGeode;
-   char *mod = NULL;
-
-#if CFB
-   char *reqSymbol = NULL;
-#endif /* CFB */
 #if defined(STB_X)
    GAL_ADAPTERINFO sAdapterInfo;
 #endif /* STB_X */
@@ -979,45 +956,12 @@ GX2PreInit(ScrnInfoPtr pScreenInfo, int flags)
    xf86SetDpi(pScreenInfo, 0, 0);
    GeodeDebug(("GX2PreInit(14)!\n"));
 
-   /* Load bpp-specific modules */
-   mod = NULL;
-
-#if CFB
-   /* Load bpp-specific modules */
-   switch (pScreenInfo->bitsPerPixel) {
-   case 8:
-      mod = "cfb";
-      reqSymbol = "cfbScreenInit";
-      break;
-   case 16:
-      mod = "cfb16";
-      reqSymbol = "cfb16ScreenInit";
-      break;
-   case 24:
-      mod = "cfb24";
-      reqSymbol = "cfb24ScreenInit";
-      break;
-   case 32:
-      mod = "cfb32";
-      reqSymbol = "cfb32ScreenInit";
-      break;
-   default:
-      return FALSE;
-   }
-   if (mod && xf86LoadSubModule(pScreenInfo, mod) == NULL) {
-      GX2FreeRec(pScreenInfo);
-      return FALSE;
-   }
-
-   xf86LoaderReqSymbols(reqSymbol, NULL);
-#else
    if (xf86LoadSubModule(pScreenInfo, "fb") == NULL) {
       GX2FreeRec(pScreenInfo);
       return FALSE;
    }
 
    xf86LoaderReqSymLists(nscFbSymbols, NULL);
-#endif
    GeodeDebug(("GX2PreInit(15)!\n"));
    if (pGeode->NoAccel == FALSE) {
       if (!xf86LoadSubModule(pScreenInfo, "xaa")) {
@@ -1052,6 +996,7 @@ GX2PreInit(ScrnInfoPtr pScreenInfo, int flags)
    }
    GX2UnmapMem(pScreenInfo);
    GeodeDebug(("GX2PreInit ... done successfully!\n"));
+   (void) from;
    return TRUE;
 }
 
@@ -1933,24 +1878,6 @@ GX2ScreenInit(int scrnIndex, ScreenPtr pScreen, int argc, char **argv)
    }
 
    switch (pScreenInfo->bitsPerPixel) {
-#if CFB
-   case 8:
-      Inited = cfbScreenInit(pScreen, FBStart, width, height,
-			     pScreenInfo->xDpi, pScreenInfo->yDpi,
-			     displayWidth);
-      break;
-   case 16:
-      Inited = cfb16ScreenInit(pScreen, FBStart, width, height,
-			       pScreenInfo->xDpi, pScreenInfo->yDpi,
-			       displayWidth);
-      break;
-   case 24:
-   case 32:
-      Inited = cfb32ScreenInit(pScreen, FBStart, width, height,
-			       pScreenInfo->xDpi, pScreenInfo->yDpi,
-			       displayWidth);
-      break;
-#else
    case 8:
    case 16:
    case 24:
@@ -1959,7 +1886,6 @@ GX2ScreenInit(int scrnIndex, ScreenPtr pScreen, int argc, char **argv)
 			    pScreenInfo->xDpi, pScreenInfo->yDpi,
 			    displayWidth, pScreenInfo->bitsPerPixel);
       break;
-#endif
    default:
       xf86DrvMsg(scrnIndex, X_ERROR,
 		 "Internal error: invalid bpp (%d) in ScreenInit\n",
@@ -1991,11 +1917,8 @@ GX2ScreenInit(int scrnIndex, ScreenPtr pScreen, int argc, char **argv)
 	 }
       }
    }
-#if CFB
-#else
    /* must be after RGB ordering fixed */
    fbPictureInit(pScreen, 0, 0);
-#endif
 
    GeodeDebug(("GX2ScreenInit(6)!\n"));
    if (!pGeode->NoAccel) {
@@ -2217,7 +2140,7 @@ GX2FreeScreen(int scrnIndex, int flags)
  * Comments     :none.
 *----------------------------------------------------------------------------
 */
-static int
+static ModeStatus
 GX2ValidMode(int scrnIndex, DisplayModePtr pMode, Bool Verbose, int flags)
 {
    unsigned int total_memory_required;
