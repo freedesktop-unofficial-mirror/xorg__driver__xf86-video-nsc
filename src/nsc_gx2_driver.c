@@ -1,4 +1,4 @@
-/* $XFree86: xc/programs/Xserver/hw/xfree86/drivers/nsc/nsc_gx2_driver.c,v 1.8 2003/08/23 15:03:09 dawes Exp $ */
+/* $XFree86: xc/programs/Xserver/hw/xfree86/drivers/nsc/nsc_gx2_driver.c,v 1.9tsi Exp $ */
 /*
  * $Workfile: nsc_gx2_driver.c $
  * $Revision$
@@ -230,7 +230,7 @@ static void GX2LeaveVT(int, int);
 static void GX2FreeScreen(int, int);
 void GX2AdjustFrame(int, int, int, int);
 Bool GX2SwitchMode(int, DisplayModePtr, int);
-static int GX2ValidMode(int, DisplayModePtr, Bool, int);
+static ModeStatus GX2ValidMode(int, DisplayModePtr, Bool, int);
 static void GX2LoadPalette(ScrnInfoPtr pScreenInfo,
 			   int numColors, int *indizes,
 			   LOCO * colors, VisualPtr pVisual);
@@ -474,9 +474,8 @@ GX2PreInit(ScrnInfoPtr pScreenInfo, int flags)
    MessageType from;
    int i = 0;
    GeodePtr pGeode;
-   char *mod = NULL;
-
 #if CFB
+   char *mod = NULL;
    char *reqSymbol = NULL;
 #endif /* CFB */
 #if defined(STB_X)
@@ -979,10 +978,10 @@ GX2PreInit(ScrnInfoPtr pScreenInfo, int flags)
    xf86SetDpi(pScreenInfo, 0, 0);
    GeodeDebug(("GX2PreInit(14)!\n"));
 
+#if CFB
    /* Load bpp-specific modules */
    mod = NULL;
 
-#if CFB
    /* Load bpp-specific modules */
    switch (pScreenInfo->bitsPerPixel) {
    case 8:
@@ -1052,6 +1051,7 @@ GX2PreInit(ScrnInfoPtr pScreenInfo, int flags)
    }
    GX2UnmapMem(pScreenInfo);
    GeodeDebug(("GX2PreInit ... done successfully!\n"));
+   (void) from;
    return TRUE;
 }
 
@@ -2217,7 +2217,7 @@ GX2FreeScreen(int scrnIndex, int flags)
  * Comments     :none.
 *----------------------------------------------------------------------------
 */
-static int
+static ModeStatus
 GX2ValidMode(int scrnIndex, DisplayModePtr pMode, Bool Verbose, int flags)
 {
    unsigned int total_memory_required;

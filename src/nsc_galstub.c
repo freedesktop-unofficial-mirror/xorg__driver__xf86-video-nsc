@@ -1,4 +1,4 @@
-/* $XFree86: xc/programs/Xserver/hw/xfree86/drivers/nsc/nsc_galstub.c,v 1.2 2003/01/14 09:34:31 alanh Exp $ */
+/* $XFree86: xc/programs/Xserver/hw/xfree86/drivers/nsc/nsc_galstub.c,v 1.1 2002/12/10 15:12:23 alanh Exp $ */
 /*
  * $Workfile: nsc_galstub.c $
  * $Revision$
