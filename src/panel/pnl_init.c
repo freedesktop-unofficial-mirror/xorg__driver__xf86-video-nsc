@@ -1,4 +1,4 @@
-/* $XFree86: xc/programs/Xserver/hw/xfree86/drivers/nsc/panel/pnl_init.c,v 1.1 2002/12/10 15:12:28 alanh Exp $ */
+/* $XFree86$ */
 /*
  * $Workfile: pnl_init.c $
  * $Revision$
