@@ -1,4 +1,5 @@
-/* $XFree86: xc/programs/Xserver/hw/xfree86/drivers/nsc/nsc_gx1_accel.c,v 1.5 2003/02/11 13:36:41 alanh Exp $ */
+/* $XdotOrg: xc/programs/Xserver/hw/xfree86/drivers/nsc/nsc_gx1_accel.c,v 1.2 2004/04/23 19:40:15 eich Exp $ */
+/* $XFree86: xc/programs/Xserver/hw/xfree86/drivers/nsc/nsc_gx1_accel.c,v 1.7 2003/12/07 22:40:38 alanh Exp $ */
 /*
  * $Workfile: nsc_gx1_accel.c $
  * $Revision$
@@ -171,7 +172,6 @@ static int Geodesrcx;
 static int Geodesrcy;
 static int Geodewidth;
 static int Geodeheight;
-static int Geodebpp;
 static int GeodeCounter;
 
 #if !defined(STB_X)
@@ -181,7 +181,9 @@ static unsigned short Geode_vector_mode = 0;
 static unsigned short Geode_buffer_width = 0;
 #endif
 static unsigned int gu1_bpp = 0;
+#if SCR2SCREXP
 static unsigned int gu1_xshift = 1;
+#endif
 static unsigned int gu1_yshift = 1;
 static unsigned short GeodebufferWidthPixels;
 static unsigned int ImgBufOffset;
@@ -189,9 +191,11 @@ static unsigned short Geodebb0Base;
 static unsigned short Geodebb1Base;
 static XAAInfoRecPtr localRecPtr;
 
+#if SCR2SCREXP
 #define CALC_FBOFFSET(_SrcX, _SrcY) \
 	(((unsigned int) (_SrcY) << gu1_yshift) |\
 		(((unsigned int) (_SrcX)) << gu1_xshift))
+#endif
 
 #define GFX_WAIT_BUSY while(READ_REG16(GP_BLIT_STATUS) & BS_BLIT_BUSY) { ; }
 #define GFX_WAIT_PENDING while(READ_REG16(GP_BLIT_STATUS) & BS_BLIT_PENDING) { ; }
@@ -270,9 +274,11 @@ void OPTGX1SubsequentBresenhamLine(ScrnInfoPtr pScreenInfo, int x1, int y1,
 void OPTGX1SubsequentSolidTwoPointLine(ScrnInfoPtr pScreenInfo,
 				       int x0, int y0, int x1, int y1,
 				       int flags);
+#if 0 /* disabled due to bugs */
 void OPTGX1SubsequentHorVertLine(ScrnInfoPtr pScreenInfo, int x, int y,
 				 int len, int dir);
 
+#endif
 void OPTGX1SetupForScanlineImageWrite(ScrnInfoPtr pScreenInfo,
 				      int rop, unsigned int planemask,
 				      int transparency_color, int bpp,
@@ -333,11 +339,11 @@ GX1SetupForFillRectSolid(ScrnInfoPtr pScreenInfo,
    /* CHECK IF PLANEMASK IS NOT USED (ALL PLANES ENABLED) */
    if (planemask == 0xFFFFFFFF) {
       /* USE NORMAL PATTERN ROPs IF ALL PLANES ARE ENABLED */
-      GFX(set_raster_operation(XAAPatternROP[rop]));
+      GFX(set_raster_operation(XAAGetPatternROP(rop)));
    } else {
       /* SELECT ROP THAT USES SOURCE DATA FOR PLANEMASK */
       GFX(set_solid_source((unsigned long)planemask));
-      GFX(set_raster_operation(XAAPatternROP_PM[rop]));
+      GFX(set_raster_operation(XAAGetPatternROP_PM(rop)));
    }
 }
 
@@ -408,11 +414,11 @@ GX1SetupFor8x8PatternColorExpand(ScrnInfoPtr pScreenInfo,
    /* CHECK IF PLANEMASK IS NOT USED (ALL PLANES ENABLED) */
    if (planemask == 0xFFFFFFFF) {
       /* USE NORMAL PATTERN ROPs IF ALL PLANES ARE ENABLED */
-      GFX(set_raster_operation(XAAPatternROP[rop]));
+      GFX(set_raster_operation(XAAGetPatternROP(rop)));
    } else {
       /* SELECT ROP THAT USES SOURCE DATA FOR PLANEMASK */
       GFX(set_solid_source((unsigned int)planemask));
-      GFX(set_raster_operation(XAAPatternROP_PM[rop]));
+      GFX(set_raster_operation(XAAGetPatternROP_PM(rop)));
    }
 }
 
@@ -473,7 +479,7 @@ GX1Subsequent8x8PatternColorExpand(ScrnInfoPtr pScreenInfo,
  *       fg		:Specifies the foreground color
  *       bg     :Specifies the background color
  *	planemask	:Specifies the value of masking from rop data
-
+ *
  * Returns		:none.
  *
  * Comments     :none.
@@ -497,11 +503,11 @@ GX1SetupFor8x8PatternMonoExpand(ScrnInfoPtr pScreenInfo,
    /* CHECK IF PLANEMASK IS NOT USED (ALL PLANES ENABLED) */
    if (planemask == 0xFFFFFFFF) {
       /* USE NORMAL PATTERN ROPs IF ALL PLANES ARE ENABLED */
-      GFX(set_raster_operation(XAAPatternROP[rop]));
+      GFX(set_raster_operation(XAAGetPatternROP(rop)));
    } else {
       /* SELECT ROP THAT USES SOURCE DATA FOR PLANEMASK */
       GFX(set_solid_source((unsigned int)planemask));
-      GFX(set_raster_operation(XAAPatternROP_PM[rop]));
+      GFX(set_raster_operation(XAAGetPatternROP_PM(rop)));
    }
 }
 
@@ -572,7 +578,7 @@ GX1SetupForScreenToScreenCopy(ScrnInfoPtr pScreenInfo,
 {
    GFX(set_solid_pattern(planemask));
    /* SET RASTER OPERATION FOR USING PATTERN AS PLANE MASK */
-   GFX(set_raster_operation(XAACopyROP[rop]));
+   GFX(set_raster_operation(XAAGetCopyROP(rop)));
    /* SAVE TRANSPARENCY FLAG */
    GeodeTransparent = (transparency_color == -1) ? 0 : 1;
    GeodeTransColor = transparency_color;
@@ -666,11 +672,10 @@ GX1SetupForScanlineImageWrite(ScrnInfoPtr pScreenInfo,
 {
    GFX(set_solid_pattern((unsigned int)planemask));
    /* SET RASTER OPERATION FOR USING PATTERN AS PLANE MASK */
-   GFX(set_raster_operation(XAACopyROP_PM[rop]));
+   GFX(set_raster_operation(XAAGetCopyROP_PM(rop)));
    /* SAVE TRANSPARENCY FLAG */
    GeodeTransparent = (transparency_color == -1) ? 0 : 1;
    GeodeTransColor = transparency_color;
-   Geodebpp = bpp;
 }
 
 /*----------------------------------------------------------------------------
@@ -812,7 +817,7 @@ GX1SetupForSolidLine(ScrnInfoPtr pScreenInfo,
    GFX(set_solid_pattern((unsigned int)color));
 
    /* USE NORMAL PATTERN ROPs IF ALL PLANES ARE ENABLED */
-   GFX(set_raster_operation(XAAPatternROP[rop]));
+   GFX(set_raster_operation(XAAGetPatternROP(rop)));
 }
 
 /*---------------------------------------------------------------------------
@@ -966,12 +971,12 @@ GX1SetupForDashedLine(ScrnInfoPtr pScrn, int fg, int bg, int rop,
    if (planemask == (unsigned int)-1) {
       /* USE NORMAL PATTERN ROPs IF ALL PLANES ARE ENABLED */
 
-      GFX(set_raster_operation(XAAPatternROP[rop]));
+      GFX(set_raster_operation(XAAGetPatternROP(rop)));
    } else {
       /* SELECT ROP THAT USES SOURCE DATA FOR PLANEMASK */
 
       GFX(set_solid_source((unsigned long)planemask));
-      GFX(set_raster_operation(XAAPatternROP_PM[rop]));
+      GFX(set_raster_operation(XAAGetPatternROP_PM(rop)));
    }
 }
 
@@ -985,7 +990,7 @@ GX1SetupForScreenToScreenColorExpandFill(ScrnInfoPtr pScrn,
    GFX(set_mono_source(bg, fg, (bg == -1)));
 
    /* USE NORMAL PATTERN ROPs IF ALL PLANES ARE ENABLED */
-   GFX(set_raster_operation(XAACopyROP_PM[rop & 0x0F]));
+   GFX(set_raster_operation(XAAGetCopyROP_PM(rop & 0x0F)));
 
    DEBUGMSG(0, (0, X_NONE, "%x %x %x %x\n", fg, bg, rop, planemask));
 }
@@ -1044,14 +1049,14 @@ OPTGX1SetupForFillRectSolid(ScrnInfoPtr pScreenInfo,
 	 planemask |= (planemask << 8);
       }
 
-      rop16 = XAAPatternROP[rop];
+      rop16 = XAAGetPatternROP(rop);
 
       /* POLL UNTIL ABLE TO WRITE THE SOURCE COLOR */
 
       GFX_WAIT_PENDING;
       WRITE_REG32(GP_SRC_COLOR_0, (planemask << 16) | planemask);
    } else {
-      rop16 = XAAPatternROP_PM[rop];
+      rop16 = XAAGetPatternROP_PM(rop);
    }
 
    Geode_blt_mode = 0;
@@ -1161,7 +1166,7 @@ OPTGX1SetupForScreenToScreenCopy(ScrnInfoPtr pScreenInfo,
 				 int transparency_color)
 {
    int GFXusesDstData;
-   unsigned short rop16 = XAACopyROP[rop];
+   unsigned short rop16 = XAAGetCopyROP(rop);
 
    /* FORMAT 8 BPP COLOR */
    /* GX requires 8BPP color data be duplicated into bits [15:8]. */
@@ -1369,7 +1374,6 @@ OPTGX1SetupForScanlineImageWrite(ScrnInfoPtr pScreenInfo,
 				 int rop, unsigned int planemask,
 				 int transparency_color, int bpp, int depth)
 {
-   Geodebpp = bpp;
    OPTGX1SetupForScreenToScreenCopy(pScreenInfo,
 				    0, 0, rop, planemask, transparency_color);
 }
@@ -1484,7 +1488,7 @@ OPTGX1SetupForSolidLine(ScrnInfoPtr pScreenInfo,
       color |= (color << 8);
    }
 
-   GeodeROP = XAAPatternROP[rop];
+   GeodeROP = XAAGetPatternROP(rop);
 
    /* POLL UNTIL ABLE TO WRITE THE PATTERN COLOR */
    GFX_WAIT_PENDING;
@@ -1606,6 +1610,7 @@ OPTGX1SubsequentSolidTwoPointLine(ScrnInfoPtr pScreenInfo,
    WRITE_REG16(GP_VECTOR_MODE, (Geode_vector_mode | vec_flags));
 }
 
+#if 0 /* disabled due to bugs - can't fallback to fillrectsolid */
 /*---------------------------------------------------------------------------
  * OPTGX1SubsequentHorVertLine
  *
@@ -1632,6 +1637,7 @@ OPTGX1SubsequentHorVertLine(ScrnInfoPtr pScreenInfo,
 				 (unsigned short)((dir == DEGREES_0) ? 1 :
 						  len));
 }
+#endif
 #endif
 
 /*----------------------------------------------------------------------------
@@ -1667,7 +1673,9 @@ GX1AccelInit(ScreenPtr pScreen)
       break;
    }
 
+#if SCR2SCREXP
    gu1_xshift = pScreenInfo->bitsPerPixel >> 4;
+#endif
 
    switch (pGeode->Pitch) {
    case 1024:
@@ -1735,8 +1743,10 @@ GX1AccelInit(ScreenPtr pScreen)
    localRecPtr->SetupForSolidLine = OPTACCEL(GX1SetupForSolidLine);
    localRecPtr->SubsequentSolidBresenhamLine =
 	 OPTACCEL(GX1SubsequentBresenhamLine);
+#if !defined(OPT_ACCEL)
    localRecPtr->SubsequentSolidHorVertLine =
 	 OPTACCEL(GX1SubsequentHorVertLine);
+#endif
    localRecPtr->SubsequentSolidTwoPointLine =
 	 OPTACCEL(GX1SubsequentSolidTwoPointLine);
    localRecPtr->SolidBresenhamLineErrorTermBits = 15;
