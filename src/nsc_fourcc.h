@@ -1,4 +1,4 @@
-/* $XFree86: xc/programs/Xserver/hw/xfree86/drivers/nsc/nsc_fourcc.h,v 1.2 2003/01/14 09:34:30 alanh Exp $ */
+/* $XFree86$ */
 /*
  * $Workfile: nsc_fourcc.h $
  * $Revision$

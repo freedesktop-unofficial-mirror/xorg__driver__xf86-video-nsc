@@ -1,4 +1,4 @@
-/* $XFree86: xc/programs/Xserver/hw/xfree86/drivers/nsc/nsc_driver.c,v 1.5 2003/04/23 21:51:41 tsi Exp $ */
+/* $XFree86$ */
 /*
  * $Workfile: nsc_driver.c $
  * $Revision$

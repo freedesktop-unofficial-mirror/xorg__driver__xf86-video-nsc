@@ -1,4 +1,4 @@
-/* $XFree86: xc/programs/Xserver/hw/xfree86/drivers/nsc/nsc_gx2_dga.c,v 1.2 2003/01/14 09:34:32 alanh Exp $ */
+/* $XFree86$ */
 /*
  * $Workfile: nsc_gx2_dga.c $
  * $Revision$

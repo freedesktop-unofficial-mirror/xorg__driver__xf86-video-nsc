@@ -1,4 +1,4 @@
-/* $XFree86: xc/programs/Xserver/hw/xfree86/drivers/nsc/gfx/gfx_disp.c,v 1.2 2003/01/14 09:34:34 alanh Exp $ */
+/* $XFree86$ */
 /*
  * $Workfile: gfx_disp.c $
  *

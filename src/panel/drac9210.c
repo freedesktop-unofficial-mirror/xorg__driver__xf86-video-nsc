@@ -1,4 +1,4 @@
-/* $XFree86: xc/programs/Xserver/hw/xfree86/drivers/nsc/panel/drac9210.c,v 1.2 2003/01/14 09:34:35 alanh Exp $ */
+/* $XFree86$ */
 /*
  * $Workfile: drac9210.c $
  * $Revision$

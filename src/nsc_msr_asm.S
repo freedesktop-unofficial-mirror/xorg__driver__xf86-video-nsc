@@ -1,5 +1,5 @@
 /*
-# $XFree86: xc/programs/Xserver/hw/xfree86/drivers/nsc/nsc_msr_asm.S,v 1.1 2002/12/12 22:13:34 dawes Exp $
+# $XFree86$
 ##########################################################################
 # NSC_LIC_ALTERNATIVE_PREAMBLE
 #

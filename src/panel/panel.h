@@ -1,4 +1,4 @@
-/* $XFree86: xc/programs/Xserver/hw/xfree86/drivers/nsc/panel/panel.h,v 1.3 2003/01/14 09:34:36 alanh Exp $ */
+/* $XFree86$ */
 /*
  * $Workfile: panel.h $
  * $Revision$

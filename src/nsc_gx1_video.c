@@ -1,4 +1,4 @@
-/* $XFree86: xc/programs/Xserver/hw/xfree86/drivers/nsc/nsc_gx1_video.c,v 1.8 2003/11/10 18:22:23 tsi Exp $ */
+/* $XFree86$ */
 /*
  * $Workfile: nsc_gx1_video.c $
  * $Revision$
