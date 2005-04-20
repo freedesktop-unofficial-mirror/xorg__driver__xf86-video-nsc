@@ -182,13 +182,13 @@
 /* Check for some extensions */
 #ifdef XFreeXDGA
 #define _XF86_DGA_SERVER_
-#include "extensions/xf86dgastr.h"
+#include <X11/extensions/xf86dgastr.h>
 #endif /* XFreeXDGA */
 
 #include "globals.h"
 #include "opaque.h"
 #define DPMS_SERVER
-#include "extensions/dpms.h"
+#include <X11/extensions/dpms.h>
 
 #define EXTERN
 /* Our private include file (this also includes the durango headers) */

@@ -155,7 +155,7 @@
 #include "regionstr.h"
 
 #include "nsc.h"
-#include "Xv.h"
+#include <X11/extensions/Xv.h>
 #include "xaa.h"
 #include "xaalocal.h"
 #include "dixstruct.h"
