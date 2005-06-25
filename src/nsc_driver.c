@@ -232,7 +232,7 @@ extern unsigned char *XpressROMPtr;
 /* driver record contains the functions needed by the server after loading
  * the driver module.
  */
-DriverRec NSC = {
+_X_EXPORT DriverRec NSC = {
    NSC_VERSION_CURRENT,
    NSC_DRIVER_NAME,
    NscIdentify,
@@ -386,7 +386,7 @@ static XF86ModuleVersionInfo NscVersionRec = {
  * This data is accessed by the loader.  The name must be the module name
  * followed by "ModuleInit".
  */
-XF86ModuleData nscModuleData = { &NscVersionRec, NscSetup, NULL };
+_X_EXPORT XF86ModuleData nscModuleData = { &NscVersionRec, NscSetup, NULL };
 
 /*-------------------------------------------------------------------------
  * NscSetup.
