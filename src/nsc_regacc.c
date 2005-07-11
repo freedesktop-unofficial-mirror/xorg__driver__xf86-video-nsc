@@ -142,6 +142,10 @@
  *
  * END_NSC_LIC_GPL */
 
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
 void gfx_write_reg8(unsigned long offset, unsigned char value);
 void gfx_write_reg16(unsigned long offset, unsigned short value);
 void gfx_write_reg32(unsigned long offset, unsigned long value);

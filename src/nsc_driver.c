@@ -143,6 +143,10 @@
  *
  * END_NSC_LIC_GPL */
 
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
 #define DEBUG(x)
 #define NSC_TRACE 0
 #define HWVGA 1

@@ -153,6 +153,10 @@
  * of chipsets. 
  */
 
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
 #define GFX_DISPLAY_DYNAMIC			1	/* runtime selection */
 #define GFX_DISPLAY_GU1				1	/* 1st generation display controller */
 #define GFX_DISPLAY_GU2				1	/* 2nd generation display controller */

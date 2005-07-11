@@ -132,6 +132,10 @@
  *
  * END_NSC_LIC_GPL */
 
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
 /* VGA STRUCTURE */
 
 #define GU2_STD_CRTC_REGS 25

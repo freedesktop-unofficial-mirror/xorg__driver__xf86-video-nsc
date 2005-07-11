@@ -140,6 +140,10 @@
  *
  * END_NSC_LIC_GPL */
 
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
 #if defined(linux)			/* Linux */
 
 #ifdef __KERNEL__

@@ -139,6 +139,10 @@
  *
  * END_NSC_LIC_GPL */
 
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
 #if defined(STB_X)
 /* all driver need this */
 #include "xf86.h"

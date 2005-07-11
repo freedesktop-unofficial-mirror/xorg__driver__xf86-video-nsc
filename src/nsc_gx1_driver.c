@@ -148,6 +148,10 @@
  * Alan Hourihane <alanh@fairlite.demon.co.uk>
  */
 
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
 #define DEBUG(x)
 #define GEODE_TRACE 0
 #define HWVGA 0
