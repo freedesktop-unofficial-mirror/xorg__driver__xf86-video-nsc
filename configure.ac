@@ -37,6 +37,7 @@ AM_MAINTAINER_MODE
 # Checks for programs.
 AC_PROG_LIBTOOL
 AC_PROG_CC
+AM_PROG_AS
 
 AH_TOP([#include "xorg-server.h"])
 
@@ -56,6 +57,16 @@ AC_HEADER_STDC
 
 AC_SUBST([XORG_CFLAGS])
 AC_SUBST([moduledir])
+
+is386=false
+
+case $host_cpu in
+  i*86)
+	is386=true
+	;;
+esac
+
+AM_CONDITIONAL([I386ARCH], [test $is386 = true])
 
 XORG_RELEASE_VERSION
 

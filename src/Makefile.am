@@ -24,6 +24,7 @@
 # _ladir passes a dummy rpath to libtool so the thing will actually link
 # TODO: -nostdlib/-Bstatic/-lgcc platform magic, not installing the .a, etc.
 AM_CFLAGS = @XORG_CFLAGS@ -I$(top_srcdir)/src/gfx -I$(top_srcdir)/src/panel
+AM_CCASFLAGS = @XORG_CFLAGS@
 nsc_drv_la_LTLIBRARIES = nsc_drv.la
 nsc_drv_la_LDFLAGS = -module -avoid-version
 nsc_drv_ladir = @moduledir@/drivers
@@ -48,6 +49,10 @@ nsc_drv_la_SOURCES = \
          nsc.h \
          panel.c
 
+if I386ARCH
+nsc_drv_la_SOURCES += \
+	nsc_msr_asm.S
+endif
 
 EXTRA_DIST =			\
         nsc_galfns.c		\
@@ -100,4 +105,17 @@ EXTRA_DIST =			\
 	gfx/vid_1200.c		\
 	gfx/vid_5530.c		\
 	gfx/vid_rdcl.c		\
-	gfx/vip_1200.c
+	gfx/vip_1200.c		\
+				\
+	gfx/durango.c		\
+	gfx/gfx_tv.h		\
+	gfx/history.h		\
+	gfx/release.txt		\
+	gfx/tv_fs450.c		\
+	gfx/tv_fs450.h		\
+	gfx/tv_fs451.c		\
+	gfx/tv_geode.c		\
+	gfx/vid_1400.c		\
+	gfx/vip_1400.c
+
+
