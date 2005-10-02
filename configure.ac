@@ -66,6 +66,11 @@ case $host_cpu in
 	;;
 esac
 
+# Unset is386 if compiling for AMD64/EM64T
+if test $is386 = true ; then
+	AC_CHECK_DECLS([_LP64, __amd64__, amd64], [is386=false])
+fi
+
 AM_CONDITIONAL([I386ARCH], [test $is386 = true])
 
 XORG_RELEASE_VERSION
