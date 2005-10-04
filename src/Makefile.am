@@ -74,6 +74,7 @@ EXTRA_DIST =			\
 	panel/pnl_bios.c	\
 	panel/pnl_defs.h	\
 	panel/pnl_init.c	\
+	panel/readme.txt	\
 				\
 	gfx/disp_gu1.c		\
 	gfx/disp_gu2.c		\
