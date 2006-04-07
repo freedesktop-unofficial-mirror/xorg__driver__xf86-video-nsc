@@ -526,7 +526,6 @@ gfx_outd(unsigned short port, unsigned long data)
 
 #elif defined(XFree86Server)
 
-#include <xf86_ansic.h>
 #include <compiler.h>
 #define INB(port) inb(port)
 #define INW(port) inw(port)

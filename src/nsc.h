@@ -142,6 +142,9 @@
 #ifndef _NSC_GEODE_H_
 #define _NSC_GEODE_H_
 
+#include <string.h>
+#include <stdio.h>
+
 #include "xaa.h"
 #include "xf86Cursor.h"
 #if !defined(STB_X)

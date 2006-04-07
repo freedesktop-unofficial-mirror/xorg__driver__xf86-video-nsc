@@ -1,4 +1,4 @@
-/* $XdotOrg: xc/programs/Xserver/hw/xfree86/drivers/nsc/nsc_gx1_accel.c,v 1.3 2004/07/30 20:30:53 ajax Exp $ */
+/* $XdotOrg: driver/xf86-video-nsc/src/nsc_gx1_accel.c,v 1.5 2005/07/11 02:29:55 ajax Exp $ */
 /* $XFree86: xc/programs/Xserver/hw/xfree86/drivers/nsc/nsc_gx1_accel.c,v 1.7 2003/12/07 22:40:38 alanh Exp $ */
 /*
  * $Workfile: nsc_gx1_accel.c $
@@ -154,11 +154,9 @@
 /* Xfree86 header files */
 #include "vgaHW.h"
 #include "xf86.h"
-#include "xf86_ansic.h"
 #include "xaalocal.h"
 #include "xf86fbman.h"
 #include "miline.h"
-#include "xf86_libc.h"
 #include "xaarop.h"
 #include "nsc.h"
 

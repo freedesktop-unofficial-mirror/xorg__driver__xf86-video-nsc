@@ -147,7 +147,6 @@
 /* all driver need this */
 #include "xf86.h"
 #include "xf86_OSproc.h"
-#include "xf86_ansic.h"
 /* pci stuff */
 #include "xf86PciInfo.h"
 #include "xf86Pci.h"

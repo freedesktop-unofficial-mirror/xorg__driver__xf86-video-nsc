@@ -148,11 +148,9 @@
 /* Xfree86 header files */
 #include "vgaHW.h"
 #include "xf86.h"
-#include "xf86_ansic.h"
 #include "xaalocal.h"
 #include "xf86fbman.h"
 #include "miline.h"
-#include "xf86_libc.h"
 #include "xaarop.h"
 #include "nsc.h"
 
