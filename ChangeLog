@@ -1,3 +1,10 @@
+2006-04-07  Aaron Plattner  <aplattner@nvidia.com>
+
+	* src/nsc_gx1_video.c: (GX1PutImage):
+	* src/nsc_gx2_video.c: (GX2PutImage):
+	Add a DrawablePtr argument to the XV functions to pave the way for
+	redirected video.
+
 2006-04-07  Adam Jackson  <ajax@freedesktop.org>
 
 	* configure.ac:

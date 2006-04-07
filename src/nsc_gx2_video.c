@@ -189,7 +189,7 @@ static void GX2QueryBestSize(ScrnInfoPtr, Bool,
 			     unsigned int *, pointer);
 static int GX2PutImage(ScrnInfoPtr, short, short, short, short, short, short,
 		       short, short, int, unsigned char *, short, short, Bool,
-		       RegionPtr, pointer);
+		       RegionPtr, pointer, DrawablePtr);
 static int GX2QueryImageAttributes(ScrnInfoPtr, int, unsigned short *,
 				   unsigned short *, int *, int *);
 
@@ -1017,7 +1017,8 @@ GX2PutImage(ScrnInfoPtr pScrn,
 	    short drw_w, short drw_h,
 	    int id, unsigned char *buf,
 	    short width, short height,
-	    Bool sync, RegionPtr clipBoxes, pointer data)
+	    Bool sync, RegionPtr clipBoxes, pointer data,
+	    DrawablePtr pDraw)
 {
    GeodePortPrivPtr pPriv = (GeodePortPrivPtr) data;
    GeodePtr pGeode = GEODEPTR(pScrn);
