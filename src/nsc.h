@@ -145,6 +145,8 @@
 #include <string.h>
 #include <stdio.h>
 
+#include "nsc_pcirename.h"
+
 #include "xaa.h"
 #include "xf86Cursor.h"
 #if !defined(STB_X)

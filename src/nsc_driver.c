@@ -517,7 +517,9 @@ NscProbe(DriverPtr drv, int flags)
    }
    GeodeDebug(("NscProbe: Before MatchPciInstances!\n"));
    /* PCI BUS */
+#ifndef XSERVER_LIBPCIACCESS
    if (xf86GetPciVideoInfo()) {
+#endif
       numUsed = xf86MatchPciInstances(NSC_NAME, PCI_VENDOR_ID_NS,
 				      GeodeChipsets, GeodePCIchipsets,
 				      devSections, numDevSections,
@@ -575,7 +577,9 @@ NscProbe(DriverPtr drv, int flags)
 	    }
 	 }
       }
+#ifndef XSERVER_LIBPCIACCESS
    }
+#endif
 
    if (usedChips)
       xfree(usedChips);

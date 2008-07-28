@@ -47,6 +47,7 @@ nsc_drv_la_SOURCES = \
          nsc_gx2_shadow.c \
          nsc_gx2_video.c \
          nsc.h \
+         nsc_pcirename.h \
          panel.c
 
 if I386ARCH
