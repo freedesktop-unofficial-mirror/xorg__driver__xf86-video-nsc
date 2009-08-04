@@ -1,20 +1,48 @@
-xf86-video-nsc - National Semiconductor Geode video driver for the Xorg X server
+NSC Geode GX1 and GX2 graphics driver for X.Org
+===============================================
+README last updated: 2009-08-04
 
-Please submit bugs & patches to the Xorg bugzilla:
-
-        https://bugs.freedesktop.org/enter_bug.cgi?product=xorg
-
-All questions regarding this software should be directed at the
-Xorg mailing list:
-
-        http://lists.freedesktop.org/mailman/listinfo/xorg
-
-The master development code repository can be found at:
-
+GIT repository:
         git://anongit.freedesktop.org/git/xorg/driver/xf86-video-nsc
 
+Gitweb browser:
         http://cgit.freedesktop.org/xorg/driver/xf86-video-nsc
 
-For more information on the git code manager, see:
+Project homepage:
+        http://wiki.x.org/wiki/AMDGeodeDriver
 
-        http://wiki.x.org/wiki/GitPage
+Please note that this driver is seriously deprecated and X.org developers
+cannot guarantee that it will be supported in upcoming X.org releases.
+
+Support for Cyrix and NSC Geodes shall be merged into xf86-video-geode,
+after which xf86-video-cyrix and xf86-video-nsc will be retired. Please
+contact the X.org Geode mailing list (see subscribtion instructions on
+the project's homepage) if you can contribute towards reaching this goal.
+
+= FAQ =
+
+Q: How do I produce useful information whenever submiting a bug report?
+
+A: See http://www.x.org/wiki/Development/Documentation/ServerDebugging
+   and follow the instructions.
+
+Q: How do I test development snapshots from the upstream GIT repository?
+
+A: Run the following commands from a command line interpreter shell...
+   1. git clone git://anongit.freedesktop.org/git/xorg/driver/xf86-video-nsc
+   2. Debian/Ubuntu:  apt-get install autoconf automake libtool xutils-dev
+                      apt-get install build-dep xserver-xorg-video-nsc
+     Fedora/Red Hat:  yum install autoconf automake libtool xorg-x11-util-macros
+                      yum-builddep xorg-x11-drv-nsc
+   3. cd xf86-video-nsc
+   4. ./autogen.sh
+   5. make distcheck
+   ...then install the driver manually.
+
+Q: What is the preferred method for submitting patches to this driver?
+
+A: See http://www.x.org/wiki/Development/Documentation/SubmittingPatches
+   and submit the patches as attachments to the Geode X.org mailing list
+   or to the X.org Bugzilla against component "Driver/nsc".
+
+= EOF =
