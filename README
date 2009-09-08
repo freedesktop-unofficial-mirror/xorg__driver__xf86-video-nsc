@@ -1,6 +1,6 @@
-NSC Geode GX1 and GX2 graphics driver for X.Org
-===============================================
-README last updated: 2009-08-04
+xf86-video-nsc -- NSC Geode GX1 and GX2 graphics driver for X.Org
+=================================================================
+README last updated: 2009-09-09
 
 GIT repository:
         git://anongit.freedesktop.org/git/xorg/driver/xf86-video-nsc
@@ -18,6 +18,22 @@ Support for Cyrix and NSC Geodes shall be merged into xf86-video-geode,
 after which xf86-video-cyrix and xf86-video-nsc will be retired. Please
 contact the X.org Geode mailing list (see subscription instructions on
 the project homepage) if you can contribute towards reaching this goal.
+
+Until then, the current situation for Geode coverage is as follow:
+ 
+xf86-video-geode
+ * AMD Geode LX (a.k.a. GX3) PCI ID 0x1022:0x2081
+ * AMD Geode GX (a.k.a. GX2) PCI ID 0x100B:0x0030 
+
+xf86-video-nsc
+ * NSC Geode GX (a.k.a. GX2) PCI ID 0x100B:0x0030
+ * NSC Geode SC (a.k.a. GX1) PCI ID 0x100B:0x0504
+
+xf86-video-cyrix
+ * Cyrix Geode  (a.k.a. GX1) PCI ID 0x1078:0x0104
+
+Please note that both NSC and GEODE support GX2. This is indeed correct.
+However, only GEODE has up-to-date code, while NSC is deprecated.
 
 = FAQ =
 
