@@ -560,7 +560,7 @@ NscProbe(DriverPtr drv, int flags)
 		     break;
 		  }
 	       }
-	       xfree(pEnt);
+	       free(pEnt);
 	       GeodeDebug(("NscProbe: CPUDetected %d!\n", CPUDetected));
 
 	       pScrn->driverName = NSC_DRIVER_NAME;
@@ -586,9 +586,9 @@ NscProbe(DriverPtr drv, int flags)
 #endif
 
    if (usedChips)
-      xfree(usedChips);
+      free(usedChips);
    if (devSections)
-      xfree(devSections);
+      free(devSections);
    GeodeDebug(("NscProbe: result (%d)!\n", foundScreen));
    return foundScreen;
 }

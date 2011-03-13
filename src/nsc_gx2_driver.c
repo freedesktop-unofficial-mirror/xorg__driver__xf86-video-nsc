@@ -315,7 +315,7 @@ GX2GetRec(ScrnInfoPtr pScreenInfo)
 
       pGeode = pScreenInfo->driverPrivate = xnfcalloc(sizeof(GeodeRec), 1);
 #if INT10_SUPPORT
-      pGeode->vesa = xcalloc(sizeof(VESARec), 1);
+      pGeode->vesa = calloc(sizeof(VESARec), 1);
 #endif
    }
    return GEODEPTR(pScreenInfo);
@@ -342,7 +342,7 @@ GX2FreeRec(ScrnInfoPtr pScreenInfo)
    if (pScreenInfo->driverPrivate == NULL) {
       return;
    }
-   xfree(pScreenInfo->driverPrivate);
+   free(pScreenInfo->driverPrivate);
    pScreenInfo->driverPrivate = NULL;
 }
 
@@ -1581,7 +1581,7 @@ GX2CloseScreen(int scrnIndex, ScreenPtr pScreen)
    GeodePtr pGeode = GEODEPTR(pScreenInfo);
 
    if (pGeode->ShadowPtr)
-      xfree(pGeode->ShadowPtr);
+      free(pGeode->ShadowPtr);
 
    DEBUGMSG(0, (scrnIndex, X_PROBED, "GX2CloseScreen %d\n",
 		pScreenInfo->vtSema));
@@ -1592,7 +1592,7 @@ GX2CloseScreen(int scrnIndex, ScreenPtr pScreen)
       XAADestroyInfoRec(pGeode->AccelInfoRec);
 
    if (pGeode->AccelImageWriteBufferOffsets) {
-      xfree(pGeode->AccelImageWriteBufferOffsets);
+      free(pGeode->AccelImageWriteBufferOffsets);
       pGeode->AccelImageWriteBufferOffsets = 0x0;
    }
    /* free the allocated off screen area */
@@ -1783,7 +1783,7 @@ GX2ScreenInit(int scrnIndex, ScreenPtr pScreen, int argc, char **argv)
       if (pGeode->NoOfImgBuffers > 0) {
 	 if (pGeode->NoOfImgBuffers <= (AvailBox.y2 - AvailBox.y1)) {
 	    pGeode->AccelImageWriteBufferOffsets =
-		  xalloc(sizeof(unsigned long) * pGeode->NoOfImgBuffers);
+		  malloc(sizeof(unsigned long) * pGeode->NoOfImgBuffers);
 
 	    pGeode->AccelImageWriteBufferOffsets[0] =
 		  ((unsigned char *)pGeode->FBBase) +
@@ -1876,7 +1876,7 @@ GX2ScreenInit(int scrnIndex, ScreenPtr pScreen, int argc, char **argv)
    }
    if (pGeode->ShadowFB) {
       pGeode->ShadowPitch = BitmapBytePad(pScreenInfo->bitsPerPixel * width);
-      pGeode->ShadowPtr = xalloc(pGeode->ShadowPitch * height);
+      pGeode->ShadowPtr = malloc(pGeode->ShadowPitch * height);
       displayWidth = pGeode->ShadowPitch / (pScreenInfo->bitsPerPixel >> 3);
       FBStart = pGeode->ShadowPtr;
    } else {

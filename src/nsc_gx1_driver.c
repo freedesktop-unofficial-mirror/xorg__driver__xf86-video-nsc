@@ -364,7 +364,7 @@ GX1FreeRec(ScrnInfoPtr pScreenInfo)
    if (pScreenInfo->driverPrivate == NULL) {
       return;
    }
-   xfree(pScreenInfo->driverPrivate);
+   free(pScreenInfo->driverPrivate);
    pScreenInfo->driverPrivate = NULL;
 }
 
@@ -1643,13 +1643,13 @@ GX1CloseScreen(int scrnIndex, ScreenPtr pScreen)
       XAADestroyInfoRec(pGeode->AccelInfoRec);
    pScreenInfo->vtSema = FALSE;
    if (pGeode->DGAModes)
-      xfree(pGeode->DGAModes);
+      free(pGeode->DGAModes);
    pGeode->DGAModes = 0;
    if (pGeode->ShadowPtr)
-      xfree(pGeode->ShadowPtr);
+      free(pGeode->ShadowPtr);
 
    if (pGeode->AccelImageWriteBufferOffsets) {
-      xfree(pGeode->AccelImageWriteBufferOffsets);
+      free(pGeode->AccelImageWriteBufferOffsets);
       pGeode->AccelImageWriteBufferOffsets = 0x0;
    }
    /* free the allocated off screen area */
@@ -1863,7 +1863,7 @@ GX1ScreenInit(int scrnIndex, ScreenPtr pScreen, int argc, char **argv)
       if (pGeode->NoOfImgBuffers > 0) {
 	 if (pGeode->NoOfImgBuffers <= (AvailBox.y2 - AvailBox.y1)) {
 	    pGeode->AccelImageWriteBufferOffsets =
-		  xalloc(sizeof(unsigned long) * pGeode->NoOfImgBuffers);
+		  malloc(sizeof(unsigned long) * pGeode->NoOfImgBuffers);
 
 	    pGeode->AccelImageWriteBufferOffsets[0] =
 		  ((unsigned char *)pGeode->FBBase) +
@@ -1959,7 +1959,7 @@ GX1ScreenInit(int scrnIndex, ScreenPtr pScreen, int argc, char **argv)
    }
    if (pGeode->ShadowFB) {
       pGeode->ShadowPitch = BitmapBytePad(pScreenInfo->bitsPerPixel * width);
-      pGeode->ShadowPtr = xalloc(pGeode->ShadowPitch * height);
+      pGeode->ShadowPtr = malloc(pGeode->ShadowPitch * height);
       displayWidth = pGeode->ShadowPitch / (pScreenInfo->bitsPerPixel >> 3);
       FBStart = pGeode->ShadowPtr;
    } else {

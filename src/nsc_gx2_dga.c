@@ -226,7 +226,7 @@ GX2DGAInit(ScreenPtr pScreen)
 	 oneMore = FALSE;
       }
       if (!newmodes) {
-	 xfree(modes);
+	 free(modes);
 	 return FALSE;
       }
       modes = newmodes;
