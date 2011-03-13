@@ -1,6 +1,6 @@
 xf86-video-nsc -- NSC Geode GX1 and GX2 graphics driver for X.Org
 =================================================================
-README last updated: 2009-09-09
+README last updated: 2011-03-13
 
 GIT repository:
         git://anongit.freedesktop.org/git/xorg/driver/xf86-video-nsc
@@ -11,8 +11,10 @@ Gitweb browser:
 Project homepage:
         http://www.x.org/wiki/GeodeDriver
 
-Please note that this driver is seriously deprecated and X.org developers
-cannot guarantee that it will be supported in upcoming X.org releases.
+### IMPORTANT NOTICE ###
+Please note that this driver is seriously deprecated and in fact fails
+to build on recent X.org releases, due to a missing assyntax.h that was
+removed by commit 593144dddd977f53bcd1a115f9544eeece46df4c in X server.
 
 Support for Cyrix and NSC Geodes shall be merged into xf86-video-geode,
 after which xf86-video-cyrix and xf86-video-nsc will be retired. Please
