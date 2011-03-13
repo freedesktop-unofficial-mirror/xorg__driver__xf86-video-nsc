@@ -159,7 +159,9 @@
 /* Includes that are used by all drivers */
 #include "xf86.h"
 #include "xf86_OSproc.h"
+#if GET_ABI_MAJOR(ABI_VIDEODRV_VERSION) < 6
 #include "xf86Resources.h"
+#endif
 
 /* We may want inb() and outb() */
 #include "compiler.h"
@@ -178,7 +180,6 @@
 
 /* Machine independent stuff */
 #include "mipointer.h"
-#include "mibank.h"
 #include "micmap.h"
 /* All drivers implementing backing store need this */
 #include "mibstore.h"
@@ -193,8 +194,12 @@
 
 #include "globals.h"
 #include "opaque.h"
+#ifdef HAVE_XEXTPROTO_71
+#include <X11/extensions/dpmsconst.h>
+#else
 #define DPMS_SERVER
 #include <X11/extensions/dpms.h>
+#endif
 
 /* Our private include file (this also includes the durango headers) */
 #include "nsc.h"
