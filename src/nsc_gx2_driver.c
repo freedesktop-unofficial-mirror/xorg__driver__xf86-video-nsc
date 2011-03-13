@@ -487,8 +487,10 @@ GX2PreInit(ScrnInfoPtr pScreenInfo, int flags)
    /* This is the general case */
    for (i = 0; i < pScreenInfo->numEntities; i++) {
       pGeode->pEnt = xf86GetEntityInfo(pScreenInfo->entityList[i]);
+      #ifndef XSERVER_LIBPCIACCESS
       if (pGeode->pEnt->resources)
 	 return FALSE;
+      #endif
       pGeode->Chipset = pGeode->pEnt->chipset;
       pScreenInfo->chipset = (char *)xf86TokenToString(GeodeChipsets,
 						       pGeode->pEnt->chipset);
@@ -997,12 +999,14 @@ GX2PreInit(ScrnInfoPtr pScreenInfo, int flags)
       xf86LoaderReqSymLists(nscShadowSymbols, NULL);
    }
    GeodeDebug(("GX2PreInit(18)!\n"));
+   #ifndef XSERVER_LIBPCIACCESS
    if (xf86RegisterResources(pGeode->pEnt->index, NULL, ResExclusive)) {
       DEBUGMSG(1, (pScreenInfo->scrnIndex, X_ERROR,
 		   "xf86RegisterResources() found resource conflicts\n"));
       GX2FreeRec(pScreenInfo);
       return FALSE;
    }
+   #endif
    GX2UnmapMem(pScreenInfo);
    GeodeDebug(("GX2PreInit ... done successfully!\n"));
    (void) from;
