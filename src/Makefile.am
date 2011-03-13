@@ -52,6 +52,7 @@ nsc_drv_la_SOURCES = \
 
 if I386ARCH
 nsc_drv_la_SOURCES += \
+	assyntax.h
 	nsc_msr_asm.S
 endif
 
