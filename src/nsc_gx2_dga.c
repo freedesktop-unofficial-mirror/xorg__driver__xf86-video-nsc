@@ -218,11 +218,11 @@ GX2DGAInit(ScreenPtr pScreen)
 	 /* memory is allocated for dga to
 	  *setup the viewport and mode parameters
 	  */
-	 newmodes = xrealloc(modes, (num + 2) * sizeof(DGAModeRec));
+	 newmodes = realloc(modes, (num + 2) * sizeof(DGAModeRec));
 	 oneMore = TRUE;
       } else {
 	 /* one record is allocated here */
-	 newmodes = xrealloc(modes, (num + 1) * sizeof(DGAModeRec));
+	 newmodes = realloc(modes, (num + 1) * sizeof(DGAModeRec));
 	 oneMore = FALSE;
       }
       if (!newmodes) {
