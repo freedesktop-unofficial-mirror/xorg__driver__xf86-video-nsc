@@ -189,7 +189,7 @@
 /* Check for some extensions */
 #ifdef XFreeXDGA
 #define _XF86_DGA_SERVER_
-#include <X11/extensions/xf86dgastr.h>
+#include <X11/extensions/xf86dgaproto.h>
 #endif /* XFreeXDGA */
 
 #include "globals.h"
