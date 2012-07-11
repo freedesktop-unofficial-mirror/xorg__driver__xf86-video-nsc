@@ -149,18 +149,18 @@ unsigned long gu1_get_vip_register_base(void);
 unsigned char
 gfx_gxm_config_read(unsigned char index)
 {
-   unsigned char value = 0xFF;
-   unsigned char lock;
+    unsigned char value = 0xFF;
+    unsigned char lock;
 
-   OUTB(0x22, GXM_CONFIG_CCR3);
-   lock = INB(0x23);
-   OUTB(0x22, GXM_CONFIG_CCR3);
-   OUTB(0x23, (unsigned char)(lock | 0x10));
-   OUTB(0x22, index);
-   value = INB(0x23);
-   OUTB(0x22, GXM_CONFIG_CCR3);
-   OUTB(0x23, lock);
-   return (value);
+    OUTB(0x22, GXM_CONFIG_CCR3);
+    lock = INB(0x23);
+    OUTB(0x22, GXM_CONFIG_CCR3);
+    OUTB(0x23, (unsigned char) (lock | 0x10));
+    OUTB(0x22, index);
+    value = INB(0x23);
+    OUTB(0x22, GXM_CONFIG_CCR3);
+    OUTB(0x23, lock);
+    return (value);
 }
 
 /*-----------------------------------------------------------------------------
@@ -178,58 +178,59 @@ unsigned long
 gfx_get_core_freq(void)
 #endif
 {
-   unsigned char dir0, dir1;
+    unsigned char dir0, dir1;
 
-   dir0 = gfx_gxm_config_read(GXM_CONFIG_DIR0) & 0x0F;
-   dir1 = gfx_gxm_config_read(GXM_CONFIG_DIR1);
+    dir0 = gfx_gxm_config_read(GXM_CONFIG_DIR0) & 0x0F;
+    dir1 = gfx_gxm_config_read(GXM_CONFIG_DIR1);
 
-   /* REVISION 4.0 AND UP */
+    /* REVISION 4.0 AND UP */
 
-   if (dir1 >= 0x50) {
-      switch (dir0) {
-      case 0:
-      case 2:
-	 return 133;
+    if (dir1 >= 0x50) {
+        switch (dir0) {
+        case 0:
+        case 2:
+            return 133;
 
-      case 5:
-	 return 166;
-      case 3:
-	 return 200;
-      case 6:
-	 return 233;
-      case 7:
-	 return 266;
-      case 4:
-	 return 300;
-      case 1:
-	 return 333;
-      default:
-	 return (0);
-      }
-   } else {
-      switch (dir0) {
-      case 0:
-      case 2:
-	 return 133;
+        case 5:
+            return 166;
+        case 3:
+            return 200;
+        case 6:
+            return 233;
+        case 7:
+            return 266;
+        case 4:
+            return 300;
+        case 1:
+            return 333;
+        default:
+            return (0);
+        }
+    }
+    else {
+        switch (dir0) {
+        case 0:
+        case 2:
+            return 133;
 
-      case 7:
-	 return 166;
+        case 7:
+            return 166;
 
-      case 1:
-      case 3:
-	 return 200;
+        case 1:
+        case 3:
+            return 200;
 
-      case 4:
-      case 6:
-	 return 233;
+        case 4:
+        case 6:
+            return 233;
 
-      case 5:
-	 return 266;
-      default:
-	 return (0);
-      }
-   }
-   return (0);
+        case 5:
+            return 266;
+        default:
+            return (0);
+        }
+    }
+    return (0);
 }
 
 /*-----------------------------------------------------------------------------
@@ -246,11 +247,11 @@ unsigned long
 gfx_get_cpu_register_base(void)
 #endif
 {
-   unsigned long base;
+    unsigned long base;
 
-   base = (unsigned long)gfx_gxm_config_read(GXM_CONFIG_GCR);
-   base = (base & 0x03) << 30;
-   return (base);
+    base = (unsigned long) gfx_gxm_config_read(GXM_CONFIG_GCR);
+    base = (base & 0x03) << 30;
+    return (base);
 }
 
 /*-----------------------------------------------------------------------------
@@ -271,13 +272,13 @@ unsigned long
 gfx_get_frame_buffer_base(void)
 #endif
 {
-   unsigned long base;
+    unsigned long base;
 
-   base = (unsigned long)gfx_gxm_config_read(GXM_CONFIG_GCR);
-   base = (base & 0x03) << 30;
-   if (base)
-      base |= 0x00800000;
-   return (base);
+    base = (unsigned long) gfx_gxm_config_read(GXM_CONFIG_GCR);
+    base = (base & 0x03) << 30;
+    if (base)
+        base |= 0x00800000;
+    return (base);
 }
 
 /*-----------------------------------------------------------------------------
@@ -297,9 +298,9 @@ gfx_get_frame_buffer_size(void)
 #endif
 {
 #if FB4MB
-   return (0x00400000);
+    return (0x00400000);
 #else
-   return (0x00200000);
+    return (0x00200000);
 #endif
 }
 
@@ -321,13 +322,13 @@ unsigned long
 gfx_get_vid_register_base(void)
 #endif
 {
-   unsigned long base;
+    unsigned long base;
 
-   base = (unsigned long)gfx_gxm_config_read(GXM_CONFIG_GCR);
-   base = (base & 0x03) << 30;
-   if (base)
-      base |= 0x00010000;
-   return (base);
+    base = (unsigned long) gfx_gxm_config_read(GXM_CONFIG_GCR);
+    base = (base & 0x03) << 30;
+    if (base)
+        base |= 0x00010000;
+    return (base);
 }
 
 /*-----------------------------------------------------------------------------
@@ -349,15 +350,15 @@ unsigned long
 gfx_get_vip_register_base(void)
 #endif
 {
-   unsigned long base = 0;
+    unsigned long base = 0;
 
-   if ((gfx_cpu_version & 0xFF) == GFX_CPU_SC1200) {
-      base = (unsigned long)gfx_gxm_config_read(GXM_CONFIG_GCR);
-      base = (base & 0x03) << 30;
-      if (base)
-	 base |= 0x00015000;
-   }
-   return (base);
+    if ((gfx_cpu_version & 0xFF) == GFX_CPU_SC1200) {
+        base = (unsigned long) gfx_gxm_config_read(GXM_CONFIG_GCR);
+        base = (base & 0x03) << 30;
+        if (base)
+            base |= 0x00015000;
+    }
+    return (base);
 }
 
 /* END OF FILE */

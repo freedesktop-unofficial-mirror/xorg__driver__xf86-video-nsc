@@ -153,8 +153,8 @@ Depth : 16
 Mono_Color : Color
 */
 static Pnl_PanelParams sPanelParam = {
-   0, 1, CENTAURUS_PLATFORM, PNL_9211_A,
-   {PNL_DSTN, 800, 600, 16, PNL_COLOR_PANEL}
+    0, 1, CENTAURUS_PLATFORM, PNL_9211_A,
+    {PNL_DSTN, 800, 600, 16, PNL_COLOR_PANEL}
 };
 
 #if PLATFORM_DRACO
@@ -192,8 +192,8 @@ static Pnl_PanelParams sPanelParam = {
 void
 Pnl_SetPlatform(int platform)
 {
-   /* To Be Implemented */
-   sPanelParam.Platform = platform;
+    /* To Be Implemented */
+    sPanelParam.Platform = platform;
 
 }
 
@@ -207,9 +207,9 @@ Pnl_SetPlatform(int platform)
 int
 Pnl_GetPlatform(void)
 {
-   sPanelParam.Platform = Detect_Platform();
+    sPanelParam.Platform = Detect_Platform();
 
-   return sPanelParam.Platform;
+    return sPanelParam.Platform;
 
 }
 
@@ -224,8 +224,8 @@ Pnl_GetPlatform(void)
 int
 Pnl_IsPanelPresent(void)
 {
-   /* To Be Implemented */
-   return sPanelParam.PanelPresent;
+    /* To Be Implemented */
+    return sPanelParam.PanelPresent;
 }
 
 /*-----------------------------------------------------------------
@@ -239,8 +239,8 @@ Pnl_IsPanelPresent(void)
 void
 Pnl_SetPanelPresent(int present)
 {
-   /* To Be Implemented */
-   sPanelParam.PanelPresent = present;
+    /* To Be Implemented */
+    sPanelParam.PanelPresent = present;
 }
 
 /*-----------------------------------------------------------------
@@ -255,22 +255,22 @@ Pnl_SetPanelPresent(int present)
 void
 Pnl_SetPanelParam(PPnl_PanelParams pParam)
 {
-   if (pParam->Flags & PNL_PANELPRESENT) {
-      Pnl_SetPanelPresent(pParam->PanelPresent);
-   }
-   if (pParam->Flags & PNL_PLATFORM) {
-      Pnl_SetPlatform(pParam->Platform);
-   }
-   if (pParam->Flags & PNL_PANELCHIP) {
-      Pnl_SetPanelChip(pParam->PanelChip);
-   }
-   if (pParam->Flags & PNL_PANELSTAT) {
-      sPanelParam.PanelStat.XRes = pParam->PanelStat.XRes;
-      sPanelParam.PanelStat.YRes = pParam->PanelStat.YRes;
-      sPanelParam.PanelStat.Depth = pParam->PanelStat.Depth;
-      sPanelParam.PanelStat.MonoColor = pParam->PanelStat.MonoColor;
-      sPanelParam.PanelStat.Type = pParam->PanelStat.Type;
-   }
+    if (pParam->Flags & PNL_PANELPRESENT) {
+        Pnl_SetPanelPresent(pParam->PanelPresent);
+    }
+    if (pParam->Flags & PNL_PLATFORM) {
+        Pnl_SetPlatform(pParam->Platform);
+    }
+    if (pParam->Flags & PNL_PANELCHIP) {
+        Pnl_SetPanelChip(pParam->PanelChip);
+    }
+    if (pParam->Flags & PNL_PANELSTAT) {
+        sPanelParam.PanelStat.XRes = pParam->PanelStat.XRes;
+        sPanelParam.PanelStat.YRes = pParam->PanelStat.YRes;
+        sPanelParam.PanelStat.Depth = pParam->PanelStat.Depth;
+        sPanelParam.PanelStat.MonoColor = pParam->PanelStat.MonoColor;
+        sPanelParam.PanelStat.Type = pParam->PanelStat.Type;
+    }
 }
 
 /*-----------------------------------------------------------------
@@ -284,57 +284,59 @@ Pnl_SetPanelParam(PPnl_PanelParams pParam)
 void
 Pnl_PowerUp(void)
 {
-   int Platform;
-   unsigned long dcfg, hw_video;
+    int Platform;
+    unsigned long dcfg, hw_video;
 
-   Platform = Pnl_GetPlatform();
+    Platform = Pnl_GetPlatform();
 
 #if PLATFORM_CENTAURUS
-   if (Platform == CENTAURUS_PLATFORM) {
-      Centaurus_Power_Up();
-      return;
-   }
+    if (Platform == CENTAURUS_PLATFORM) {
+        Centaurus_Power_Up();
+        return;
+    }
 #endif
 
 #if PLATFORM_DORADO
-   if (Platform == DORADO_PLATFORM) {
-      Dorado_Power_Up();
-      return;
-   }
+    if (Platform == DORADO_PLATFORM) {
+        Dorado_Power_Up();
+        return;
+    }
 #endif
 
 #if PLATFORM_GX2BASED
-   if (Platform == REDCLOUD_PLATFORM) {
-   }
+    if (Platform == REDCLOUD_PLATFORM) {
+    }
 #endif
 
-   hw_video = gfx_detect_video();
+    hw_video = gfx_detect_video();
 
-   if (hw_video == GFX_VID_CS5530) {
-      /* READ DISPLAY CONFIG FROM CX5530 */
-      dcfg = READ_VID32(CS5530_DISPLAY_CONFIG);
+    if (hw_video == GFX_VID_CS5530) {
+        /* READ DISPLAY CONFIG FROM CX5530 */
+        dcfg = READ_VID32(CS5530_DISPLAY_CONFIG);
 
-      /* SET RELEVANT FIELDS */
-      dcfg |= (CS5530_DCFG_FP_PWR_EN | CS5530_DCFG_FP_DATA_EN);
-      /* Enable the flatpanel power and data */
-      WRITE_VID32(CS5530_DISPLAY_CONFIG, dcfg);
-   } else if (hw_video == GFX_VID_SC1200) {
-      /* READ DISPLAY CONFIG FROM SC1200 */
-      dcfg = READ_VID32(SC1200_DISPLAY_CONFIG);
+        /* SET RELEVANT FIELDS */
+        dcfg |= (CS5530_DCFG_FP_PWR_EN | CS5530_DCFG_FP_DATA_EN);
+        /* Enable the flatpanel power and data */
+        WRITE_VID32(CS5530_DISPLAY_CONFIG, dcfg);
+    }
+    else if (hw_video == GFX_VID_SC1200) {
+        /* READ DISPLAY CONFIG FROM SC1200 */
+        dcfg = READ_VID32(SC1200_DISPLAY_CONFIG);
 
-      /* SET RELEVANT FIELDS */
-      dcfg |= (SC1200_DCFG_FP_PWR_EN | SC1200_DCFG_FP_DATA_EN);
-      /* Enable the flatpanel power and data */
-      WRITE_VID32(SC1200_DISPLAY_CONFIG, dcfg);
-   } else if (hw_video == GFX_VID_REDCLOUD) {
-      /* READ DISPLAY CONFIG FROM REDCLOUD */
-      dcfg = READ_VID32(RCDF_DISPLAY_CONFIG);
+        /* SET RELEVANT FIELDS */
+        dcfg |= (SC1200_DCFG_FP_PWR_EN | SC1200_DCFG_FP_DATA_EN);
+        /* Enable the flatpanel power and data */
+        WRITE_VID32(SC1200_DISPLAY_CONFIG, dcfg);
+    }
+    else if (hw_video == GFX_VID_REDCLOUD) {
+        /* READ DISPLAY CONFIG FROM REDCLOUD */
+        dcfg = READ_VID32(RCDF_DISPLAY_CONFIG);
 
-      /* SET RELEVANT FIELDS */
-      dcfg |= (RCDF_DCFG_FP_PWR_EN | RCDF_DCFG_FP_DATA_EN);
-      /* Enable the flatpanel power and data */
-      WRITE_VID32(RCDF_DISPLAY_CONFIG, dcfg);
-   }
+        /* SET RELEVANT FIELDS */
+        dcfg |= (RCDF_DCFG_FP_PWR_EN | RCDF_DCFG_FP_DATA_EN);
+        /* Enable the flatpanel power and data */
+        WRITE_VID32(RCDF_DISPLAY_CONFIG, dcfg);
+    }
 
 }
 
@@ -349,56 +351,58 @@ Pnl_PowerUp(void)
 void
 Pnl_PowerDown(void)
 {
-   int Platform;
-   unsigned long dcfg, hw_video;
+    int Platform;
+    unsigned long dcfg, hw_video;
 
-   Platform = Pnl_GetPlatform();
+    Platform = Pnl_GetPlatform();
 
 #if PLATFORM_CENTAURUS
-   if (Platform == CENTAURUS_PLATFORM) {
-      Centaurus_Power_Down();
-      return;
-   }
+    if (Platform == CENTAURUS_PLATFORM) {
+        Centaurus_Power_Down();
+        return;
+    }
 #endif
 #if PLATFORM_DORADO
-   if (Platform == DORADO_PLATFORM) {
-      Dorado_Power_Down();
-      return;
-   }
+    if (Platform == DORADO_PLATFORM) {
+        Dorado_Power_Down();
+        return;
+    }
 #endif
 
 #if PLATFORM_GX2BASED
-   if (Platform == REDCLOUD_PLATFORM) {
-   }
+    if (Platform == REDCLOUD_PLATFORM) {
+    }
 #endif
 
-   hw_video = gfx_detect_video();
+    hw_video = gfx_detect_video();
 
-   if (hw_video == GFX_VID_CS5530) {
-      /* READ DISPLAY CONFIG FROM CX5530 */
-      dcfg = READ_VID32(CS5530_DISPLAY_CONFIG);
+    if (hw_video == GFX_VID_CS5530) {
+        /* READ DISPLAY CONFIG FROM CX5530 */
+        dcfg = READ_VID32(CS5530_DISPLAY_CONFIG);
 
-      /* CLEAR RELEVANT FIELDS */
-      dcfg &= ~(CS5530_DCFG_FP_PWR_EN | CS5530_DCFG_FP_DATA_EN);
-      /* Disable the flatpanel power and data */
-      WRITE_VID32(CS5530_DISPLAY_CONFIG, dcfg);
-   } else if (hw_video == GFX_VID_SC1200) {
-      /* READ DISPLAY CONFIG FROM SC1200 */
-      dcfg = READ_VID32(SC1200_DISPLAY_CONFIG);
+        /* CLEAR RELEVANT FIELDS */
+        dcfg &= ~(CS5530_DCFG_FP_PWR_EN | CS5530_DCFG_FP_DATA_EN);
+        /* Disable the flatpanel power and data */
+        WRITE_VID32(CS5530_DISPLAY_CONFIG, dcfg);
+    }
+    else if (hw_video == GFX_VID_SC1200) {
+        /* READ DISPLAY CONFIG FROM SC1200 */
+        dcfg = READ_VID32(SC1200_DISPLAY_CONFIG);
 
-      /* CLEAR RELEVANT FIELDS */
-      dcfg &= ~(SC1200_DCFG_FP_PWR_EN | SC1200_DCFG_FP_DATA_EN);
-      /* Disable the flatpanel power and data */
-      WRITE_VID32(SC1200_DISPLAY_CONFIG, dcfg);
-   } else if (hw_video == GFX_VID_REDCLOUD) {
-      /* READ DISPLAY CONFIG FROM REDCLOUD */
-      dcfg = READ_VID32(RCDF_DISPLAY_CONFIG);
+        /* CLEAR RELEVANT FIELDS */
+        dcfg &= ~(SC1200_DCFG_FP_PWR_EN | SC1200_DCFG_FP_DATA_EN);
+        /* Disable the flatpanel power and data */
+        WRITE_VID32(SC1200_DISPLAY_CONFIG, dcfg);
+    }
+    else if (hw_video == GFX_VID_REDCLOUD) {
+        /* READ DISPLAY CONFIG FROM REDCLOUD */
+        dcfg = READ_VID32(RCDF_DISPLAY_CONFIG);
 
-      /* CLEAR RELEVANT FIELDS */
-      dcfg &= ~(RCDF_DCFG_FP_PWR_EN | RCDF_DCFG_FP_DATA_EN);
-      /* Disable the flatpanel power and data */
-      WRITE_VID32(RCDF_DISPLAY_CONFIG, dcfg);
-   }
+        /* CLEAR RELEVANT FIELDS */
+        dcfg &= ~(RCDF_DCFG_FP_PWR_EN | RCDF_DCFG_FP_DATA_EN);
+        /* Disable the flatpanel power and data */
+        WRITE_VID32(RCDF_DISPLAY_CONFIG, dcfg);
+    }
 }
 
 /*-----------------------------------------------------------------
@@ -412,27 +416,27 @@ Pnl_PowerDown(void)
 void
 Pnl_SavePanelState(void)
 {
-   int Platform;
+    int Platform;
 
-   Platform = Pnl_GetPlatform();
+    Platform = Pnl_GetPlatform();
 
 #if PLATFORM_CENTAURUS
-   if (Platform == CENTAURUS_PLATFORM) {
-      Centaurus_Save_Panel_State();
-      return;
-   }
+    if (Platform == CENTAURUS_PLATFORM) {
+        Centaurus_Save_Panel_State();
+        return;
+    }
 #endif
 
 #if PLATFORM_DORADO
-   if (Platform == DORADO_PLATFORM) {
-      Dorado_Save_Panel_State();
-      return;
-   }
+    if (Platform == DORADO_PLATFORM) {
+        Dorado_Save_Panel_State();
+        return;
+    }
 #endif
 
 #if PLATFORM_GX2BASED
-   if (Platform == REDCLOUD_PLATFORM) {
-   }
+    if (Platform == REDCLOUD_PLATFORM) {
+    }
 #endif
 }
 
@@ -447,26 +451,26 @@ Pnl_SavePanelState(void)
 void
 Pnl_RestorePanelState(void)
 {
-   int Platform;
+    int Platform;
 
-   Platform = Pnl_GetPlatform();
+    Platform = Pnl_GetPlatform();
 #if PLATFORM_CENTAURUS
-   if (Platform == CENTAURUS_PLATFORM) {
-      Centaurus_Restore_Panel_State();
-      return;
-   }
+    if (Platform == CENTAURUS_PLATFORM) {
+        Centaurus_Restore_Panel_State();
+        return;
+    }
 #endif
 
 #if PLATFORM_DORADO
-   if (Platform == DORADO_PLATFORM) {
-      Dorado_Restore_Panel_State();
-      return;
-   }
+    if (Platform == DORADO_PLATFORM) {
+        Dorado_Restore_Panel_State();
+        return;
+    }
 #endif
 
 #if PLATFORM_GX2BASED
-   if (Platform == REDCLOUD_PLATFORM) {
-   }
+    if (Platform == REDCLOUD_PLATFORM) {
+    }
 #endif
 }
 
@@ -483,44 +487,44 @@ Pnl_RestorePanelState(void)
 void
 Pnl_GetPanelParam(PPnl_PanelParams pParam)
 {
-   if (pParam->Flags & PNL_PANELPRESENT) {
-      pParam->PanelPresent = Pnl_IsPanelPresent();
-   }
-   if (pParam->Flags & PNL_PLATFORM) {
-      pParam->Platform = Pnl_GetPlatform();
-   }
-   if ((pParam->Flags & PNL_PANELCHIP) || (pParam->Flags & PNL_PANELSTAT)) {
+    if (pParam->Flags & PNL_PANELPRESENT) {
+        pParam->PanelPresent = Pnl_IsPanelPresent();
+    }
+    if (pParam->Flags & PNL_PLATFORM) {
+        pParam->Platform = Pnl_GetPlatform();
+    }
+    if ((pParam->Flags & PNL_PANELCHIP) || (pParam->Flags & PNL_PANELSTAT)) {
 #if PLATFORM_CENTAURUS
-      if (pParam->Platform == CENTAURUS_PLATFORM) {
-	 Centaurus_Get_9211_Details(pParam->Flags, pParam);
-	 return;
-      }
+        if (pParam->Platform == CENTAURUS_PLATFORM) {
+            Centaurus_Get_9211_Details(pParam->Flags, pParam);
+            return;
+        }
 #endif
 
 #if PLATFORM_DORADO
-      if (pParam->Platform == DORADO_PLATFORM) {
-	 Dorado_Get_9211_Details(pParam->Flags, pParam);
-	 return;
-      }
+        if (pParam->Platform == DORADO_PLATFORM) {
+            Dorado_Get_9211_Details(pParam->Flags, pParam);
+            return;
+        }
 #endif
 
 #if PLATFORM_GX2BASED
-      if (pParam->Platform == REDCLOUD_PLATFORM) {
-      }
+        if (pParam->Platform == REDCLOUD_PLATFORM) {
+        }
 #endif
 
-      /* if unknown platform put unknown */
-      if (pParam->Flags & PNL_PANELCHIP)
-	 pParam->PanelChip = PNL_UNKNOWN_CHIP;
+        /* if unknown platform put unknown */
+        if (pParam->Flags & PNL_PANELCHIP)
+            pParam->PanelChip = PNL_UNKNOWN_CHIP;
 
-      if (pParam->Flags & PNL_PANELSTAT) {
-	 pParam->PanelStat.XRes = 0;
-	 pParam->PanelStat.YRes = 0;
-	 pParam->PanelStat.Depth = 0;
-	 pParam->PanelStat.MonoColor = PNL_UNKNOWN_COLOR;
-	 pParam->PanelStat.Type = PNL_UNKNOWN_PANEL;
-      }
-   }
+        if (pParam->Flags & PNL_PANELSTAT) {
+            pParam->PanelStat.XRes = 0;
+            pParam->PanelStat.YRes = 0;
+            pParam->PanelStat.Depth = 0;
+            pParam->PanelStat.MonoColor = PNL_UNKNOWN_COLOR;
+            pParam->PanelStat.Type = PNL_UNKNOWN_PANEL;
+        }
+    }
 }
 
 /*-----------------------------------------------------------------
@@ -536,8 +540,8 @@ Pnl_GetPanelParam(PPnl_PanelParams pParam)
 void
 Pnl_SetPanelChip(int panelChip)
 {
-   /* To Be Implemented */
-   sPanelParam.PanelChip = panelChip;
+    /* To Be Implemented */
+    sPanelParam.PanelChip = panelChip;
 
 }
 
@@ -552,8 +556,8 @@ Pnl_SetPanelChip(int panelChip)
 int
 Pnl_GetPanelChip(void)
 {
-   /* To Be Implemented */
-   return sPanelParam.PanelChip;
+    /* To Be Implemented */
+    return sPanelParam.PanelChip;
 }
 
 /*-----------------------------------------------------------------
@@ -569,45 +573,46 @@ Pnl_GetPanelChip(void)
 int
 Pnl_InitPanel(PPnl_PanelParams pParam)
 {
-   PPnl_PanelParams pPtr;
+    PPnl_PanelParams pPtr;
 
-   if (pParam == 0x0)			/* NULL  use the static table */
-      pPtr = &sPanelParam;
-   else
-      pPtr = pParam;
+    if (pParam == 0x0)          /* NULL  use the static table */
+        pPtr = &sPanelParam;
+    else
+        pPtr = pParam;
 
-   if (!pPtr->PanelPresent) {
-      return -1;			/* error */
-   } else {
-      if ((pPtr->PanelChip < 0) || (pPtr->Platform < 0))
-	 return -1;			/* error */
+    if (!pPtr->PanelPresent) {
+        return -1;              /* error */
+    }
+    else {
+        if ((pPtr->PanelChip < 0) || (pPtr->Platform < 0))
+            return -1;          /* error */
 
 #if PLATFORM_DRACO
-      /* check we are init. the right one */
-      if ((pPtr->Platform == DRACO_PLATFORM) && (pPtr->PanelChip == PNL_9210)) {
-	 Draco9210Init(&(pPtr->PanelStat));
-      }
+        /* check we are init. the right one */
+        if ((pPtr->Platform == DRACO_PLATFORM) && (pPtr->PanelChip == PNL_9210)) {
+            Draco9210Init(&(pPtr->PanelStat));
+        }
 #endif
 
 #if PLATFORM_CENTAURUS
-      /* check we are init. the right one */
-      if (pPtr->Platform == CENTAURUS_PLATFORM) {
-	 Centaurus_9211init(&(pPtr->PanelStat));
-      }
+        /* check we are init. the right one */
+        if (pPtr->Platform == CENTAURUS_PLATFORM) {
+            Centaurus_9211init(&(pPtr->PanelStat));
+        }
 #endif
 
 #if PLATFORM_DORADO
-      /* check we are init. the right one */
-      if ((pPtr->Platform == DORADO_PLATFORM) &&
-	  (pPtr->PanelChip == PNL_9211_C)) {
-	 Dorado9211Init(&(pPtr->PanelStat));
-      }
+        /* check we are init. the right one */
+        if ((pPtr->Platform == DORADO_PLATFORM) &&
+            (pPtr->PanelChip == PNL_9211_C)) {
+            Dorado9211Init(&(pPtr->PanelStat));
+        }
 #endif
 #if PLATFORM_GX2BASED
-      if (pPtr->Platform == REDCLOUD_PLATFORM) {
-	 Redcloud_9211init(&(pPtr->PanelStat));
-      }
+        if (pPtr->Platform == REDCLOUD_PLATFORM) {
+            Redcloud_9211init(&(pPtr->PanelStat));
+        }
 #endif
-   }					/* else  end */
-   return 1;
+    }                           /* else  end */
+    return 1;
 }

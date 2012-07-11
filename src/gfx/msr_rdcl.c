@@ -131,17 +131,17 @@
 int redcloud_msr_init(void);
 DEV_STATUS redcloud_id_msr_device(MSR * pDev, unsigned long address);
 DEV_STATUS redcloud_get_msr_dev_address(unsigned int device,
-					unsigned long *address);
+                                        unsigned long *address);
 DEV_STATUS redcloud_get_glink_id_at_address(unsigned int *device,
-					    unsigned long address);
+                                            unsigned long address);
 DEV_STATUS redcloud_msr_read(unsigned int device, unsigned int msrRegister,
-			     Q_WORD * msrValue);
+                             Q_WORD * msrValue);
 DEV_STATUS redcloud_msr_write(unsigned int device, unsigned int msrRegister,
-			      Q_WORD * msrValue);
+                              Q_WORD * msrValue);
 
-void redcloud_build_mbus_tree(void);	/* private routine definition */
-int redcloud_init_msr_devices(MSR aDev[], unsigned int array_size);	/* private routine definition */
-DEV_STATUS redcloud_find_msr_device(MSR * pDev);	/* private routine definition */
+void redcloud_build_mbus_tree(void);    /* private routine definition */
+int redcloud_init_msr_devices(MSR aDev[], unsigned int array_size);     /* private routine definition */
+DEV_STATUS redcloud_find_msr_device(MSR * pDev);        /* private routine definition */
 
 /* REDCLOUD MSR BITMASKS */
 
@@ -158,24 +158,24 @@ DEV_STATUS redcloud_find_msr_device(MSR * pDev);	/* private routine definition *
 /* REDCLOUD and CS5535 MSR DEVICES */
 
 MSR msrDev[] = {
-   {FOUND, RC_CC_MBIU, RC_MB0_MBIU0},
-   {FOUND, RC_CC_MBIU, RC_MB0_MBIU1},
-   {NOT_KNOWN, RC_CC_MCP, FAKE_ADDRESS},
-   {NOT_KNOWN, RC_CC_MPCI, FAKE_ADDRESS},
-   {NOT_KNOWN, RC_CC_MC, FAKE_ADDRESS},
-   {NOT_KNOWN, RC_CC_GP, FAKE_ADDRESS},
-   {NOT_KNOWN, RC_CC_VG, FAKE_ADDRESS},
-   {NOT_KNOWN, RC_CC_DF, FAKE_ADDRESS},
-   {NOT_KNOWN, RC_CC_FG, FAKE_ADDRESS},
-   {FOUND, RC_CC_VA, RC_MB0_CPU},
-   {FOUND, CP_CC_MBIU, CP_MB0_MBIU0},
-   {NOT_KNOWN, CP_CC_MPCI, FAKE_ADDRESS},
-   {NOT_KNOWN, CP_CC_USB2, FAKE_ADDRESS},
-   {NOT_KNOWN, CP_CC_ATAC, FAKE_ADDRESS},
-   {NOT_KNOWN, CP_CC_MDD, FAKE_ADDRESS},
-   {NOT_KNOWN, CP_CC_ACC, FAKE_ADDRESS},
-   {NOT_KNOWN, CP_CC_USB1, FAKE_ADDRESS},
-   {NOT_KNOWN, CP_CC_MCP, FAKE_ADDRESS},
+    {FOUND, RC_CC_MBIU, RC_MB0_MBIU0},
+    {FOUND, RC_CC_MBIU, RC_MB0_MBIU1},
+    {NOT_KNOWN, RC_CC_MCP, FAKE_ADDRESS},
+    {NOT_KNOWN, RC_CC_MPCI, FAKE_ADDRESS},
+    {NOT_KNOWN, RC_CC_MC, FAKE_ADDRESS},
+    {NOT_KNOWN, RC_CC_GP, FAKE_ADDRESS},
+    {NOT_KNOWN, RC_CC_VG, FAKE_ADDRESS},
+    {NOT_KNOWN, RC_CC_DF, FAKE_ADDRESS},
+    {NOT_KNOWN, RC_CC_FG, FAKE_ADDRESS},
+    {FOUND, RC_CC_VA, RC_MB0_CPU},
+    {FOUND, CP_CC_MBIU, CP_MB0_MBIU0},
+    {NOT_KNOWN, CP_CC_MPCI, FAKE_ADDRESS},
+    {NOT_KNOWN, CP_CC_USB2, FAKE_ADDRESS},
+    {NOT_KNOWN, CP_CC_ATAC, FAKE_ADDRESS},
+    {NOT_KNOWN, CP_CC_MDD, FAKE_ADDRESS},
+    {NOT_KNOWN, CP_CC_ACC, FAKE_ADDRESS},
+    {NOT_KNOWN, CP_CC_USB1, FAKE_ADDRESS},
+    {NOT_KNOWN, CP_CC_MCP, FAKE_ADDRESS},
 };
 
 #define NUM_DEVS sizeof(msrDev) / sizeof(struct msr)
@@ -215,44 +215,44 @@ int
 gfx_msr_init(void)
 #endif
 {
-   Q_WORD msrValue;
-   int return_value = 1;
+    Q_WORD msrValue;
+    int return_value = 1;
 
-   /* CHECK FOR VALID MBUS CONFIGURATION */
-   /* The CPU and the two MBIUs are assumed to be at known static addresses, so */
-   /* we will check the device IDs at these addresses as proof of a valid mbus  */
-   /* configuration.                                                            */
+    /* CHECK FOR VALID MBUS CONFIGURATION */
+    /* The CPU and the two MBIUs are assumed to be at known static addresses, so */
+    /* we will check the device IDs at these addresses as proof of a valid mbus  */
+    /* configuration.                                                            */
 
-   MSR_READ(MBD_MSR_CAP, RC_MB0_CPU, &(msrValue.high), &(msrValue.low));
-   if (GET_DEVICE_ID(msrValue.high, msrValue.low) != RC_CC_VA)
-      return_value = 0;
+    MSR_READ(MBD_MSR_CAP, RC_MB0_CPU, &(msrValue.high), &(msrValue.low));
+    if (GET_DEVICE_ID(msrValue.high, msrValue.low) != RC_CC_VA)
+        return_value = 0;
 
-   MSR_READ(MBD_MSR_CAP, RC_MB0_MBIU0, &(msrValue.high), &(msrValue.low));
-   if (GET_DEVICE_ID(msrValue.high, msrValue.low) != RC_CC_MBIU)
-      return_value = 0;
+    MSR_READ(MBD_MSR_CAP, RC_MB0_MBIU0, &(msrValue.high), &(msrValue.low));
+    if (GET_DEVICE_ID(msrValue.high, msrValue.low) != RC_CC_MBIU)
+        return_value = 0;
 
-   MSR_READ(MBD_MSR_CAP, RC_MB0_MBIU1, &(msrValue.high), &(msrValue.low));
-   if (GET_DEVICE_ID(msrValue.high, msrValue.low) != RC_CC_MBIU)
-      return_value = 0;
+    MSR_READ(MBD_MSR_CAP, RC_MB0_MBIU1, &(msrValue.high), &(msrValue.low));
+    if (GET_DEVICE_ID(msrValue.high, msrValue.low) != RC_CC_MBIU)
+        return_value = 0;
 
-   /* ENUMERATE VALID BUS */
-   /* If all static devices were identified, continue with the enumeration */
+    /* ENUMERATE VALID BUS */
+    /* If all static devices were identified, continue with the enumeration */
 
-   if (return_value) {
-      /* OPTIMIZATION */
-      /* Build a local copy of the MBUS topology.  This allows us to  */
-      /* quickly search the entire MBUS for a given device ID without */
-      /* repeated MSR accesses.                                       */
+    if (return_value) {
+        /* OPTIMIZATION */
+        /* Build a local copy of the MBUS topology.  This allows us to  */
+        /* quickly search the entire MBUS for a given device ID without */
+        /* repeated MSR accesses.                                       */
 
-      redcloud_build_mbus_tree();
+        redcloud_build_mbus_tree();
 
-      /* INITIALIZE MSR DEVICES */
+        /* INITIALIZE MSR DEVICES */
 
-      return_value = redcloud_init_msr_devices(msrDev, NUM_DEVS);
+        return_value = redcloud_init_msr_devices(msrDev, NUM_DEVS);
 
-   }
+    }
 
-   return return_value;
+    return return_value;
 
 }
 
@@ -270,157 +270,159 @@ gfx_msr_init(void)
 void
 redcloud_build_mbus_tree(void)
 {
-   unsigned long mbiu_port_count, reflective;
-   unsigned long port;
-   Q_WORD msrValue;
+    unsigned long mbiu_port_count, reflective;
+    unsigned long port;
+    Q_WORD msrValue;
 
-   /*                  */
-   /* ENUMERATE MBIU0  */
-   /*                  */
+    /*                  */
+    /* ENUMERATE MBIU0  */
+    /*                  */
 
-   /* COUNT MBIU PORTS */
+    /* COUNT MBIU PORTS */
 
-   MSR_READ(MBIU_CAP, RC_MB0_MBIU0, &(msrValue.high), &(msrValue.low));
-   mbiu_port_count = GET_NUM_PORTS(msrValue.high, msrValue.low);
+    MSR_READ(MBIU_CAP, RC_MB0_MBIU0, &(msrValue.high), &(msrValue.low));
+    mbiu_port_count = GET_NUM_PORTS(msrValue.high, msrValue.low);
 
-   /* FIND REFLECTIVE PORT */
-   /* Query the MBIU for the port through which we are communicating. */
-   /* We will avoid accesses to this port to avoid a self-reference.  */
+    /* FIND REFLECTIVE PORT */
+    /* Query the MBIU for the port through which we are communicating. */
+    /* We will avoid accesses to this port to avoid a self-reference.  */
 
-   MSR_READ(MBIU_WHOAMI, RC_MB0_MBIU0, &(msrValue.high), &(msrValue.low));
-   reflective = msrValue.low & WHOAMI_MASK;
+    MSR_READ(MBIU_WHOAMI, RC_MB0_MBIU0, &(msrValue.high), &(msrValue.low));
+    reflective = msrValue.low & WHOAMI_MASK;
 
-   /* ENUMERATE ALL PORTS */
-   /* For every possible port, set the MBIU.deviceId to something. */
+    /* ENUMERATE ALL PORTS */
+    /* For every possible port, set the MBIU.deviceId to something. */
 
-   for (port = 0; port < 8; port++) {
-      /* FILL IN CLAIMED FIELD */
-      /* All MBIU ports can only be assigned to one device from the */
-      /* Durango table                                              */
+    for (port = 0; port < 8; port++) {
+        /* FILL IN CLAIMED FIELD */
+        /* All MBIU ports can only be assigned to one device from the */
+        /* Durango table                                              */
 
-      MBIU0[port].claimed = 0;
+        MBIU0[port].claimed = 0;
 
-      /* MBIU0 PORT NUMBERS ARE IN ADDRESS BITS 31:29 */
+        /* MBIU0 PORT NUMBERS ARE IN ADDRESS BITS 31:29 */
 
-      MBIU0[port].address = port << 29;
+        MBIU0[port].address = port << 29;
 
-      /* SPECIAL CASE FOR MBIU0 */
-      /* MBIU0 port 0 is a special case, as it points back to MBIU0.  MBIU0 */
-      /* responds at address 0x40000xxx, which does not equal 0 << 29.      */
+        /* SPECIAL CASE FOR MBIU0 */
+        /* MBIU0 port 0 is a special case, as it points back to MBIU0.  MBIU0 */
+        /* responds at address 0x40000xxx, which does not equal 0 << 29.      */
 
-      if (port == 0)
-	 MBIU0[port].deviceId = RC_CC_MBIU;
-      else if (port == reflective)
-	 MBIU0[port].deviceId = REFLECTIVE;
-      else if (port > mbiu_port_count)
-	 MBIU0[port].deviceId = NOT_POPULATED;
-      else {
-	 MSR_READ(MBD_MSR_CAP, MBIU0[port].address, &(msrValue.high),
-		  &(msrValue.low));
-	 MBIU0[port].deviceId = GET_DEVICE_ID(msrValue.high, msrValue.low);
-      }
-   }
+        if (port == 0)
+            MBIU0[port].deviceId = RC_CC_MBIU;
+        else if (port == reflective)
+            MBIU0[port].deviceId = REFLECTIVE;
+        else if (port > mbiu_port_count)
+            MBIU0[port].deviceId = NOT_POPULATED;
+        else {
+            MSR_READ(MBD_MSR_CAP, MBIU0[port].address, &(msrValue.high),
+                     &(msrValue.low));
+            MBIU0[port].deviceId = GET_DEVICE_ID(msrValue.high, msrValue.low);
+        }
+    }
 
-   /*                  */
-   /* ENUMERATE MBIU1  */
-   /*                  */
+    /*                  */
+    /* ENUMERATE MBIU1  */
+    /*                  */
 
-   /* COUNT MBIU PORTS */
+    /* COUNT MBIU PORTS */
 
-   MSR_READ(MBIU_CAP, RC_MB0_MBIU1, &(msrValue.high), &(msrValue.low));
-   mbiu_port_count = GET_NUM_PORTS(msrValue.high, msrValue.low);
+    MSR_READ(MBIU_CAP, RC_MB0_MBIU1, &(msrValue.high), &(msrValue.low));
+    mbiu_port_count = GET_NUM_PORTS(msrValue.high, msrValue.low);
 
-   /* FIND REFLECTIVE PORT */
-   /* Query the MBIU for the port through which we are communicating. */
-   /* We will avoid accesses to this port to avoid a self-reference.  */
+    /* FIND REFLECTIVE PORT */
+    /* Query the MBIU for the port through which we are communicating. */
+    /* We will avoid accesses to this port to avoid a self-reference.  */
 
-   MSR_READ(MBIU_WHOAMI, RC_MB0_MBIU1, &(msrValue.high), &(msrValue.low));
-   reflective = msrValue.low & WHOAMI_MASK;
+    MSR_READ(MBIU_WHOAMI, RC_MB0_MBIU1, &(msrValue.high), &(msrValue.low));
+    reflective = msrValue.low & WHOAMI_MASK;
 
-   /* ENUMERATE ALL PORTS */
-   /* For every possible port, set the MBIU.deviceId to something. */
+    /* ENUMERATE ALL PORTS */
+    /* For every possible port, set the MBIU.deviceId to something. */
 
-   for (port = 0; port < 8; port++) {
-      /* FILL IN CLAIMED FIELD */
-      /* All MBIU ports can only be assigned to one device from the */
-      /* Durango table                                              */
+    for (port = 0; port < 8; port++) {
+        /* FILL IN CLAIMED FIELD */
+        /* All MBIU ports can only be assigned to one device from the */
+        /* Durango table                                              */
 
-      MBIU1[port].claimed = 0;
+        MBIU1[port].claimed = 0;
 
-      /* MBIU1 PORT NUMBERS ARE IN 28:26 AND 31:29 = 010B */
+        /* MBIU1 PORT NUMBERS ARE IN 28:26 AND 31:29 = 010B */
 
-      MBIU1[port].address = (0x02l << 29) + (port << 26);
+        MBIU1[port].address = (0x02l << 29) + (port << 26);
 
-      if (port == reflective)
-	 MBIU1[port].deviceId = REFLECTIVE;
-      else if (port > mbiu_port_count)
-	 MBIU1[port].deviceId = NOT_POPULATED;
-      else {
-	 MSR_READ(MBD_MSR_CAP, MBIU1[port].address, &(msrValue.high),
-		  &(msrValue.low));
-	 MBIU1[port].deviceId = GET_DEVICE_ID(msrValue.high, msrValue.low);
-      }
-   }
+        if (port == reflective)
+            MBIU1[port].deviceId = REFLECTIVE;
+        else if (port > mbiu_port_count)
+            MBIU1[port].deviceId = NOT_POPULATED;
+        else {
+            MSR_READ(MBD_MSR_CAP, MBIU1[port].address, &(msrValue.high),
+                     &(msrValue.low));
+            MBIU1[port].deviceId = GET_DEVICE_ID(msrValue.high, msrValue.low);
+        }
+    }
 
-   /*                          */
-   /* ENUMERATE MBIU2 (CS5535) */
-   /*  (if present)            */
+    /*                          */
+    /* ENUMERATE MBIU2 (CS5535) */
+    /*  (if present)            */
 
-   MSR_READ(MBD_MSR_CAP, CP_MB0_MBIU0, &(msrValue.high), &(msrValue.low));
-   if (GET_DEVICE_ID(msrValue.high, msrValue.low) == CP_CC_MBIU) {
-      /* COUNT MBIU PORTS */
+    MSR_READ(MBD_MSR_CAP, CP_MB0_MBIU0, &(msrValue.high), &(msrValue.low));
+    if (GET_DEVICE_ID(msrValue.high, msrValue.low) == CP_CC_MBIU) {
+        /* COUNT MBIU PORTS */
 
-      MSR_READ(MBIU_CAP, CP_MB0_MBIU0, &(msrValue.high), &(msrValue.low));
-      mbiu_port_count = GET_NUM_PORTS(msrValue.high, msrValue.low);
+        MSR_READ(MBIU_CAP, CP_MB0_MBIU0, &(msrValue.high), &(msrValue.low));
+        mbiu_port_count = GET_NUM_PORTS(msrValue.high, msrValue.low);
 
-      /* FIND REFLECTIVE PORT */
-      /* Query the MBIU for the port through which we are communicating. */
-      /* We will avoid accesses to this port to avoid a self-reference.  */
+        /* FIND REFLECTIVE PORT */
+        /* Query the MBIU for the port through which we are communicating. */
+        /* We will avoid accesses to this port to avoid a self-reference.  */
 
-      MSR_READ(MBIU_WHOAMI, CP_MB0_MBIU0, &(msrValue.high), &(msrValue.low));
-      reflective = msrValue.low & WHOAMI_MASK;
+        MSR_READ(MBIU_WHOAMI, CP_MB0_MBIU0, &(msrValue.high), &(msrValue.low));
+        reflective = msrValue.low & WHOAMI_MASK;
 
-      /* ENUMERATE ALL PORTS */
-      /* For every possible port, set the MBIU.deviceId to something. */
+        /* ENUMERATE ALL PORTS */
+        /* For every possible port, set the MBIU.deviceId to something. */
 
-      for (port = 0; port < 8; port++) {
-	 /* FILL IN CLAIMED FIELD */
-	 /* All MBIU ports can only be assigned to one device from the */
-	 /* Durango table                                              */
+        for (port = 0; port < 8; port++) {
+            /* FILL IN CLAIMED FIELD */
+            /* All MBIU ports can only be assigned to one device from the */
+            /* Durango table                                              */
 
-	 MBIU2[port].claimed = 0;
+            MBIU2[port].claimed = 0;
 
-	 /* MBIU2 PORT NUMBERS ARE IN 22:20 AND 31:23 = 010100010B */
+            /* MBIU2 PORT NUMBERS ARE IN 22:20 AND 31:23 = 010100010B */
 
-	 MBIU2[port].address =
-	       (0x02l << 29) + (0x04l << 26) + (0x02l << 23) + (port << 20);
+            MBIU2[port].address =
+                (0x02l << 29) + (0x04l << 26) + (0x02l << 23) + (port << 20);
 
-	 if (port == reflective)
-	    MBIU2[port].deviceId = REFLECTIVE;
-	 else if (port > mbiu_port_count)
-	    MBIU2[port].deviceId = NOT_POPULATED;
-	 else {
-	    MSR_READ(MBD_MSR_CAP, MBIU2[port].address, &(msrValue.high),
-		     &(msrValue.low));
-	    MBIU2[port].deviceId = GET_DEVICE_ID(msrValue.high, msrValue.low);
-	 }
-      }
-   } else {
-      /* NO 5535                                                  */
-      /* If the CS5535 is not installed, fill in the cached table */
-      /* with the 'NOT_INSTALLED' flag.  Also, fill in the device */
-      /* status from NOT_KNOWN to REQ_NOT_INSTALLED.              */
+            if (port == reflective)
+                MBIU2[port].deviceId = REFLECTIVE;
+            else if (port > mbiu_port_count)
+                MBIU2[port].deviceId = NOT_POPULATED;
+            else {
+                MSR_READ(MBD_MSR_CAP, MBIU2[port].address, &(msrValue.high),
+                         &(msrValue.low));
+                MBIU2[port].deviceId =
+                    GET_DEVICE_ID(msrValue.high, msrValue.low);
+            }
+        }
+    }
+    else {
+        /* NO 5535                                                  */
+        /* If the CS5535 is not installed, fill in the cached table */
+        /* with the 'NOT_INSTALLED' flag.  Also, fill in the device */
+        /* status from NOT_KNOWN to REQ_NOT_INSTALLED.              */
 
-      for (port = 0; port < 8; port++) {
-	 MBIU2[port].claimed = 0;
-	 MBIU2[port].deviceId = NOT_INSTALLED;
-	 MBIU2[port].address =
-	       (0x02l << 29) + (0x04l << 26) + (0x02l << 23) + (port << 20);
-      }
-      for (port = CP_INDEX_START; port <= CP_INDEX_STOP; port++) {
-	 msrDev[port].Present = REQ_NOT_INSTALLED;
-      }
-   }
+        for (port = 0; port < 8; port++) {
+            MBIU2[port].claimed = 0;
+            MBIU2[port].deviceId = NOT_INSTALLED;
+            MBIU2[port].address =
+                (0x02l << 29) + (0x04l << 26) + (0x02l << 23) + (port << 20);
+        }
+        for (port = CP_INDEX_START; port <= CP_INDEX_STOP; port++) {
+            msrDev[port].Present = REQ_NOT_INSTALLED;
+        }
+    }
 }
 
 /*------------------------------------------------------------------
@@ -444,28 +446,28 @@ redcloud_build_mbus_tree(void)
 int
 redcloud_init_msr_devices(MSR aDev[], unsigned int array_size)
 {
-   unsigned int i, issues = 0;
+    unsigned int i, issues = 0;
 
-   /* TRY TO FIND EACH ITEM IN THE ARRAY */
+    /* TRY TO FIND EACH ITEM IN THE ARRAY */
 
-   for (i = 0; i < array_size; i++) {
-      /* IGNORE DEVICES THAT ARE ALREADY FOUND                */
-      /* The addresses for "found" devices are already known. */
+    for (i = 0; i < array_size; i++) {
+        /* IGNORE DEVICES THAT ARE ALREADY FOUND                */
+        /* The addresses for "found" devices are already known. */
 
-      if (aDev[i].Present == FOUND || aDev[i].Present == REQ_NOT_INSTALLED)
-	 continue;
+        if (aDev[i].Present == FOUND || aDev[i].Present == REQ_NOT_INSTALLED)
+            continue;
 
-      /* TRY TO FIND THE DEVICE ON THE MBUS */
+        /* TRY TO FIND THE DEVICE ON THE MBUS */
 
-      aDev[i].Present = redcloud_find_msr_device(&aDev[i]);
+        aDev[i].Present = redcloud_find_msr_device(&aDev[i]);
 
-      /* INCREMENT ERROR COUNT IF DEVICE NOT FOUND */
+        /* INCREMENT ERROR COUNT IF DEVICE NOT FOUND */
 
-      if (aDev[i].Present != FOUND)
-	 issues++;
-   }
+        if (aDev[i].Present != FOUND)
+            issues++;
+    }
 
-   return (issues == 0);
+    return (issues == 0);
 }
 
 /*------------------------------------------------------------------
@@ -485,54 +487,54 @@ redcloud_init_msr_devices(MSR aDev[], unsigned int array_size)
 DEV_STATUS
 redcloud_find_msr_device(MSR * pDev)
 {
-   unsigned int i;
+    unsigned int i;
 
-   /* SEARCH DURANGO'S CACHED MBUS TOPOLOGY */
-   /* This gets a little tricky.  As the only identifier we have for each   */
-   /* device is the device ID and we have multiple devices of the same type */
-   /* MCP, MPCI, USB, etc. we need to make some assumptions based on table  */
-   /* order.  These are as follows:                                         */
-   /* 1. All Redcloud nodes are searched first, as we assume that they      */
-   /*    are first in the table.                                            */
-   /* 2. If two devices have the same device ID and are found on the same   */
-   /*    device (GX2, CS5535, etc.) we assume that they are listed such     */
-   /*    that the first device in the table with this device ID has a lower */
-   /*    port address.                                                      */
-   /* 3. After a device ID has been matched, the port is marked as          */
-   /*    'claimed', such that future enumerations continue searching the    */
-   /*    GeodeLink topology.                                                */
+    /* SEARCH DURANGO'S CACHED MBUS TOPOLOGY */
+    /* This gets a little tricky.  As the only identifier we have for each   */
+    /* device is the device ID and we have multiple devices of the same type */
+    /* MCP, MPCI, USB, etc. we need to make some assumptions based on table  */
+    /* order.  These are as follows:                                         */
+    /* 1. All Redcloud nodes are searched first, as we assume that they      */
+    /*    are first in the table.                                            */
+    /* 2. If two devices have the same device ID and are found on the same   */
+    /*    device (GX2, CS5535, etc.) we assume that they are listed such     */
+    /*    that the first device in the table with this device ID has a lower */
+    /*    port address.                                                      */
+    /* 3. After a device ID has been matched, the port is marked as          */
+    /*    'claimed', such that future enumerations continue searching the    */
+    /*    GeodeLink topology.                                                */
 
-   /* SEARCH MBIU0 */
+    /* SEARCH MBIU0 */
 
-   for (i = 0; i < 8; i++) {
-      if (MBIU0[i].deviceId == pDev->Id && !(MBIU0[i].claimed)) {
-	 MBIU0[i].claimed = 1;
-	 pDev->Address = MBIU0[i].address;
-	 return FOUND;
-      }
-   }
+    for (i = 0; i < 8; i++) {
+        if (MBIU0[i].deviceId == pDev->Id && !(MBIU0[i].claimed)) {
+            MBIU0[i].claimed = 1;
+            pDev->Address = MBIU0[i].address;
+            return FOUND;
+        }
+    }
 
-   /* SEARCH MBIU1 */
+    /* SEARCH MBIU1 */
 
-   for (i = 0; i < 8; i++) {
-      if (MBIU1[i].deviceId == pDev->Id && !(MBIU1[i].claimed)) {
-	 MBIU1[i].claimed = 1;
-	 pDev->Address = MBIU1[i].address;
-	 return FOUND;
-      }
-   }
+    for (i = 0; i < 8; i++) {
+        if (MBIU1[i].deviceId == pDev->Id && !(MBIU1[i].claimed)) {
+            MBIU1[i].claimed = 1;
+            pDev->Address = MBIU1[i].address;
+            return FOUND;
+        }
+    }
 
-   /* SEARCH MBIU2 */
+    /* SEARCH MBIU2 */
 
-   for (i = 0; i < 8; i++) {
-      if (MBIU2[i].deviceId == pDev->Id && !(MBIU2[i].claimed)) {
-	 MBIU2[i].claimed = 1;
-	 pDev->Address = MBIU2[i].address;
-	 return FOUND;
-      }
-   }
+    for (i = 0; i < 8; i++) {
+        if (MBIU2[i].deviceId == pDev->Id && !(MBIU2[i].claimed)) {
+            MBIU2[i].claimed = 1;
+            pDev->Address = MBIU2[i].address;
+            return FOUND;
+        }
+    }
 
-   return REQ_NOT_FOUND;
+    return REQ_NOT_FOUND;
 }
 
 /*--------------------------------------------------------------------
@@ -561,14 +563,14 @@ DEV_STATUS
 gfx_id_msr_device(MSR * pDev, unsigned long address)
 #endif
 {
-   Q_WORD msrValue;
+    Q_WORD msrValue;
 
-   MSR_READ(MBD_MSR_CAP, address, &(msrValue.high), &(msrValue.low));
+    MSR_READ(MBD_MSR_CAP, address, &(msrValue.high), &(msrValue.low));
 
-   if (GET_DEVICE_ID(msrValue.high, msrValue.low) == pDev->Id)
-      return FOUND;
-   else
-      return REQ_NOT_FOUND;
+    if (GET_DEVICE_ID(msrValue.high, msrValue.low) == pDev->Id)
+        return FOUND;
+    else
+        return REQ_NOT_FOUND;
 }
 
 /*--------------------------------------------------------------------
@@ -601,13 +603,13 @@ DEV_STATUS
 gfx_get_msr_dev_address(unsigned int device, unsigned long *address)
 #endif
 {
-   if (device < NUM_DEVS) {
-      if (msrDev[device].Present == FOUND)
-	 *address = msrDev[device].Address;
+    if (device < NUM_DEVS) {
+        if (msrDev[device].Present == FOUND)
+            *address = msrDev[device].Address;
 
-      return msrDev[device].Present;
-   }
-   return NOT_KNOWN;
+        return msrDev[device].Present;
+    }
+    return NOT_KNOWN;
 
 }
 
@@ -639,22 +641,24 @@ DEV_STATUS
 gfx_get_glink_id_at_address(unsigned int *device, unsigned long address)
 #endif
 {
-   int port;
+    int port;
 
-   for (port = 0; port < 8; port++) {
-      if (MBIU0[port].address == address) {
-	 *device = MBIU0[port].deviceId;
-	 return FOUND;
-      } else if (MBIU1[port].address == address) {
-	 *device = MBIU1[port].deviceId;
-	 return FOUND;
-      } else if (MBIU2[port].address == address) {
-	 *device = MBIU2[port].deviceId;
-	 return FOUND;
-      }
-   }
+    for (port = 0; port < 8; port++) {
+        if (MBIU0[port].address == address) {
+            *device = MBIU0[port].deviceId;
+            return FOUND;
+        }
+        else if (MBIU1[port].address == address) {
+            *device = MBIU1[port].deviceId;
+            return FOUND;
+        }
+        else if (MBIU2[port].address == address) {
+            *device = MBIU2[port].deviceId;
+            return FOUND;
+        }
+    }
 
-   return NOT_KNOWN;
+    return NOT_KNOWN;
 
 }
 
@@ -676,20 +680,20 @@ gfx_get_glink_id_at_address(unsigned int *device, unsigned long address)
 #if GFX_MSR_DYNAMIC
 DEV_STATUS
 redcloud_msr_read(unsigned int device, unsigned int msrRegister,
-		  Q_WORD * msrValue)
+                  Q_WORD * msrValue)
 #else
 DEV_STATUS
 gfx_msr_read(unsigned int device, unsigned int msrRegister, Q_WORD * msrValue)
 #endif
 {
-   if (device < NUM_DEVS) {
-      if (msrDev[device].Present == FOUND)
-	 MSR_READ(msrRegister, msrDev[device].Address, &(msrValue->high),
-		  &(msrValue->low));
+    if (device < NUM_DEVS) {
+        if (msrDev[device].Present == FOUND)
+            MSR_READ(msrRegister, msrDev[device].Address, &(msrValue->high),
+                     &(msrValue->low));
 
-      return msrDev[device].Present;
-   }
-   return NOT_KNOWN;
+        return msrDev[device].Present;
+    }
+    return NOT_KNOWN;
 }
 
 /*--------------------------------------------------------------------
@@ -711,19 +715,18 @@ gfx_msr_read(unsigned int device, unsigned int msrRegister, Q_WORD * msrValue)
 #if GFX_MSR_DYNAMIC
 DEV_STATUS
 redcloud_msr_write(unsigned int device, unsigned int msrRegister,
-		   Q_WORD * msrValue)
+                   Q_WORD * msrValue)
 #else
 DEV_STATUS
-gfx_msr_write(unsigned int device, unsigned int msrRegister,
-	      Q_WORD * msrValue)
+gfx_msr_write(unsigned int device, unsigned int msrRegister, Q_WORD * msrValue)
 #endif
 {
-   if (device < NUM_DEVS) {
-      if (msrDev[device].Present == FOUND)
-	 MSR_WRITE(msrRegister, msrDev[device].Address, &(msrValue->high),
-		   &(msrValue->low));
+    if (device < NUM_DEVS) {
+        if (msrDev[device].Present == FOUND)
+            MSR_WRITE(msrRegister, msrDev[device].Address, &(msrValue->high),
+                      &(msrValue->low));
 
-      return msrDev[device].Present;
-   }
-   return NOT_KNOWN;
+        return msrDev[device].Present;
+    }
+    return NOT_KNOWN;
 }

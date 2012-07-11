@@ -187,8 +187,7 @@ void disable_Centaurus_9211_chip_select(void);
 void toggle_Centaurus_9211_clock(void);
 void write_Centaurus_CX9211_GPIO(unsigned char databit);
 void write_Centaurus_CX9211_DWdata(unsigned long data);
-void Centaurus_write_gpio(int width, unsigned long address,
-			  unsigned long data);
+void Centaurus_write_gpio(int width, unsigned long address, unsigned long data);
 void Centaurus_Power_Up(void);
 void Centaurus_Power_Down(void);
 unsigned long Centaurus_read_gpio(int width, unsigned long address);
@@ -204,6 +203,6 @@ void Centaurus_Save_Panel_State(void);
 void Centaurus_Restore_Panel_State(void);
 void Centaurus_9211init(Pnl_PanelStat * pstat);
 
-#endif /* !_CEN9211_h */
+#endif                          /* !_CEN9211_h */
 
 /* END OF FILE */

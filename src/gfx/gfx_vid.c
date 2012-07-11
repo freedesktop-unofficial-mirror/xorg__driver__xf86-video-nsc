@@ -225,21 +225,21 @@
 /* STATIC VARIABLES FOR VIDEO OVERLAY CONTROL */
 /* These are saved to allow these routines to do clipping. */
 
-unsigned long gfx_vid_offset = 0;	/* copy from last gfx_set_video_offset */
-unsigned long gfx_vid_uoffset = 0;	/* copy from last gfx_set_video_yuv_offsets */
-unsigned long gfx_vid_voffset = 0;	/* copy from last gfx_set_video_yuv_offsets */
-unsigned long gfx_vid_srcw = 300;	/* copy from last gfx_set_video_scale  */
-unsigned long gfx_vid_srch = 300;	/* copy from last gfx_set_video_scale  */
-unsigned long gfx_vid_dstw = 300;	/* copy from last gfx_set_video_scale  */
-unsigned long gfx_vid_dsth = 300;	/* copy from last gfx_set_video_scale  */
-short gfx_vid_xpos = 0;			/* copy from last gfx_set_video_window */
-short gfx_vid_ypos = 0;			/* copy from last gfx_set_video_window */
-unsigned short gfx_vid_width = 0;	/* copy from last gfx_set_video_window */
-unsigned short gfx_vid_height = 0;	/* copy from last gfx_set_video_window */
+unsigned long gfx_vid_offset = 0;       /* copy from last gfx_set_video_offset */
+unsigned long gfx_vid_uoffset = 0;      /* copy from last gfx_set_video_yuv_offsets */
+unsigned long gfx_vid_voffset = 0;      /* copy from last gfx_set_video_yuv_offsets */
+unsigned long gfx_vid_srcw = 300;       /* copy from last gfx_set_video_scale  */
+unsigned long gfx_vid_srch = 300;       /* copy from last gfx_set_video_scale  */
+unsigned long gfx_vid_dstw = 300;       /* copy from last gfx_set_video_scale  */
+unsigned long gfx_vid_dsth = 300;       /* copy from last gfx_set_video_scale  */
+short gfx_vid_xpos = 0;         /* copy from last gfx_set_video_window */
+short gfx_vid_ypos = 0;         /* copy from last gfx_set_video_window */
+unsigned short gfx_vid_width = 0;       /* copy from last gfx_set_video_window */
+unsigned short gfx_vid_height = 0;      /* copy from last gfx_set_video_window */
 
-int gfx_alpha_select = 0;		/* currently selected alpha region */
+int gfx_alpha_select = 0;       /* currently selected alpha region */
 
-int gfx_set_screen_enable(int enable);	/* forward declaration */
+int gfx_set_screen_enable(int enable);  /* forward declaration */
 
 /* INCLUDE SUPPORT FOR CS5530, IF SPECIFIED. */
 
@@ -270,11 +270,11 @@ int gfx_set_screen_enable(int enable);	/* forward declaration */
 int
 gfx_select_alpha_region(int region)
 {
-   if (region > 2)
-      return (GFX_STATUS_BAD_PARAMETER);
+    if (region > 2)
+        return (GFX_STATUS_BAD_PARAMETER);
 
-   gfx_alpha_select = region;
-   return (GFX_STATUS_OK);
+    gfx_alpha_select = region;
+    return (GFX_STATUS_OK);
 }
 
 /* WRAPPERS IF DYNAMIC SELECTION */
@@ -293,16 +293,16 @@ void
 gfx_reset_video(void)
 {
 #	if GFX_VIDEO_CS5530
-   if (gfx_video_type == GFX_VIDEO_TYPE_CS5530)
-      cs5530_reset_video();
+    if (gfx_video_type == GFX_VIDEO_TYPE_CS5530)
+        cs5530_reset_video();
 #	endif
 #	if GFX_VIDEO_SC1200
-   if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
-      sc1200_reset_video();
+    if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
+        sc1200_reset_video();
 #	endif
 #	if GFX_VIDEO_REDCLOUD
-   if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
-      redcloud_reset_video();
+    if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
+        redcloud_reset_video();
 #	endif
 }
 
@@ -315,21 +315,21 @@ gfx_reset_video(void)
 int
 gfx_set_display_control(int sync_polarities)
 {
-   int status = GFX_STATUS_UNSUPPORTED;
+    int status = GFX_STATUS_UNSUPPORTED;
 
 #	if GFX_VIDEO_CS5530
-   if (gfx_video_type == GFX_VIDEO_TYPE_CS5530)
-      status = cs5530_set_display_control(sync_polarities);
+    if (gfx_video_type == GFX_VIDEO_TYPE_CS5530)
+        status = cs5530_set_display_control(sync_polarities);
 #	endif
 #	if GFX_VIDEO_SC1200
-   if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
-      status = sc1200_set_display_control(sync_polarities);
+    if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
+        status = sc1200_set_display_control(sync_polarities);
 #	endif
 #	if GFX_VIDEO_REDCLOUD
-   if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
-      status = redcloud_set_display_control(sync_polarities);
+    if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
+        status = redcloud_set_display_control(sync_polarities);
 #	endif
-   return (status);
+    return (status);
 }
 
 /*-----------------------------------------------------------------------------
@@ -340,16 +340,16 @@ void
 gfx_set_clock_frequency(unsigned long frequency)
 {
 #	if GFX_VIDEO_CS5530
-   if (gfx_video_type == GFX_VIDEO_TYPE_CS5530)
-      cs5530_set_clock_frequency(frequency);
+    if (gfx_video_type == GFX_VIDEO_TYPE_CS5530)
+        cs5530_set_clock_frequency(frequency);
 #	endif
 #	if GFX_VIDEO_SC1200
-   if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
-      sc1200_set_clock_frequency(frequency);
+    if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
+        sc1200_set_clock_frequency(frequency);
 #	endif
 #	if GFX_VIDEO_REDCLOUD
-   if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
-      redcloud_set_clock_frequency(frequency);
+    if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
+        redcloud_set_clock_frequency(frequency);
 #	endif
 }
 
@@ -360,21 +360,21 @@ gfx_set_clock_frequency(unsigned long frequency)
 int
 gfx_set_crt_enable(int enable)
 {
-   int status = GFX_STATUS_UNSUPPORTED;
+    int status = GFX_STATUS_UNSUPPORTED;
 
 #	if GFX_VIDEO_SC1200
-   if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
-      status = sc1200_set_crt_enable(enable);
+    if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
+        status = sc1200_set_crt_enable(enable);
 #	endif
 #	if GFX_VIDEO_CS5530
-   if (gfx_video_type == GFX_VIDEO_TYPE_CS5530)
-      status = cs5530_set_crt_enable(enable);
+    if (gfx_video_type == GFX_VIDEO_TYPE_CS5530)
+        status = cs5530_set_crt_enable(enable);
 #	endif
 #	if GFX_VIDEO_REDCLOUD
-   if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
-      status = redcloud_set_crt_enable(enable);
+    if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
+        status = redcloud_set_crt_enable(enable);
 #	endif
-   return (status);
+    return (status);
 }
 
 /*-----------------------------------------------------------------------------
@@ -384,21 +384,21 @@ gfx_set_crt_enable(int enable)
 int
 gfx_set_video_enable(int enable)
 {
-   int status = GFX_STATUS_UNSUPPORTED;
+    int status = GFX_STATUS_UNSUPPORTED;
 
 #	if GFX_VIDEO_CS5530
-   if (gfx_video_type == GFX_VIDEO_TYPE_CS5530)
-      status = cs5530_set_video_enable(enable);
+    if (gfx_video_type == GFX_VIDEO_TYPE_CS5530)
+        status = cs5530_set_video_enable(enable);
 #	endif
 #	if GFX_VIDEO_SC1200
-   if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
-      status = sc1200_set_video_enable(enable);
+    if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
+        status = sc1200_set_video_enable(enable);
 #	endif
 #	if GFX_VIDEO_REDCLOUD
-   if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
-      status = redcloud_set_video_enable(enable);
+    if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
+        status = redcloud_set_video_enable(enable);
 #	endif
-   return (status);
+    return (status);
 }
 
 /*---------------------------------------------------------------------------
@@ -410,13 +410,13 @@ gfx_set_video_enable(int enable)
 int
 gfx_set_screen_enable(int enable)
 {
-   int status = GFX_STATUS_UNSUPPORTED;
+    int status = GFX_STATUS_UNSUPPORTED;
 
 #	if GFX_VIDEO_SC1200
-   if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
-      status = sc1200_set_screen_enable(enable);
+    if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
+        status = sc1200_set_screen_enable(enable);
 #	endif
-   return (status);
+    return (status);
 }
 
 /*-----------------------------------------------------------------------------
@@ -426,21 +426,21 @@ gfx_set_screen_enable(int enable)
 int
 gfx_set_video_format(unsigned long format)
 {
-   int status = GFX_STATUS_UNSUPPORTED;
+    int status = GFX_STATUS_UNSUPPORTED;
 
 #	if GFX_VIDEO_CS5530
-   if (gfx_video_type == GFX_VIDEO_TYPE_CS5530)
-      status = cs5530_set_video_format(format);
+    if (gfx_video_type == GFX_VIDEO_TYPE_CS5530)
+        status = cs5530_set_video_format(format);
 #	endif
 #	if GFX_VIDEO_SC1200
-   if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
-      status = sc1200_set_video_format(format);
+    if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
+        status = sc1200_set_video_format(format);
 #	endif
 #	if GFX_VIDEO_REDCLOUD
-   if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
-      status = redcloud_set_video_format(format);
+    if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
+        status = redcloud_set_video_format(format);
 #	endif
-   return (status);
+    return (status);
 }
 
 /*-----------------------------------------------------------------------------
@@ -450,21 +450,21 @@ gfx_set_video_format(unsigned long format)
 int
 gfx_set_video_size(unsigned short width, unsigned short height)
 {
-   int status = GFX_STATUS_UNSUPPORTED;
+    int status = GFX_STATUS_UNSUPPORTED;
 
 #	if GFX_VIDEO_CS5530
-   if (gfx_video_type == GFX_VIDEO_TYPE_CS5530)
-      status = cs5530_set_video_size(width, height);
+    if (gfx_video_type == GFX_VIDEO_TYPE_CS5530)
+        status = cs5530_set_video_size(width, height);
 #	endif
 #	if GFX_VIDEO_SC1200
-   if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
-      status = sc1200_set_video_size(width, height);
+    if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
+        status = sc1200_set_video_size(width, height);
 #	endif
 #	if GFX_VIDEO_REDCLOUD
-   if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
-      status = redcloud_set_video_size(width, height);
+    if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
+        status = redcloud_set_video_size(width, height);
 #	endif
-   return (status);
+    return (status);
 }
 
 /*-----------------------------------------------------------------------------
@@ -474,13 +474,13 @@ gfx_set_video_size(unsigned short width, unsigned short height)
 int
 gfx_set_video_yuv_pitch(unsigned long ypitch, unsigned long uvpitch)
 {
-   int status = GFX_STATUS_UNSUPPORTED;
+    int status = GFX_STATUS_UNSUPPORTED;
 
 #	if GFX_VIDEO_REDCLOUD
-   if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
-      status = redcloud_set_video_yuv_pitch(ypitch, uvpitch);
+    if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
+        status = redcloud_set_video_yuv_pitch(ypitch, uvpitch);
 #	endif
-   return (status);
+    return (status);
 }
 
 /*-----------------------------------------------------------------------------
@@ -490,21 +490,21 @@ gfx_set_video_yuv_pitch(unsigned long ypitch, unsigned long uvpitch)
 int
 gfx_set_video_offset(unsigned long offset)
 {
-   int status = GFX_STATUS_UNSUPPORTED;
+    int status = GFX_STATUS_UNSUPPORTED;
 
 #	if GFX_VIDEO_CS5530
-   if (gfx_video_type == GFX_VIDEO_TYPE_CS5530)
-      status = cs5530_set_video_offset(offset);
+    if (gfx_video_type == GFX_VIDEO_TYPE_CS5530)
+        status = cs5530_set_video_offset(offset);
 #	endif
 #	if GFX_VIDEO_SC1200
-   if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
-      status = sc1200_set_video_offset(offset);
+    if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
+        status = sc1200_set_video_offset(offset);
 #	endif
 #	if GFX_VIDEO_REDCLOUD
-   if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
-      status = redcloud_set_video_offset(offset);
+    if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
+        status = redcloud_set_video_offset(offset);
 #	endif
-   return (status);
+    return (status);
 }
 
 /*-----------------------------------------------------------------------------
@@ -513,15 +513,15 @@ gfx_set_video_offset(unsigned long offset)
  */
 int
 gfx_set_video_yuv_offsets(unsigned long yoffset, unsigned long uoffset,
-			  unsigned long voffset)
+                          unsigned long voffset)
 {
-   int status = GFX_STATUS_UNSUPPORTED;
+    int status = GFX_STATUS_UNSUPPORTED;
 
 #	if GFX_VIDEO_REDCLOUD
-   if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
-      status = redcloud_set_video_yuv_offsets(yoffset, uoffset, voffset);
+    if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
+        status = redcloud_set_video_yuv_offsets(yoffset, uoffset, voffset);
 #	endif
-   return (status);
+    return (status);
 }
 
 /*---------------------------------------------------------------------------
@@ -530,23 +530,23 @@ gfx_set_video_yuv_offsets(unsigned long yoffset, unsigned long uoffset,
  */
 int
 gfx_set_video_scale(unsigned short srcw, unsigned short srch,
-		    unsigned short dstw, unsigned short dsth)
+                    unsigned short dstw, unsigned short dsth)
 {
-   int status = GFX_STATUS_UNSUPPORTED;
+    int status = GFX_STATUS_UNSUPPORTED;
 
 #	if GFX_VIDEO_CS5530
-   if (gfx_video_type == GFX_VIDEO_TYPE_CS5530)
-      status = cs5530_set_video_scale(srcw, srch, dstw, dsth);
+    if (gfx_video_type == GFX_VIDEO_TYPE_CS5530)
+        status = cs5530_set_video_scale(srcw, srch, dstw, dsth);
 #	endif
 #	if GFX_VIDEO_SC1200
-   if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
-      status = sc1200_set_video_scale(srcw, srch, dstw, dsth);
+    if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
+        status = sc1200_set_video_scale(srcw, srch, dstw, dsth);
 #	endif
 #	if GFX_VIDEO_REDCLOUD
-   if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
-      status = redcloud_set_video_scale(srcw, srch, dstw, dsth);
+    if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
+        status = redcloud_set_video_scale(srcw, srch, dstw, dsth);
 #	endif
-   return (status);
+    return (status);
 }
 
 /*---------------------------------------------------------------------------
@@ -555,15 +555,15 @@ gfx_set_video_scale(unsigned short srcw, unsigned short srch,
  */
 int
 gfx_set_video_upscale(unsigned short srcw, unsigned short srch,
-		      unsigned short dstw, unsigned short dsth)
+                      unsigned short dstw, unsigned short dsth)
 {
-   int status = GFX_STATUS_UNSUPPORTED;
+    int status = GFX_STATUS_UNSUPPORTED;
 
 #	if GFX_VIDEO_SC1200
-   if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
-      status = sc1200_set_video_upscale(srcw, srch, dstw, dsth);
+    if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
+        status = sc1200_set_video_upscale(srcw, srch, dstw, dsth);
 #	endif
-   return (status);
+    return (status);
 }
 
 /*---------------------------------------------------------------------------
@@ -573,13 +573,13 @@ gfx_set_video_upscale(unsigned short srcw, unsigned short srch,
 int
 gfx_set_video_vertical_downscale(unsigned short srch, unsigned short dsth)
 {
-   int status = GFX_STATUS_UNSUPPORTED;
+    int status = GFX_STATUS_UNSUPPORTED;
 
 #	if GFX_VIDEO_REDCLOUD
-   if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
-      status = redcloud_set_video_vertical_downscale(srch, dsth);
+    if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
+        status = redcloud_set_video_vertical_downscale(srch, dsth);
 #	endif
-   return (status);
+    return (status);
 }
 
 /*---------------------------------------------------------------------------
@@ -590,8 +590,8 @@ void
 gfx_set_video_vertical_downscale_enable(int enable)
 {
 #	if GFX_VIDEO_REDCLOUD
-   if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
-      redcloud_set_video_vertical_downscale_enable(enable);
+    if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
+        redcloud_set_video_vertical_downscale_enable(enable);
 #	endif
 }
 
@@ -602,17 +602,17 @@ gfx_set_video_vertical_downscale_enable(int enable)
 int
 gfx_set_video_downscale_config(unsigned short type, unsigned short m)
 {
-   int status = GFX_STATUS_UNSUPPORTED;
+    int status = GFX_STATUS_UNSUPPORTED;
 
 #	if GFX_VIDEO_SC1200
-   if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
-      status = sc1200_set_video_downscale_config(type, m);
+    if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
+        status = sc1200_set_video_downscale_config(type, m);
 #	endif
 #	if GFX_VIDEO_REDCLOUD
-   if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
-      status = redcloud_set_video_downscale_config(type, m);
+    if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
+        status = redcloud_set_video_downscale_config(type, m);
 #	endif
-   return (status);
+    return (status);
 }
 
 /*---------------------------------------------------------------------------
@@ -621,25 +621,23 @@ gfx_set_video_downscale_config(unsigned short type, unsigned short m)
  */
 int
 gfx_set_video_downscale_coefficients(unsigned short coef1,
-				     unsigned short coef2,
-				     unsigned short coef3,
-				     unsigned short coef4)
+                                     unsigned short coef2,
+                                     unsigned short coef3, unsigned short coef4)
 {
-   int status = GFX_STATUS_UNSUPPORTED;
+    int status = GFX_STATUS_UNSUPPORTED;
 
 #	if GFX_VIDEO_SC1200
-   if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
-      status =
-	    sc1200_set_video_downscale_coefficients(coef1, coef2, coef3,
-						    coef4);
+    if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
+        status =
+            sc1200_set_video_downscale_coefficients(coef1, coef2, coef3, coef4);
 #	endif
 #	if GFX_VIDEO_REDCLOUD
-   if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
-      status =
-	    redcloud_set_video_downscale_coefficients(coef1, coef2, coef3,
-						      coef4);
+    if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
+        status =
+            redcloud_set_video_downscale_coefficients(coef1, coef2, coef3,
+                                                      coef4);
 #	endif
-   return (status);
+    return (status);
 }
 
 /*---------------------------------------------------------------------------
@@ -649,17 +647,17 @@ gfx_set_video_downscale_coefficients(unsigned short coef1,
 int
 gfx_set_video_downscale_enable(int enable)
 {
-   int status = GFX_STATUS_UNSUPPORTED;
+    int status = GFX_STATUS_UNSUPPORTED;
 
 #	if GFX_VIDEO_SC1200
-   if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
-      status = sc1200_set_video_downscale_enable(enable);
+    if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
+        status = sc1200_set_video_downscale_enable(enable);
 #	endif
 #	if GFX_VIDEO_REDCLOUD
-   if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
-      status = redcloud_set_video_downscale_enable(enable);
+    if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
+        status = redcloud_set_video_downscale_enable(enable);
 #	endif
-   return (status);
+    return (status);
 }
 
 /*---------------------------------------------------------------------------
@@ -669,21 +667,21 @@ gfx_set_video_downscale_enable(int enable)
 int
 gfx_set_video_window(short x, short y, unsigned short w, unsigned short h)
 {
-   int status = GFX_STATUS_UNSUPPORTED;
+    int status = GFX_STATUS_UNSUPPORTED;
 
 #	if GFX_VIDEO_CS5530
-   if (gfx_video_type == GFX_VIDEO_TYPE_CS5530)
-      status = cs5530_set_video_window(x, y, w, h);
+    if (gfx_video_type == GFX_VIDEO_TYPE_CS5530)
+        status = cs5530_set_video_window(x, y, w, h);
 #	endif
 #	if GFX_VIDEO_SC1200
-   if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
-      status = sc1200_set_video_window(x, y, w, h);
+    if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
+        status = sc1200_set_video_window(x, y, w, h);
 #	endif
 #	if GFX_VIDEO_REDCLOUD
-   if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
-      status = redcloud_set_video_window(x, y, w, h);
+    if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
+        status = redcloud_set_video_window(x, y, w, h);
 #	endif
-   return (status);
+    return (status);
 }
 
 /*---------------------------------------------------------------------------
@@ -693,21 +691,21 @@ gfx_set_video_window(short x, short y, unsigned short w, unsigned short h)
 int
 gfx_set_video_left_crop(unsigned short x)
 {
-   int status = GFX_STATUS_UNSUPPORTED;
+    int status = GFX_STATUS_UNSUPPORTED;
 
 #	if GFX_VIDEO_SC1200
-   if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
-      status = sc1200_set_video_left_crop(x);
+    if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
+        status = sc1200_set_video_left_crop(x);
 #	endif
 #	if GFX_VIDEO_CS5530
-   if (gfx_video_type == GFX_VIDEO_TYPE_CS5530)
-      status = cs5530_set_video_left_crop(x);
+    if (gfx_video_type == GFX_VIDEO_TYPE_CS5530)
+        status = cs5530_set_video_left_crop(x);
 #	endif
 #	if GFX_VIDEO_REDCLOUD
-   if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
-      status = redcloud_set_video_left_crop(x);
+    if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
+        status = redcloud_set_video_left_crop(x);
 #	endif
-   return (status);
+    return (status);
 }
 
 /*---------------------------------------------------------------------------
@@ -717,21 +715,21 @@ gfx_set_video_left_crop(unsigned short x)
 int
 gfx_set_video_color_key(unsigned long key, unsigned long mask, int graphics)
 {
-   int status = GFX_STATUS_UNSUPPORTED;
+    int status = GFX_STATUS_UNSUPPORTED;
 
 #	if GFX_VIDEO_CS5530
-   if (gfx_video_type == GFX_VIDEO_TYPE_CS5530)
-      status = cs5530_set_video_color_key(key, mask, graphics);
+    if (gfx_video_type == GFX_VIDEO_TYPE_CS5530)
+        status = cs5530_set_video_color_key(key, mask, graphics);
 #	endif
 #	if GFX_VIDEO_SC1200
-   if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
-      status = sc1200_set_video_color_key(key, mask, graphics);
+    if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
+        status = sc1200_set_video_color_key(key, mask, graphics);
 #	endif
 #	if GFX_VIDEO_REDCLOUD
-   if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
-      status = redcloud_set_video_color_key(key, mask, graphics);
+    if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
+        status = redcloud_set_video_color_key(key, mask, graphics);
 #	endif
-   return (status);
+    return (status);
 }
 
 /*---------------------------------------------------------------------------
@@ -741,21 +739,21 @@ gfx_set_video_color_key(unsigned long key, unsigned long mask, int graphics)
 int
 gfx_set_video_filter(int xfilter, int yfilter)
 {
-   int status = GFX_STATUS_UNSUPPORTED;
+    int status = GFX_STATUS_UNSUPPORTED;
 
 #	if GFX_VIDEO_CS5530
-   if (gfx_video_type == GFX_VIDEO_TYPE_CS5530)
-      status = cs5530_set_video_filter(xfilter, yfilter);
+    if (gfx_video_type == GFX_VIDEO_TYPE_CS5530)
+        status = cs5530_set_video_filter(xfilter, yfilter);
 #	endif
 #	if GFX_VIDEO_SC1200
-   if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
-      status = sc1200_set_video_filter(xfilter, yfilter);
+    if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
+        status = sc1200_set_video_filter(xfilter, yfilter);
 #	endif
 #	if GFX_VIDEO_REDCLOUD
-   if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
-      status = redcloud_set_video_filter(xfilter, yfilter);
+    if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
+        status = redcloud_set_video_filter(xfilter, yfilter);
 #	endif
-   return (status);
+    return (status);
 }
 
 /*---------------------------------------------------------------------------
@@ -765,21 +763,21 @@ gfx_set_video_filter(int xfilter, int yfilter)
 int
 gfx_set_video_palette(unsigned long *palette)
 {
-   int status = GFX_STATUS_UNSUPPORTED;
+    int status = GFX_STATUS_UNSUPPORTED;
 
 #	if GFX_VIDEO_CS5530
-   if (gfx_video_type == GFX_VIDEO_TYPE_CS5530)
-      status = cs5530_set_video_palette(palette);
+    if (gfx_video_type == GFX_VIDEO_TYPE_CS5530)
+        status = cs5530_set_video_palette(palette);
 #	endif
 #	if GFX_VIDEO_SC1200
-   if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
-      status = sc1200_set_video_palette(palette);
+    if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
+        status = sc1200_set_video_palette(palette);
 #	endif
 #	if GFX_VIDEO_REDCLOUD
-   if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
-      status = redcloud_set_video_palette(palette);
+    if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
+        status = redcloud_set_video_palette(palette);
 #	endif
-   return (status);
+    return (status);
 }
 
 /*---------------------------------------------------------------------------
@@ -789,21 +787,21 @@ gfx_set_video_palette(unsigned long *palette)
 int
 gfx_set_video_palette_entry(unsigned long index, unsigned long palette)
 {
-   int status = GFX_STATUS_UNSUPPORTED;
+    int status = GFX_STATUS_UNSUPPORTED;
 
 #	if GFX_VIDEO_CS5530
-   if (gfx_video_type == GFX_VIDEO_TYPE_CS5530)
-      status = cs5530_set_video_palette_entry(index, palette);
+    if (gfx_video_type == GFX_VIDEO_TYPE_CS5530)
+        status = cs5530_set_video_palette_entry(index, palette);
 #	endif
 #	if GFX_VIDEO_SC1200
-   if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
-      status = sc1200_set_video_palette_entry(index, palette);
+    if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
+        status = sc1200_set_video_palette_entry(index, palette);
 #	endif
 #	if GFX_VIDEO_REDCLOUD
-   if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
-      status = redcloud_set_video_palette_entry(index, palette);
+    if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
+        status = redcloud_set_video_palette_entry(index, palette);
 #	endif
-   return (status);
+    return (status);
 }
 
 /*---------------------------------------------------------------------------
@@ -813,17 +811,17 @@ gfx_set_video_palette_entry(unsigned long index, unsigned long palette)
 int
 gfx_set_video_request(short x, short y)
 {
-   int status = GFX_STATUS_UNSUPPORTED;
+    int status = GFX_STATUS_UNSUPPORTED;
 
 #	if GFX_VIDEO_SC1200
-   if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
-      status = sc1200_set_video_request(x, y);
+    if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
+        status = sc1200_set_video_request(x, y);
 #	endif
 #	if GFX_VIDEO_REDCLOUD
-   if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
-      status = redcloud_set_video_request(x, y);
+    if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
+        status = redcloud_set_video_request(x, y);
 #	endif
-   return (status);
+    return (status);
 }
 
 /*---------------------------------------------------------------------------
@@ -833,13 +831,13 @@ gfx_set_video_request(short x, short y)
 int
 gfx_set_video_source(VideoSourceType source)
 {
-   int status = GFX_STATUS_UNSUPPORTED;
+    int status = GFX_STATUS_UNSUPPORTED;
 
 #	if GFX_VIDEO_SC1200
-   if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
-      status = sc1200_set_video_source(source);
+    if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
+        status = sc1200_set_video_source(source);
 #	endif
-   return (status);
+    return (status);
 }
 
 /*---------------------------------------------------------------------------
@@ -849,13 +847,13 @@ gfx_set_video_source(VideoSourceType source)
 int
 gfx_set_vbi_source(VbiSourceType source)
 {
-   int status = GFX_STATUS_UNSUPPORTED;
+    int status = GFX_STATUS_UNSUPPORTED;
 
 #	if GFX_VIDEO_SC1200
-   if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
-      status = sc1200_set_vbi_source(source);
+    if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
+        status = sc1200_set_vbi_source(source);
 #	endif
-   return (status);
+    return (status);
 }
 
 /*---------------------------------------------------------------------------
@@ -865,13 +863,13 @@ gfx_set_vbi_source(VbiSourceType source)
 int
 gfx_set_vbi_lines(unsigned long even, unsigned long odd)
 {
-   int status = GFX_STATUS_UNSUPPORTED;
+    int status = GFX_STATUS_UNSUPPORTED;
 
 #	if GFX_VIDEO_SC1200
-   if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
-      status = sc1200_set_vbi_lines(even, odd);
+    if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
+        status = sc1200_set_vbi_lines(even, odd);
 #	endif
-   return (status);
+    return (status);
 }
 
 /*---------------------------------------------------------------------------
@@ -881,13 +879,13 @@ gfx_set_vbi_lines(unsigned long even, unsigned long odd)
 int
 gfx_set_vbi_total(unsigned long even, unsigned long odd)
 {
-   int status = GFX_STATUS_UNSUPPORTED;
+    int status = GFX_STATUS_UNSUPPORTED;
 
 #	if GFX_VIDEO_SC1200
-   if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
-      status = sc1200_set_vbi_total(even, odd);
+    if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
+        status = sc1200_set_vbi_total(even, odd);
 #	endif
-   return (status);
+    return (status);
 }
 
 /*---------------------------------------------------------------------------
@@ -897,13 +895,13 @@ gfx_set_vbi_total(unsigned long even, unsigned long odd)
 int
 gfx_set_video_interlaced(int enable)
 {
-   int status = GFX_STATUS_UNSUPPORTED;
+    int status = GFX_STATUS_UNSUPPORTED;
 
 #	if GFX_VIDEO_SC1200
-   if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
-      status = sc1200_set_video_interlaced(enable);
+    if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
+        status = sc1200_set_video_interlaced(enable);
 #	endif
-   return (status);
+    return (status);
 }
 
 /*---------------------------------------------------------------------------
@@ -913,13 +911,13 @@ gfx_set_video_interlaced(int enable)
 int
 gfx_set_color_space_YUV(int enable)
 {
-   int status = GFX_STATUS_UNSUPPORTED;
+    int status = GFX_STATUS_UNSUPPORTED;
 
 #	if GFX_VIDEO_SC1200
-   if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
-      status = sc1200_set_color_space_YUV(enable);
+    if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
+        status = sc1200_set_color_space_YUV(enable);
 #	endif
-   return (status);
+    return (status);
 }
 
 /*---------------------------------------------------------------------------
@@ -929,13 +927,13 @@ gfx_set_color_space_YUV(int enable)
 int
 gfx_set_vertical_scaler_offset(char offset)
 {
-   int status = GFX_STATUS_UNSUPPORTED;
+    int status = GFX_STATUS_UNSUPPORTED;
 
 #	if GFX_VIDEO_SC1200
-   if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
-      status = sc1200_set_vertical_scaler_offset(offset);
+    if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
+        status = sc1200_set_vertical_scaler_offset(offset);
 #	endif
-   return (status);
+    return (status);
 }
 
 /*---------------------------------------------------------------------------
@@ -945,13 +943,13 @@ gfx_set_vertical_scaler_offset(char offset)
 int
 gfx_set_top_line_in_odd(int enable)
 {
-   int status = GFX_STATUS_UNSUPPORTED;
+    int status = GFX_STATUS_UNSUPPORTED;
 
 #	if GFX_VIDEO_SC1200
-   if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
-      status = sc1200_set_top_line_in_odd(enable);
+    if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
+        status = sc1200_set_top_line_in_odd(enable);
 #	endif
-   return (status);
+    return (status);
 }
 
 /*---------------------------------------------------------------------------
@@ -961,13 +959,13 @@ gfx_set_top_line_in_odd(int enable)
 int
 gfx_set_genlock_delay(unsigned long delay)
 {
-   int status = GFX_STATUS_UNSUPPORTED;
+    int status = GFX_STATUS_UNSUPPORTED;
 
 #	if GFX_VIDEO_SC1200
-   if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
-      status = sc1200_set_genlock_delay(delay);
+    if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
+        status = sc1200_set_genlock_delay(delay);
 #	endif
-   return (status);
+    return (status);
 }
 
 /*---------------------------------------------------------------------------
@@ -977,13 +975,13 @@ gfx_set_genlock_delay(unsigned long delay)
 int
 gfx_set_genlock_enable(int flags)
 {
-   int status = GFX_STATUS_UNSUPPORTED;
+    int status = GFX_STATUS_UNSUPPORTED;
 
 #	if GFX_VIDEO_SC1200
-   if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
-      status = sc1200_set_genlock_enable(flags);
+    if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
+        status = sc1200_set_genlock_enable(flags);
 #	endif
-   return (status);
+    return (status);
 }
 
 /*---------------------------------------------------------------------------
@@ -992,23 +990,22 @@ gfx_set_genlock_enable(int flags)
  */
 int
 gfx_set_video_cursor(unsigned long key, unsigned long mask,
-		     unsigned short select_color2, unsigned long color1,
-		     unsigned long color2)
+                     unsigned short select_color2, unsigned long color1,
+                     unsigned long color2)
 {
-   int status = GFX_STATUS_UNSUPPORTED;
+    int status = GFX_STATUS_UNSUPPORTED;
 
 #	if GFX_VIDEO_SC1200
-   if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
-      status =
-	    sc1200_set_video_cursor(key, mask, select_color2, color1, color2);
+    if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
+        status =
+            sc1200_set_video_cursor(key, mask, select_color2, color1, color2);
 #	endif
 #	if GFX_VIDEO_REDCLOUD
-   if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
-      status =
-	    redcloud_set_video_cursor(key, mask, select_color2, color1,
-				      color2);
+    if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
+        status =
+            redcloud_set_video_cursor(key, mask, select_color2, color1, color2);
 #	endif
-   return (status);
+    return (status);
 }
 
 /*---------------------------------------------------------------------------
@@ -1018,13 +1015,13 @@ gfx_set_video_cursor(unsigned long key, unsigned long mask,
 int
 gfx_set_video_cursor_enable(int enable)
 {
-   int status = GFX_STATUS_UNSUPPORTED;
+    int status = GFX_STATUS_UNSUPPORTED;
 
 #	if GFX_VIDEO_REDCLOUD
-   if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
-      status = redcloud_set_video_cursor_enable(enable);
+    if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
+        status = redcloud_set_video_cursor_enable(enable);
 #	endif
-   return (status);
+    return (status);
 }
 
 /*---------------------------------------------------------------------------
@@ -1034,17 +1031,17 @@ gfx_set_video_cursor_enable(int enable)
 int
 gfx_set_alpha_enable(int enable)
 {
-   int status = GFX_STATUS_UNSUPPORTED;
+    int status = GFX_STATUS_UNSUPPORTED;
 
 #	if GFX_VIDEO_SC1200
-   if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
-      status = sc1200_set_alpha_enable(enable);
+    if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
+        status = sc1200_set_alpha_enable(enable);
 #	endif
 #	if GFX_VIDEO_REDCLOUD
-   if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
-      status = redcloud_set_alpha_enable(enable);
+    if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
+        status = redcloud_set_alpha_enable(enable);
 #	endif
-   return (status);
+    return (status);
 }
 
 /*---------------------------------------------------------------------------
@@ -1053,19 +1050,19 @@ gfx_set_alpha_enable(int enable)
  */
 int
 gfx_set_alpha_window(short x, short y,
-		     unsigned short width, unsigned short height)
+                     unsigned short width, unsigned short height)
 {
-   int status = GFX_STATUS_UNSUPPORTED;
+    int status = GFX_STATUS_UNSUPPORTED;
 
 #	if GFX_VIDEO_SC1200
-   if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
-      status = sc1200_set_alpha_window(x, y, width, height);
+    if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
+        status = sc1200_set_alpha_window(x, y, width, height);
 #	endif
 #	if GFX_VIDEO_REDCLOUD
-   if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
-      status = redcloud_set_alpha_window(x, y, width, height);
+    if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
+        status = redcloud_set_alpha_window(x, y, width, height);
 #	endif
-   return (status);
+    return (status);
 }
 
 /*---------------------------------------------------------------------------
@@ -1075,17 +1072,17 @@ gfx_set_alpha_window(short x, short y,
 int
 gfx_set_alpha_value(unsigned char alpha, char delta)
 {
-   int status = GFX_STATUS_UNSUPPORTED;
+    int status = GFX_STATUS_UNSUPPORTED;
 
 #	if GFX_VIDEO_SC1200
-   if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
-      status = sc1200_set_alpha_value(alpha, delta);
+    if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
+        status = sc1200_set_alpha_value(alpha, delta);
 #	endif
 #	if GFX_VIDEO_REDCLOUD
-   if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
-      status = redcloud_set_alpha_value(alpha, delta);
+    if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
+        status = redcloud_set_alpha_value(alpha, delta);
 #	endif
-   return (status);
+    return (status);
 }
 
 /*---------------------------------------------------------------------------
@@ -1095,17 +1092,17 @@ gfx_set_alpha_value(unsigned char alpha, char delta)
 int
 gfx_set_alpha_priority(int priority)
 {
-   int status = GFX_STATUS_UNSUPPORTED;
+    int status = GFX_STATUS_UNSUPPORTED;
 
 #	if GFX_VIDEO_SC1200
-   if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
-      status = sc1200_set_alpha_priority(priority);
+    if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
+        status = sc1200_set_alpha_priority(priority);
 #	endif
 #	if GFX_VIDEO_REDCLOUD
-   if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
-      status = redcloud_set_alpha_priority(priority);
+    if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
+        status = redcloud_set_alpha_priority(priority);
 #	endif
-   return (status);
+    return (status);
 }
 
 /*---------------------------------------------------------------------------
@@ -1115,17 +1112,17 @@ gfx_set_alpha_priority(int priority)
 int
 gfx_set_alpha_color(unsigned long color)
 {
-   int status = GFX_STATUS_UNSUPPORTED;
+    int status = GFX_STATUS_UNSUPPORTED;
 
 #	if GFX_VIDEO_SC1200
-   if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
-      status = sc1200_set_alpha_color(color);
+    if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
+        status = sc1200_set_alpha_color(color);
 #	endif
 #	if GFX_VIDEO_REDCLOUD
-   if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
-      status = redcloud_set_alpha_color(color);
+    if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
+        status = redcloud_set_alpha_color(color);
 #	endif
-   return (status);
+    return (status);
 }
 
 /*---------------------------------------------------------------------------
@@ -1135,17 +1132,17 @@ gfx_set_alpha_color(unsigned long color)
 int
 gfx_set_alpha_color_enable(int enable)
 {
-   int status = GFX_STATUS_UNSUPPORTED;
+    int status = GFX_STATUS_UNSUPPORTED;
 
 #	if GFX_VIDEO_SC1200
-   if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
-      status = sc1200_set_alpha_color_enable(enable);
+    if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
+        status = sc1200_set_alpha_color_enable(enable);
 #	endif
 #	if GFX_VIDEO_REDCLOUD
-   if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
-      status = redcloud_set_alpha_color_enable(enable);
+    if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
+        status = redcloud_set_alpha_color_enable(enable);
 #	endif
-   return (status);
+    return (status);
 }
 
 /*---------------------------------------------------------------------------
@@ -1155,17 +1152,17 @@ gfx_set_alpha_color_enable(int enable)
 int
 gfx_set_no_ck_outside_alpha(int enable)
 {
-   int status = GFX_STATUS_UNSUPPORTED;
+    int status = GFX_STATUS_UNSUPPORTED;
 
 #	if GFX_VIDEO_SC1200
-   if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
-      status = sc1200_set_no_ck_outside_alpha(enable);
+    if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
+        status = sc1200_set_no_ck_outside_alpha(enable);
 #	endif
 #	if GFX_VIDEO_REDCLOUD
-   if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
-      status = redcloud_set_no_ck_outside_alpha(enable);
+    if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
+        status = redcloud_set_no_ck_outside_alpha(enable);
 #	endif
-   return (status);
+    return (status);
 }
 
 /*---------------------------------------------------------------------------
@@ -1175,13 +1172,13 @@ gfx_set_no_ck_outside_alpha(int enable)
 int
 gfx_set_macrovision_enable(int enable)
 {
-   int status = GFX_STATUS_UNSUPPORTED;
+    int status = GFX_STATUS_UNSUPPORTED;
 
 #	if GFX_VIDEO_SC1200
-   if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
-      status = sc1200_set_macrovision_enable(enable);
+    if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
+        status = sc1200_set_macrovision_enable(enable);
 #	endif
-   return (status);
+    return (status);
 }
 
 /*---------------------------------------------------------------------------
@@ -1191,17 +1188,17 @@ gfx_set_macrovision_enable(int enable)
 int
 gfx_disable_softvga(void)
 {
-   int status = 0;
+    int status = 0;
 
 #	if GFX_VIDEO_CS5530
-   if (gfx_video_type == GFX_VIDEO_TYPE_CS5530)
-      status = cs5530_disable_softvga();
+    if (gfx_video_type == GFX_VIDEO_TYPE_CS5530)
+        status = cs5530_disable_softvga();
 #	endif
 #	if GFX_VIDEO_SC1200
-   if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
-      status = sc1200_disable_softvga();
+    if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
+        status = sc1200_disable_softvga();
 #	endif
-   return (status);
+    return (status);
 }
 
 /*---------------------------------------------------------------------------
@@ -1211,17 +1208,17 @@ gfx_disable_softvga(void)
 int
 gfx_enable_softvga(void)
 {
-   int status = 0;
+    int status = 0;
 
 #	if GFX_VIDEO_CS5530
-   if (gfx_video_type == GFX_VIDEO_TYPE_CS5530)
-      status = cs5530_enable_softvga();
+    if (gfx_video_type == GFX_VIDEO_TYPE_CS5530)
+        status = cs5530_enable_softvga();
 #	endif
 #	if GFX_VIDEO_SC1200
-   if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
-      status = sc1200_enable_softvga();
+    if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
+        status = sc1200_enable_softvga();
 #	endif
-   return (status);
+    return (status);
 }
 
 /*---------------------------------------------------------------------------
@@ -1231,21 +1228,21 @@ gfx_enable_softvga(void)
 unsigned long
 gfx_get_clock_frequency(void)
 {
-   unsigned long frequency = 0;
+    unsigned long frequency = 0;
 
 #	if GFX_VIDEO_CS5530
-   if (gfx_video_type == GFX_VIDEO_TYPE_CS5530)
-      frequency = cs5530_get_clock_frequency();
+    if (gfx_video_type == GFX_VIDEO_TYPE_CS5530)
+        frequency = cs5530_get_clock_frequency();
 #	endif
 #	if GFX_VIDEO_SC1200
-   if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
-      frequency = sc1200_get_clock_frequency();
+    if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
+        frequency = sc1200_get_clock_frequency();
 #	endif
 #	if GFX_VIDEO_REDCLOUD
-   if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
-      frequency = redcloud_get_clock_frequency();
+    if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
+        frequency = redcloud_get_clock_frequency();
 #	endif
-   return (frequency);
+    return (frequency);
 }
 
 /*************************************************************/
@@ -1261,17 +1258,17 @@ gfx_get_clock_frequency(void)
 int
 gfx_get_vsa2_softvga_enable(void)
 {
-   int enable = 0;
+    int enable = 0;
 
 #	if GFX_VIDEO_CS5530
-   if (gfx_video_type == GFX_VIDEO_TYPE_CS5530)
-      enable = cs5530_get_vsa2_softvga_enable();
+    if (gfx_video_type == GFX_VIDEO_TYPE_CS5530)
+        enable = cs5530_get_vsa2_softvga_enable();
 #	endif
 #	if GFX_VIDEO_SC1200
-   if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
-      enable = sc1200_get_vsa2_softvga_enable();
+    if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
+        enable = sc1200_get_vsa2_softvga_enable();
 #	endif
-   return enable;
+    return enable;
 
 }
 
@@ -1282,21 +1279,21 @@ gfx_get_vsa2_softvga_enable(void)
 int
 gfx_get_sync_polarities(void)
 {
-   int polarities = 0;
+    int polarities = 0;
 
 #	if GFX_VIDEO_CS5530
-   if (gfx_video_type == GFX_VIDEO_TYPE_CS5530)
-      polarities = cs5530_get_sync_polarities();
+    if (gfx_video_type == GFX_VIDEO_TYPE_CS5530)
+        polarities = cs5530_get_sync_polarities();
 #	endif
 #	if GFX_VIDEO_SC1200
-   if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
-      polarities = sc1200_get_sync_polarities();
+    if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
+        polarities = sc1200_get_sync_polarities();
 #	endif
 #	if GFX_VIDEO_REDCLOUD
-   if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
-      polarities = redcloud_get_sync_polarities();
+    if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
+        polarities = redcloud_get_sync_polarities();
 #	endif
-   return (polarities);
+    return (polarities);
 }
 
 /*---------------------------------------------------------------------------
@@ -1306,21 +1303,21 @@ gfx_get_sync_polarities(void)
 int
 gfx_get_video_palette_entry(unsigned long index, unsigned long *palette)
 {
-   int status = GFX_STATUS_UNSUPPORTED;
+    int status = GFX_STATUS_UNSUPPORTED;
 
 #	if GFX_VIDEO_CS5530
-   if (gfx_video_type == GFX_VIDEO_TYPE_CS5530)
-      status = cs5530_get_video_palette_entry(index, palette);
+    if (gfx_video_type == GFX_VIDEO_TYPE_CS5530)
+        status = cs5530_get_video_palette_entry(index, palette);
 #	endif
 #	if GFX_VIDEO_SC1200
-   if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
-      status = sc1200_get_video_palette_entry(index, palette);
+    if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
+        status = sc1200_get_video_palette_entry(index, palette);
 #	endif
 #	if GFX_VIDEO_REDCLOUD
-   if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
-      status = redcloud_get_video_palette_entry(index, palette);
+    if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
+        status = redcloud_get_video_palette_entry(index, palette);
 #	endif
-   return (status);
+    return (status);
 }
 
 /*-----------------------------------------------------------------------------
@@ -1330,21 +1327,21 @@ gfx_get_video_palette_entry(unsigned long index, unsigned long *palette)
 int
 gfx_get_video_enable(void)
 {
-   int enable = 0;
+    int enable = 0;
 
 #	if GFX_VIDEO_CS5530
-   if (gfx_video_type == GFX_VIDEO_TYPE_CS5530)
-      enable = cs5530_get_video_enable();
+    if (gfx_video_type == GFX_VIDEO_TYPE_CS5530)
+        enable = cs5530_get_video_enable();
 #	endif
 #	if GFX_VIDEO_SC1200
-   if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
-      enable = sc1200_get_video_enable();
+    if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
+        enable = sc1200_get_video_enable();
 #	endif
 #	if GFX_VIDEO_REDCLOUD
-   if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
-      enable = redcloud_get_video_enable();
+    if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
+        enable = redcloud_get_video_enable();
 #	endif
-   return (enable);
+    return (enable);
 }
 
 /*-----------------------------------------------------------------------------
@@ -1354,21 +1351,21 @@ gfx_get_video_enable(void)
 int
 gfx_get_video_format(void)
 {
-   int format = 0;
+    int format = 0;
 
 #	if GFX_VIDEO_CS5530
-   if (gfx_video_type == GFX_VIDEO_TYPE_CS5530)
-      format = cs5530_get_video_format();
+    if (gfx_video_type == GFX_VIDEO_TYPE_CS5530)
+        format = cs5530_get_video_format();
 #	endif
 #	if GFX_VIDEO_SC1200
-   if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
-      format = sc1200_get_video_format();
+    if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
+        format = sc1200_get_video_format();
 #	endif
 #	if GFX_VIDEO_REDCLOUD
-   if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
-      format = redcloud_get_video_format();
+    if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
+        format = redcloud_get_video_format();
 #	endif
-   return (format);
+    return (format);
 }
 
 /*-----------------------------------------------------------------------------
@@ -1378,21 +1375,21 @@ gfx_get_video_format(void)
 unsigned long
 gfx_get_video_src_size(void)
 {
-   unsigned long size = 0;
+    unsigned long size = 0;
 
 #	if GFX_VIDEO_CS5530
-   if (gfx_video_type == GFX_VIDEO_TYPE_CS5530)
-      size = cs5530_get_video_src_size();
+    if (gfx_video_type == GFX_VIDEO_TYPE_CS5530)
+        size = cs5530_get_video_src_size();
 #	endif
 #	if GFX_VIDEO_SC1200
-   if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
-      size = sc1200_get_video_src_size();
+    if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
+        size = sc1200_get_video_src_size();
 #	endif
 #	if GFX_VIDEO_REDCLOUD
-   if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
-      size = redcloud_get_video_src_size();
+    if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
+        size = redcloud_get_video_src_size();
 #	endif
-   return (size);
+    return (size);
 }
 
 /*-----------------------------------------------------------------------------
@@ -1402,21 +1399,21 @@ gfx_get_video_src_size(void)
 unsigned long
 gfx_get_video_line_size(void)
 {
-   unsigned long size = 0;
+    unsigned long size = 0;
 
 #	if GFX_VIDEO_CS5530
-   if (gfx_video_type == GFX_VIDEO_TYPE_CS5530)
-      size = cs5530_get_video_line_size();
+    if (gfx_video_type == GFX_VIDEO_TYPE_CS5530)
+        size = cs5530_get_video_line_size();
 #	endif
 #	if GFX_VIDEO_SC1200
-   if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
-      size = sc1200_get_video_line_size();
+    if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
+        size = sc1200_get_video_line_size();
 #	endif
 #	if GFX_VIDEO_REDCLOUD
-   if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
-      size = redcloud_get_video_line_size();
+    if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
+        size = redcloud_get_video_line_size();
 #	endif
-   return (size);
+    return (size);
 }
 
 /*-----------------------------------------------------------------------------
@@ -1426,21 +1423,21 @@ gfx_get_video_line_size(void)
 unsigned long
 gfx_get_video_xclip(void)
 {
-   unsigned long size = 0;
+    unsigned long size = 0;
 
 #	if GFX_VIDEO_CS5530
-   if (gfx_video_type == GFX_VIDEO_TYPE_CS5530)
-      size = cs5530_get_video_xclip();
+    if (gfx_video_type == GFX_VIDEO_TYPE_CS5530)
+        size = cs5530_get_video_xclip();
 #	endif
 #	if GFX_VIDEO_SC1200
-   if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
-      size = sc1200_get_video_xclip();
+    if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
+        size = sc1200_get_video_xclip();
 #	endif
 #	if GFX_VIDEO_REDCLOUD
-   if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
-      size = redcloud_get_video_xclip();
+    if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
+        size = redcloud_get_video_xclip();
 #	endif
-   return (size);
+    return (size);
 }
 
 /*-----------------------------------------------------------------------------
@@ -1450,21 +1447,21 @@ gfx_get_video_xclip(void)
 unsigned long
 gfx_get_video_offset(void)
 {
-   unsigned long offset = 0;
+    unsigned long offset = 0;
 
 #	if GFX_VIDEO_CS5530
-   if (gfx_video_type == GFX_VIDEO_TYPE_CS5530)
-      offset = cs5530_get_video_offset();
+    if (gfx_video_type == GFX_VIDEO_TYPE_CS5530)
+        offset = cs5530_get_video_offset();
 #	endif
 #	if GFX_VIDEO_SC1200
-   if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
-      offset = sc1200_get_video_offset();
+    if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
+        offset = sc1200_get_video_offset();
 #	endif
 #	if GFX_VIDEO_REDCLOUD
-   if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
-      offset = redcloud_get_video_offset();
+    if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
+        offset = redcloud_get_video_offset();
 #	endif
-   return (offset);
+    return (offset);
 }
 
 /*-----------------------------------------------------------------------------
@@ -1473,11 +1470,11 @@ gfx_get_video_offset(void)
  */
 void
 gfx_get_video_yuv_offsets(unsigned long *yoffset, unsigned long *uoffset,
-			  unsigned long *voffset)
+                          unsigned long *voffset)
 {
 #	if GFX_VIDEO_REDCLOUD
-   if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
-      redcloud_get_video_yuv_offsets(yoffset, uoffset, voffset);
+    if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
+        redcloud_get_video_yuv_offsets(yoffset, uoffset, voffset);
 #	endif
 }
 
@@ -1489,8 +1486,8 @@ void
 gfx_get_video_yuv_pitch(unsigned long *ypitch, unsigned long *uvpitch)
 {
 #	if GFX_VIDEO_REDCLOUD
-   if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
-      redcloud_get_video_yuv_pitch(ypitch, uvpitch);
+    if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
+        redcloud_get_video_yuv_pitch(ypitch, uvpitch);
 #	endif
 }
 
@@ -1501,13 +1498,13 @@ gfx_get_video_yuv_pitch(unsigned long *ypitch, unsigned long *uvpitch)
 unsigned long
 gfx_get_video_upscale(void)
 {
-   unsigned long scale = 0;
+    unsigned long scale = 0;
 
 #	if GFX_VIDEO_SC1200
-   if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
-      scale = sc1200_get_video_upscale();
+    if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
+        scale = sc1200_get_video_upscale();
 #	endif
-   return (scale);
+    return (scale);
 }
 
 /*---------------------------------------------------------------------------
@@ -1517,21 +1514,21 @@ gfx_get_video_upscale(void)
 unsigned long
 gfx_get_video_scale(void)
 {
-   unsigned long scale = 0;
+    unsigned long scale = 0;
 
 #	if GFX_VIDEO_CS5530
-   if (gfx_video_type == GFX_VIDEO_TYPE_CS5530)
-      scale = cs5530_get_video_scale();
+    if (gfx_video_type == GFX_VIDEO_TYPE_CS5530)
+        scale = cs5530_get_video_scale();
 #	endif
 #	if GFX_VIDEO_SC1200
-   if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
-      scale = sc1200_get_video_scale();
+    if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
+        scale = sc1200_get_video_scale();
 #	endif
 #	if GFX_VIDEO_REDCLOUD
-   if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
-      scale = redcloud_get_video_scale();
+    if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
+        scale = redcloud_get_video_scale();
 #	endif
-   return (scale);
+    return (scale);
 }
 
 /*---------------------------------------------------------------------------
@@ -1541,13 +1538,13 @@ gfx_get_video_scale(void)
 unsigned long
 gfx_get_video_downscale_delta(void)
 {
-   unsigned long delta = 0;
+    unsigned long delta = 0;
 
 #	if GFX_VIDEO_REDCLOUD
-   if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
-      delta = redcloud_get_video_downscale_delta();
+    if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
+        delta = redcloud_get_video_downscale_delta();
 #	endif
-   return (delta);
+    return (delta);
 }
 
 /*---------------------------------------------------------------------------
@@ -1557,13 +1554,13 @@ gfx_get_video_downscale_delta(void)
 int
 gfx_get_video_vertical_downscale_enable(void)
 {
-   int enable = 0;
+    int enable = 0;
 
 #	if GFX_VIDEO_REDCLOUD
-   if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
-      enable = redcloud_get_video_vertical_downscale_enable();
+    if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
+        enable = redcloud_get_video_vertical_downscale_enable();
 #	endif
-   return (enable);
+    return (enable);
 }
 
 /*---------------------------------------------------------------------------
@@ -1573,17 +1570,17 @@ gfx_get_video_vertical_downscale_enable(void)
 int
 gfx_get_video_downscale_config(unsigned short *type, unsigned short *m)
 {
-   int status = GFX_STATUS_UNSUPPORTED;
+    int status = GFX_STATUS_UNSUPPORTED;
 
 #	if GFX_VIDEO_SC1200
-   if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
-      status = sc1200_get_video_downscale_config(type, m);
+    if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
+        status = sc1200_get_video_downscale_config(type, m);
 #	endif
 #	if GFX_VIDEO_REDCLOUD
-   if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
-      status = redcloud_get_video_downscale_config(type, m);
+    if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
+        status = redcloud_get_video_downscale_config(type, m);
 #	endif
-   return (status);
+    return (status);
 }
 
 /*---------------------------------------------------------------------------
@@ -1592,17 +1589,17 @@ gfx_get_video_downscale_config(unsigned short *type, unsigned short *m)
  */
 void
 gfx_get_video_downscale_coefficients(unsigned short *coef1,
-				     unsigned short *coef2,
-				     unsigned short *coef3,
-				     unsigned short *coef4)
+                                     unsigned short *coef2,
+                                     unsigned short *coef3,
+                                     unsigned short *coef4)
 {
 #	if GFX_VIDEO_SC1200
-   if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
-      sc1200_get_video_downscale_coefficients(coef1, coef2, coef3, coef4);
+    if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
+        sc1200_get_video_downscale_coefficients(coef1, coef2, coef3, coef4);
 #	endif
 #	if GFX_VIDEO_REDCLOUD
-   if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
-      redcloud_get_video_downscale_coefficients(coef1, coef2, coef3, coef4);
+    if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
+        redcloud_get_video_downscale_coefficients(coef1, coef2, coef3, coef4);
 #	endif
 }
 
@@ -1614,12 +1611,12 @@ void
 gfx_get_video_downscale_enable(int *enable)
 {
 #	if GFX_VIDEO_SC1200
-   if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
-      sc1200_get_video_downscale_enable(enable);
+    if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
+        sc1200_get_video_downscale_enable(enable);
 #	endif
 #	if GFX_VIDEO_REDCLOUD
-   if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
-      redcloud_get_video_downscale_enable(enable);
+    if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
+        redcloud_get_video_downscale_enable(enable);
 #	endif
 }
 
@@ -1630,21 +1627,21 @@ gfx_get_video_downscale_enable(int *enable)
 unsigned long
 gfx_get_video_dst_size(void)
 {
-   unsigned long size = 0;
+    unsigned long size = 0;
 
 #	if GFX_VIDEO_CS5530
-   if (gfx_video_type == GFX_VIDEO_TYPE_CS5530)
-      size = cs5530_get_video_dst_size();
+    if (gfx_video_type == GFX_VIDEO_TYPE_CS5530)
+        size = cs5530_get_video_dst_size();
 #	endif
 #	if GFX_VIDEO_SC1200
-   if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
-      size = sc1200_get_video_dst_size();
+    if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
+        size = sc1200_get_video_dst_size();
 #	endif
 #	if GFX_VIDEO_REDCLOUD
-   if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
-      size = redcloud_get_video_dst_size();
+    if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
+        size = redcloud_get_video_dst_size();
 #	endif
-   return (size);
+    return (size);
 }
 
 /*---------------------------------------------------------------------------
@@ -1654,21 +1651,21 @@ gfx_get_video_dst_size(void)
 unsigned long
 gfx_get_video_position(void)
 {
-   unsigned long position = 0;
+    unsigned long position = 0;
 
 #	if GFX_VIDEO_CS5530
-   if (gfx_video_type == GFX_VIDEO_TYPE_CS5530)
-      position = cs5530_get_video_position();
+    if (gfx_video_type == GFX_VIDEO_TYPE_CS5530)
+        position = cs5530_get_video_position();
 #	endif
 #	if GFX_VIDEO_SC1200
-   if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
-      position = sc1200_get_video_position();
+    if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
+        position = sc1200_get_video_position();
 #	endif
 #	if GFX_VIDEO_REDCLOUD
-   if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
-      position = redcloud_get_video_position();
+    if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
+        position = redcloud_get_video_position();
 #	endif
-   return (position);
+    return (position);
 }
 
 /*---------------------------------------------------------------------------
@@ -1678,21 +1675,21 @@ gfx_get_video_position(void)
 unsigned long
 gfx_get_video_color_key(void)
 {
-   unsigned long key = 0;
+    unsigned long key = 0;
 
 #	if GFX_VIDEO_CS5530
-   if (gfx_video_type == GFX_VIDEO_TYPE_CS5530)
-      key = cs5530_get_video_color_key();
+    if (gfx_video_type == GFX_VIDEO_TYPE_CS5530)
+        key = cs5530_get_video_color_key();
 #	endif
 #	if GFX_VIDEO_SC1200
-   if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
-      key = sc1200_get_video_color_key();
+    if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
+        key = sc1200_get_video_color_key();
 #	endif
 #	if GFX_VIDEO_REDCLOUD
-   if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
-      key = redcloud_get_video_color_key();
+    if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
+        key = redcloud_get_video_color_key();
 #	endif
-   return (key);
+    return (key);
 }
 
 /*---------------------------------------------------------------------------
@@ -1702,21 +1699,21 @@ gfx_get_video_color_key(void)
 unsigned long
 gfx_get_video_color_key_mask(void)
 {
-   unsigned long mask = 0;
+    unsigned long mask = 0;
 
 #	if GFX_VIDEO_CS5530
-   if (gfx_video_type == GFX_VIDEO_TYPE_CS5530)
-      mask = cs5530_get_video_color_key_mask();
+    if (gfx_video_type == GFX_VIDEO_TYPE_CS5530)
+        mask = cs5530_get_video_color_key_mask();
 #	endif
 #	if GFX_VIDEO_SC1200
-   if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
-      mask = sc1200_get_video_color_key_mask();
+    if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
+        mask = sc1200_get_video_color_key_mask();
 #	endif
 #	if GFX_VIDEO_REDCLOUD
-   if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
-      mask = redcloud_get_video_color_key_mask();
+    if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
+        mask = redcloud_get_video_color_key_mask();
 #	endif
-   return (mask);
+    return (mask);
 }
 
 /*---------------------------------------------------------------------------
@@ -1726,21 +1723,21 @@ gfx_get_video_color_key_mask(void)
 int
 gfx_get_video_color_key_src(void)
 {
-   int src = 0;
+    int src = 0;
 
 #	if GFX_VIDEO_CS5530
-   if (gfx_video_type == GFX_VIDEO_TYPE_CS5530)
-      src = cs5530_get_video_color_key_src();
+    if (gfx_video_type == GFX_VIDEO_TYPE_CS5530)
+        src = cs5530_get_video_color_key_src();
 #	endif
 #	if GFX_VIDEO_SC1200
-   if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
-      src = sc1200_get_video_color_key_src();
+    if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
+        src = sc1200_get_video_color_key_src();
 #	endif
 #	if GFX_VIDEO_REDCLOUD
-   if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
-      src = redcloud_get_video_color_key_src();
+    if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
+        src = redcloud_get_video_color_key_src();
 #	endif
-   return (src);
+    return (src);
 }
 
 /*---------------------------------------------------------------------------
@@ -1750,21 +1747,21 @@ gfx_get_video_color_key_src(void)
 int
 gfx_get_video_filter(void)
 {
-   int filter = 0;
+    int filter = 0;
 
 #	if GFX_VIDEO_CS5530
-   if (gfx_video_type == GFX_VIDEO_TYPE_CS5530)
-      filter = cs5530_get_video_filter();
+    if (gfx_video_type == GFX_VIDEO_TYPE_CS5530)
+        filter = cs5530_get_video_filter();
 #	endif
 #	if GFX_VIDEO_SC1200
-   if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
-      filter = sc1200_get_video_filter();
+    if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
+        filter = sc1200_get_video_filter();
 #	endif
 #	if GFX_VIDEO_REDCLOUD
-   if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
-      filter = redcloud_get_video_filter();
+    if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
+        filter = redcloud_get_video_filter();
 #	endif
-   return (filter);
+    return (filter);
 }
 
 /*---------------------------------------------------------------------------
@@ -1774,17 +1771,17 @@ gfx_get_video_filter(void)
 int
 gfx_get_video_request(short *x, short *y)
 {
-   int status = GFX_STATUS_UNSUPPORTED;
+    int status = GFX_STATUS_UNSUPPORTED;
 
 #	if GFX_VIDEO_SC1200
-   if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
-      status = sc1200_get_video_request(x, y);
+    if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
+        status = sc1200_get_video_request(x, y);
 #	endif
 #	if GFX_VIDEO_REDCLOUD
-   if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
-      status = redcloud_get_video_request(x, y);
+    if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
+        status = redcloud_get_video_request(x, y);
 #	endif
-   return (status);
+    return (status);
 }
 
 /*---------------------------------------------------------------------------
@@ -1794,13 +1791,13 @@ gfx_get_video_request(short *x, short *y)
 int
 gfx_get_video_source(VideoSourceType * source)
 {
-   int status = GFX_STATUS_UNSUPPORTED;
+    int status = GFX_STATUS_UNSUPPORTED;
 
 #	if GFX_VIDEO_SC1200
-   if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
-      status = sc1200_get_video_source(source);
+    if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
+        status = sc1200_get_video_source(source);
 #	endif
-   return (status);
+    return (status);
 }
 
 /*---------------------------------------------------------------------------
@@ -1810,13 +1807,13 @@ gfx_get_video_source(VideoSourceType * source)
 int
 gfx_get_vbi_source(VbiSourceType * source)
 {
-   int status = GFX_STATUS_UNSUPPORTED;
+    int status = GFX_STATUS_UNSUPPORTED;
 
 #	if GFX_VIDEO_SC1200
-   if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
-      status = sc1200_get_vbi_source(source);
+    if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
+        status = sc1200_get_vbi_source(source);
 #	endif
-   return (status);
+    return (status);
 }
 
 /*---------------------------------------------------------------------------
@@ -1826,13 +1823,13 @@ gfx_get_vbi_source(VbiSourceType * source)
 unsigned long
 gfx_get_vbi_lines(int odd)
 {
-   unsigned long lines = (unsigned long)GFX_STATUS_UNSUPPORTED;
+    unsigned long lines = (unsigned long) GFX_STATUS_UNSUPPORTED;
 
 #	if GFX_VIDEO_SC1200
-   if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
-      lines = sc1200_get_vbi_lines(odd);
+    if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
+        lines = sc1200_get_vbi_lines(odd);
 #	endif
-   return (lines);
+    return (lines);
 }
 
 /*---------------------------------------------------------------------------
@@ -1842,13 +1839,13 @@ gfx_get_vbi_lines(int odd)
 unsigned long
 gfx_get_vbi_total(int odd)
 {
-   unsigned long total = (unsigned long)GFX_STATUS_UNSUPPORTED;
+    unsigned long total = (unsigned long) GFX_STATUS_UNSUPPORTED;
 
 #	if GFX_VIDEO_SC1200
-   if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
-      total = sc1200_get_vbi_total(odd);
+    if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
+        total = sc1200_get_vbi_total(odd);
 #	endif
-   return (total);
+    return (total);
 }
 
 /*---------------------------------------------------------------------------
@@ -1858,13 +1855,13 @@ gfx_get_vbi_total(int odd)
 int
 gfx_get_video_interlaced(void)
 {
-   int interlaced = GFX_STATUS_UNSUPPORTED;
+    int interlaced = GFX_STATUS_UNSUPPORTED;
 
 #	if GFX_VIDEO_SC1200
-   if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
-      interlaced = sc1200_get_video_interlaced();
+    if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
+        interlaced = sc1200_get_video_interlaced();
 #	endif
-   return (interlaced);
+    return (interlaced);
 }
 
 /*---------------------------------------------------------------------------
@@ -1874,13 +1871,13 @@ gfx_get_video_interlaced(void)
 int
 gfx_get_color_space_YUV(void)
 {
-   int color_space = GFX_STATUS_UNSUPPORTED;
+    int color_space = GFX_STATUS_UNSUPPORTED;
 
 #	if GFX_VIDEO_SC1200
-   if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
-      color_space = sc1200_get_color_space_YUV();
+    if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
+        color_space = sc1200_get_color_space_YUV();
 #	endif
-   return (color_space);
+    return (color_space);
 }
 
 /*---------------------------------------------------------------------------
@@ -1890,13 +1887,13 @@ gfx_get_color_space_YUV(void)
 int
 gfx_get_vertical_scaler_offset(char *offset)
 {
-   int status = GFX_STATUS_UNSUPPORTED;
+    int status = GFX_STATUS_UNSUPPORTED;
 
 #	if GFX_VIDEO_SC1200
-   if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
-      status = sc1200_get_vertical_scaler_offset(offset);
+    if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
+        status = sc1200_get_vertical_scaler_offset(offset);
 #	endif
-   return (status);
+    return (status);
 }
 
 /*---------------------------------------------------------------------------
@@ -1906,13 +1903,13 @@ gfx_get_vertical_scaler_offset(char *offset)
 unsigned long
 gfx_get_genlock_delay(void)
 {
-   unsigned long delay = (unsigned long)GFX_STATUS_UNSUPPORTED;
+    unsigned long delay = (unsigned long) GFX_STATUS_UNSUPPORTED;
 
 #	if GFX_VIDEO_SC1200
-   if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
-      delay = sc1200_get_genlock_delay();
+    if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
+        delay = sc1200_get_genlock_delay();
 #	endif
-   return (delay);
+    return (delay);
 }
 
 /*---------------------------------------------------------------------------
@@ -1922,13 +1919,13 @@ gfx_get_genlock_delay(void)
 int
 gfx_get_genlock_enable(void)
 {
-   int enable = GFX_STATUS_UNSUPPORTED;
+    int enable = GFX_STATUS_UNSUPPORTED;
 
 #	if GFX_VIDEO_SC1200
-   if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
-      enable = sc1200_get_genlock_enable();
+    if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
+        enable = sc1200_get_genlock_enable();
 #	endif
-   return (enable);
+    return (enable);
 }
 
 /*---------------------------------------------------------------------------
@@ -1937,23 +1934,22 @@ gfx_get_genlock_enable(void)
  */
 int
 gfx_get_video_cursor(unsigned long *key, unsigned long *mask,
-		     unsigned short *select_color2, unsigned long *color1,
-		     unsigned short *color2)
+                     unsigned short *select_color2, unsigned long *color1,
+                     unsigned short *color2)
 {
-   int enable = GFX_STATUS_UNSUPPORTED;
+    int enable = GFX_STATUS_UNSUPPORTED;
 
 #	if GFX_VIDEO_SC1200
-   if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
-      enable =
-	    sc1200_get_video_cursor(key, mask, select_color2, color1, color2);
+    if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
+        enable =
+            sc1200_get_video_cursor(key, mask, select_color2, color1, color2);
 #	endif
 #	if GFX_VIDEO_REDCLOUD
-   if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
-      enable =
-	    redcloud_get_video_cursor(key, mask, select_color2, color1,
-				      color2);
+    if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
+        enable =
+            redcloud_get_video_cursor(key, mask, select_color2, color1, color2);
 #	endif
-   return (enable);
+    return (enable);
 }
 
 /*---------------------------------------------------------------------------
@@ -1963,21 +1959,21 @@ gfx_get_video_cursor(unsigned long *key, unsigned long *mask,
 unsigned long
 gfx_read_crc(void)
 {
-   unsigned long crc = 0;
+    unsigned long crc = 0;
 
 #	if GFX_VIDEO_CS5530
-   if (gfx_video_type == GFX_VIDEO_TYPE_CS5530)
-      crc = cs5530_read_crc();
+    if (gfx_video_type == GFX_VIDEO_TYPE_CS5530)
+        crc = cs5530_read_crc();
 #	endif
 #	if GFX_VIDEO_SC1200
-   if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
-      crc = sc1200_read_crc();
+    if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
+        crc = sc1200_read_crc();
 #	endif
 #	if GFX_VIDEO_REDCLOUD
-   if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
-      crc = redcloud_read_crc();
+    if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
+        crc = redcloud_read_crc();
 #	endif
-   return (crc);
+    return (crc);
 }
 
 /*---------------------------------------------------------------------------
@@ -1987,13 +1983,13 @@ gfx_read_crc(void)
 unsigned long
 gfx_read_crc32(void)
 {
-   unsigned long crc = 0;
+    unsigned long crc = 0;
 
 #	if GFX_VIDEO_REDCLOUD
-   if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
-      crc = redcloud_read_crc32();
+    if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
+        crc = redcloud_read_crc32();
 #	endif
-   return (crc);
+    return (crc);
 }
 
 /*---------------------------------------------------------------------------
@@ -2002,15 +1998,15 @@ gfx_read_crc32(void)
  */
 unsigned long
 gfx_read_window_crc(int source, unsigned short x, unsigned short y,
-		    unsigned short width, unsigned short height, int crc32)
+                    unsigned short width, unsigned short height, int crc32)
 {
-   unsigned long crc = 0;
+    unsigned long crc = 0;
 
 #	if GFX_VIDEO_REDCLOUD
-   if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
-      crc = redcloud_read_window_crc(source, x, y, width, height, crc32);
+    if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
+        crc = redcloud_read_window_crc(source, x, y, width, height, crc32);
 #	endif
-   return (crc);
+    return (crc);
 }
 
 /*-----------------------------------------------------------------------------
@@ -2020,13 +2016,13 @@ gfx_read_window_crc(int source, unsigned short x, unsigned short y,
 int
 gfx_get_macrovision_enable(void)
 {
-   int enable = 0;
+    int enable = 0;
 
 #	if GFX_VIDEO_SC1200
-   if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
-      enable = sc1200_get_video_enable();
+    if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
+        enable = sc1200_get_video_enable();
 #	endif
-   return (enable);
+    return (enable);
 }
 
 /*---------------------------------------------------------------------------
@@ -2037,14 +2033,14 @@ void
 gfx_get_alpha_enable(int *enable)
 {
 #	if GFX_VIDEO_SC1200
-   if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
-      sc1200_get_alpha_enable(enable);
+    if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
+        sc1200_get_alpha_enable(enable);
 #	endif
 #	if GFX_VIDEO_REDCLOUD
-   if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
-      redcloud_get_alpha_enable(enable);
+    if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
+        redcloud_get_alpha_enable(enable);
 #	endif
-   return;
+    return;
 }
 
 /*---------------------------------------------------------------------------
@@ -2053,17 +2049,17 @@ gfx_get_alpha_enable(int *enable)
  */
 void
 gfx_get_alpha_size(unsigned short *x, unsigned short *y,
-		   unsigned short *width, unsigned short *height)
+                   unsigned short *width, unsigned short *height)
 {
 #	if GFX_VIDEO_SC1200
-   if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
-      sc1200_get_alpha_size(x, y, width, height);
+    if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
+        sc1200_get_alpha_size(x, y, width, height);
 #	endif
 #	if GFX_VIDEO_REDCLOUD
-   if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
-      redcloud_get_alpha_size(x, y, width, height);
+    if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
+        redcloud_get_alpha_size(x, y, width, height);
 #	endif
-   return;
+    return;
 }
 
 /*---------------------------------------------------------------------------
@@ -2074,14 +2070,14 @@ void
 gfx_get_alpha_value(unsigned char *alpha, char *delta)
 {
 #	if GFX_VIDEO_SC1200
-   if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
-      sc1200_get_alpha_value(alpha, delta);
+    if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
+        sc1200_get_alpha_value(alpha, delta);
 #	endif
 #	if GFX_VIDEO_REDCLOUD
-   if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
-      redcloud_get_alpha_value(alpha, delta);
+    if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
+        redcloud_get_alpha_value(alpha, delta);
 #	endif
-   return;
+    return;
 }
 
 /*---------------------------------------------------------------------------
@@ -2092,14 +2088,14 @@ void
 gfx_get_alpha_priority(int *priority)
 {
 #	if GFX_VIDEO_SC1200
-   if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
-      sc1200_get_alpha_priority(priority);
+    if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
+        sc1200_get_alpha_priority(priority);
 #	endif
 #	if GFX_VIDEO_REDCLOUD
-   if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
-      redcloud_get_alpha_priority(priority);
+    if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
+        redcloud_get_alpha_priority(priority);
 #	endif
-   return;
+    return;
 }
 
 /*---------------------------------------------------------------------------
@@ -2110,18 +2106,18 @@ void
 gfx_get_alpha_color(unsigned long *color)
 {
 #	if GFX_VIDEO_SC1200
-   if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
-      sc1200_get_alpha_color(color);
+    if (gfx_video_type == GFX_VIDEO_TYPE_SC1200)
+        sc1200_get_alpha_color(color);
 #	endif
 #	if GFX_VIDEO_REDCLOUD
-   if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
-      redcloud_get_alpha_color(color);
+    if (gfx_video_type == GFX_VIDEO_TYPE_REDCLOUD)
+        redcloud_get_alpha_color(color);
 #	endif
-   return;
+    return;
 }
 
-#endif /* GFX_READ_ROUTINES */
+#endif                          /* GFX_READ_ROUTINES */
 
-#endif /* GFX_VIDEO_DYNAMIC */
+#endif                          /* GFX_VIDEO_DYNAMIC */
 
 /* END OF FILE */

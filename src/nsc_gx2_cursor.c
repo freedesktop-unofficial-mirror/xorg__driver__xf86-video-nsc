@@ -159,9 +159,9 @@ void GX2HideCursor(ScrnInfoPtr pScreenInfo);
 void GX2ShowCursor(ScrnInfoPtr pScreenInfo);
 static Bool GX2UseHWCursor(ScreenPtr pScreen, CursorPtr pCurs);
 extern void GX2SetVideoPosition(int x, int y, int width, int height,
-				short src_w, short src_h, short drw_w,
-				short drw_h, int id, int offset,
-				ScrnInfoPtr pScrn);
+                                short src_w, short src_h, short drw_w,
+                                short drw_h, int id, int offset,
+                                ScrnInfoPtr pScrn);
 
 /*----------------------------------------------------------------------------
  * GX2HWCursorInit.
@@ -181,31 +181,31 @@ extern void GX2SetVideoPosition(int x, int y, int width, int height,
 Bool
 GX2HWCursorInit(ScreenPtr pScreen)
 {
-   ScrnInfoPtr pScreenInfo = xf86Screens[pScreen->myNum];
-   GeodePtr pGeode = GEODEPTR(pScreenInfo);
-   xf86CursorInfoPtr infoPtr;
+    ScrnInfoPtr pScreenInfo = xf86Screens[pScreen->myNum];
+    GeodePtr pGeode = GEODEPTR(pScreenInfo);
+    xf86CursorInfoPtr infoPtr;
 
-   infoPtr = xf86CreateCursorInfoRec();
-   if (!infoPtr)
-      return FALSE;
-   /* the geode structure is intiallized with the cursor infoRec */
-   pGeode->CursorInfo = infoPtr;
-   infoPtr->MaxWidth = 32;
-   infoPtr->MaxHeight = 32;
-   /* seeting up the cursor flags */
-   infoPtr->Flags = HARDWARE_CURSOR_BIT_ORDER_MSBFIRST |
-	 HARDWARE_CURSOR_TRUECOLOR_AT_8BPP |
-	 HARDWARE_CURSOR_SOURCE_MASK_NOT_INTERLEAVED;
-   /* cursor info ptr is intiallized with the values obtained from
-    * * durnago calls
-    */
-   infoPtr->SetCursorColors = GX2SetCursorColors;
-   infoPtr->SetCursorPosition = GX2SetCursorPosition;
-   infoPtr->LoadCursorImage = GX2LoadCursorImage;
-   infoPtr->HideCursor = GX2HideCursor;
-   infoPtr->ShowCursor = GX2ShowCursor;
-   infoPtr->UseHWCursor = GX2UseHWCursor;
-   return (xf86InitCursor(pScreen, infoPtr));
+    infoPtr = xf86CreateCursorInfoRec();
+    if (!infoPtr)
+        return FALSE;
+    /* the geode structure is intiallized with the cursor infoRec */
+    pGeode->CursorInfo = infoPtr;
+    infoPtr->MaxWidth = 32;
+    infoPtr->MaxHeight = 32;
+    /* seeting up the cursor flags */
+    infoPtr->Flags = HARDWARE_CURSOR_BIT_ORDER_MSBFIRST |
+        HARDWARE_CURSOR_TRUECOLOR_AT_8BPP |
+        HARDWARE_CURSOR_SOURCE_MASK_NOT_INTERLEAVED;
+    /* cursor info ptr is intiallized with the values obtained from
+     * * durnago calls
+     */
+    infoPtr->SetCursorColors = GX2SetCursorColors;
+    infoPtr->SetCursorPosition = GX2SetCursorPosition;
+    infoPtr->LoadCursorImage = GX2LoadCursorImage;
+    infoPtr->HideCursor = GX2HideCursor;
+    infoPtr->ShowCursor = GX2ShowCursor;
+    infoPtr->UseHWCursor = GX2UseHWCursor;
+    return (xf86InitCursor(pScreen, infoPtr));
 }
 
 /*----------------------------------------------------------------------------
@@ -226,7 +226,7 @@ GX2HWCursorInit(ScreenPtr pScreen)
 static void
 GX2SetCursorColors(ScrnInfoPtr pScreenInfo, int bg, int fg)
 {
-   GFX(set_cursor_colors(bg, fg));
+    GFX(set_cursor_colors(bg, fg));
 }
 
 /*----------------------------------------------------------------------------
@@ -246,40 +246,40 @@ GX2SetCursorColors(ScrnInfoPtr pScreenInfo, int bg, int fg)
 static void
 GX2SetCursorPosition(ScrnInfoPtr pScreenInfo, int x, int y)
 {
-   unsigned long offset;
-   static int panOffset = 0;
-   GeodePtr pGeode = GEODEPTR(pScreenInfo);
+    unsigned long offset;
+    static int panOffset = 0;
+    GeodePtr pGeode = GEODEPTR(pScreenInfo);
 
-   unsigned short xhot = 0, yhot = 0;
+    unsigned short xhot = 0, yhot = 0;
 
-   if (x < 0) {
-      xhot = (unsigned short)(-x);
-      x = 0;
-   }
-   if (y < 0) {
-      yhot = (unsigned short)(-y);
-      y = 0;
-   }
+    if (x < 0) {
+        xhot = (unsigned short) (-x);
+        x = 0;
+    }
+    if (y < 0) {
+        yhot = (unsigned short) (-y);
+        y = 0;
+    }
 
-   GFX(set_cursor_position(pGeode->CursorStartOffset, x, y, xhot, yhot));
-   GFX(set_cursor_enable(1));
+    GFX(set_cursor_position(pGeode->CursorStartOffset, x, y, xhot, yhot));
+    GFX(set_cursor_enable(1));
 
-   if ((pGeode->OverlayON) && (pGeode->Panel)) {
+    if ((pGeode->OverlayON) && (pGeode->Panel)) {
 #if defined(STB_X)
-      Gal_get_display_offset(&offset);
+        Gal_get_display_offset(&offset);
 #else
-      offset = gfx_get_display_offset();
+        offset = gfx_get_display_offset();
 #endif
-      if (offset != panOffset) {
-	 GX2SetVideoPosition(pGeode->video_x, pGeode->video_y,
-			     pGeode->video_w, pGeode->video_h,
-			     pGeode->video_srcw, pGeode->video_srch,
-			     pGeode->video_dstw, pGeode->video_dsth,
-			     pGeode->video_id, pGeode->video_offset,
-			     pGeode->video_scrnptr);
-	 panOffset = offset;
-      }
-   }
+        if (offset != panOffset) {
+            GX2SetVideoPosition(pGeode->video_x, pGeode->video_y,
+                                pGeode->video_w, pGeode->video_h,
+                                pGeode->video_srcw, pGeode->video_srch,
+                                pGeode->video_dstw, pGeode->video_dsth,
+                                pGeode->video_id, pGeode->video_offset,
+                                pGeode->video_scrnptr);
+            panOffset = offset;
+        }
+    }
 }
 
 /*----------------------------------------------------------------------------
@@ -298,33 +298,34 @@ GX2SetCursorPosition(ScrnInfoPtr pScreenInfo, int x, int y)
 void
 GX2LoadCursorImage(ScrnInfoPtr pScreenInfo, unsigned char *src)
 {
-   int i;
-   unsigned long shape;
-   unsigned long mask;
-   unsigned long andMask[32] = { 0, };
-   unsigned long xorMask[32] = { 0, };
-   GeodePtr pGeode = GEODEPTR(pScreenInfo);
+    int i;
+    unsigned long shape;
+    unsigned long mask;
+    unsigned long andMask[32] = { 0, };
+    unsigned long xorMask[32] = { 0, };
+    GeodePtr pGeode = GEODEPTR(pScreenInfo);
 
-   for (i = 0; i < 32; i++) {
-      if (src) {
-	 shape = ((unsigned long)src[i * 4] << 24) |
-	       ((unsigned long)src[i * 4 + 1] << 16) |
-	       ((unsigned long)src[i * 4 + 2] << 8) |
-	       ((unsigned long)src[i * 4 + 3] << 0);
-	 mask = ((unsigned long)src[i * 4 + 128] << 24) |
-	       ((unsigned long)src[i * 4 + 1 + 128] << 16) |
-	       ((unsigned long)src[i * 4 + 2 + 128] << 8) |
-	       ((unsigned long)src[i * 4 + 3 + 128] << 0);
-      } else {
-	 mask = 0x0;
-	 shape = 0xFFFFFFFF;
-      }
+    for (i = 0; i < 32; i++) {
+        if (src) {
+            shape = ((unsigned long) src[i * 4] << 24) |
+                ((unsigned long) src[i * 4 + 1] << 16) |
+                ((unsigned long) src[i * 4 + 2] << 8) |
+                ((unsigned long) src[i * 4 + 3] << 0);
+            mask = ((unsigned long) src[i * 4 + 128] << 24) |
+                ((unsigned long) src[i * 4 + 1 + 128] << 16) |
+                ((unsigned long) src[i * 4 + 2 + 128] << 8) |
+                ((unsigned long) src[i * 4 + 3 + 128] << 0);
+        }
+        else {
+            mask = 0x0;
+            shape = 0xFFFFFFFF;
+        }
 
-      andMask[i] = ~(mask);
-      xorMask[i] = shape & mask;
-   }
+        andMask[i] = ~(mask);
+        xorMask[i] = shape & mask;
+    }
 
-   GFX(set_cursor_shape32(pGeode->CursorStartOffset, andMask, xorMask));
+    GFX(set_cursor_shape32(pGeode->CursorStartOffset, andMask, xorMask));
 }
 
 /*----------------------------------------------------------------------------
@@ -344,7 +345,7 @@ GX2LoadCursorImage(ScrnInfoPtr pScreenInfo, unsigned char *src)
 void
 GX2HideCursor(ScrnInfoPtr pScreenInfo)
 {
-   GFX(set_cursor_enable(0));
+    GFX(set_cursor_enable(0));
 }
 
 /*----------------------------------------------------------------------------
@@ -364,7 +365,7 @@ GX2HideCursor(ScrnInfoPtr pScreenInfo)
 void
 GX2ShowCursor(ScrnInfoPtr pScreenInfo)
 {
-   GFX(set_cursor_enable(1));
+    GFX(set_cursor_enable(1));
 }
 
 /*----------------------------------------------------------------------------
@@ -385,11 +386,11 @@ GX2ShowCursor(ScrnInfoPtr pScreenInfo)
 static Bool
 GX2UseHWCursor(ScreenPtr pScreen, CursorPtr pCurs)
 {
-   ScrnInfoPtr pScreenInfo = XF86SCRNINFO(pScreen);
+    ScrnInfoPtr pScreenInfo = XF86SCRNINFO(pScreen);
 
-   if (pScreenInfo->currentMode->Flags & V_DBLSCAN)
-      return FALSE;
-   return TRUE;
+    if (pScreenInfo->currentMode->Flags & V_DBLSCAN)
+        return FALSE;
+    return TRUE;
 }
 
 /* End of File */

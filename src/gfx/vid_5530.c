@@ -132,51 +132,49 @@
  * CS5530 PLL TABLE
  *----------------------------------------------------------------------------
  */
-typedef struct tagCS5530PLLENTRY
-{
-   long frequency;			/* 16.16 fixed point frequency */
-   unsigned long pll_value;		/* associated register value */
-}
-CS5530PLLENTRY;
+typedef struct tagCS5530PLLENTRY {
+    long frequency;             /* 16.16 fixed point frequency */
+    unsigned long pll_value;    /* associated register value */
+} CS5530PLLENTRY;
 
 CS5530PLLENTRY CS5530_PLLtable[] = {
-   {0x00192CCC, 0x31C45801,},		/*  25.1750 */
-   {0x001C526E, 0x20E36802,},		/*  28.3220 */
-   {0x001F8000, 0x33915801,},		/*  31.5000 */
-   {0x00240000, 0x31EC4801,},		/*  36.0000 */
-   {0x00258000, 0x21E22801,},		/*  37.5000 */
-   {0x00280000, 0x33088801,},		/*  40.0000 */
-   {0x002CE666, 0x33E22801,},		/*  44.9000 */
-   {0x00318000, 0x336C4801,},		/*  49.5000 */
-   {0x00320000, 0x23088801,},		/*  50.0000 */
-   {0x00325999, 0x23088801,},		/*  50.3500 */
-   {0x00360000, 0x3708A801,},		/*  54.0000 */
-   {0x00384000, 0x23E36802,},		/*  56.2500 */
-   {0x0038643F, 0x23E36802,},		/*  56.3916 */
-   {0x0038A4DD, 0x23E36802,},		/*  56.6444 */
-   {0x003B0000, 0x37C45801,},		/*  59.0000 */
-   {0x003F0000, 0x23EC4801,},		/*  63.0000 */
-   {0x00410000, 0x37911801,},		/*  65.0000 */
-   {0x00438000, 0x37963803,},		/*  67.5000 */
-   {0x0046CCCC, 0x37058803,},		/*  70.8000 */
-   {0x00480000, 0x3710C805,},		/*  72.0000 */
-   {0x004B0000, 0x37E22801,},		/*  75.0000 */
-   {0x004EC000, 0x27915801,},		/*  78.7500 */
-   {0x00500000, 0x37D8D802,},		/*  80.0000 */
-   {0x0059CCCC, 0x27588802,},		/*  89.8000 */
-   {0x005E8000, 0x27EC4802,},		/*  94.5000 */
-   {0x00630000, 0x27AC6803,},		/*  99.0000 */
-   {0x00640000, 0x27088801,},		/* 100.0000 */
-   {0x006C0000, 0x2710C805,},		/* 108.0000 */
-   {0x00708000, 0x27E36802,},		/* 112.5000 */
-   {0x00820000, 0x27C58803,},		/* 130.0000 */
-   {0x00870000, 0x27316803,},		/* 135.0000 */
-   {0x009D8000, 0x2F915801,},		/* 157.5000 */
-   {0x00A20000, 0x2F08A801,},		/* 162.0000 */
-   {0x00AF0000, 0x2FB11802,},		/* 175.0000 */
-   {0x00BD0000, 0x2FEC4802,},		/* 189.0000 */
-   {0x00CA0000, 0x2F963803,},		/* 202.0000 */
-   {0x00E80000, 0x2FB1B802,},		/* 232.0000 */
+    {0x00192CCC, 0x31C45801,},  /*  25.1750 */
+    {0x001C526E, 0x20E36802,},  /*  28.3220 */
+    {0x001F8000, 0x33915801,},  /*  31.5000 */
+    {0x00240000, 0x31EC4801,},  /*  36.0000 */
+    {0x00258000, 0x21E22801,},  /*  37.5000 */
+    {0x00280000, 0x33088801,},  /*  40.0000 */
+    {0x002CE666, 0x33E22801,},  /*  44.9000 */
+    {0x00318000, 0x336C4801,},  /*  49.5000 */
+    {0x00320000, 0x23088801,},  /*  50.0000 */
+    {0x00325999, 0x23088801,},  /*  50.3500 */
+    {0x00360000, 0x3708A801,},  /*  54.0000 */
+    {0x00384000, 0x23E36802,},  /*  56.2500 */
+    {0x0038643F, 0x23E36802,},  /*  56.3916 */
+    {0x0038A4DD, 0x23E36802,},  /*  56.6444 */
+    {0x003B0000, 0x37C45801,},  /*  59.0000 */
+    {0x003F0000, 0x23EC4801,},  /*  63.0000 */
+    {0x00410000, 0x37911801,},  /*  65.0000 */
+    {0x00438000, 0x37963803,},  /*  67.5000 */
+    {0x0046CCCC, 0x37058803,},  /*  70.8000 */
+    {0x00480000, 0x3710C805,},  /*  72.0000 */
+    {0x004B0000, 0x37E22801,},  /*  75.0000 */
+    {0x004EC000, 0x27915801,},  /*  78.7500 */
+    {0x00500000, 0x37D8D802,},  /*  80.0000 */
+    {0x0059CCCC, 0x27588802,},  /*  89.8000 */
+    {0x005E8000, 0x27EC4802,},  /*  94.5000 */
+    {0x00630000, 0x27AC6803,},  /*  99.0000 */
+    {0x00640000, 0x27088801,},  /* 100.0000 */
+    {0x006C0000, 0x2710C805,},  /* 108.0000 */
+    {0x00708000, 0x27E36802,},  /* 112.5000 */
+    {0x00820000, 0x27C58803,},  /* 130.0000 */
+    {0x00870000, 0x27316803,},  /* 135.0000 */
+    {0x009D8000, 0x2F915801,},  /* 157.5000 */
+    {0x00A20000, 0x2F08A801,},  /* 162.0000 */
+    {0x00AF0000, 0x2FB11802,},  /* 175.0000 */
+    {0x00BD0000, 0x2FEC4802,},  /* 189.0000 */
+    {0x00CA0000, 0x2F963803,},  /* 202.0000 */
+    {0x00E80000, 0x2FB1B802,},  /* 232.0000 */
 };
 
 #define NUM_CS5530_FREQUENCIES sizeof(CS5530_PLLtable)/sizeof(CS5530PLLENTRY)
@@ -187,27 +185,27 @@ int cs5530_set_video_size(unsigned short width, unsigned short height);
 int cs5530_set_video_yuv_pitch(unsigned long ypitch, unsigned long uvpitch);
 int cs5530_set_video_offset(unsigned long offset);
 int cs5530_set_video_yuv_offsets(unsigned long yoffset, unsigned long uoffset,
-				 unsigned long voffset);
+                                 unsigned long voffset);
 int cs5530_set_video_window(short x, short y, unsigned short w,
-			    unsigned short h);
+                            unsigned short h);
 int cs5530_set_video_left_crop(unsigned short x);
 int cs5530_set_video_upscale(unsigned short srcw, unsigned short srch,
-			     unsigned short dstw, unsigned short dsth);
+                             unsigned short dstw, unsigned short dsth);
 int cs5530_set_video_scale(unsigned short srcw, unsigned short srch,
-			   unsigned short dstw, unsigned short dsth);
+                           unsigned short dstw, unsigned short dsth);
 int cs5530_set_video_vertical_downscale(unsigned short srch,
-					unsigned short dsth);
+                                        unsigned short dsth);
 void cs5530_set_video_vertical_downscale_enable(int enable);
 int cs5530_set_video_downscale_config(unsigned short type, unsigned short m);
 int cs5530_set_video_color_key(unsigned long key, unsigned long mask,
-			       int bluescreen);
+                               int bluescreen);
 int cs5530_set_video_filter(int xfilter, int yfilter);
 int cs5530_set_video_palette(unsigned long *palette);
 int cs5530_set_video_palette_entry(unsigned long index, unsigned long color);
 int cs5530_set_video_downscale_coefficients(unsigned short coef1,
-					    unsigned short coef2,
-					    unsigned short coef3,
-					    unsigned short coef4);
+                                            unsigned short coef2,
+                                            unsigned short coef3,
+                                            unsigned short coef4);
 int cs5530_set_video_downscale_enable(int enable);
 int cs5530_set_video_source(VideoSourceType source);
 int cs5530_set_vbi_source(VbiSourceType source);
@@ -220,15 +218,15 @@ int cs5530_set_top_line_in_odd(int enable);
 int cs5530_set_genlock_delay(unsigned long delay);
 int cs5530_set_genlock_enable(int flags);
 int cs5530_set_video_cursor(unsigned long key, unsigned long mask,
-			    unsigned short select_color2,
-			    unsigned long color1, unsigned long color2);
+                            unsigned short select_color2,
+                            unsigned long color1, unsigned long color2);
 int cs5530_set_video_cursor_enable(int enable);
 int cs5530_set_video_request(short x, short y);
 
 int cs5530_select_alpha_region(int region);
 int cs5530_set_alpha_enable(int enable);
 int cs5530_set_alpha_window(short x, short y,
-			    unsigned short width, unsigned short height);
+                            unsigned short width, unsigned short height);
 int cs5530_set_alpha_value(unsigned char alpha, char delta);
 int cs5530_set_alpha_priority(int priority);
 int cs5530_set_alpha_color(unsigned long color);
@@ -251,27 +249,24 @@ unsigned long cs5530_get_video_line_size(void);
 unsigned long cs5530_get_video_xclip(void);
 unsigned long cs5530_get_video_offset(void);
 void cs5530_get_video_yuv_offsets(unsigned long *yoffset,
-				  unsigned long *uoffset,
-				  unsigned long *voffset);
-void cs5530_get_video_yuv_pitch(unsigned long *ypitch,
-				unsigned long *uvpitch);
+                                  unsigned long *uoffset,
+                                  unsigned long *voffset);
+void cs5530_get_video_yuv_pitch(unsigned long *ypitch, unsigned long *uvpitch);
 unsigned long cs5530_get_video_upscale(void);
 unsigned long cs5530_get_video_scale(void);
 unsigned long cs5530_get_video_downscale_delta(void);
 int cs5530_get_video_vertical_downscale_enable(void);
-int cs5530_get_video_downscale_config(unsigned short *type,
-				      unsigned short *m);
+int cs5530_get_video_downscale_config(unsigned short *type, unsigned short *m);
 void cs5530_get_video_downscale_coefficients(unsigned short *coef1,
-					     unsigned short *coef2,
-					     unsigned short *coef3,
-					     unsigned short *coef4);
+                                             unsigned short *coef2,
+                                             unsigned short *coef3,
+                                             unsigned short *coef4);
 void cs5530_get_video_downscale_enable(int *enable);
 unsigned long cs5530_get_video_dst_size(void);
 unsigned long cs5530_get_video_position(void);
 unsigned long cs5530_get_video_color_key(void);
 unsigned long cs5530_get_video_color_key_mask(void);
-int cs5530_get_video_palette_entry(unsigned long index,
-				   unsigned long *palette);
+int cs5530_get_video_palette_entry(unsigned long index, unsigned long *palette);
 int cs5530_get_video_color_key_src(void);
 int cs5530_get_video_filter(void);
 int cs5530_get_video_request(short *x, short *y);
@@ -285,18 +280,18 @@ int cs5530_get_vertical_scaler_offset(char *offset);
 unsigned long cs5530_get_genlock_delay(void);
 int cs5530_get_genlock_enable(void);
 int cs5530_get_video_cursor(unsigned long *key, unsigned long *mask,
-			    unsigned short *select_color2,
-			    unsigned long *color1, unsigned short *color2);
+                            unsigned short *select_color2,
+                            unsigned long *color1, unsigned short *color2);
 unsigned long cs5530_read_crc(void);
 unsigned long cs5530_read_crc32(void);
 unsigned long cs5530_read_window_crc(int source, unsigned short x,
-				     unsigned short y, unsigned short width,
-				     unsigned short height, int crc32);
+                                     unsigned short y, unsigned short width,
+                                     unsigned short height, int crc32);
 int cs5530_get_macrovision_enable(void);
 
 void cs5530_get_alpha_enable(int *enable);
 void cs5530_get_alpha_size(unsigned short *x, unsigned short *y,
-			   unsigned short *width, unsigned short *height);
+                           unsigned short *width, unsigned short *height);
 void cs5530_get_alpha_value(unsigned char *alpha, char *delta);
 void cs5530_get_alpha_priority(int *priority);
 void cs5530_get_alpha_color(unsigned long *color);
@@ -318,49 +313,49 @@ int
 gfx_set_crt_enable(int enable)
 #endif
 {
-   unsigned long config;
+    unsigned long config;
 
-   config = READ_VID32(CS5530_DISPLAY_CONFIG);
+    config = READ_VID32(CS5530_DISPLAY_CONFIG);
 
-   switch (enable) {
-   case CRT_DISABLE:			/* Disable everything */
+    switch (enable) {
+    case CRT_DISABLE:          /* Disable everything */
 
-      WRITE_VID32(CS5530_DISPLAY_CONFIG,
-		  config & ~(CS5530_DCFG_DIS_EN | CS5530_DCFG_HSYNC_EN |
-			     CS5530_DCFG_VSYNC_EN | CS5530_DCFG_DAC_BL_EN |
-			     CS5530_DCFG_DAC_PWDNX));
-      break;
+        WRITE_VID32(CS5530_DISPLAY_CONFIG,
+                    config & ~(CS5530_DCFG_DIS_EN | CS5530_DCFG_HSYNC_EN |
+                               CS5530_DCFG_VSYNC_EN | CS5530_DCFG_DAC_BL_EN |
+                               CS5530_DCFG_DAC_PWDNX));
+        break;
 
-   case CRT_ENABLE:			/* Enable CRT display, including display logic */
+    case CRT_ENABLE:           /* Enable CRT display, including display logic */
 
-      WRITE_VID32(CS5530_DISPLAY_CONFIG,
-		  config | CS5530_DCFG_DIS_EN | CS5530_DCFG_HSYNC_EN |
-		  CS5530_DCFG_VSYNC_EN | CS5530_DCFG_DAC_BL_EN |
-		  CS5530_DCFG_DAC_PWDNX);
-      break;
+        WRITE_VID32(CS5530_DISPLAY_CONFIG,
+                    config | CS5530_DCFG_DIS_EN | CS5530_DCFG_HSYNC_EN |
+                    CS5530_DCFG_VSYNC_EN | CS5530_DCFG_DAC_BL_EN |
+                    CS5530_DCFG_DAC_PWDNX);
+        break;
 
-   case CRT_STANDBY:			/* HSync:Off VSync:On */
+    case CRT_STANDBY:          /* HSync:Off VSync:On */
 
-      WRITE_VID32(CS5530_DISPLAY_CONFIG,
-		  (config &
-		   ~(CS5530_DCFG_DIS_EN | CS5530_DCFG_HSYNC_EN |
-		     CS5530_DCFG_DAC_BL_EN | CS5530_DCFG_DAC_PWDNX))
-		  | CS5530_DCFG_VSYNC_EN);
-      break;
+        WRITE_VID32(CS5530_DISPLAY_CONFIG,
+                    (config &
+                     ~(CS5530_DCFG_DIS_EN | CS5530_DCFG_HSYNC_EN |
+                       CS5530_DCFG_DAC_BL_EN | CS5530_DCFG_DAC_PWDNX))
+                    | CS5530_DCFG_VSYNC_EN);
+        break;
 
-   case CRT_SUSPEND:			/* HSync:On VSync:Off */
+    case CRT_SUSPEND:          /* HSync:On VSync:Off */
 
-      WRITE_VID32(CS5530_DISPLAY_CONFIG,
-		  (config &
-		   ~(CS5530_DCFG_DIS_EN | CS5530_DCFG_VSYNC_EN |
-		     CS5530_DCFG_DAC_BL_EN | CS5530_DCFG_DAC_PWDNX))
-		  | CS5530_DCFG_HSYNC_EN);
-      break;
+        WRITE_VID32(CS5530_DISPLAY_CONFIG,
+                    (config &
+                     ~(CS5530_DCFG_DIS_EN | CS5530_DCFG_VSYNC_EN |
+                       CS5530_DCFG_DAC_BL_EN | CS5530_DCFG_DAC_PWDNX))
+                    | CS5530_DCFG_HSYNC_EN);
+        break;
 
-   default:
-      return (GFX_STATUS_BAD_PARAMETER);
-   }
-   return (GFX_STATUS_OK);
+    default:
+        return (GFX_STATUS_BAD_PARAMETER);
+    }
+    return (GFX_STATUS_OK);
 }
 
 /*---------------------------------------------------------------------------
@@ -378,7 +373,7 @@ void
 gfx_reset_video(void)
 #endif
 {
-   gfx_set_video_enable(0);
+    gfx_set_video_enable(0);
 }
 
 /*-----------------------------------------------------------------------------
@@ -404,37 +399,37 @@ int
 gfx_set_display_control(int sync_polarities)
 #endif
 {
-   unsigned long dcfg;
+    unsigned long dcfg;
 
-   /* ENABLE DISPLAY OUTPUT FROM CX5530 */
+    /* ENABLE DISPLAY OUTPUT FROM CX5530 */
 
-   dcfg = READ_VID32(CS5530_DISPLAY_CONFIG);
+    dcfg = READ_VID32(CS5530_DISPLAY_CONFIG);
 
-   /* CLEAR RELEVANT FIELDS */
+    /* CLEAR RELEVANT FIELDS */
 
-   dcfg &= ~(CS5530_DCFG_CRT_SYNC_SKW_MASK | CS5530_DCFG_PWR_SEQ_DLY_MASK |
-	     CS5530_DCFG_CRT_HSYNC_POL | CS5530_DCFG_CRT_VSYNC_POL |
-	     CS5530_DCFG_FP_PWR_EN | CS5530_DCFG_FP_DATA_EN);
+    dcfg &= ~(CS5530_DCFG_CRT_SYNC_SKW_MASK | CS5530_DCFG_PWR_SEQ_DLY_MASK |
+              CS5530_DCFG_CRT_HSYNC_POL | CS5530_DCFG_CRT_VSYNC_POL |
+              CS5530_DCFG_FP_PWR_EN | CS5530_DCFG_FP_DATA_EN);
 
-   /* INITIALIZATION */
+    /* INITIALIZATION */
 
-   dcfg |= (CS5530_DCFG_CRT_SYNC_SKW_INIT |
-	    CS5530_DCFG_PWR_SEQ_DLY_INIT | CS5530_DCFG_GV_PAL_BYP);
+    dcfg |= (CS5530_DCFG_CRT_SYNC_SKW_INIT |
+             CS5530_DCFG_PWR_SEQ_DLY_INIT | CS5530_DCFG_GV_PAL_BYP);
 
-   if (PanelEnable) {
-      dcfg |= CS5530_DCFG_FP_PWR_EN;
-      dcfg |= CS5530_DCFG_FP_DATA_EN;
-   }
+    if (PanelEnable) {
+        dcfg |= CS5530_DCFG_FP_PWR_EN;
+        dcfg |= CS5530_DCFG_FP_DATA_EN;
+    }
 
-   /* SET APPROPRIATE SYNC POLARITIES */
+    /* SET APPROPRIATE SYNC POLARITIES */
 
-   if (sync_polarities & 1)
-      dcfg |= CS5530_DCFG_CRT_HSYNC_POL;
-   if (sync_polarities & 2)
-      dcfg |= CS5530_DCFG_CRT_VSYNC_POL;
+    if (sync_polarities & 1)
+        dcfg |= CS5530_DCFG_CRT_HSYNC_POL;
+    if (sync_polarities & 2)
+        dcfg |= CS5530_DCFG_CRT_VSYNC_POL;
 
-   WRITE_VID32(CS5530_DISPLAY_CONFIG, dcfg);
-   return (0);
+    WRITE_VID32(CS5530_DISPLAY_CONFIG, dcfg);
+    return (0);
 }
 
 /*---------------------------------------------------------------------------
@@ -453,35 +448,35 @@ void
 gfx_set_clock_frequency(unsigned long frequency)
 #endif
 {
-   unsigned int index;
-   unsigned long value;
-   long min, diff;
+    unsigned int index;
+    unsigned long value;
+    long min, diff;
 
-   /* FIND THE REGISTER VALUES FOR THE DESIRED FREQUENCY */
-   /* Search the table for the closest frequency (16.16 format). */
+    /* FIND THE REGISTER VALUES FOR THE DESIRED FREQUENCY */
+    /* Search the table for the closest frequency (16.16 format). */
 
-   value = CS5530_PLLtable[0].pll_value;
-   min = (long)CS5530_PLLtable[0].frequency - frequency;
-   if (min < 0L)
-      min = -min;
-   for (index = 1; index < NUM_CS5530_FREQUENCIES; index++) {
-      diff = (long)CS5530_PLLtable[index].frequency - frequency;
-      if (diff < 0L)
-	 diff = -diff;
-      if (diff < min) {
-	 min = diff;
-	 value = CS5530_PLLtable[index].pll_value;
-      }
-   }
+    value = CS5530_PLLtable[0].pll_value;
+    min = (long) CS5530_PLLtable[0].frequency - frequency;
+    if (min < 0L)
+        min = -min;
+    for (index = 1; index < NUM_CS5530_FREQUENCIES; index++) {
+        diff = (long) CS5530_PLLtable[index].frequency - frequency;
+        if (diff < 0L)
+            diff = -diff;
+        if (diff < min) {
+            min = diff;
+            value = CS5530_PLLtable[index].pll_value;
+        }
+    }
 
-   /* SET THE DOT CLOCK REGISTER */
+    /* SET THE DOT CLOCK REGISTER */
 
-   WRITE_VID32(CS5530_DOT_CLK_CONFIG, value);
-   WRITE_VID32(CS5530_DOT_CLK_CONFIG, value | 0x80000100);	/* set reset/bypass */
-   gfx_delay_milliseconds(1);		/* wait for PLL to settle */
-   WRITE_VID32(CS5530_DOT_CLK_CONFIG, value & 0x7FFFFFFF);	/* clear reset */
-   WRITE_VID32(CS5530_DOT_CLK_CONFIG, value & 0x7FFFFEFF);	/* clear bypass */
-   return;
+    WRITE_VID32(CS5530_DOT_CLK_CONFIG, value);
+    WRITE_VID32(CS5530_DOT_CLK_CONFIG, value | 0x80000100);     /* set reset/bypass */
+    gfx_delay_milliseconds(1);  /* wait for PLL to settle */
+    WRITE_VID32(CS5530_DOT_CLK_CONFIG, value & 0x7FFFFFFF);     /* clear reset */
+    WRITE_VID32(CS5530_DOT_CLK_CONFIG, value & 0x7FFFFEFF);     /* clear bypass */
+    return;
 }
 
 /*-----------------------------------------------------------------------------
@@ -498,46 +493,47 @@ int
 gfx_set_video_enable(int enable)
 #endif
 {
-   unsigned long vcfg;
+    unsigned long vcfg;
 
-   /* WAIT FOR VERTICAL BLANK TO START */
-   /* Otherwise a glitch can be observed. */
+    /* WAIT FOR VERTICAL BLANK TO START */
+    /* Otherwise a glitch can be observed. */
 
-   if (gfx_test_timing_active()) {
-      if (!gfx_test_vertical_active()) {
-	 while (!gfx_test_vertical_active()) ;
-      }
-      while (gfx_test_vertical_active()) ;
-   }
-   vcfg = READ_VID32(CS5530_VIDEO_CONFIG);
-   if (enable) {
-      /* ENABLE VIDEO OVERLAY FROM DISPLAY CONTROLLER */
-      /* Use private routine to abstract the display controller. */
+    if (gfx_test_timing_active()) {
+        if (!gfx_test_vertical_active()) {
+            while (!gfx_test_vertical_active());
+        }
+        while (gfx_test_vertical_active());
+    }
+    vcfg = READ_VID32(CS5530_VIDEO_CONFIG);
+    if (enable) {
+        /* ENABLE VIDEO OVERLAY FROM DISPLAY CONTROLLER */
+        /* Use private routine to abstract the display controller. */
 
-      gfx_set_display_video_enable(1);
+        gfx_set_display_video_enable(1);
 
-      /* SET CS5530 BUS CONTROL PARAMETERS */
-      /* Currently always high speed, 8-bit interface. */
+        /* SET CS5530 BUS CONTROL PARAMETERS */
+        /* Currently always high speed, 8-bit interface. */
 
-      vcfg |= CS5530_VCFG_HIGH_SPD_INT;
-      vcfg &= ~(CS5530_VCFG_EARLY_VID_RDY | CS5530_VCFG_16_BIT_EN);
+        vcfg |= CS5530_VCFG_HIGH_SPD_INT;
+        vcfg &= ~(CS5530_VCFG_EARLY_VID_RDY | CS5530_VCFG_16_BIT_EN);
 
-      /* ENABLE CS5530 VIDEO OVERLAY */
+        /* ENABLE CS5530 VIDEO OVERLAY */
 
-      vcfg |= CS5530_VCFG_VID_EN;
-      WRITE_VID32(CS5530_VIDEO_CONFIG, vcfg);
-   } else {
-      /* DISABLE CS5530 VIDEO OVERLAY */
+        vcfg |= CS5530_VCFG_VID_EN;
+        WRITE_VID32(CS5530_VIDEO_CONFIG, vcfg);
+    }
+    else {
+        /* DISABLE CS5530 VIDEO OVERLAY */
 
-      vcfg &= ~CS5530_VCFG_VID_EN;
-      WRITE_VID32(CS5530_VIDEO_CONFIG, vcfg);
+        vcfg &= ~CS5530_VCFG_VID_EN;
+        WRITE_VID32(CS5530_VIDEO_CONFIG, vcfg);
 
-      /* DISABLE VIDEO OVERLAY FROM DISPLAY CONTROLLER */
-      /* Use private routine to abstract the display controller. */
+        /* DISABLE VIDEO OVERLAY FROM DISPLAY CONTROLLER */
+        /* Use private routine to abstract the display controller. */
 
-      gfx_set_display_video_enable(0);
-   }
-   return (0);
+        gfx_set_display_video_enable(0);
+    }
+    return (0);
 }
 
 /*-----------------------------------------------------------------------------
@@ -554,30 +550,30 @@ int
 gfx_set_video_format(unsigned long format)
 #endif
 {
-   unsigned long vcfg = 0;
+    unsigned long vcfg = 0;
 
-   /* SET THE CS5530 VIDEO INPUT FORMAT */
+    /* SET THE CS5530 VIDEO INPUT FORMAT */
 
-   vcfg = READ_VID32(CS5530_VIDEO_CONFIG);
-   vcfg &= ~(CS5530_VCFG_VID_INP_FORMAT | CS5530_VCFG_4_2_0_MODE);
-   vcfg &= ~(CS5530_VCFG_CSC_BYPASS);
-   vcfg &= ~(CS5530_VCFG_GV_SEL);
+    vcfg = READ_VID32(CS5530_VIDEO_CONFIG);
+    vcfg &= ~(CS5530_VCFG_VID_INP_FORMAT | CS5530_VCFG_4_2_0_MODE);
+    vcfg &= ~(CS5530_VCFG_CSC_BYPASS);
+    vcfg &= ~(CS5530_VCFG_GV_SEL);
 
-   if (format < 4)
-      vcfg |= (format << 2);
-   else {
-      if (format == VIDEO_FORMAT_Y0Y1Y2Y3) {
-	 vcfg |= CS5530_VCFG_4_2_0_MODE;
-	 vcfg |= 1 << 2;
-      }
-      if (format == VIDEO_FORMAT_RGB) {
-	 vcfg |= CS5530_VCFG_CSC_BYPASS;
-	 vcfg |= CS5530_VCFG_GV_SEL;
-      }
-   }
+    if (format < 4)
+        vcfg |= (format << 2);
+    else {
+        if (format == VIDEO_FORMAT_Y0Y1Y2Y3) {
+            vcfg |= CS5530_VCFG_4_2_0_MODE;
+            vcfg |= 1 << 2;
+        }
+        if (format == VIDEO_FORMAT_RGB) {
+            vcfg |= CS5530_VCFG_CSC_BYPASS;
+            vcfg |= CS5530_VCFG_GV_SEL;
+        }
+    }
 
-   WRITE_VID32(CS5530_VIDEO_CONFIG, vcfg);
-   return (0);
+    WRITE_VID32(CS5530_VIDEO_CONFIG, vcfg);
+    return (0);
 }
 
 /*-----------------------------------------------------------------------------
@@ -596,23 +592,23 @@ int
 gfx_set_video_size(unsigned short width, unsigned short height)
 #endif
 {
-   unsigned long size, vcfg;
+    unsigned long size, vcfg;
 
-   /* SET THE CS5530 VIDEO LINE SIZE */
+    /* SET THE CS5530 VIDEO LINE SIZE */
 
-   vcfg = READ_VID32(CS5530_VIDEO_CONFIG);
-   vcfg &= ~(CS5530_VCFG_LINE_SIZE_LOWER_MASK | CS5530_VCFG_LINE_SIZE_UPPER);
-   size = (width >> 1);
-   vcfg |= (size & 0x00FF) << 8;
-   if (size & 0x0100)
-      vcfg |= CS5530_VCFG_LINE_SIZE_UPPER;
-   WRITE_VID32(CS5530_VIDEO_CONFIG, vcfg);
+    vcfg = READ_VID32(CS5530_VIDEO_CONFIG);
+    vcfg &= ~(CS5530_VCFG_LINE_SIZE_LOWER_MASK | CS5530_VCFG_LINE_SIZE_UPPER);
+    size = (width >> 1);
+    vcfg |= (size & 0x00FF) << 8;
+    if (size & 0x0100)
+        vcfg |= CS5530_VCFG_LINE_SIZE_UPPER;
+    WRITE_VID32(CS5530_VIDEO_CONFIG, vcfg);
 
-   /* SET TOTAL VIDEO BUFFER SIZE IN DISPLAY CONTROLLER */
-   /* Use private routine to abstract the display controller. */
+    /* SET TOTAL VIDEO BUFFER SIZE IN DISPLAY CONTROLLER */
+    /* Use private routine to abstract the display controller. */
 
-   gfx_set_display_video_size(width, height);
-   return (0);
+    gfx_set_display_video_size(width, height);
+    return (0);
 }
 
 /*-----------------------------------------------------------------------------
@@ -630,15 +626,15 @@ int
 gfx_set_video_offset(unsigned long offset)
 #endif
 {
-   /* SAVE VALUE FOR FUTURE CLIPPING OF THE TOP OF THE VIDEO WINDOW */
+    /* SAVE VALUE FOR FUTURE CLIPPING OF THE TOP OF THE VIDEO WINDOW */
 
-   gfx_vid_offset = offset;
+    gfx_vid_offset = offset;
 
-   /* SET VIDEO BUFFER OFFSET IN DISPLAY CONTROLLER */
-   /* Use private routine to abstract the display controller. */
+    /* SET VIDEO BUFFER OFFSET IN DISPLAY CONTROLLER */
+    /* Use private routine to abstract the display controller. */
 
-   gfx_set_display_video_offset(offset);
-   return (0);
+    gfx_set_display_video_offset(offset);
+    return (0);
 }
 
 /*---------------------------------------------------------------------------
@@ -651,48 +647,48 @@ gfx_set_video_offset(unsigned long offset)
 #if GFX_VIDEO_DYNAMIC
 int
 cs5530_set_video_scale(unsigned short srcw, unsigned short srch,
-		       unsigned short dstw, unsigned short dsth)
+                       unsigned short dstw, unsigned short dsth)
 #else
 int
 gfx_set_video_scale(unsigned short srcw, unsigned short srch,
-		    unsigned short dstw, unsigned short dsth)
+                    unsigned short dstw, unsigned short dsth)
 #endif
 {
-   unsigned long xscale, yscale;
+    unsigned long xscale, yscale;
 
-   /* SAVE PARAMETERS */
-   /* These are needed for clipping the video window later. */
+    /* SAVE PARAMETERS */
+    /* These are needed for clipping the video window later. */
 
-   gfx_vid_srcw = srcw;
-   gfx_vid_srch = srch;
-   gfx_vid_dstw = dstw;
-   gfx_vid_dsth = dsth;
+    gfx_vid_srcw = srcw;
+    gfx_vid_srch = srch;
+    gfx_vid_dstw = dstw;
+    gfx_vid_dsth = dsth;
 
-   /* CALCULATE CS5530 SCALE FACTORS */
-   /* No downscaling in CS5530 so force to 1x if attempted. */
+    /* CALCULATE CS5530 SCALE FACTORS */
+    /* No downscaling in CS5530 so force to 1x if attempted. */
 
-   if (dstw <= srcw)
-      xscale = 0x1FFF;
-   else if (dstw == 1 || srcw == 1)
-      return GFX_STATUS_BAD_PARAMETER;
-   else
-      xscale = (0x2000l * (srcw - 1l)) / (dstw - 1l);
-   if (dsth <= srch)
-      yscale = 0x1FFF;
-   else if (dsth == 1 || srch == 1)
-      return GFX_STATUS_BAD_PARAMETER;
-   else
-      yscale = (0x2000l * (srch - 1l)) / (dsth - 1l);
-   WRITE_VID32(CS5530_VIDEO_SCALE, (yscale << 16) | xscale);
+    if (dstw <= srcw)
+        xscale = 0x1FFF;
+    else if (dstw == 1 || srcw == 1)
+        return GFX_STATUS_BAD_PARAMETER;
+    else
+        xscale = (0x2000l * (srcw - 1l)) / (dstw - 1l);
+    if (dsth <= srch)
+        yscale = 0x1FFF;
+    else if (dsth == 1 || srch == 1)
+        return GFX_STATUS_BAD_PARAMETER;
+    else
+        yscale = (0x2000l * (srch - 1l)) / (dsth - 1l);
+    WRITE_VID32(CS5530_VIDEO_SCALE, (yscale << 16) | xscale);
 
-   /* CALL ROUTINE TO UPDATE WINDOW POSITION */
-   /* This is required because the scale values effect the number of */
-   /* source data pixels that need to be clipped, as well as the */
-   /* amount of data that needs to be transferred. */
+    /* CALL ROUTINE TO UPDATE WINDOW POSITION */
+    /* This is required because the scale values effect the number of */
+    /* source data pixels that need to be clipped, as well as the */
+    /* amount of data that needs to be transferred. */
 
-   gfx_set_video_window(gfx_vid_xpos, gfx_vid_ypos, gfx_vid_width,
-			gfx_vid_height);
-   return (0);
+    gfx_set_video_window(gfx_vid_xpos, gfx_vid_ypos, gfx_vid_width,
+                         gfx_vid_height);
+    return (0);
 }
 
 /*---------------------------------------------------------------------------
@@ -712,61 +708,61 @@ int
 gfx_set_video_window(short x, short y, unsigned short w, unsigned short h)
 #endif
 {
-   unsigned long vcfg = 0;
-   unsigned long hadjust, vadjust;
-   unsigned long xstart, ystart, xend, yend;
+    unsigned long vcfg = 0;
+    unsigned long hadjust, vadjust;
+    unsigned long xstart, ystart, xend, yend;
 
-   /* SAVE PARAMETERS */
-   /* These are needed to call this routine if the scale value changes. */
+    /* SAVE PARAMETERS */
+    /* These are needed to call this routine if the scale value changes. */
 
-   gfx_vid_xpos = x;
-   gfx_vid_ypos = y;
-   gfx_vid_width = w;
-   gfx_vid_height = h;
+    gfx_vid_xpos = x;
+    gfx_vid_ypos = y;
+    gfx_vid_width = w;
+    gfx_vid_height = h;
 
-   /* GET ADJUSTMENT VALUES */
-   /* Use routines to abstract version of display controller. */
+    /* GET ADJUSTMENT VALUES */
+    /* Use routines to abstract version of display controller. */
 
-   hadjust = gfx_get_htotal() - gfx_get_hsync_end() - 13l;
-   vadjust = gfx_get_vtotal() - gfx_get_vsync_end() + 1l;
+    hadjust = gfx_get_htotal() - gfx_get_hsync_end() - 13l;
+    vadjust = gfx_get_vtotal() - gfx_get_vsync_end() + 1l;
 
-   /* HORIZONTAL START */
-   xstart = (unsigned long)x + hadjust;
+    /* HORIZONTAL START */
+    xstart = (unsigned long) x + hadjust;
 
-   /* HORIZONTAL END */
-   /* End positions in register are non-inclusive (one more than the actual end) */
+    /* HORIZONTAL END */
+    /* End positions in register are non-inclusive (one more than the actual end) */
 
-   if ((x + w) < gfx_get_hactive())
-      xend = (unsigned long)x + (unsigned long)w + hadjust;
-   else					/* right clipping needed */
-      xend = (unsigned long)gfx_get_hactive() + hadjust;
+    if ((x + w) < gfx_get_hactive())
+        xend = (unsigned long) x + (unsigned long) w + hadjust;
+    else                        /* right clipping needed */
+        xend = (unsigned long) gfx_get_hactive() + hadjust;
 
-   /* VERTICAL START */
+    /* VERTICAL START */
 
-   ystart = (unsigned long)y + vadjust;
+    ystart = (unsigned long) y + vadjust;
 
-   /* VERTICAL END */
+    /* VERTICAL END */
 
-   if ((y + h) < gfx_get_vactive())
-      yend = (unsigned long)y + (unsigned long)h + vadjust;
-   else					/* bottom clipping needed */
-      yend = (unsigned long)gfx_get_vactive() + vadjust;
+    if ((y + h) < gfx_get_vactive())
+        yend = (unsigned long) y + (unsigned long) h + vadjust;
+    else                        /* bottom clipping needed */
+        yend = (unsigned long) gfx_get_vactive() + vadjust;
 
-   /* DISABLE REGISTER UPDATES */
+    /* DISABLE REGISTER UPDATES */
 
-   vcfg = READ_VID32(CS5530_VIDEO_CONFIG);
-   vcfg &= ~CS5530_VCFG_VID_REG_UPDATE;
-   WRITE_VID32(CS5530_VIDEO_CONFIG, vcfg);
+    vcfg = READ_VID32(CS5530_VIDEO_CONFIG);
+    vcfg &= ~CS5530_VCFG_VID_REG_UPDATE;
+    WRITE_VID32(CS5530_VIDEO_CONFIG, vcfg);
 
-   /* SET VIDEO POSITION */
+    /* SET VIDEO POSITION */
 
-   WRITE_VID32(CS5530_VIDEO_X_POS, (xend << 16) | xstart);
-   WRITE_VID32(CS5530_VIDEO_Y_POS, (yend << 16) | ystart);
+    WRITE_VID32(CS5530_VIDEO_X_POS, (xend << 16) | xstart);
+    WRITE_VID32(CS5530_VIDEO_Y_POS, (yend << 16) | ystart);
 
-   vcfg |= CS5530_VCFG_VID_REG_UPDATE;
-   WRITE_VID32(CS5530_VIDEO_CONFIG, vcfg);
+    vcfg |= CS5530_VCFG_VID_REG_UPDATE;
+    WRITE_VID32(CS5530_VIDEO_CONFIG, vcfg);
 
-   return (0);
+    return (0);
 }
 
 /*---------------------------------------------------------------------------
@@ -786,25 +782,25 @@ int
 gfx_set_video_left_crop(unsigned short x)
 #endif
 {
-   unsigned long vcfg, initread;
+    unsigned long vcfg, initread;
 
-   /* CLIPPING ON LEFT */
-   /* Adjust initial read for scale, checking for divide by zero */
+    /* CLIPPING ON LEFT */
+    /* Adjust initial read for scale, checking for divide by zero */
 
-   if (gfx_vid_dstw)
-      initread = (unsigned long)x *gfx_vid_srcw / gfx_vid_dstw;
+    if (gfx_vid_dstw)
+        initread = (unsigned long) x *gfx_vid_srcw / gfx_vid_dstw;
 
-   else
-      initread = 0;
+    else
+        initread = 0;
 
-   /* SET INITIAL READ ADDRESS AND ENABLE REGISTER UPDATES */
+    /* SET INITIAL READ ADDRESS AND ENABLE REGISTER UPDATES */
 
-   vcfg = READ_VID32(CS5530_VIDEO_CONFIG);
-   vcfg &= ~CS5530_VCFG_INIT_READ_MASK;
-   vcfg |= (initread << 15) & CS5530_VCFG_INIT_READ_MASK;
-   vcfg |= CS5530_VCFG_VID_REG_UPDATE;
-   WRITE_VID32(CS5530_VIDEO_CONFIG, vcfg);
-   return (0);
+    vcfg = READ_VID32(CS5530_VIDEO_CONFIG);
+    vcfg &= ~CS5530_VCFG_INIT_READ_MASK;
+    vcfg |= (initread << 15) & CS5530_VCFG_INIT_READ_MASK;
+    vcfg |= CS5530_VCFG_VID_REG_UPDATE;
+    WRITE_VID32(CS5530_VIDEO_CONFIG, vcfg);
+    return (0);
 }
 
 /*---------------------------------------------------------------------------
@@ -823,29 +819,28 @@ gfx_set_video_left_crop(unsigned short x)
  */
 #if GFX_VIDEO_DYNAMIC
 int
-cs5530_set_video_color_key(unsigned long key, unsigned long mask,
-			   int graphics)
+cs5530_set_video_color_key(unsigned long key, unsigned long mask, int graphics)
 #else
 int
 gfx_set_video_color_key(unsigned long key, unsigned long mask, int graphics)
 #endif
 {
-   unsigned long dcfg = 0;
+    unsigned long dcfg = 0;
 
-   /* SET CS5530 COLOR KEY VALUE */
+    /* SET CS5530 COLOR KEY VALUE */
 
-   WRITE_VID32(CS5530_VIDEO_COLOR_KEY, key);
-   WRITE_VID32(CS5530_VIDEO_COLOR_MASK, mask);
+    WRITE_VID32(CS5530_VIDEO_COLOR_KEY, key);
+    WRITE_VID32(CS5530_VIDEO_COLOR_MASK, mask);
 
-   /* SELECT GRAPHICS OR VIDEO DATA TO COMPARE TO THE COLOR KEY */
+    /* SELECT GRAPHICS OR VIDEO DATA TO COMPARE TO THE COLOR KEY */
 
-   dcfg = READ_VID32(CS5530_DISPLAY_CONFIG);
-   if (graphics & 0x01)
-      dcfg &= ~CS5530_DCFG_VG_CK;
-   else
-      dcfg |= CS5530_DCFG_VG_CK;
-   WRITE_VID32(CS5530_DISPLAY_CONFIG, dcfg);
-   return (0);
+    dcfg = READ_VID32(CS5530_DISPLAY_CONFIG);
+    if (graphics & 0x01)
+        dcfg &= ~CS5530_DCFG_VG_CK;
+    else
+        dcfg |= CS5530_DCFG_VG_CK;
+    WRITE_VID32(CS5530_DISPLAY_CONFIG, dcfg);
+    return (0);
 }
 
 /*---------------------------------------------------------------------------
@@ -862,19 +857,19 @@ int
 gfx_set_video_filter(int xfilter, int yfilter)
 #endif
 {
-   unsigned long vcfg = 0;
+    unsigned long vcfg = 0;
 
-   /* ENABLE OR DISABLE CS5530 VIDEO OVERLAY FILTERS */
+    /* ENABLE OR DISABLE CS5530 VIDEO OVERLAY FILTERS */
 
-   vcfg = READ_VID32(CS5530_VIDEO_CONFIG);
-   vcfg &= ~(CS5530_VCFG_X_FILTER_EN | CS5530_VCFG_Y_FILTER_EN);
-   if (xfilter)
-      vcfg |= CS5530_VCFG_X_FILTER_EN;
-   if (yfilter)
-      vcfg |= CS5530_VCFG_Y_FILTER_EN;
-   WRITE_VID32(CS5530_VIDEO_CONFIG, vcfg);
+    vcfg = READ_VID32(CS5530_VIDEO_CONFIG);
+    vcfg &= ~(CS5530_VCFG_X_FILTER_EN | CS5530_VCFG_Y_FILTER_EN);
+    if (xfilter)
+        vcfg |= CS5530_VCFG_X_FILTER_EN;
+    if (yfilter)
+        vcfg |= CS5530_VCFG_Y_FILTER_EN;
+    WRITE_VID32(CS5530_VIDEO_CONFIG, vcfg);
 
-   return (0);
+    return (0);
 }
 
 /*---------------------------------------------------------------------------
@@ -893,19 +888,19 @@ int
 gfx_set_video_palette(unsigned long *palette)
 #endif
 {
-   unsigned long i, entry;
+    unsigned long i, entry;
 
-   /* LOAD CS5530 VIDEO PALETTE */
+    /* LOAD CS5530 VIDEO PALETTE */
 
-   WRITE_VID32(CS5530_PALETTE_ADDRESS, 0);
-   for (i = 0; i < 256; i++) {
-      if (palette)
-	 entry = palette[i];
-      else
-	 entry = i | (i << 8) | (i << 16);
-      WRITE_VID32(CS5530_PALETTE_DATA, entry);
-   }
-   return (0);
+    WRITE_VID32(CS5530_PALETTE_ADDRESS, 0);
+    for (i = 0; i < 256; i++) {
+        if (palette)
+            entry = palette[i];
+        else
+            entry = i | (i << 8) | (i << 16);
+        WRITE_VID32(CS5530_PALETTE_DATA, entry);
+    }
+    return (0);
 }
 
 /*---------------------------------------------------------------------------
@@ -922,15 +917,15 @@ int
 gfx_set_video_palette_entry(unsigned long index, unsigned long palette)
 #endif
 {
-   if (index > 0xFF)
-      return GFX_STATUS_BAD_PARAMETER;
+    if (index > 0xFF)
+        return GFX_STATUS_BAD_PARAMETER;
 
-   /* SET A SINGLE ENTRY */
+    /* SET A SINGLE ENTRY */
 
-   WRITE_VID32(CS5530_PALETTE_ADDRESS, index);
-   WRITE_VID32(CS5530_PALETTE_DATA, palette);
+    WRITE_VID32(CS5530_PALETTE_ADDRESS, index);
+    WRITE_VID32(CS5530_PALETTE_DATA, palette);
 
-   return (0);
+    return (0);
 }
 
 #define CX55xx_VIDEO_PCI_44 0x80009444
@@ -950,20 +945,20 @@ int
 gfx_disable_softvga(void)
 #endif
 {
-   unsigned long reg_val;
+    unsigned long reg_val;
 
-   /* get the current value */
-   reg_val = gfx_pci_config_read(CX55xx_VIDEO_PCI_44);
-   /* setting video PCI register 44 bit 0 to 1 disables SoftVga */
-   reg_val |= 0x1;
-   gfx_pci_config_write(CX55xx_VIDEO_PCI_44, reg_val);
+    /* get the current value */
+    reg_val = gfx_pci_config_read(CX55xx_VIDEO_PCI_44);
+    /* setting video PCI register 44 bit 0 to 1 disables SoftVga */
+    reg_val |= 0x1;
+    gfx_pci_config_write(CX55xx_VIDEO_PCI_44, reg_val);
 
-   /* see if we set the bit and return the appropriate value */
-   reg_val = gfx_pci_config_read(CX55xx_VIDEO_PCI_44);
-   if ((reg_val & 0x1) == 0x1)
-      return (1);
-   else
-      return (0);
+    /* see if we set the bit and return the appropriate value */
+    reg_val = gfx_pci_config_read(CX55xx_VIDEO_PCI_44);
+    if ((reg_val & 0x1) == 0x1)
+        return (1);
+    else
+        return (0);
 
 }
 
@@ -982,19 +977,19 @@ int
 gfx_enable_softvga(void)
 #endif
 {
-   unsigned long reg_val;
+    unsigned long reg_val;
 
-   /* get the current value */
-   reg_val = gfx_pci_config_read(CX55xx_VIDEO_PCI_44);
-   /* clearing video PCI register 44 bit 0 enables SoftVga */
-   gfx_pci_config_write(CX55xx_VIDEO_PCI_44, reg_val & 0xfffffffe);
+    /* get the current value */
+    reg_val = gfx_pci_config_read(CX55xx_VIDEO_PCI_44);
+    /* clearing video PCI register 44 bit 0 enables SoftVga */
+    gfx_pci_config_write(CX55xx_VIDEO_PCI_44, reg_val & 0xfffffffe);
 
-   /* see if we cleared the bit and return the appropriate value */
-   reg_val = gfx_pci_config_read(CX55xx_VIDEO_PCI_44);
-   if ((reg_val & 0x1) == 0)
-      return (1);
-   else
-      return (0);
+    /* see if we cleared the bit and return the appropriate value */
+    reg_val = gfx_pci_config_read(CX55xx_VIDEO_PCI_44);
+    if ((reg_val & 0x1) == 0)
+        return (1);
+    else
+        return (0);
 
 }
 
@@ -1014,16 +1009,16 @@ unsigned long
 gfx_get_clock_frequency(void)
 #endif
 {
-   unsigned int index;
-   unsigned long value, mask;
+    unsigned int index;
+    unsigned long value, mask;
 
-   mask = 0x7FFFFEDC;
-   value = READ_VID32(CS5530_DOT_CLK_CONFIG) & mask;
-   for (index = 0; index < NUM_CS5530_FREQUENCIES; index++) {
-      if ((CS5530_PLLtable[index].pll_value & mask) == value)
-	 return (CS5530_PLLtable[index].frequency);
-   }
-   return (0);
+    mask = 0x7FFFFEDC;
+    value = READ_VID32(CS5530_DOT_CLK_CONFIG) & mask;
+    for (index = 0; index < NUM_CS5530_FREQUENCIES; index++) {
+        if ((CS5530_PLLtable[index].pll_value & mask) == value)
+            return (CS5530_PLLtable[index].frequency);
+    }
+    return (0);
 }
 
 /*************************************************************/
@@ -1047,13 +1042,13 @@ int
 gfx_get_vsa2_softvga_enable(void)
 #endif
 {
-   unsigned long reg_val;
+    unsigned long reg_val;
 
-   reg_val = gfx_pci_config_read(CX55xx_VIDEO_PCI_44);
-   if ((reg_val & 0x1) == 0)
-      return (1);
-   else
-      return (0);
+    reg_val = gfx_pci_config_read(CX55xx_VIDEO_PCI_44);
+    if ((reg_val & 0x1) == 0)
+        return (1);
+    else
+        return (0);
 
 }
 
@@ -1073,13 +1068,13 @@ int
 gfx_get_sync_polarities(void)
 #endif
 {
-   int polarities = 0;
+    int polarities = 0;
 
-   if (READ_VID32(CS5530_DISPLAY_CONFIG) & 0x00000100)
-      polarities |= 1;
-   if (READ_VID32(CS5530_DISPLAY_CONFIG) & 0x00000200)
-      polarities |= 2;
-   return (polarities);
+    if (READ_VID32(CS5530_DISPLAY_CONFIG) & 0x00000100)
+        polarities |= 1;
+    if (READ_VID32(CS5530_DISPLAY_CONFIG) & 0x00000200)
+        polarities |= 2;
+    return (polarities);
 }
 
 /*---------------------------------------------------------------------------
@@ -1096,15 +1091,15 @@ int
 gfx_get_video_palette_entry(unsigned long index, unsigned long *palette)
 #endif
 {
-   if (index > 0xFF)
-      return GFX_STATUS_BAD_PARAMETER;
+    if (index > 0xFF)
+        return GFX_STATUS_BAD_PARAMETER;
 
-   /* READ A SINGLE ENTRY */
+    /* READ A SINGLE ENTRY */
 
-   WRITE_VID32(CS5530_PALETTE_ADDRESS, index);
-   *palette = READ_VID32(CS5530_PALETTE_DATA);
+    WRITE_VID32(CS5530_PALETTE_ADDRESS, index);
+    *palette = READ_VID32(CS5530_PALETTE_DATA);
 
-   return (GFX_STATUS_OK);
+    return (GFX_STATUS_OK);
 }
 
 /*-----------------------------------------------------------------------------
@@ -1122,9 +1117,9 @@ int
 gfx_get_video_enable(void)
 #endif
 {
-   if (READ_VID32(CS5530_VIDEO_CONFIG) & CS5530_VCFG_VID_EN)
-      return (1);
-   return (0);
+    if (READ_VID32(CS5530_VIDEO_CONFIG) & CS5530_VCFG_VID_EN)
+        return (1);
+    return (0);
 }
 
 /*-----------------------------------------------------------------------------
@@ -1141,15 +1136,15 @@ int
 gfx_get_video_format(void)
 #endif
 {
-   unsigned long vcfg;
+    unsigned long vcfg;
 
-   vcfg = READ_VID32(CS5530_VIDEO_CONFIG);
-   if (vcfg & CS5530_VCFG_CSC_BYPASS)
-      return (VIDEO_FORMAT_RGB);
-   if (vcfg & CS5530_VCFG_4_2_0_MODE)
-      return (VIDEO_FORMAT_Y0Y1Y2Y3);
+    vcfg = READ_VID32(CS5530_VIDEO_CONFIG);
+    if (vcfg & CS5530_VCFG_CSC_BYPASS)
+        return (VIDEO_FORMAT_RGB);
+    if (vcfg & CS5530_VCFG_4_2_0_MODE)
+        return (VIDEO_FORMAT_Y0Y1Y2Y3);
 
-   return ((int)((vcfg >> 2) & 3));
+    return ((int) ((vcfg >> 2) & 3));
 }
 
 /*-----------------------------------------------------------------------------
@@ -1167,21 +1162,21 @@ unsigned long
 gfx_get_video_src_size(void)
 #endif
 {
-   unsigned long width = 0, height = 0;
+    unsigned long width = 0, height = 0;
 
-   /* DETERMINE SOURCE WIDTH FROM THE CS5530 VIDEO LINE SIZE */
+    /* DETERMINE SOURCE WIDTH FROM THE CS5530 VIDEO LINE SIZE */
 
-   width = (READ_VID32(CS5530_VIDEO_CONFIG) >> 7) & 0x000001FE;
-   if (READ_VID32(CS5530_VIDEO_CONFIG) & CS5530_VCFG_LINE_SIZE_UPPER)
-      width += 512l;
+    width = (READ_VID32(CS5530_VIDEO_CONFIG) >> 7) & 0x000001FE;
+    if (READ_VID32(CS5530_VIDEO_CONFIG) & CS5530_VCFG_LINE_SIZE_UPPER)
+        width += 512l;
 
-   if (width) {
-      /* DETERMINE HEIGHT BY DIVIDING TOTAL SIZE BY WIDTH */
-      /* Get total size from display controller - abtracted. */
+    if (width) {
+        /* DETERMINE HEIGHT BY DIVIDING TOTAL SIZE BY WIDTH */
+        /* Get total size from display controller - abtracted. */
 
-      height = gfx_get_display_video_size() / (width << 1);
-   }
-   return ((height << 16) | width);
+        height = gfx_get_display_video_size() / (width << 1);
+    }
+    return ((height << 16) | width);
 }
 
 /*-----------------------------------------------------------------------------
@@ -1199,14 +1194,14 @@ unsigned long
 gfx_get_video_line_size(void)
 #endif
 {
-   unsigned long width = 0;
+    unsigned long width = 0;
 
-   /* DETERMINE SOURCE WIDTH FROM THE CS5530 VIDEO LINE SIZE */
+    /* DETERMINE SOURCE WIDTH FROM THE CS5530 VIDEO LINE SIZE */
 
-   width = (READ_VID32(CS5530_VIDEO_CONFIG) >> 7) & 0x000001FE;
-   if (READ_VID32(CS5530_VIDEO_CONFIG) & CS5530_VCFG_LINE_SIZE_UPPER)
-      width += 512l;
-   return (width);
+    width = (READ_VID32(CS5530_VIDEO_CONFIG) >> 7) & 0x000001FE;
+    if (READ_VID32(CS5530_VIDEO_CONFIG) & CS5530_VCFG_LINE_SIZE_UPPER)
+        width += 512l;
+    return (width);
 }
 
 /*-----------------------------------------------------------------------------
@@ -1224,12 +1219,12 @@ unsigned long
 gfx_get_video_xclip(void)
 #endif
 {
-   unsigned long clip = 0;
+    unsigned long clip = 0;
 
-   /* DETERMINE SOURCE WIDTH FROM THE CS5530 VIDEO LINE SIZE */
+    /* DETERMINE SOURCE WIDTH FROM THE CS5530 VIDEO LINE SIZE */
 
-   clip = (READ_VID32(CS5530_VIDEO_CONFIG) >> 14) & 0x000007FC;
-   return (clip);
+    clip = (READ_VID32(CS5530_VIDEO_CONFIG) >> 14) & 0x000007FC;
+    return (clip);
 }
 
 /*-----------------------------------------------------------------------------
@@ -1246,7 +1241,7 @@ unsigned long
 gfx_get_video_offset(void)
 #endif
 {
-   return (gfx_get_display_video_offset());
+    return (gfx_get_display_video_offset());
 }
 
 /*---------------------------------------------------------------------------
@@ -1263,7 +1258,7 @@ unsigned long
 gfx_get_video_scale(void)
 #endif
 {
-   return (READ_VID32(CS5530_VIDEO_SCALE));
+    return (READ_VID32(CS5530_VIDEO_SCALE));
 }
 
 /*---------------------------------------------------------------------------
@@ -1282,13 +1277,13 @@ unsigned long
 gfx_get_video_dst_size(void)
 #endif
 {
-   unsigned long xsize, ysize;
+    unsigned long xsize, ysize;
 
-   xsize = READ_VID32(CS5530_VIDEO_X_POS);
-   xsize = ((xsize >> 16) & 0x7FF) - (xsize & 0x07FF);
-   ysize = READ_VID32(CS5530_VIDEO_Y_POS);
-   ysize = ((ysize >> 16) & 0x7FF) - (ysize & 0x07FF);
-   return ((ysize << 16) | xsize);
+    xsize = READ_VID32(CS5530_VIDEO_X_POS);
+    xsize = ((xsize >> 16) & 0x7FF) - (xsize & 0x07FF);
+    ysize = READ_VID32(CS5530_VIDEO_Y_POS);
+    ysize = ((ysize >> 16) & 0x7FF) - (ysize & 0x07FF);
+    return ((ysize << 16) | xsize);
 }
 
 /*---------------------------------------------------------------------------
@@ -1308,22 +1303,22 @@ unsigned long
 gfx_get_video_position(void)
 #endif
 {
-   unsigned long hadjust, vadjust;
-   unsigned long xpos, ypos;
+    unsigned long hadjust, vadjust;
+    unsigned long xpos, ypos;
 
-   /* READ HARDWARE POSITION */
+    /* READ HARDWARE POSITION */
 
-   xpos = READ_VID32(CS5530_VIDEO_X_POS) & 0x000007FF;
-   ypos = READ_VID32(CS5530_VIDEO_Y_POS) & 0x000007FF;
+    xpos = READ_VID32(CS5530_VIDEO_X_POS) & 0x000007FF;
+    ypos = READ_VID32(CS5530_VIDEO_Y_POS) & 0x000007FF;
 
-   /* GET ADJUSTMENT VALUES */
-   /* Use routines to abstract version of display controller. */
+    /* GET ADJUSTMENT VALUES */
+    /* Use routines to abstract version of display controller. */
 
-   hadjust = gfx_get_htotal() - gfx_get_hsync_end() - 13l;
-   vadjust = gfx_get_vtotal() - gfx_get_vsync_end() + 1l;
-   xpos -= hadjust;
-   ypos -= vadjust;
-   return ((ypos << 16) | (xpos & 0x0000FFFF));
+    hadjust = gfx_get_htotal() - gfx_get_hsync_end() - 13l;
+    vadjust = gfx_get_vtotal() - gfx_get_vsync_end() + 1l;
+    xpos -= hadjust;
+    ypos -= vadjust;
+    return ((ypos << 16) | (xpos & 0x0000FFFF));
 }
 
 /*---------------------------------------------------------------------------
@@ -1340,7 +1335,7 @@ unsigned long
 gfx_get_video_color_key(void)
 #endif
 {
-   return (READ_VID32(CS5530_VIDEO_COLOR_KEY));
+    return (READ_VID32(CS5530_VIDEO_COLOR_KEY));
 }
 
 /*---------------------------------------------------------------------------
@@ -1357,7 +1352,7 @@ unsigned long
 gfx_get_video_color_key_mask(void)
 #endif
 {
-   return (READ_VID32(CS5530_VIDEO_COLOR_MASK));
+    return (READ_VID32(CS5530_VIDEO_COLOR_MASK));
 }
 
 /*---------------------------------------------------------------------------
@@ -1374,9 +1369,9 @@ int
 gfx_get_video_color_key_src(void)
 #endif
 {
-   if (READ_VID32(CS5530_DISPLAY_CONFIG) & CS5530_DCFG_VG_CK)
-      return (0);
-   return (1);
+    if (READ_VID32(CS5530_DISPLAY_CONFIG) & CS5530_DCFG_VG_CK)
+        return (0);
+    return (1);
 }
 
 /*---------------------------------------------------------------------------
@@ -1393,13 +1388,13 @@ int
 gfx_get_video_filter(void)
 #endif
 {
-   int retval = 0;
+    int retval = 0;
 
-   if (READ_VID32(CS5530_VIDEO_CONFIG) & CS5530_VCFG_X_FILTER_EN)
-      retval |= 1;
-   if (READ_VID32(CS5530_VIDEO_CONFIG) & CS5530_VCFG_Y_FILTER_EN)
-      retval |= 2;
-   return (retval);
+    if (READ_VID32(CS5530_VIDEO_CONFIG) & CS5530_VCFG_X_FILTER_EN)
+        retval |= 1;
+    if (READ_VID32(CS5530_VIDEO_CONFIG) & CS5530_VCFG_Y_FILTER_EN)
+        retval |= 2;
+    return (retval);
 }
 
 /*---------------------------------------------------------------------------
@@ -1418,29 +1413,29 @@ unsigned long
 gfx_read_crc(void)
 #endif
 {
-   unsigned long crc = 0xFFFFFFFF;
+    unsigned long crc = 0xFFFFFFFF;
 
-   if (gfx_test_timing_active()) {
-      /* WAIT UNTIL ACTIVE DISPLAY */
+    if (gfx_test_timing_active()) {
+        /* WAIT UNTIL ACTIVE DISPLAY */
 
-      while (!gfx_test_vertical_active()) ;
+        while (!gfx_test_vertical_active());
 
-      /* RESET CRC DURING ACTIVE DISPLAY */
+        /* RESET CRC DURING ACTIVE DISPLAY */
 
-      WRITE_VID32(CS5530_CRCSIG_TFT_TV, 0);
-      WRITE_VID32(CS5530_CRCSIG_TFT_TV, 1);
+        WRITE_VID32(CS5530_CRCSIG_TFT_TV, 0);
+        WRITE_VID32(CS5530_CRCSIG_TFT_TV, 1);
 
-      /* WAIT UNTIL NOT ACTIVE, THEN ACTIVE, NOT ACTIVE, THEN ACTIVE */
+        /* WAIT UNTIL NOT ACTIVE, THEN ACTIVE, NOT ACTIVE, THEN ACTIVE */
 
-      while (gfx_test_vertical_active()) ;
-      while (!gfx_test_vertical_active()) ;
-      while (gfx_test_vertical_active()) ;
-      while (!gfx_test_vertical_active()) ;
-      crc = READ_VID32(CS5530_CRCSIG_TFT_TV) >> 8;
-   }
-   return (crc);
+        while (gfx_test_vertical_active());
+        while (!gfx_test_vertical_active());
+        while (gfx_test_vertical_active());
+        while (!gfx_test_vertical_active());
+        crc = READ_VID32(CS5530_CRCSIG_TFT_TV) >> 8;
+    }
+    return (crc);
 }
 
-#endif /* GFX_READ_ROUTINES */
+#endif                          /* GFX_READ_ROUTINES */
 
 /* END OF FILE */

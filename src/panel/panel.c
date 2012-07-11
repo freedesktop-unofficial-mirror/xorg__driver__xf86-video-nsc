@@ -148,11 +148,11 @@ extern unsigned char *gfx_virt_vidptr;
 extern unsigned char *gfx_virt_vipptr;
 extern unsigned long gfx_detect_video(void);
 
-#define PLATFORM_DYNAMIC		1	/* runtime selection */
-#define PLATFORM_DRACO			1	/* Draco + 9210 */
-#define PLATFORM_CENTAURUS		1	/* Centaurus + 9211 RevA */
-#define PLATFORM_DORADO			1	/* Dorado + 9211 RevC */
-#define PLATFORM_REDCLOUD		1	/* GX2 */
+#define PLATFORM_DYNAMIC		1       /* runtime selection */
+#define PLATFORM_DRACO			1       /* Draco + 9210 */
+#define PLATFORM_CENTAURUS		1       /* Centaurus + 9211 RevA */
+#define PLATFORM_DORADO			1       /* Dorado + 9211 RevC */
+#define PLATFORM_REDCLOUD		1       /* GX2 */
 
 unsigned char *XpressROMPtr;
 

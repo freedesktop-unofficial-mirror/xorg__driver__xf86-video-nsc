@@ -50,48 +50,48 @@
  */
 
  /*
- * assyntax.h
- *
- * Select the syntax appropriate to the 386 assembler being used
- * To add support for more assemblers add more columns to the CHOICE
- * macro.  Note that register names must also have uppercase names
- * to avoid macro recursion. e.g., #define ah %ah recurses!
- *
- * NB 1.  Some of the macros for certain assemblers imply that the code is to
- *	  run in protected mode!!  Caveat emptor.
- *
- * NB 2.  486 specific instructions are not included.  This is to discourage
- *	  their accidental use in code that is intended to run on 386 and 486
- *	  systems.
- *
- * Supported assemblers:
- *
- * (a) AT&T SysVr4 as(1):	default
- * (b) GNU Assembler gas:	define USE_GAS or GNU_ASSEMBLER
- * (c) Amsterdam Compiler kit:	define ACK_ASSEMBLER
- *
- * The following naming conventions have been used to identify the various
- * data types:
- *		_SR = segment register version
- *	Integer:
- *		_Q = quadword	= 64 bits
- *		_L = long	= 32 bits
- *		_W = short	= 16 bits
- *		_B = byte	=  8 bits
- *	Floating-point:
- *		_X = m80real	= 80 bits
- *		_D = double	= 64 bits
- *		_S = single	= 32 bits
- *
- * Author: Gregory J. Sharp, Sept 1992
- *         Vrije Universiteit, Amsterdam, The Netherlands
- */
+  * assyntax.h
+  *
+  * Select the syntax appropriate to the 386 assembler being used
+  * To add support for more assemblers add more columns to the CHOICE
+  * macro.  Note that register names must also have uppercase names
+  * to avoid macro recursion. e.g., #define ah %ah recurses!
+  *
+  * NB 1.  Some of the macros for certain assemblers imply that the code is to
+  *       run in protected mode!!  Caveat emptor.
+  *
+  * NB 2.  486 specific instructions are not included.  This is to discourage
+  *       their accidental use in code that is intended to run on 386 and 486
+  *       systems.
+  *
+  * Supported assemblers:
+  *
+  * (a) AT&T SysVr4 as(1):      default
+  * (b) GNU Assembler gas:      define USE_GAS or GNU_ASSEMBLER
+  * (c) Amsterdam Compiler kit: define ACK_ASSEMBLER
+  *
+  * The following naming conventions have been used to identify the various
+  * data types:
+  *             _SR = segment register version
+  *     Integer:
+  *             _Q = quadword   = 64 bits
+  *             _L = long       = 32 bits
+  *             _W = short      = 16 bits
+  *             _B = byte       =  8 bits
+  *     Floating-point:
+  *             _X = m80real    = 80 bits
+  *             _D = double     = 64 bits
+  *             _S = single     = 32 bits
+  *
+  * Author: Gregory J. Sharp, Sept 1992
+  *         Vrije Universiteit, Amsterdam, The Netherlands
+  */
 
 #if defined(USE_GAS) && !defined(GNU_ASSEMBLER)
 #define GNU_ASSEMBLER
 #endif
 
-#if (defined(__STDC__) && !defined(UNIXCPP)) || (defined (sun) && defined (i386) && defined (SVR4) && defined (__STDC__) && !defined (__GNUC__)) 
+#if (defined(__STDC__) && !defined(UNIXCPP)) || (defined (sun) && defined (i386) && defined (SVR4) && defined (__STDC__) && !defined (__GNUC__))
 #define	CONCAT(x, y)	x ## y
 #else
 #define	CONCAT(x, y)	x/**/y
@@ -151,9 +151,8 @@
 
 #define	AS_BEGIN	.sect .text; .sect .rom; .sect .data; .sect .bss; .sect .text
 
-
-#define	_WTOG		o16	/* word toggle for _W instructions */
-#define	_LTOG			/* long toggle for _L instructions */
+#define	_WTOG		o16     /* word toggle for _W instructions */
+#define	_LTOG                   /* long toggle for _L instructions */
 #define	ADDR_TOGGLE	a16
 #define	OPSZ_TOGGLE	o16
 #define	USE16		.use16
@@ -161,7 +160,7 @@
 
 #define	CHOICE(a,b,c)	c
 
-#else /* AT&T or GAS */
+#else                           /* AT&T or GAS */
 
 /* Redefine register names for GAS & AT&T assemblers */
 #define	AL	%al
@@ -232,9 +231,8 @@
 #define	ADDR_TOGGLE	addr16
 #define	OPSZ_TOGGLE	data16
 
-#endif /* GNU_ASSEMBLER */
-#endif /* ACK_ASSEMBLER */
-
+#endif                          /* GNU_ASSEMBLER */
+#endif                          /* ACK_ASSEMBLER */
 
 #if defined(__QNX__) || defined(Lynx) || (defined(SYSV) || defined(SVR4)) && !defined(ACK_ASSEMBLER) || defined(__ELF__) || defined(__GNU__)
 #define GLNAME(a)       a
@@ -242,13 +240,11 @@
 #define GLNAME(a)       CONCAT(_,a)
 #endif
 
-
-	/****************************************/
-	/*					*/
-	/*	Select the various choices	*/
-	/*					*/
-	/****************************************/
-
+        /****************************************/
+        /*                                      */
+        /*      Select the various choices      */
+        /*                                      */
+        /****************************************/
 
 /* Redefine assembler directives */
 /*********************************/
@@ -284,8 +280,8 @@
 #define	CONST(a)	CHOICE(CONCAT($,a), CONCAT($,a), a)
 
 /* Indirect Mode */
-#define	CONTENT(a)	CHOICE(a, a, (a))	 /* take contents of variable */
-#define	REGIND(a)	CHOICE((a), (a), (a))	 /* Register a indirect */
+#define	CONTENT(a)	CHOICE(a, a, (a))       /* take contents of variable */
+#define	REGIND(a)	CHOICE((a), (a), (a))   /* Register a indirect */
 /* Register b indirect plus displacement a */
 #define	REGOFF(a, b)	CHOICE(a(b), a(b), a(b))
 /* Reg indirect Base + Index + Displacement  - this is mainly for 16-bit mode
@@ -629,7 +625,6 @@
 #define	XOR_W(a, b)	CHOICE(xorw ARG2(a,b), xorw ARG2(a,b), _WTOG xor ARG2(b,a))
 #define	XOR_B(a, b)	CHOICE(xorb ARG2(a,b), xorb ARG2(a,b), xorb ARG2(b,a))
 
-
 /* Floating Point Instructions */
 #define	F2XM1		CHOICE(f2xm1, f2xm1, f2xm1)
 #define	FABS		CHOICE(fabs, fabs, fabs)
@@ -681,7 +676,7 @@
 #define	FISTP_Q(a)	CHOICE(fistpll a, fistpq a, fistpq a)
 #define	FISTP_L(a)	CHOICE(fistpl a, fistpl a, fistpl a)
 #define	FISTP_W(a)	CHOICE(fistp a, fistps a, fistps a)
-#define	FLD_X(a)	CHOICE(fldt a, fldt a, fldx a) /* 80 bit data type! */
+#define	FLD_X(a)	CHOICE(fldt a, fldt a, fldx a)  /* 80 bit data type! */
 #define	FLD_D(a)	CHOICE(fldl a, fldl a, fldd a)
 #define	FLD_S(a)	CHOICE(flds a, flds a, flds a)
 #define	FLD1		CHOICE(fld1, fld1, fld1)
@@ -746,4 +741,4 @@
 #define	FYL2X		CHOICE(fyl2x, fyl2x, fyl2x)
 #define	FYL2XP1		CHOICE(fyl2xp1, fyl2xp1, fyl2xp1)
 
-#endif /* __ASSYNTAX_H__ */
+#endif                          /* __ASSYNTAX_H__ */

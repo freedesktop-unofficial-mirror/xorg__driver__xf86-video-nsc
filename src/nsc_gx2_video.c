@@ -167,7 +167,7 @@
 #include "fourcc.h"
 #include "nsc_fourcc.h"
 
-#define OFF_DELAY 	200		/* milliseconds */
+#define OFF_DELAY 	200     /* milliseconds */
 #define FREE_DELAY 	60000
 
 #define OFF_TIMER 	0x01
@@ -187,18 +187,18 @@ static void GX2StopVideo(ScrnInfoPtr, pointer, Bool);
 static int GX2SetPortAttribute(ScrnInfoPtr, Atom, INT32, pointer);
 static int GX2GetPortAttribute(ScrnInfoPtr, Atom, INT32 *, pointer);
 static void GX2QueryBestSize(ScrnInfoPtr, Bool,
-			     short, short, short, short, unsigned int *,
-			     unsigned int *, pointer);
+                             short, short, short, short, unsigned int *,
+                             unsigned int *, pointer);
 static int GX2PutImage(ScrnInfoPtr, short, short, short, short, short, short,
-		       short, short, int, unsigned char *, short, short, Bool,
-		       RegionPtr, pointer, DrawablePtr);
+                       short, short, int, unsigned char *, short, short, Bool,
+                       RegionPtr, pointer, DrawablePtr);
 static int GX2QueryImageAttributes(ScrnInfoPtr, int, unsigned short *,
-				   unsigned short *, int *, int *);
+                                   unsigned short *, int *, int *);
 
 static void GX2BlockHandler(int, pointer, pointer, pointer);
 void GX2SetVideoPosition(int x, int y, int width, int height,
-			 short src_w, short src_h, short drw_w,
-			 short drw_h, int id, int offset, ScrnInfoPtr pScrn);
+                         short src_w, short src_h, short drw_w,
+                         short drw_h, int id, int offset, ScrnInfoPtr pScrn);
 
 extern void GX2AccelSync(ScrnInfoPtr pScreenInfo);
 
@@ -212,9 +212,9 @@ int DeltaX, DeltaY;
 
 static Atom xvColorKey, xvColorKeyMode, xvFilter
 #if DBUF
-  , xvDoubleBuffer
+, xvDoubleBuffer
 #endif
-  ;
+;
 
 /*----------------------------------------------------------------------------
  * GX2InitVideo
@@ -253,43 +253,44 @@ GX2InitVideo(ScreenPtr pScreen)
     num_adaptors = xf86XVListGenericAdaptors(pScreenInfo, &adaptors);
 
     if (newAdaptor) {
-	if (!num_adaptors) {
-	    num_adaptors = 1;
-	    adaptors = &newAdaptor;
-	} else {
-	    newAdaptors =		/* need to free this someplace */
-		malloc((num_adaptors + 1) * sizeof(XF86VideoAdaptorPtr *));
-	    if (newAdaptors) {
-		memcpy(newAdaptors, adaptors, num_adaptors *
-		       sizeof(XF86VideoAdaptorPtr));
-		newAdaptors[num_adaptors] = newAdaptor;
-		adaptors = newAdaptors;
-		num_adaptors++;
-	    }
-	}
+        if (!num_adaptors) {
+            num_adaptors = 1;
+            adaptors = &newAdaptor;
+        }
+        else {
+            newAdaptors =       /* need to free this someplace */
+                malloc((num_adaptors + 1) * sizeof(XF86VideoAdaptorPtr *));
+            if (newAdaptors) {
+                memcpy(newAdaptors, adaptors, num_adaptors *
+                       sizeof(XF86VideoAdaptorPtr));
+                newAdaptors[num_adaptors] = newAdaptor;
+                adaptors = newAdaptors;
+                num_adaptors++;
+            }
+        }
     }
 
     if (num_adaptors)
-	xf86XVScreenInit(pScreen, adaptors, num_adaptors);
+        xf86XVScreenInit(pScreen, adaptors, num_adaptors);
 
     if (newAdaptors)
-	free(newAdaptors);
+        free(newAdaptors);
 }
 
 /* client libraries expect an encoding */
 static XF86VideoEncodingRec DummyEncoding[1] = {
-   {
-    0,
-    "XV_IMAGE",
-    1024, 1024,
-    {1, 1}
-    }
+    {
+     0,
+     "XV_IMAGE",
+     1024, 1024,
+     {1, 1}
+     }
 };
 
 #define NUM_FORMATS 4
 
 static XF86VideoFormatRec Formats[NUM_FORMATS] = {
-   {8, PseudoColor}, {15, TrueColor}, {16, TrueColor}, {24, TrueColor}
+    {8, PseudoColor}, {15, TrueColor}, {16, TrueColor}, {24, TrueColor}
 };
 
 #if DBUF
@@ -300,42 +301,40 @@ static XF86VideoFormatRec Formats[NUM_FORMATS] = {
 
 static XF86AttributeRec Attributes[NUM_ATTRIBUTES] = {
 #if DBUF
-   {XvSettable | XvGettable, 0, 1, "XV_DOUBLE_BUFFER"},
+    {XvSettable | XvGettable, 0, 1, "XV_DOUBLE_BUFFER"},
 #endif
-   {XvSettable | XvGettable, 0, (1 << 24) - 1, "XV_COLORKEY"},
-   {XvSettable | XvGettable, 0, 1, "XV_FILTER"},
-   {XvSettable | XvGettable, 0, 1, "XV_COLORKEYMODE"}
+    {XvSettable | XvGettable, 0, (1 << 24) - 1, "XV_COLORKEY"},
+    {XvSettable | XvGettable, 0, 1, "XV_FILTER"},
+    {XvSettable | XvGettable, 0, 1, "XV_COLORKEYMODE"}
 };
 
 #define NUM_IMAGES 7
 
 static XF86ImageRec Images[NUM_IMAGES] = {
-   XVIMAGE_UYVY,
-   XVIMAGE_YUY2,
-   XVIMAGE_Y2YU,
-   XVIMAGE_YVYU,
-   XVIMAGE_Y800,
-   XVIMAGE_I420,
-   XVIMAGE_YV12
+    XVIMAGE_UYVY,
+    XVIMAGE_YUY2,
+    XVIMAGE_Y2YU,
+    XVIMAGE_YVYU,
+    XVIMAGE_Y800,
+    XVIMAGE_I420,
+    XVIMAGE_YV12
 };
 
-typedef struct
-{
-   FBAreaPtr area;
-   FBLinearPtr linear;
-   RegionRec clip;
-   CARD32 colorKey;
-   CARD32 colorKeyMode;
-   CARD32 filter;
-   CARD32 videoStatus;
-   Time offTime;
-   Time freeTime;
+typedef struct {
+    FBAreaPtr area;
+    FBLinearPtr linear;
+    RegionRec clip;
+    CARD32 colorKey;
+    CARD32 colorKeyMode;
+    CARD32 filter;
+    CARD32 videoStatus;
+    Time offTime;
+    Time freeTime;
 #if DBUF
-   Bool doubleBuffer;
-   int currentBuffer;
+    Bool doubleBuffer;
+    int currentBuffer;
 #endif
-}
-GeodePortPrivRec, *GeodePortPrivPtr;
+} GeodePortPrivRec, *GeodePortPrivPtr;
 
 #define GET_PORT_PRIVATE(pScrn) \
    (GeodePortPrivPtr)((GEODEPTR(pScrn))->adaptor->pPortPrivates[0].ptr)
@@ -360,42 +359,42 @@ GeodePortPrivRec, *GeodePortPrivPtr;
 static INT32
 GX2SetColorkey(ScrnInfoPtr pScrn, GeodePortPrivPtr pPriv)
 {
-   int red, green, blue;
-   unsigned long key;
+    int red, green, blue;
+    unsigned long key;
 
-   switch (pScrn->depth) {
-   case 8:
-      GFX(get_display_palette_entry(pPriv->colorKey & 0xFF, &key));
-      red = ((key >> 16) & 0xFF);
-      green = ((key >> 8) & 0xFF);
-      blue = (key & 0xFF);
-      break;
-   case 16:
-      red = (pPriv->colorKey & pScrn->mask.red) >>
-	    pScrn->offset.red << (8 - pScrn->weight.red);
-      green = (pPriv->colorKey & pScrn->mask.green) >>
-	    pScrn->offset.green << (8 - pScrn->weight.green);
-      blue = (pPriv->colorKey & pScrn->mask.blue) >>
-	    pScrn->offset.blue << (8 - pScrn->weight.blue);
-      break;
-   default:
-      /* for > 16 bpp we send in the mask in xf86SetWeight. This
-       * function is providing the offset by 1 more. So we take 
-       * this as a special case and subtract 1 for > 16
-       */
-      red = (pPriv->colorKey & pScrn->mask.red) >>
-	    (pScrn->offset.red - 1) << (8 - pScrn->weight.red);
-      green = (pPriv->colorKey & pScrn->mask.green) >>
-	    (pScrn->offset.green - 1) << (8 - pScrn->weight.green);
-      blue = (pPriv->colorKey & pScrn->mask.blue) >>
-	    (pScrn->offset.blue - 1) << (8 - pScrn->weight.blue);
-      break;
-   }
+    switch (pScrn->depth) {
+    case 8:
+        GFX(get_display_palette_entry(pPriv->colorKey & 0xFF, &key));
+        red = ((key >> 16) & 0xFF);
+        green = ((key >> 8) & 0xFF);
+        blue = (key & 0xFF);
+        break;
+    case 16:
+        red = (pPriv->colorKey & pScrn->mask.red) >>
+            pScrn->offset.red << (8 - pScrn->weight.red);
+        green = (pPriv->colorKey & pScrn->mask.green) >>
+            pScrn->offset.green << (8 - pScrn->weight.green);
+        blue = (pPriv->colorKey & pScrn->mask.blue) >>
+            pScrn->offset.blue << (8 - pScrn->weight.blue);
+        break;
+    default:
+        /* for > 16 bpp we send in the mask in xf86SetWeight. This
+         * function is providing the offset by 1 more. So we take 
+         * this as a special case and subtract 1 for > 16
+         */
+        red = (pPriv->colorKey & pScrn->mask.red) >>
+            (pScrn->offset.red - 1) << (8 - pScrn->weight.red);
+        green = (pPriv->colorKey & pScrn->mask.green) >>
+            (pScrn->offset.green - 1) << (8 - pScrn->weight.green);
+        blue = (pPriv->colorKey & pScrn->mask.blue) >>
+            (pScrn->offset.blue - 1) << (8 - pScrn->weight.blue);
+        break;
+    }
 
-   GFX(set_video_color_key((blue | (green << 8) | (red << 16)), 0xFFFFFF,
-			   (pPriv->colorKeyMode == 0)));
-   REGION_EMPTY(pScrn->pScreen, &pPriv->clip);
-   return 0;
+    GFX(set_video_color_key((blue | (green << 8) | (red << 16)), 0xFFFFFF,
+                            (pPriv->colorKeyMode == 0)));
+    REGION_EMPTY(pScrn->pScreen, &pPriv->clip);
+    return 0;
 }
 
 /*----------------------------------------------------------------------------
@@ -421,7 +420,8 @@ GX2ResetVideo(ScrnInfoPtr pScrn)
 
     GeodePortPrivPtr pPriv = pGeode->adaptor->pPortPrivates[0].ptr;
 
-    if (!pGeode->NoAccel) GX2AccelSync(pScrn);
+    if (!pGeode->NoAccel)
+        GX2AccelSync(pScrn);
     GFX(set_video_palette(NULL));
     GX2SetColorkey(pScrn, pPriv);
     GFX(set_video_filter(pPriv->filter, pPriv->filter));
@@ -447,68 +447,68 @@ GX2ResetVideo(ScrnInfoPtr pScrn)
 static XF86VideoAdaptorPtr
 GX2SetupImageVideo(ScreenPtr pScreen)
 {
-   ScrnInfoPtr pScrn = xf86Screens[pScreen->myNum];
-   GeodePtr pGeode = GEODEPTR(pScrn);
-   XF86VideoAdaptorPtr adapt;
-   GeodePortPrivPtr pPriv;
+    ScrnInfoPtr pScrn = xf86Screens[pScreen->myNum];
+    GeodePtr pGeode = GEODEPTR(pScrn);
+    XF86VideoAdaptorPtr adapt;
+    GeodePortPrivPtr pPriv;
 
-   if (!(adapt = calloc(1, sizeof(XF86VideoAdaptorRec) +
-			 sizeof(GeodePortPrivRec) + sizeof(DevUnion))))
-      return NULL;
+    if (!(adapt = calloc(1, sizeof(XF86VideoAdaptorRec) +
+                         sizeof(GeodePortPrivRec) + sizeof(DevUnion))))
+        return NULL;
 
-   adapt->type = XvWindowMask | XvInputMask | XvImageMask;
-   adapt->flags = VIDEO_OVERLAID_IMAGES | VIDEO_CLIP_TO_VIEWPORT;
-   adapt->name = "National Semiconductor Corporation";
-   adapt->nEncodings = 1;
-   adapt->pEncodings = DummyEncoding;
-   adapt->nFormats = NUM_FORMATS;
-   adapt->pFormats = Formats;
-   adapt->nPorts = 1;
-   adapt->pPortPrivates = (DevUnion *) (&adapt[1]);
-   pPriv = (GeodePortPrivPtr) (&adapt->pPortPrivates[1]);
-   adapt->pPortPrivates[0].ptr = (pointer) (pPriv);
-   adapt->pAttributes = Attributes;
-   adapt->nImages = NUM_IMAGES;
-   adapt->nAttributes = NUM_ATTRIBUTES;
-   adapt->pImages = Images;
-   adapt->PutVideo = NULL;
-   adapt->PutStill = NULL;
-   adapt->GetVideo = NULL;
-   adapt->GetStill = NULL;
-   adapt->StopVideo = GX2StopVideo;
-   adapt->SetPortAttribute = GX2SetPortAttribute;
-   adapt->GetPortAttribute = GX2GetPortAttribute;
-   adapt->QueryBestSize = GX2QueryBestSize;
-   adapt->PutImage = GX2PutImage;
-   adapt->QueryImageAttributes = GX2QueryImageAttributes;
+    adapt->type = XvWindowMask | XvInputMask | XvImageMask;
+    adapt->flags = VIDEO_OVERLAID_IMAGES | VIDEO_CLIP_TO_VIEWPORT;
+    adapt->name = "National Semiconductor Corporation";
+    adapt->nEncodings = 1;
+    adapt->pEncodings = DummyEncoding;
+    adapt->nFormats = NUM_FORMATS;
+    adapt->pFormats = Formats;
+    adapt->nPorts = 1;
+    adapt->pPortPrivates = (DevUnion *) (&adapt[1]);
+    pPriv = (GeodePortPrivPtr) (&adapt->pPortPrivates[1]);
+    adapt->pPortPrivates[0].ptr = (pointer) (pPriv);
+    adapt->pAttributes = Attributes;
+    adapt->nImages = NUM_IMAGES;
+    adapt->nAttributes = NUM_ATTRIBUTES;
+    adapt->pImages = Images;
+    adapt->PutVideo = NULL;
+    adapt->PutStill = NULL;
+    adapt->GetVideo = NULL;
+    adapt->GetStill = NULL;
+    adapt->StopVideo = GX2StopVideo;
+    adapt->SetPortAttribute = GX2SetPortAttribute;
+    adapt->GetPortAttribute = GX2GetPortAttribute;
+    adapt->QueryBestSize = GX2QueryBestSize;
+    adapt->PutImage = GX2PutImage;
+    adapt->QueryImageAttributes = GX2QueryImageAttributes;
 
-   pPriv->colorKey = pGeode->videoKey;
-   pPriv->colorKeyMode = 0;
-   pPriv->filter = 0;
-   pPriv->videoStatus = 0;
+    pPriv->colorKey = pGeode->videoKey;
+    pPriv->colorKeyMode = 0;
+    pPriv->filter = 0;
+    pPriv->videoStatus = 0;
 #if DBUF
-   pPriv->doubleBuffer = TRUE;
-   pPriv->currentBuffer = 0;		/* init to first buffer */
+    pPriv->doubleBuffer = TRUE;
+    pPriv->currentBuffer = 0;   /* init to first buffer */
 #endif
 
-   /* gotta uninit this someplace */
-   REGION_NULL(pScreen, &pPriv->clip);
+    /* gotta uninit this someplace */
+    REGION_NULL(pScreen, &pPriv->clip);
 
-   pGeode->adaptor = adapt;
+    pGeode->adaptor = adapt;
 
-   pGeode->BlockHandler = pScreen->BlockHandler;
-   pScreen->BlockHandler = GX2BlockHandler;
+    pGeode->BlockHandler = pScreen->BlockHandler;
+    pScreen->BlockHandler = GX2BlockHandler;
 
-   xvColorKey = MAKE_ATOM("XV_COLORKEY");
-   xvColorKeyMode = MAKE_ATOM("XV_COLORKEYMODE");
-   xvFilter = MAKE_ATOM("XV_FILTER");
+    xvColorKey = MAKE_ATOM("XV_COLORKEY");
+    xvColorKeyMode = MAKE_ATOM("XV_COLORKEYMODE");
+    xvFilter = MAKE_ATOM("XV_FILTER");
 #if DBUF
-   xvDoubleBuffer = MAKE_ATOM("XV_DOUBLE_BUFFER");
+    xvDoubleBuffer = MAKE_ATOM("XV_DOUBLE_BUFFER");
 #endif
 
-   GX2ResetVideo(pScrn);
+    GX2ResetVideo(pScrn);
 
-   return adapt;
+    return adapt;
 }
 
 /*----------------------------------------------------------------------------
@@ -531,28 +531,30 @@ GX2SetupImageVideo(ScreenPtr pScreen)
 static void
 GX2StopVideo(ScrnInfoPtr pScrn, pointer data, Bool exit)
 {
-   GeodePortPrivPtr pPriv = (GeodePortPrivPtr) data;
-   GeodePtr pGeode = GEODEPTR(pScrn);
+    GeodePortPrivPtr pPriv = (GeodePortPrivPtr) data;
+    GeodePtr pGeode = GEODEPTR(pScrn);
 
-   REGION_EMPTY(pScrn->pScreen, &pPriv->clip);
+    REGION_EMPTY(pScrn->pScreen, &pPriv->clip);
 
-   if (!pGeode->NoAccel) GX2AccelSync(pScrn);
-   if (exit) {
-      if (pPriv->videoStatus & CLIENT_VIDEO_ON) {
-	 GFX(set_video_enable(0));
-      }
-      if (pPriv->area) {
-	 xf86FreeOffscreenArea(pPriv->area);
-	 pPriv->area = NULL;
-      }
-      pPriv->videoStatus = 0;
-      pGeode->OverlayON = FALSE;
-   } else {
-      if (pPriv->videoStatus & CLIENT_VIDEO_ON) {
-	 pPriv->videoStatus |= OFF_TIMER;
-	 pPriv->offTime = currentTime.milliseconds + OFF_DELAY;
-      }
-   }
+    if (!pGeode->NoAccel)
+        GX2AccelSync(pScrn);
+    if (exit) {
+        if (pPriv->videoStatus & CLIENT_VIDEO_ON) {
+            GFX(set_video_enable(0));
+        }
+        if (pPriv->area) {
+            xf86FreeOffscreenArea(pPriv->area);
+            pPriv->area = NULL;
+        }
+        pPriv->videoStatus = 0;
+        pGeode->OverlayON = FALSE;
+    }
+    else {
+        if (pPriv->videoStatus & CLIENT_VIDEO_ON) {
+            pPriv->videoStatus |= OFF_TIMER;
+            pPriv->offTime = currentTime.milliseconds + OFF_DELAY;
+        }
+    }
 }
 
 /*----------------------------------------------------------------------------
@@ -576,33 +578,36 @@ GX2StopVideo(ScrnInfoPtr pScrn, pointer data, Bool exit)
 */
 static int
 GX2SetPortAttribute(ScrnInfoPtr pScrn,
-		    Atom attribute, INT32 value, pointer data)
+                    Atom attribute, INT32 value, pointer data)
 {
-   GeodePortPrivPtr pPriv = (GeodePortPrivPtr) data;
-   GeodePtr pGeode = GEODEPTR(pScrn);
+    GeodePortPrivPtr pPriv = (GeodePortPrivPtr) data;
+    GeodePtr pGeode = GEODEPTR(pScrn);
 
-   if (!pGeode->NoAccel) GX2AccelSync(pScrn);
-   if (attribute == xvColorKey) {
-      pPriv->colorKey = value;
-      GX2SetColorkey(pScrn, pPriv);
-   }
+    if (!pGeode->NoAccel)
+        GX2AccelSync(pScrn);
+    if (attribute == xvColorKey) {
+        pPriv->colorKey = value;
+        GX2SetColorkey(pScrn, pPriv);
+    }
 #if DBUF
-   else if (attribute == xvDoubleBuffer) {
-      if ((value < 0) || (value > 1))
-	 return BadValue;
-      pPriv->doubleBuffer = value;
-   }
+    else if (attribute == xvDoubleBuffer) {
+        if ((value < 0) || (value > 1))
+            return BadValue;
+        pPriv->doubleBuffer = value;
+    }
 #endif
-   else if (attribute == xvColorKeyMode) {
-      pPriv->colorKeyMode = value;
-      GX2SetColorkey(pScrn, pPriv);
-   } else if (attribute == xvFilter) {
-      pPriv->filter = value;
-      GFX(set_video_filter(pPriv->filter, pPriv->filter));
-   } else
-      return BadMatch;
+    else if (attribute == xvColorKeyMode) {
+        pPriv->colorKeyMode = value;
+        GX2SetColorkey(pScrn, pPriv);
+    }
+    else if (attribute == xvFilter) {
+        pPriv->filter = value;
+        GFX(set_video_filter(pPriv->filter, pPriv->filter));
+    }
+    else
+        return BadMatch;
 
-   return Success;
+    return Success;
 }
 
 /*----------------------------------------------------------------------------
@@ -626,26 +631,28 @@ GX2SetPortAttribute(ScrnInfoPtr pScrn,
 */
 static int
 GX2GetPortAttribute(ScrnInfoPtr pScrn,
-		    Atom attribute, INT32 * value, pointer data)
+                    Atom attribute, INT32 *value, pointer data)
 {
-   GeodePortPrivPtr pPriv = (GeodePortPrivPtr) data;
+    GeodePortPrivPtr pPriv = (GeodePortPrivPtr) data;
 
-   if (attribute == xvColorKey) {
-      *value = pPriv->colorKey;
-   }
+    if (attribute == xvColorKey) {
+        *value = pPriv->colorKey;
+    }
 #if DBUF
-   else if (attribute == xvDoubleBuffer) {
-      *value = (pPriv->doubleBuffer) ? 1 : 0;
-   }
+    else if (attribute == xvDoubleBuffer) {
+        *value = (pPriv->doubleBuffer) ? 1 : 0;
+    }
 #endif
-   else if (attribute == xvColorKeyMode) {
-      *value = pPriv->colorKeyMode;
-   } else if (attribute == xvFilter) {
-      *value = pPriv->filter;
-   } else
-      return BadMatch;
+    else if (attribute == xvColorKeyMode) {
+        *value = pPriv->colorKeyMode;
+    }
+    else if (attribute == xvFilter) {
+        *value = pPriv->filter;
+    }
+    else
+        return BadMatch;
 
-   return Success;
+    return Success;
 }
 
 /*----------------------------------------------------------------------------
@@ -672,45 +679,45 @@ GX2GetPortAttribute(ScrnInfoPtr pScrn,
 */
 static void
 GX2QueryBestSize(ScrnInfoPtr pScrn,
-		 Bool motion,
-		 short vid_w, short vid_h,
-		 short drw_w, short drw_h,
-		 unsigned int *p_w, unsigned int *p_h, pointer data)
+                 Bool motion,
+                 short vid_w, short vid_h,
+                 short drw_w, short drw_h,
+                 unsigned int *p_w, unsigned int *p_h, pointer data)
 {
-   *p_w = drw_w;
-   *p_h = drw_h;
+    *p_w = drw_w;
+    *p_h = drw_h;
 
-   if (*p_w > 16384)
-      *p_w = 16384;
+    if (*p_w > 16384)
+        *p_w = 16384;
 }
 
 static void
 GX2CopyGreyscale(unsigned char *src,
-		 unsigned char *dst, int srcPitch, int dstPitch, int h, int w)
+                 unsigned char *dst, int srcPitch, int dstPitch, int h, int w)
 {
-   int i;
-   unsigned char *src2 = src;
-   unsigned char *dst2 = dst;
-   unsigned char *dst3;
-   unsigned char *src3;
+    int i;
+    unsigned char *src2 = src;
+    unsigned char *dst2 = dst;
+    unsigned char *dst3;
+    unsigned char *src3;
 
-   dstPitch <<= 1;
+    dstPitch <<= 1;
 
-   while (h--) {
-      dst3 = dst2;
-      src3 = src2;
-      for (i = 0; i < w; i++) {
-	 *dst3++ = *src3++;		/* Copy Y data */
-	 *dst3++ = 0x80;		/* Fill UV with 0x80 - greyscale */
-      }
-      src3 = src2;
-      for (i = 0; i < w; i++) {
-	 *dst3++ = *src3++;		/* Copy Y data */
-	 *dst3++ = 0x80;		/* Fill UV with 0x80 - greyscale */
-      }
-      dst2 += dstPitch;
-      src2 += srcPitch;
-   }
+    while (h--) {
+        dst3 = dst2;
+        src3 = src2;
+        for (i = 0; i < w; i++) {
+            *dst3++ = *src3++;  /* Copy Y data */
+            *dst3++ = 0x80;     /* Fill UV with 0x80 - greyscale */
+        }
+        src3 = src2;
+        for (i = 0; i < w; i++) {
+            *dst3++ = *src3++;  /* Copy Y data */
+            *dst3++ = 0x80;     /* Fill UV with 0x80 - greyscale */
+        }
+        dst2 += dstPitch;
+        src2 += srcPitch;
+    }
 }
 
 /*----------------------------------------------------------------------------
@@ -734,13 +741,13 @@ GX2CopyGreyscale(unsigned char *src,
 
 static void
 GX2CopyData420(unsigned char *src, unsigned char *dst,
-	       int srcPitch, int dstPitch, int h, int w)
+               int srcPitch, int dstPitch, int h, int w)
 {
-   while (h--) {
-      memcpy(dst, src, w);
-      src += srcPitch;
-      dst += dstPitch;
-   }
+    while (h--) {
+        memcpy(dst, src, w);
+        src += srcPitch;
+        dst += dstPitch;
+    }
 }
 
 /*----------------------------------------------------------------------------
@@ -764,50 +771,50 @@ GX2CopyData420(unsigned char *src, unsigned char *dst,
 
 static void
 GX2CopyData422(unsigned char *src, unsigned char *dst,
-	       int srcPitch, int dstPitch, int h, int w)
+               int srcPitch, int dstPitch, int h, int w)
 {
-   w <<= 1;
-   while (h--) {
-      memcpy(dst, src, w);
-      src += srcPitch;
-      dst += dstPitch;
-   }
+    w <<= 1;
+    while (h--) {
+        memcpy(dst, src, w);
+        src += srcPitch;
+        dst += dstPitch;
+    }
 }
 
 static FBAreaPtr
 GX2AllocateMemory(ScrnInfoPtr pScrn, FBAreaPtr area, int numlines)
 {
-   ScreenPtr pScreen = screenInfo.screens[pScrn->scrnIndex];
-   FBAreaPtr new_area;
+    ScreenPtr pScreen = screenInfo.screens[pScrn->scrnIndex];
+    FBAreaPtr new_area;
 
-   if (area) {
-      if ((area->box.y2 - area->box.y1) >= numlines)
-	 return area;
+    if (area) {
+        if ((area->box.y2 - area->box.y1) >= numlines)
+            return area;
 
-      if (xf86ResizeOffscreenArea(area, pScrn->displayWidth, numlines))
-	 return area;
+        if (xf86ResizeOffscreenArea(area, pScrn->displayWidth, numlines))
+            return area;
 
-      xf86FreeOffscreenArea(area);
-   }
+        xf86FreeOffscreenArea(area);
+    }
 
-   new_area = xf86AllocateOffscreenArea(pScreen, pScrn->displayWidth,
-					numlines, 0, NULL, NULL, NULL);
+    new_area = xf86AllocateOffscreenArea(pScreen, pScrn->displayWidth,
+                                         numlines, 0, NULL, NULL, NULL);
 
-   if (!new_area) {
-      int max_w, max_h;
+    if (!new_area) {
+        int max_w, max_h;
 
-      xf86QueryLargestOffscreenArea(pScreen, &max_w, &max_h, 0,
-				    FAVOR_WIDTH_THEN_AREA, PRIORITY_EXTREME);
+        xf86QueryLargestOffscreenArea(pScreen, &max_w, &max_h, 0,
+                                      FAVOR_WIDTH_THEN_AREA, PRIORITY_EXTREME);
 
-      if ((max_w < pScrn->displayWidth) || (max_h < numlines))
-	 return NULL;
+        if ((max_w < pScrn->displayWidth) || (max_h < numlines))
+            return NULL;
 
-      xf86PurgeUnlockedOffscreenAreas(pScreen);
-      new_area = xf86AllocateOffscreenArea(pScreen, pScrn->displayWidth,
-					   numlines, 0, NULL, NULL, NULL);
-   }
+        xf86PurgeUnlockedOffscreenAreas(pScreen);
+        new_area = xf86AllocateOffscreenArea(pScreen, pScrn->displayWidth,
+                                             numlines, 0, NULL, NULL, NULL);
+    }
 
-   return new_area;
+    return new_area;
 }
 
 static BoxRec dstBox;
@@ -820,98 +827,101 @@ static int d2offset = 0, d3offset = 0;
 static Bool
 RegionsIntersect(BoxPtr pRcl1, BoxPtr pRcl2, BoxPtr pRclResult)
 {
-   pRclResult->x1 = max(pRcl1->x1, pRcl2->x1);
-   pRclResult->x2 = min(pRcl1->x2, pRcl2->x2);
+    pRclResult->x1 = max(pRcl1->x1, pRcl2->x1);
+    pRclResult->x2 = min(pRcl1->x2, pRcl2->x2);
 
-   if (pRclResult->x1 <= pRclResult->x2) {
-      pRclResult->y1 = max(pRcl1->y1, pRcl2->y1);
-      pRclResult->y2 = min(pRcl1->y2, pRcl2->y2);
+    if (pRclResult->x1 <= pRclResult->x2) {
+        pRclResult->y1 = max(pRcl1->y1, pRcl2->y1);
+        pRclResult->y2 = min(pRcl1->y2, pRcl2->y2);
 
-      if (pRclResult->y1 <= pRclResult->y2) {
-	 return (TRUE);
-      }
-   }
+        if (pRclResult->y1 <= pRclResult->y2) {
+            return (TRUE);
+        }
+    }
 
-   return (FALSE);
+    return (FALSE);
 }
 
 void
 GX2SetVideoPosition(int x, int y, int width, int height,
-		    short src_w, short src_h, short drw_w, short drw_h,
-		    int id, int offset, ScrnInfoPtr pScrn)
+                    short src_w, short src_h, short drw_w, short drw_h,
+                    int id, int offset, ScrnInfoPtr pScrn)
 {
-   GeodePtr pGeode = GEODEPTR(pScrn);
-   long xstart, ystart, xend, yend;
-   unsigned long lines = 0;
-   unsigned long y_extra, uv_extra = 0;
-   BoxRec ovly, display, result;
+    GeodePtr pGeode = GEODEPTR(pScrn);
+    long xstart, ystart, xend, yend;
+    unsigned long lines = 0;
+    unsigned long y_extra, uv_extra = 0;
+    BoxRec ovly, display, result;
 
 #if defined(STB_X)
-   unsigned long startAddress = 0;
+    unsigned long startAddress = 0;
 #endif
 
-   xend = x + drw_w;
-   yend = y + drw_h;
+    xend = x + drw_w;
+    yend = y + drw_h;
 
-   /* Take care of panning when panel is present */
+    /* Take care of panning when panel is present */
 
 #if defined(STB_X)
-   Gal_get_display_offset(&startAddress);
-   DeltaY = startAddress / pGeode->Pitch;
-   DeltaX = startAddress & (pGeode->Pitch - 1);
-   DeltaX /= (pScrn->bitsPerPixel >> 3);
+    Gal_get_display_offset(&startAddress);
+    DeltaY = startAddress / pGeode->Pitch;
+    DeltaX = startAddress & (pGeode->Pitch - 1);
+    DeltaX /= (pScrn->bitsPerPixel >> 3);
 #endif
 
-   if (pGeode->Panel) {
-      ovly.x1 = x;
-      ovly.x2 = x + pGeode->video_dstw;
-      ovly.y1 = y;
-      ovly.y2 = y + pGeode->video_dsth;
+    if (pGeode->Panel) {
+        ovly.x1 = x;
+        ovly.x2 = x + pGeode->video_dstw;
+        ovly.y1 = y;
+        ovly.y2 = y + pGeode->video_dsth;
 
-      display.x1 = DeltaX;
-      display.x2 = DeltaX + pGeode->FPBX;
-      display.y1 = DeltaY;
-      display.y2 = DeltaY + pGeode->FPBY;
-      x = xend = 0;
-      if (RegionsIntersect(&display, &ovly, &result)) {
-	 x = ovly.x1 - DeltaX;
-	 xend = ovly.x2 - DeltaX;
-	 y = ovly.y1 - DeltaY;
-	 yend = ovly.y2 - DeltaY;
-      }
-   }
+        display.x1 = DeltaX;
+        display.x2 = DeltaX + pGeode->FPBX;
+        display.y1 = DeltaY;
+        display.y2 = DeltaY + pGeode->FPBY;
+        x = xend = 0;
+        if (RegionsIntersect(&display, &ovly, &result)) {
+            x = ovly.x1 - DeltaX;
+            xend = ovly.x2 - DeltaX;
+            y = ovly.y1 - DeltaY;
+            yend = ovly.y2 - DeltaY;
+        }
+    }
 
-   /*  LEFT CLIPPING */
+    /*  LEFT CLIPPING */
 
-   if (x < 0) {
-      xstart = 0;
-   } else {
-      xstart = (unsigned long)x;
-   }
-   drw_w -= (xstart - x);
+    if (x < 0) {
+        xstart = 0;
+    }
+    else {
+        xstart = (unsigned long) x;
+    }
+    drw_w -= (xstart - x);
 
-   /*  TOP CLIPPING */
+    /*  TOP CLIPPING */
 
-   if (y < 0) {
-      lines = (-y) * src_h / drw_h;
-      ystart = 0;
-      drw_h += y;
-      y_extra = lines * dstPitch;
-      uv_extra = (lines >> 1) * (dstPitch2);
-   } else {
-      ystart = y;
-      lines = 0;
-      y_extra = 0;
-   }
-   GFX(set_video_window(xstart, ystart, xend - xstart, yend - ystart));
-   if ((id == FOURCC_Y800) || (id == FOURCC_I420) || (id == FOURCC_YV12)) {
-      GFX(set_video_yuv_offsets(offset + y_extra,
-				offset + d3offset + uv_extra,
-				offset + d2offset + uv_extra));
-   } else {
-      GFX(set_video_offset(offset + y_extra));
-   }
-   GFX(set_video_left_crop(xstart - x));
+    if (y < 0) {
+        lines = (-y) * src_h / drw_h;
+        ystart = 0;
+        drw_h += y;
+        y_extra = lines * dstPitch;
+        uv_extra = (lines >> 1) * (dstPitch2);
+    }
+    else {
+        ystart = y;
+        lines = 0;
+        y_extra = 0;
+    }
+    GFX(set_video_window(xstart, ystart, xend - xstart, yend - ystart));
+    if ((id == FOURCC_Y800) || (id == FOURCC_I420) || (id == FOURCC_YV12)) {
+        GFX(set_video_yuv_offsets(offset + y_extra,
+                                  offset + d3offset + uv_extra,
+                                  offset + d2offset + uv_extra));
+    }
+    else {
+        GFX(set_video_offset(offset + y_extra));
+    }
+    GFX(set_video_left_crop(xstart - x));
 }
 
 /*----------------------------------------------------------------------------
@@ -931,61 +941,62 @@ GX2SetVideoPosition(int x, int y, int width, int height,
 
 static void
 GX2DisplayVideo(ScrnInfoPtr pScrn,
-		int id,
-		int offset,
-		short width, short height,
-		int pitch,
-		int x1, int y1, int x2, int y2,
-		BoxPtr dstBox,
-		short src_w, short src_h, short drw_w, short drw_h)
+                int id,
+                int offset,
+                short width, short height,
+                int pitch,
+                int x1, int y1, int x2, int y2,
+                BoxPtr dstBox,
+                short src_w, short src_h, short drw_w, short drw_h)
 {
-   GeodePtr pGeode = GEODEPTR(pScrn);
+    GeodePtr pGeode = GEODEPTR(pScrn);
 
-   if (!pGeode->NoAccel) GX2AccelSync(pScrn);
+    if (!pGeode->NoAccel)
+        GX2AccelSync(pScrn);
 
-   GFX(set_video_enable(1));
+    GFX(set_video_enable(1));
 
-   switch (id) {
-   case FOURCC_UYVY:			/* UYVY */
-      GFX(set_video_format(VIDEO_FORMAT_UYVY));
-      GFX(set_video_size(width, height));
-      break;
-   case FOURCC_Y800:			/* Y800 - greyscale - we munge it! */
-   case FOURCC_YV12:			/* YV12 */
-   case FOURCC_I420:			/* I420 */
-      GFX(set_video_format(VIDEO_FORMAT_Y0Y1Y2Y3));
-      GFX(set_video_size(width, height));
-      GFX(set_video_yuv_pitch(dstPitch, dstPitch2));
-      break;
-   case FOURCC_YUY2:			/* YUY2 */
-      GFX(set_video_format(VIDEO_FORMAT_YUYV));
-      GFX(set_video_size(width, height));
-      break;
-   case FOURCC_Y2YU:			/* Y2YU */
-      GFX(set_video_format(VIDEO_FORMAT_Y2YU));
-      GFX(set_video_size(width, height));
-      break;
-   case FOURCC_YVYU:			/* YVYU */
-      GFX(set_video_format(VIDEO_FORMAT_YVYU));
-      GFX(set_video_size(width, height));
-      break;
-   }
-   if (pGeode->Panel) {
-      pGeode->video_x = dstBox->x1;
-      pGeode->video_y = dstBox->y1;
-      pGeode->video_w = width;
-      pGeode->video_h = height;
-      pGeode->video_srcw = src_w;
-      pGeode->video_srch = src_h;
-      pGeode->video_dstw = drw_w;
-      pGeode->video_dsth = drw_h;
-      pGeode->video_offset = offset;
-      pGeode->video_id = id;
-      pGeode->video_scrnptr = pScrn;
-   }
-   GFX(set_video_scale(width, height, drw_w, drw_h));
-   GX2SetVideoPosition(dstBox->x1, dstBox->y1, width, height, src_w,
-		       src_h, drw_w, drw_h, id, offset, pScrn);
+    switch (id) {
+    case FOURCC_UYVY:          /* UYVY */
+        GFX(set_video_format(VIDEO_FORMAT_UYVY));
+        GFX(set_video_size(width, height));
+        break;
+    case FOURCC_Y800:          /* Y800 - greyscale - we munge it! */
+    case FOURCC_YV12:          /* YV12 */
+    case FOURCC_I420:          /* I420 */
+        GFX(set_video_format(VIDEO_FORMAT_Y0Y1Y2Y3));
+        GFX(set_video_size(width, height));
+        GFX(set_video_yuv_pitch(dstPitch, dstPitch2));
+        break;
+    case FOURCC_YUY2:          /* YUY2 */
+        GFX(set_video_format(VIDEO_FORMAT_YUYV));
+        GFX(set_video_size(width, height));
+        break;
+    case FOURCC_Y2YU:          /* Y2YU */
+        GFX(set_video_format(VIDEO_FORMAT_Y2YU));
+        GFX(set_video_size(width, height));
+        break;
+    case FOURCC_YVYU:          /* YVYU */
+        GFX(set_video_format(VIDEO_FORMAT_YVYU));
+        GFX(set_video_size(width, height));
+        break;
+    }
+    if (pGeode->Panel) {
+        pGeode->video_x = dstBox->x1;
+        pGeode->video_y = dstBox->y1;
+        pGeode->video_w = width;
+        pGeode->video_h = height;
+        pGeode->video_srcw = src_w;
+        pGeode->video_srch = src_h;
+        pGeode->video_dstw = drw_w;
+        pGeode->video_dsth = drw_h;
+        pGeode->video_offset = offset;
+        pGeode->video_id = id;
+        pGeode->video_scrnptr = pScrn;
+    }
+    GFX(set_video_scale(width, height, drw_w, drw_h));
+    GX2SetVideoPosition(dstBox->x1, dstBox->y1, width, height, src_w,
+                        src_h, drw_w, drw_h, id, offset, pScrn);
 
 }
 
@@ -1013,207 +1024,206 @@ GX2DisplayVideo(ScrnInfoPtr pScrn,
 
 static int
 GX2PutImage(ScrnInfoPtr pScrn,
-	    short src_x, short src_y,
-	    short drw_x, short drw_y,
-	    short src_w, short src_h,
-	    short drw_w, short drw_h,
-	    int id, unsigned char *buf,
-	    short width, short height,
-	    Bool sync, RegionPtr clipBoxes, pointer data,
-	    DrawablePtr pDraw)
+            short src_x, short src_y,
+            short drw_x, short drw_y,
+            short src_w, short src_h,
+            short drw_w, short drw_h,
+            int id, unsigned char *buf,
+            short width, short height,
+            Bool sync, RegionPtr clipBoxes, pointer data, DrawablePtr pDraw)
 {
-   GeodePortPrivPtr pPriv = (GeodePortPrivPtr) data;
-   GeodePtr pGeode = GEODEPTR(pScrn);
-   int new_h;
+    GeodePortPrivPtr pPriv = (GeodePortPrivPtr) data;
+    GeodePtr pGeode = GEODEPTR(pScrn);
+    int new_h;
 
 #if REINIT
-   BOOL ReInitVideo = FALSE;
+    BOOL ReInitVideo = FALSE;
 #endif
 
 #if XV_PROFILE
-   long oldtime, newtime;
+    long oldtime, newtime;
 
-   UpdateCurrentTime();
-   oldtime = currentTime.milliseconds;
+    UpdateCurrentTime();
+    oldtime = currentTime.milliseconds;
 #endif
 
 #if REINIT
 /* update cliplist */
-   if (!REGION_EQUAL(pScrn->pScreen, &pPriv->clip, clipBoxes)) {
-      ReInitVideo = TRUE;
-   }
-   if (ReInitVideo) {
-      DEBUGMSG(1, (0, X_NONE, "Regional Not Equal - Init\n"));
+    if (!REGION_EQUAL(pScrn->pScreen, &pPriv->clip, clipBoxes)) {
+        ReInitVideo = TRUE;
+    }
+    if (ReInitVideo) {
+        DEBUGMSG(1, (0, X_NONE, "Regional Not Equal - Init\n"));
 #endif
 
-      if (drw_w > 16384)
-	 drw_w = 16384;
+        if (drw_w > 16384)
+            drw_w = 16384;
 
-      /* Clip */
-      Bx1 = src_x;
-      Bx2 = src_x + src_w;
-      By1 = src_y;
-      By2 = src_y + src_h;
+        /* Clip */
+        Bx1 = src_x;
+        Bx2 = src_x + src_w;
+        By1 = src_y;
+        By2 = src_y + src_h;
 
-      if ((Bx1 >= Bx2) || (By1 >= By2))
-	 return Success;
+        if ((Bx1 >= Bx2) || (By1 >= By2))
+            return Success;
 
-      dstBox.x1 = drw_x;
-      dstBox.x2 = drw_x + drw_w;
-      dstBox.y1 = drw_y;
-      dstBox.y2 = drw_y + drw_h;
+        dstBox.x1 = drw_x;
+        dstBox.x2 = drw_x + drw_w;
+        dstBox.y1 = drw_y;
+        dstBox.y2 = drw_y + drw_h;
 
-      dstBox.x1 -= pScrn->frameX0;
-      dstBox.x2 -= pScrn->frameX0;
-      dstBox.y1 -= pScrn->frameY0;
-      dstBox.y2 -= pScrn->frameY0;
+        dstBox.x1 -= pScrn->frameX0;
+        dstBox.x2 -= pScrn->frameX0;
+        dstBox.y1 -= pScrn->frameY0;
+        dstBox.y2 -= pScrn->frameY0;
 
-      switch (id) {
-      case FOURCC_YV12:
-      case FOURCC_I420:
+        switch (id) {
+        case FOURCC_YV12:
+        case FOURCC_I420:
 
-	 srcPitch = (width + 3) & ~3;	/* of luma */
-	 dstPitch = (width + 31) & ~31;
+            srcPitch = (width + 3) & ~3;        /* of luma */
+            dstPitch = (width + 31) & ~31;
 
-	 s2offset = srcPitch * height;
-	 d2offset = dstPitch * height;
+            s2offset = srcPitch * height;
+            d2offset = dstPitch * height;
 
-	 srcPitch2 = ((width >> 1) + 3) & ~3;
-	 dstPitch2 = ((width >> 1) + 15) & ~15;
+            srcPitch2 = ((width >> 1) + 3) & ~3;
+            dstPitch2 = ((width >> 1) + 15) & ~15;
 
-	 s3offset = (srcPitch2 * (height >> 1)) + s2offset;
-	 d3offset = (dstPitch2 * (height >> 1)) + d2offset;
+            s3offset = (srcPitch2 * (height >> 1)) + s2offset;
+            d3offset = (dstPitch2 * (height >> 1)) + d2offset;
 
-	 new_h = dstPitch * height;	/* Y */
-	 new_h += (dstPitch2 * height);	/* U+V */
-	 new_h += pGeode->Pitch - 1;
-	 new_h /= pGeode->Pitch;
-	 break;
+            new_h = dstPitch * height;  /* Y */
+            new_h += (dstPitch2 * height);      /* U+V */
+            new_h += pGeode->Pitch - 1;
+            new_h /= pGeode->Pitch;
+            break;
 
-      case FOURCC_UYVY:
-      case FOURCC_YUY2:
-      case FOURCC_Y800:
-      default:
-	 dstPitch = ((width << 1) + 3) & ~3;
-	 srcPitch = (width << 1);
-	 new_h = ((dstPitch * height) + pGeode->Pitch - 1) / pGeode->Pitch;
-	 break;
-      }
+        case FOURCC_UYVY:
+        case FOURCC_YUY2:
+        case FOURCC_Y800:
+        default:
+            dstPitch = ((width << 1) + 3) & ~3;
+            srcPitch = (width << 1);
+            new_h = ((dstPitch * height) + pGeode->Pitch - 1) / pGeode->Pitch;
+            break;
+        }
 
 #if DBUF
-      if (pPriv->doubleBuffer)
-	 new_h <<= 1;
+        if (pPriv->doubleBuffer)
+            new_h <<= 1;
 #endif
 
-      if (!(pPriv->area = GX2AllocateMemory(pScrn, pPriv->area, new_h)))
-	 return BadAlloc;
+        if (!(pPriv->area = GX2AllocateMemory(pScrn, pPriv->area, new_h)))
+            return BadAlloc;
 
-      /* copy data */
-      top = By1;
-      left = Bx1 & ~1;
-      npixels = ((Bx2 + 1) & ~1) - left;
+        /* copy data */
+        top = By1;
+        left = Bx1 & ~1;
+        npixels = ((Bx2 + 1) & ~1) - left;
 
-      switch (id) {
-      case FOURCC_YV12:
-      case FOURCC_I420:
-	 {
-	    int tmp;
+        switch (id) {
+        case FOURCC_YV12:
+        case FOURCC_I420:
+        {
+            int tmp;
 
-	    top &= ~1;
-	    offset = (pPriv->area->box.y1 * pGeode->Pitch) + (top * dstPitch);
+            top &= ~1;
+            offset = (pPriv->area->box.y1 * pGeode->Pitch) + (top * dstPitch);
 
 #if DBUF
-	    if (pPriv->doubleBuffer && pPriv->currentBuffer)
-	       offset += (new_h >> 1) * pGeode->Pitch;
+            if (pPriv->doubleBuffer && pPriv->currentBuffer)
+                offset += (new_h >> 1) * pGeode->Pitch;
 #endif
 
-	    dst_start = pGeode->FBBase + offset + left;
-	    tmp = ((top >> 1) * srcPitch2) + (left >> 1);
-	    s2offset += tmp;
-	    s3offset += tmp;
-	    if (id == FOURCC_I420) {
-	       tmp = s2offset;
-	       s2offset = s3offset;
-	       s3offset = tmp;
-	    }
-	    nlines = ((By2 + 1) & ~1) - top;
-	 }
-	 break;
-      case FOURCC_UYVY:
-      case FOURCC_YUY2:
-      case FOURCC_Y800:
-      default:
-	 left <<= 1;
-	 buf += (top * srcPitch) + left;
-	 nlines = By2 - top;
-	 offset = (pPriv->area->box.y1 * pGeode->Pitch) + (top * dstPitch);
+            dst_start = pGeode->FBBase + offset + left;
+            tmp = ((top >> 1) * srcPitch2) + (left >> 1);
+            s2offset += tmp;
+            s3offset += tmp;
+            if (id == FOURCC_I420) {
+                tmp = s2offset;
+                s2offset = s3offset;
+                s3offset = tmp;
+            }
+            nlines = ((By2 + 1) & ~1) - top;
+        }
+            break;
+        case FOURCC_UYVY:
+        case FOURCC_YUY2:
+        case FOURCC_Y800:
+        default:
+            left <<= 1;
+            buf += (top * srcPitch) + left;
+            nlines = By2 - top;
+            offset = (pPriv->area->box.y1 * pGeode->Pitch) + (top * dstPitch);
 #if DBUF
-	 if (pPriv->doubleBuffer && pPriv->currentBuffer)
-	    offset += (new_h >> 1) * pGeode->Pitch;
+            if (pPriv->doubleBuffer && pPriv->currentBuffer)
+                offset += (new_h >> 1) * pGeode->Pitch;
 #endif
 
-	 dst_start = pGeode->FBBase + offset + left;
-	 break;
-      }
-      s1offset = (top * srcPitch) + left;
+            dst_start = pGeode->FBBase + offset + left;
+            break;
+        }
+        s1offset = (top * srcPitch) + left;
 
 #if REINIT
-      /* update cliplist */
-      REGION_COPY(pScrn->pScreen, &pPriv->clip, clipBoxes);
-      if (pPriv->colorKeyMode == 0) {
-	 /* draw these */
-	 xf86XVFillKeyHelper(pScrn->pScreen, pPriv->colorKey, clipBoxes);
-      }
-      GX2DisplayVideo(pScrn, id, offset, width, height, dstPitch,
-		      Bx1, By1, Bx2, By2, &dstBox, src_w, src_h, drw_w,
-		      drw_h);
-   }
+        /* update cliplist */
+        REGION_COPY(pScrn->pScreen, &pPriv->clip, clipBoxes);
+        if (pPriv->colorKeyMode == 0) {
+            /* draw these */
+            xf86XVFillKeyHelper(pScrn->pScreen, pPriv->colorKey, clipBoxes);
+        }
+        GX2DisplayVideo(pScrn, id, offset, width, height, dstPitch,
+                        Bx1, By1, Bx2, By2, &dstBox, src_w, src_h, drw_w,
+                        drw_h);
+    }
 #endif
 
-   switch (id) {
+    switch (id) {
 
-   case FOURCC_Y800:
-      GX2CopyGreyscale(buf, dst_start, srcPitch, dstPitch, nlines, npixels);
-      break;
-   case FOURCC_YV12:
-   case FOURCC_I420:
-      GX2CopyData420(buf + s1offset, dst_start, srcPitch, dstPitch, nlines,
-		     npixels);
-      GX2CopyData420(buf + s2offset, dst_start + d2offset, srcPitch2,
-		     dstPitch2, nlines >> 1, npixels >> 1);
-      GX2CopyData420(buf + s3offset, dst_start + d3offset, srcPitch2,
-		     dstPitch2, nlines >> 1, npixels >> 1);
-      break;
-   case FOURCC_UYVY:
-   case FOURCC_YUY2:
-   default:
-      GX2CopyData422(buf, dst_start, srcPitch, dstPitch, nlines, npixels);
-      break;
-   }
+    case FOURCC_Y800:
+        GX2CopyGreyscale(buf, dst_start, srcPitch, dstPitch, nlines, npixels);
+        break;
+    case FOURCC_YV12:
+    case FOURCC_I420:
+        GX2CopyData420(buf + s1offset, dst_start, srcPitch, dstPitch, nlines,
+                       npixels);
+        GX2CopyData420(buf + s2offset, dst_start + d2offset, srcPitch2,
+                       dstPitch2, nlines >> 1, npixels >> 1);
+        GX2CopyData420(buf + s3offset, dst_start + d3offset, srcPitch2,
+                       dstPitch2, nlines >> 1, npixels >> 1);
+        break;
+    case FOURCC_UYVY:
+    case FOURCC_YUY2:
+    default:
+        GX2CopyData422(buf, dst_start, srcPitch, dstPitch, nlines, npixels);
+        break;
+    }
 #if !REINIT
-   /* update cliplist */
-   REGION_COPY(pScreen, &pPriv->clip, clipBoxes);
-   if (pPriv->colorKeyMode == 0) {
-      /* draw these */
-      xf86XVFillKeyHelper(pScrn->pScreen, pPriv->colorKey, clipBoxes);
-   }
-   GX2DisplayVideo(pScrn, id, offset, width, height, dstPitch,
-		   Bx1, By1, Bx2, By2, &dstBox, src_w, src_h, drw_w, drw_h);
+    /* update cliplist */
+    REGION_COPY(pScreen, &pPriv->clip, clipBoxes);
+    if (pPriv->colorKeyMode == 0) {
+        /* draw these */
+        xf86XVFillKeyHelper(pScrn->pScreen, pPriv->colorKey, clipBoxes);
+    }
+    GX2DisplayVideo(pScrn, id, offset, width, height, dstPitch,
+                    Bx1, By1, Bx2, By2, &dstBox, src_w, src_h, drw_w, drw_h);
 #endif
 
 #if XV_PROFILE
-   UpdateCurrentTime();
-   newtime = currentTime.milliseconds;
-   DEBUGMSG(1, (0, X_NONE, "PI %d\n", newtime - oldtime));
+    UpdateCurrentTime();
+    newtime = currentTime.milliseconds;
+    DEBUGMSG(1, (0, X_NONE, "PI %d\n", newtime - oldtime));
 #endif
 
 #if DBUF
-   pPriv->currentBuffer ^= 1;
+    pPriv->currentBuffer ^= 1;
 #endif
 
-   pPriv->videoStatus = CLIENT_VIDEO_ON;
-   pGeode->OverlayON = TRUE;
-   return Success;
+    pPriv->videoStatus = CLIENT_VIDEO_ON;
+    pGeode->OverlayON = TRUE;
+    return Success;
 }
 
 /*----------------------------------------------------------------------------
@@ -1237,98 +1247,98 @@ GX2PutImage(ScrnInfoPtr pScrn,
 */
 static int
 GX2QueryImageAttributes(ScrnInfoPtr pScrn,
-			int id,
-			unsigned short *w, unsigned short *h,
-			int *pitches, int *offsets)
+                        int id,
+                        unsigned short *w, unsigned short *h,
+                        int *pitches, int *offsets)
 {
-   int size;
-   int tmp;
+    int size;
+    int tmp;
 
-   DEBUGMSG(0, (0, X_NONE, "QueryImageAttributes %X\n", id));
+    DEBUGMSG(0, (0, X_NONE, "QueryImageAttributes %X\n", id));
 
-   if (*w > 1024)
-      *w = 1024;
-   if (*h > 1024)
-      *h = 1024;
+    if (*w > 1024)
+        *w = 1024;
+    if (*h > 1024)
+        *h = 1024;
 
-   *w = (*w + 1) & ~1;
-   if (offsets)
-      offsets[0] = 0;
+    *w = (*w + 1) & ~1;
+    if (offsets)
+        offsets[0] = 0;
 
-   switch (id) {
-   case FOURCC_YV12:
-   case FOURCC_I420:
-      *h = (*h + 1) & ~1;
-      size = (*w + 3) & ~3;
-      if (pitches)
-	 pitches[0] = size;
-      size *= *h;
-      if (offsets)
-	 offsets[1] = size;
-      tmp = ((*w >> 1) + 3) & ~3;
-      if (pitches)
-	 pitches[1] = pitches[2] = tmp;
-      tmp *= (*h >> 1);
-      size += tmp;
-      if (offsets)
-	 offsets[2] = size;
-      size += tmp;
-      break;
-   case FOURCC_UYVY:
-   case FOURCC_YUY2:
-   case FOURCC_Y800:
-   default:
-      size = *w << 1;
-      if (pitches)
-	 pitches[0] = size;
-      size *= *h;
-      break;
-   }
-   return size;
+    switch (id) {
+    case FOURCC_YV12:
+    case FOURCC_I420:
+        *h = (*h + 1) & ~1;
+        size = (*w + 3) & ~3;
+        if (pitches)
+            pitches[0] = size;
+        size *= *h;
+        if (offsets)
+            offsets[1] = size;
+        tmp = ((*w >> 1) + 3) & ~3;
+        if (pitches)
+            pitches[1] = pitches[2] = tmp;
+        tmp *= (*h >> 1);
+        size += tmp;
+        if (offsets)
+            offsets[2] = size;
+        size += tmp;
+        break;
+    case FOURCC_UYVY:
+    case FOURCC_YUY2:
+    case FOURCC_Y800:
+    default:
+        size = *w << 1;
+        if (pitches)
+            pitches[0] = size;
+        size *= *h;
+        break;
+    }
+    return size;
 }
 
 static void
 GX2BlockHandler(int i, pointer blockData, pointer pTimeout, pointer pReadmask)
 {
-   ScreenPtr pScreen = screenInfo.screens[i];
-   ScrnInfoPtr pScrn = xf86Screens[i];
-   GeodePtr pGeode = GEODEPTR(pScrn);
-   GeodePortPrivPtr pPriv = GET_PORT_PRIVATE(pScrn);
+    ScreenPtr pScreen = screenInfo.screens[i];
+    ScrnInfoPtr pScrn = xf86Screens[i];
+    GeodePtr pGeode = GEODEPTR(pScrn);
+    GeodePortPrivPtr pPriv = GET_PORT_PRIVATE(pScrn);
 
-   pScreen->BlockHandler = pGeode->BlockHandler;
-   (*pScreen->BlockHandler) (i, blockData, pTimeout, pReadmask);
-   pScreen->BlockHandler = GX2BlockHandler;
+    pScreen->BlockHandler = pGeode->BlockHandler;
+    (*pScreen->BlockHandler) (i, blockData, pTimeout, pReadmask);
+    pScreen->BlockHandler = GX2BlockHandler;
 
-   if (!pGeode->NoAccel) GX2AccelSync(pScrn);
-   if (pPriv->videoStatus & TIMER_MASK) {
-      UpdateCurrentTime();
-      if (pPriv->videoStatus & OFF_TIMER) {
-	 if (pPriv->offTime < currentTime.milliseconds) {
-	    GFX(set_video_enable(0));
-	    pPriv->videoStatus = FREE_TIMER;
-	    pPriv->freeTime = currentTime.milliseconds + FREE_DELAY;
-	 }
-      } else {				/* FREE_TIMER */
-	 if (pPriv->freeTime < currentTime.milliseconds) {
-	    if (pPriv->area) {
-	       xf86FreeOffscreenArea(pPriv->area);
-	       pPriv->area = NULL;
-	    }
-	    pPriv->videoStatus = 0;
-	 }
-      }
-   }
+    if (!pGeode->NoAccel)
+        GX2AccelSync(pScrn);
+    if (pPriv->videoStatus & TIMER_MASK) {
+        UpdateCurrentTime();
+        if (pPriv->videoStatus & OFF_TIMER) {
+            if (pPriv->offTime < currentTime.milliseconds) {
+                GFX(set_video_enable(0));
+                pPriv->videoStatus = FREE_TIMER;
+                pPriv->freeTime = currentTime.milliseconds + FREE_DELAY;
+            }
+        }
+        else {                  /* FREE_TIMER */
+            if (pPriv->freeTime < currentTime.milliseconds) {
+                if (pPriv->area) {
+                    xf86FreeOffscreenArea(pPriv->area);
+                    pPriv->area = NULL;
+                }
+                pPriv->videoStatus = 0;
+            }
+        }
+    }
 }
 
 /****************** Offscreen stuff ***************/
 
-typedef struct
-{
-   FBAreaPtr area;
-   FBLinearPtr linear;
-   Bool isOn;
-}
-OffscreenPrivRec, *OffscreenPrivPtr;
+typedef struct {
+    FBAreaPtr area;
+    FBLinearPtr linear;
+    Bool isOn;
+} OffscreenPrivRec, *OffscreenPrivPtr;
 
 /*----------------------------------------------------------------------------
  * GX2AllocateSurface
@@ -1347,139 +1357,139 @@ OffscreenPrivRec, *OffscreenPrivPtr;
 
 static int
 GX2AllocateSurface(ScrnInfoPtr pScrn,
-		   int id,
-		   unsigned short w, unsigned short h, XF86SurfacePtr surface)
+                   int id,
+                   unsigned short w, unsigned short h, XF86SurfacePtr surface)
 {
-   FBAreaPtr area;
-   int pitch, fbpitch, numlines;
-   OffscreenPrivPtr pPriv;
+    FBAreaPtr area;
+    int pitch, fbpitch, numlines;
+    OffscreenPrivPtr pPriv;
 
-   if ((w > 1024) || (h > 1024))
-      return BadAlloc;
+    if ((w > 1024) || (h > 1024))
+        return BadAlloc;
 
-   w = (w + 1) & ~1;
-   pitch = ((w << 1) + 15) & ~15;
-   fbpitch = pScrn->bitsPerPixel * pScrn->displayWidth >> 3;
-   numlines = ((pitch * h) + fbpitch - 1) / fbpitch;
+    w = (w + 1) & ~1;
+    pitch = ((w << 1) + 15) & ~15;
+    fbpitch = pScrn->bitsPerPixel * pScrn->displayWidth >> 3;
+    numlines = ((pitch * h) + fbpitch - 1) / fbpitch;
 
-   if (!(area = GX2AllocateMemory(pScrn, NULL, numlines)))
-      return BadAlloc;
+    if (!(area = GX2AllocateMemory(pScrn, NULL, numlines)))
+        return BadAlloc;
 
-   surface->width = w;
-   surface->height = h;
+    surface->width = w;
+    surface->height = h;
 
-   if (!(surface->pitches = malloc(sizeof(int))))
-      return BadAlloc;
-   if (!(surface->offsets = malloc(sizeof(int)))) {
-      free(surface->pitches);
-      return BadAlloc;
-   }
-   if (!(pPriv = malloc(sizeof(OffscreenPrivRec)))) {
-      free(surface->pitches);
-      free(surface->offsets);
-      return BadAlloc;
-   }
+    if (!(surface->pitches = malloc(sizeof(int))))
+        return BadAlloc;
+    if (!(surface->offsets = malloc(sizeof(int)))) {
+        free(surface->pitches);
+        return BadAlloc;
+    }
+    if (!(pPriv = malloc(sizeof(OffscreenPrivRec)))) {
+        free(surface->pitches);
+        free(surface->offsets);
+        return BadAlloc;
+    }
 
-   pPriv->area = area;
-   pPriv->isOn = FALSE;
+    pPriv->area = area;
+    pPriv->isOn = FALSE;
 
-   surface->pScrn = pScrn;
-   surface->id = id;
-   surface->pitches[0] = pitch;
-   surface->offsets[0] = area->box.y1 * fbpitch;
-   surface->devPrivate.ptr = (pointer) pPriv;
+    surface->pScrn = pScrn;
+    surface->id = id;
+    surface->pitches[0] = pitch;
+    surface->offsets[0] = area->box.y1 * fbpitch;
+    surface->devPrivate.ptr = (pointer) pPriv;
 
-   return Success;
+    return Success;
 }
 
 static int
 GX2StopSurface(XF86SurfacePtr surface)
 {
-   OffscreenPrivPtr pPriv = (OffscreenPrivPtr) surface->devPrivate.ptr;
+    OffscreenPrivPtr pPriv = (OffscreenPrivPtr) surface->devPrivate.ptr;
 
-   if (pPriv->isOn) {
-      pPriv->isOn = FALSE;
-   }
+    if (pPriv->isOn) {
+        pPriv->isOn = FALSE;
+    }
 
-   return Success;
+    return Success;
 }
 
 static int
 GX2FreeSurface(XF86SurfacePtr surface)
 {
-   OffscreenPrivPtr pPriv = (OffscreenPrivPtr) surface->devPrivate.ptr;
+    OffscreenPrivPtr pPriv = (OffscreenPrivPtr) surface->devPrivate.ptr;
 
-   if (pPriv->isOn)
-      GX2StopSurface(surface);
-   xf86FreeOffscreenArea(pPriv->area);
-   free(surface->pitches);
-   free(surface->offsets);
-   free(surface->devPrivate.ptr);
+    if (pPriv->isOn)
+        GX2StopSurface(surface);
+    xf86FreeOffscreenArea(pPriv->area);
+    free(surface->pitches);
+    free(surface->offsets);
+    free(surface->devPrivate.ptr);
 
-   return Success;
+    return Success;
 }
 
 static int
-GX2GetSurfaceAttribute(ScrnInfoPtr pScrn, Atom attribute, INT32 * value)
+GX2GetSurfaceAttribute(ScrnInfoPtr pScrn, Atom attribute, INT32 *value)
 {
-   return GX2GetPortAttribute(pScrn, attribute, value,
-			      (pointer) (GET_PORT_PRIVATE(pScrn)));
+    return GX2GetPortAttribute(pScrn, attribute, value,
+                               (pointer) (GET_PORT_PRIVATE(pScrn)));
 }
 
 static int
 GX2SetSurfaceAttribute(ScrnInfoPtr pScrn, Atom attribute, INT32 value)
 {
-   return GX2SetPortAttribute(pScrn, attribute, value,
-			      (pointer) (GET_PORT_PRIVATE(pScrn)));
+    return GX2SetPortAttribute(pScrn, attribute, value,
+                               (pointer) (GET_PORT_PRIVATE(pScrn)));
 }
 
 static int
 GX2DisplaySurface(XF86SurfacePtr surface,
-		  short src_x, short src_y,
-		  short drw_x, short drw_y,
-		  short src_w, short src_h,
-		  short drw_w, short drw_h, RegionPtr clipBoxes)
+                  short src_x, short src_y,
+                  short drw_x, short drw_y,
+                  short src_w, short src_h,
+                  short drw_w, short drw_h, RegionPtr clipBoxes)
 {
-   OffscreenPrivPtr pPriv = (OffscreenPrivPtr) surface->devPrivate.ptr;
-   ScrnInfoPtr pScrn = surface->pScrn;
-   GeodePortPrivPtr portPriv = GET_PORT_PRIVATE(pScrn);
-   INT32 x1, y1, x2, y2;
-   BoxRec dstBox;
+    OffscreenPrivPtr pPriv = (OffscreenPrivPtr) surface->devPrivate.ptr;
+    ScrnInfoPtr pScrn = surface->pScrn;
+    GeodePortPrivPtr portPriv = GET_PORT_PRIVATE(pScrn);
+    INT32 x1, y1, x2, y2;
+    BoxRec dstBox;
 
-   DEBUGMSG(0, (0, X_NONE, "DisplaySuface\n"));
-   x1 = src_x;
-   x2 = src_x + src_w;
-   y1 = src_y;
-   y2 = src_y + src_h;
+    DEBUGMSG(0, (0, X_NONE, "DisplaySuface\n"));
+    x1 = src_x;
+    x2 = src_x + src_w;
+    y1 = src_y;
+    y2 = src_y + src_h;
 
-   dstBox.x1 = drw_x;
-   dstBox.x2 = drw_x + drw_w;
-   dstBox.y1 = drw_y;
-   dstBox.y2 = drw_y + drw_h;
+    dstBox.x1 = drw_x;
+    dstBox.x2 = drw_x + drw_w;
+    dstBox.y1 = drw_y;
+    dstBox.y2 = drw_y + drw_h;
 
-   if ((x1 >= x2) || (y1 >= y2))
-      return Success;
+    if ((x1 >= x2) || (y1 >= y2))
+        return Success;
 
-   dstBox.x1 -= pScrn->frameX0;
-   dstBox.x2 -= pScrn->frameX0;
-   dstBox.y1 -= pScrn->frameY0;
-   dstBox.y2 -= pScrn->frameY0;
+    dstBox.x1 -= pScrn->frameX0;
+    dstBox.x2 -= pScrn->frameX0;
+    dstBox.y1 -= pScrn->frameY0;
+    dstBox.y2 -= pScrn->frameY0;
 
-   xf86XVFillKeyHelper(pScrn->pScreen, portPriv->colorKey, clipBoxes);
+    xf86XVFillKeyHelper(pScrn->pScreen, portPriv->colorKey, clipBoxes);
 
-   GX2DisplayVideo(pScrn, surface->id, surface->offsets[0],
-		   surface->width, surface->height, surface->pitches[0],
-		   x1, y1, x2, y2, &dstBox, src_w, src_h, drw_w, drw_h);
+    GX2DisplayVideo(pScrn, surface->id, surface->offsets[0],
+                    surface->width, surface->height, surface->pitches[0],
+                    x1, y1, x2, y2, &dstBox, src_w, src_h, drw_w, drw_h);
 
-   pPriv->isOn = TRUE;
-   if (portPriv->videoStatus & CLIENT_VIDEO_ON) {
-      REGION_EMPTY(pScrn->pScreen, &portPriv->clip);
-      UpdateCurrentTime();
-      portPriv->videoStatus = FREE_TIMER;
-      portPriv->freeTime = currentTime.milliseconds + FREE_DELAY;
-   }
+    pPriv->isOn = TRUE;
+    if (portPriv->videoStatus & CLIENT_VIDEO_ON) {
+        REGION_EMPTY(pScrn->pScreen, &portPriv->clip);
+        UpdateCurrentTime();
+        portPriv->videoStatus = FREE_TIMER;
+        portPriv->freeTime = currentTime.milliseconds + FREE_DELAY;
+    }
 
-   return Success;
+    return Success;
 }
 
 /*----------------------------------------------------------------------------
@@ -1502,24 +1512,24 @@ GX2DisplaySurface(XF86SurfacePtr surface,
 static void
 GX2InitOffscreenImages(ScreenPtr pScreen)
 {
-   XF86OffscreenImagePtr offscreenImages;
+    XF86OffscreenImagePtr offscreenImages;
 
-   /* need to free this someplace */
-   if (!(offscreenImages = malloc(sizeof(XF86OffscreenImageRec))))
-      return;
+    /* need to free this someplace */
+    if (!(offscreenImages = malloc(sizeof(XF86OffscreenImageRec))))
+        return;
 
-   offscreenImages[0].image = &Images[0];
-   offscreenImages[0].flags = VIDEO_OVERLAID_IMAGES | VIDEO_CLIP_TO_VIEWPORT;
-   offscreenImages[0].alloc_surface = GX2AllocateSurface;
-   offscreenImages[0].free_surface = GX2FreeSurface;
-   offscreenImages[0].display = GX2DisplaySurface;
-   offscreenImages[0].stop = GX2StopSurface;
-   offscreenImages[0].setAttribute = GX2SetSurfaceAttribute;
-   offscreenImages[0].getAttribute = GX2GetSurfaceAttribute;
-   offscreenImages[0].max_width = 1024;
-   offscreenImages[0].max_height = 1024;
-   offscreenImages[0].num_attributes = NUM_ATTRIBUTES;
-   offscreenImages[0].attributes = Attributes;
+    offscreenImages[0].image = &Images[0];
+    offscreenImages[0].flags = VIDEO_OVERLAID_IMAGES | VIDEO_CLIP_TO_VIEWPORT;
+    offscreenImages[0].alloc_surface = GX2AllocateSurface;
+    offscreenImages[0].free_surface = GX2FreeSurface;
+    offscreenImages[0].display = GX2DisplaySurface;
+    offscreenImages[0].stop = GX2StopSurface;
+    offscreenImages[0].setAttribute = GX2SetSurfaceAttribute;
+    offscreenImages[0].getAttribute = GX2GetSurfaceAttribute;
+    offscreenImages[0].max_width = 1024;
+    offscreenImages[0].max_height = 1024;
+    offscreenImages[0].num_attributes = NUM_ATTRIBUTES;
+    offscreenImages[0].attributes = Attributes;
 
-   xf86XVRegisterOffscreenImages(pScreen, offscreenImages, 1);
+    xf86XVRegisterOffscreenImages(pScreen, offscreenImages, 1);
 }

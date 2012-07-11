@@ -151,42 +151,42 @@ DISPLAYMODE TVTimings[] = {
 
 /* NTSC resolution */
 
-   {0x3 |				/* negative syncs       */
-    GFX_MODE_TV_NTSC,			/* NTSC format          */
-    640, 640, 656, 744, 792, 792,	/* horizontal timings   */
-    480, 480, 490, 492, 517, 525,	/* vertical timings     */
-    0x0018EC4D,				/* freq = 24.923052 MHz */
-    }
-   ,
+    {0x3 |                      /* negative syncs       */
+     GFX_MODE_TV_NTSC,          /* NTSC format          */
+     640, 640, 656, 744, 792, 792,      /* horizontal timings   */
+     480, 480, 490, 492, 517, 525,      /* vertical timings     */
+     0x0018EC4D,                /* freq = 24.923052 MHz */
+     }
+    ,
 
 /* PAL resolution */
 
-   {0x3 |				/* negative syncs       */
-    GFX_MODE_TV_PAL,			/* PAL format           */
-    768, 768, 800, 848, 864, 864,	/* horizontal timings   */
-    576, 576, 586, 588, 625, 625,	/* vertical timings     */
-    0x001B0000,				/* freq = 27.00 MHz     */
-    }
-   ,
+    {0x3 |                      /* negative syncs       */
+     GFX_MODE_TV_PAL,           /* PAL format           */
+     768, 768, 800, 848, 864, 864,      /* horizontal timings   */
+     576, 576, 586, 588, 625, 625,      /* vertical timings     */
+     0x001B0000,                /* freq = 27.00 MHz     */
+     }
+    ,
 
 /* NTSC resolution non-square pixels */
 
-   {0x3 |				/* negative syncs       */
-    GFX_MODE_TV_NTSC,			/* NTSC format          */
-    720, 720, 736, 752, 792, 792,	/* horizontal timings   */
-    480, 480, 490, 492, 517, 525,	/* vertical timings     */
-    0x0018EC4D,				/* freq = 24.923052 MHz */
-    }
-   ,
+    {0x3 |                      /* negative syncs       */
+     GFX_MODE_TV_NTSC,          /* NTSC format          */
+     720, 720, 736, 752, 792, 792,      /* horizontal timings   */
+     480, 480, 490, 492, 517, 525,      /* vertical timings     */
+     0x0018EC4D,                /* freq = 24.923052 MHz */
+     }
+    ,
 
 /* PAL resolution non-square pixels */
 
-   {0x3 |				/* negative syncs       */
-    GFX_MODE_TV_PAL,			/* PAL format           */
-    720, 720, 752, 816, 864, 864,	/* horizontal timings   */
-    576, 576, 586, 588, 625, 625,	/* vertical timings     */
-    0x001B0000,				/* freq = 27.00 MHz     */
-    }
+    {0x3 |                      /* negative syncs       */
+     GFX_MODE_TV_PAL,           /* PAL format           */
+     720, 720, 752, 816, 864, 864,      /* horizontal timings   */
+     576, 576, 586, 588, 625, 625,      /* vertical timings     */
+     0x001B0000,                /* freq = 27.00 MHz     */
+     }
 };
 
 #define NUM_TV_MODES sizeof(TVTimings)/sizeof(DISPLAYMODE)
@@ -215,17 +215,17 @@ DISPLAYMODE TVTimings[] = {
 int
 gfx_set_tv_format(TVStandardType format, GfxOnTVType resolution)
 {
-   int retval = GFX_STATUS_UNSUPPORTED;
+    int retval = GFX_STATUS_UNSUPPORTED;
 
 #if GFX_TV_SC1200
-   if (gfx_tv_type & GFX_TV_TYPE_SC1200)
-      retval = sc1200_set_tv_format(format, resolution);
+    if (gfx_tv_type & GFX_TV_TYPE_SC1200)
+        retval = sc1200_set_tv_format(format, resolution);
 #endif
 #if GFX_TV_FS451
-   if (gfx_tv_type & GFX_TV_TYPE_FS451)
-      retval = fs450_set_tv_format(format, resolution);
+    if (gfx_tv_type & GFX_TV_TYPE_FS451)
+        retval = fs450_set_tv_format(format, resolution);
 #endif
-   return (retval);
+    return (retval);
 }
 
 /*-----------------------------------------------------------------------------
@@ -235,17 +235,17 @@ gfx_set_tv_format(TVStandardType format, GfxOnTVType resolution)
 int
 gfx_set_tv_output(int output)
 {
-   int retval = GFX_STATUS_UNSUPPORTED;
+    int retval = GFX_STATUS_UNSUPPORTED;
 
 #if GFX_TV_SC1200
-   if (gfx_tv_type & GFX_TV_TYPE_SC1200)
-      retval = sc1200_set_tv_output(output);
+    if (gfx_tv_type & GFX_TV_TYPE_SC1200)
+        retval = sc1200_set_tv_output(output);
 #endif
 #if GFX_TV_FS451
-   if (gfx_tv_type & GFX_TV_TYPE_FS451)
-      retval = fs450_set_tv_output(output);
+    if (gfx_tv_type & GFX_TV_TYPE_FS451)
+        retval = fs450_set_tv_output(output);
 #endif
-   return (retval);
+    return (retval);
 }
 
 /*-----------------------------------------------------------------------------
@@ -255,17 +255,17 @@ gfx_set_tv_output(int output)
 int
 gfx_set_tv_enable(int enable)
 {
-   int retval = GFX_STATUS_UNSUPPORTED;
+    int retval = GFX_STATUS_UNSUPPORTED;
 
 #if GFX_TV_SC1200
-   if (gfx_tv_type & GFX_TV_TYPE_SC1200)
-      retval = sc1200_set_tv_enable(enable);
+    if (gfx_tv_type & GFX_TV_TYPE_SC1200)
+        retval = sc1200_set_tv_enable(enable);
 #endif
 #if GFX_TV_FS451
-   if (gfx_tv_type & GFX_TV_TYPE_FS451)
-      retval = fs450_set_tv_enable(enable);
+    if (gfx_tv_type & GFX_TV_TYPE_FS451)
+        retval = fs450_set_tv_enable(enable);
 #endif
-   return (retval);
+    return (retval);
 }
 
 /*-----------------------------------------------------------------------------
@@ -275,13 +275,13 @@ gfx_set_tv_enable(int enable)
 int
 gfx_set_tv_flicker_filter(int ff)
 {
-   int retval = GFX_STATUS_UNSUPPORTED;
+    int retval = GFX_STATUS_UNSUPPORTED;
 
 #if GFX_TV_SC1200
-   if (gfx_tv_type & GFX_TV_TYPE_SC1200)
-      retval = sc1200_set_tv_flicker_filter(ff);
+    if (gfx_tv_type & GFX_TV_TYPE_SC1200)
+        retval = sc1200_set_tv_flicker_filter(ff);
 #endif
-   return (retval);
+    return (retval);
 }
 
 /*-----------------------------------------------------------------------------
@@ -291,13 +291,13 @@ gfx_set_tv_flicker_filter(int ff)
 int
 gfx_set_tv_sub_carrier_reset(int screset)
 {
-   int retval = GFX_STATUS_UNSUPPORTED;
+    int retval = GFX_STATUS_UNSUPPORTED;
 
 #if GFX_TV_SC1200
-   if (gfx_tv_type & GFX_TV_TYPE_SC1200)
-      retval = sc1200_set_tv_sub_carrier_reset(screset);
+    if (gfx_tv_type & GFX_TV_TYPE_SC1200)
+        retval = sc1200_set_tv_sub_carrier_reset(screset);
 #endif
-   return (retval);
+    return (retval);
 }
 
 /*-----------------------------------------------------------------------------
@@ -307,13 +307,13 @@ gfx_set_tv_sub_carrier_reset(int screset)
 int
 gfx_set_tv_vphase(int vphase)
 {
-   int retval = GFX_STATUS_UNSUPPORTED;
+    int retval = GFX_STATUS_UNSUPPORTED;
 
 #if GFX_TV_SC1200
-   if (gfx_tv_type & GFX_TV_TYPE_SC1200)
-      retval = sc1200_set_tv_vphase(vphase);
+    if (gfx_tv_type & GFX_TV_TYPE_SC1200)
+        retval = sc1200_set_tv_vphase(vphase);
 #endif
-   return (retval);
+    return (retval);
 }
 
 /*-----------------------------------------------------------------------------
@@ -323,13 +323,13 @@ gfx_set_tv_vphase(int vphase)
 int
 gfx_set_tv_YC_delay(int delay)
 {
-   int retval = GFX_STATUS_UNSUPPORTED;
+    int retval = GFX_STATUS_UNSUPPORTED;
 
 #if GFX_TV_SC1200
-   if (gfx_tv_type & GFX_TV_TYPE_SC1200)
-      retval = sc1200_set_tv_YC_delay(delay);
+    if (gfx_tv_type & GFX_TV_TYPE_SC1200)
+        retval = sc1200_set_tv_YC_delay(delay);
 #endif
-   return (retval);
+    return (retval);
 }
 
 /*-----------------------------------------------------------------------------
@@ -339,13 +339,13 @@ gfx_set_tv_YC_delay(int delay)
 int
 gfx_set_tvenc_reset_interval(int interval)
 {
-   int retval = GFX_STATUS_UNSUPPORTED;
+    int retval = GFX_STATUS_UNSUPPORTED;
 
 #if GFX_TV_SC1200
-   if (gfx_tv_type & GFX_TV_TYPE_SC1200)
-      retval = sc1200_set_tvenc_reset_interval(interval);
+    if (gfx_tv_type & GFX_TV_TYPE_SC1200)
+        retval = sc1200_set_tvenc_reset_interval(interval);
 #endif
-   return (retval);
+    return (retval);
 }
 
 /*-----------------------------------------------------------------------------
@@ -355,13 +355,13 @@ gfx_set_tvenc_reset_interval(int interval)
 int
 gfx_set_tv_cc_enable(int enable)
 {
-   int retval = GFX_STATUS_UNSUPPORTED;
+    int retval = GFX_STATUS_UNSUPPORTED;
 
 #if GFX_TV_SC1200
-   if (gfx_tv_type & GFX_TV_TYPE_SC1200)
-      retval = sc1200_set_tv_cc_enable(enable);
+    if (gfx_tv_type & GFX_TV_TYPE_SC1200)
+        retval = sc1200_set_tv_cc_enable(enable);
 #endif
-   return (retval);
+    return (retval);
 }
 
 /*-----------------------------------------------------------------------------
@@ -374,13 +374,13 @@ gfx_set_tv_cc_enable(int enable)
 int
 gfx_set_tv_cc_data(unsigned char data1, unsigned char data2)
 {
-   int retval = GFX_STATUS_UNSUPPORTED;
+    int retval = GFX_STATUS_UNSUPPORTED;
 
 #if GFX_TV_SC1200
-   if (gfx_tv_type & GFX_TV_TYPE_SC1200)
-      retval = sc1200_set_tv_cc_data(data1, data2);
+    if (gfx_tv_type & GFX_TV_TYPE_SC1200)
+        retval = sc1200_set_tv_cc_data(data1, data2);
 #endif
-   return (retval);
+    return (retval);
 }
 
 /*---------------------------------------------------------------------------
@@ -392,13 +392,13 @@ gfx_set_tv_cc_data(unsigned char data1, unsigned char data2)
 int
 gfx_set_tv_display(int width, int height)
 {
-   int status = GFX_STATUS_UNSUPPORTED;
+    int status = GFX_STATUS_UNSUPPORTED;
 
 #	if GFX_TV_SC1200
-   if (gfx_tv_type & GFX_TV_TYPE_SC1200)
-      status = sc1200_set_tv_display(width, height);
+    if (gfx_tv_type & GFX_TV_TYPE_SC1200)
+        status = sc1200_set_tv_display(width, height);
 #	endif
-   return (status);
+    return (status);
 }
 
 /*---------------------------------------------------------------------------
@@ -408,13 +408,13 @@ gfx_set_tv_display(int width, int height)
 int
 gfx_test_tvout_odd_field(void)
 {
-   int status = GFX_STATUS_UNSUPPORTED;
+    int status = GFX_STATUS_UNSUPPORTED;
 
 #	if GFX_TV_SC1200
-   if (gfx_tv_type & GFX_TV_TYPE_SC1200)
-      status = sc1200_test_tvout_odd_field();
+    if (gfx_tv_type & GFX_TV_TYPE_SC1200)
+        status = sc1200_test_tvout_odd_field();
 #	endif
-   return (status);
+    return (status);
 }
 
 /*---------------------------------------------------------------------------
@@ -424,13 +424,13 @@ gfx_test_tvout_odd_field(void)
 int
 gfx_test_tvenc_odd_field(void)
 {
-   int status = GFX_STATUS_UNSUPPORTED;
+    int status = GFX_STATUS_UNSUPPORTED;
 
 #	if GFX_TV_SC1200
-   if (gfx_tv_type & GFX_TV_TYPE_SC1200)
-      status = sc1200_test_tvenc_odd_field();
+    if (gfx_tv_type & GFX_TV_TYPE_SC1200)
+        status = sc1200_test_tvenc_odd_field();
 #	endif
-   return (status);
+    return (status);
 }
 
 /*-----------------------------------------------------------------------------
@@ -440,13 +440,13 @@ gfx_test_tvenc_odd_field(void)
 int
 gfx_set_tv_field_status_invert(int enable)
 {
-   int retval = GFX_STATUS_UNSUPPORTED;
+    int retval = GFX_STATUS_UNSUPPORTED;
 
 #if GFX_TV_SC1200
-   if (gfx_tv_type & GFX_TV_TYPE_SC1200)
-      retval = sc1200_set_tv_field_status_invert(enable);
+    if (gfx_tv_type & GFX_TV_TYPE_SC1200)
+        retval = sc1200_set_tv_field_status_invert(enable);
 #endif
-   return (retval);
+    return (retval);
 }
 
 /*---------------------------------------------------------------------------
@@ -456,13 +456,13 @@ gfx_set_tv_field_status_invert(int enable)
 int
 gfx_get_tv_vphase(void)
 {
-   int status = GFX_STATUS_UNSUPPORTED;
+    int status = GFX_STATUS_UNSUPPORTED;
 
 #	if GFX_TV_SC1200
-   if (gfx_tv_type & GFX_TV_TYPE_SC1200)
-      status = sc1200_get_tv_vphase();
+    if (gfx_tv_type & GFX_TV_TYPE_SC1200)
+        status = sc1200_get_tv_vphase();
 #	endif
-   return (status);
+    return (status);
 }
 
 /*---------------------------------------------------------------------------
@@ -472,17 +472,17 @@ gfx_get_tv_vphase(void)
 int
 gfx_get_tv_enable(unsigned int *p_on)
 {
-   int retval = -1;
+    int retval = -1;
 
 #	if GFX_TV_FS451
-   if (gfx_tv_type & GFX_TV_TYPE_FS451)
-      retval = fs450_get_tv_enable(p_on);
+    if (gfx_tv_type & GFX_TV_TYPE_FS451)
+        retval = fs450_get_tv_enable(p_on);
 #	endif
 #	if GFX_TV_SC1200
-   if (gfx_tv_type & GFX_TV_TYPE_SC1200)
-      retval = sc1200_get_tv_enable(p_on);
+    if (gfx_tv_type & GFX_TV_TYPE_SC1200)
+        retval = sc1200_get_tv_enable(p_on);
 #	endif
-   return (retval);
+    return (retval);
 }
 
 /*---------------------------------------------------------------------------
@@ -492,13 +492,13 @@ gfx_get_tv_enable(unsigned int *p_on)
 int
 gfx_get_tv_output()
 {
-   int retval = -1;
+    int retval = -1;
 
 #	if GFX_TV_SC1200
-   if (gfx_tv_type & GFX_TV_TYPE_SC1200)
-      retval = sc1200_get_tv_output();
+    if (gfx_tv_type & GFX_TV_TYPE_SC1200)
+        retval = sc1200_get_tv_output();
 #	endif
-   return (retval);
+    return (retval);
 }
 
 /*---------------------------------------------------------------------------
@@ -508,13 +508,13 @@ gfx_get_tv_output()
 int
 gfx_get_tv_mode_count(TVStandardType format)
 {
-   int retval = -1;
+    int retval = -1;
 
 #	if GFX_TV_SC1200
-   if (gfx_tv_type & GFX_TV_TYPE_SC1200)
-      retval = sc1200_get_tv_mode_count(format);
+    if (gfx_tv_type & GFX_TV_TYPE_SC1200)
+        retval = sc1200_get_tv_mode_count(format);
 #	endif
-   return (retval);
+    return (retval);
 }
 
 /*---------------------------------------------------------------------------
@@ -524,13 +524,13 @@ gfx_get_tv_mode_count(TVStandardType format)
 int
 gfx_get_tv_display_mode(int *width, int *height, int *bpp, int *hz)
 {
-   int retval = -1;
+    int retval = -1;
 
 #	if GFX_TV_SC1200
-   if (gfx_tv_type & GFX_TV_TYPE_SC1200)
-      retval = sc1200_get_tv_display_mode(width, height, bpp, hz);
+    if (gfx_tv_type & GFX_TV_TYPE_SC1200)
+        retval = sc1200_get_tv_display_mode(width, height, bpp, hz);
 #	endif
-   return (retval);
+    return (retval);
 }
 
 /*---------------------------------------------------------------------------
@@ -539,17 +539,17 @@ gfx_get_tv_display_mode(int *width, int *height, int *bpp, int *hz)
  */
 int
 gfx_get_tv_display_mode_frequency(unsigned short width, unsigned short height,
-				  TVStandardType format, int *frequency)
+                                  TVStandardType format, int *frequency)
 {
-   int retval = -1;
+    int retval = -1;
 
 #	if GFX_TV_SC1200
-   if (gfx_tv_type & GFX_TV_TYPE_SC1200)
-      retval =
-	    sc1200_get_tv_display_mode_frequency(width, height, format,
-						 frequency);
+    if (gfx_tv_type & GFX_TV_TYPE_SC1200)
+        retval =
+            sc1200_get_tv_display_mode_frequency(width, height, format,
+                                                 frequency);
 #	endif
-   return (retval);
+    return (retval);
 }
 
 /*---------------------------------------------------------------------------
@@ -558,15 +558,15 @@ gfx_get_tv_display_mode_frequency(unsigned short width, unsigned short height,
  */
 int
 gfx_is_tv_display_mode_supported(unsigned short width, unsigned short height,
-				 TVStandardType format)
+                                 TVStandardType format)
 {
-   int retval = -1;
+    int retval = -1;
 
 #	if GFX_TV_SC1200
-   if (gfx_tv_type & GFX_TV_TYPE_SC1200)
-      retval = sc1200_is_tv_display_mode_supported(width, height, format);
+    if (gfx_tv_type & GFX_TV_TYPE_SC1200)
+        retval = sc1200_is_tv_display_mode_supported(width, height, format);
 #	endif
-   return (retval);
+    return (retval);
 }
 
 /*------------------------------------------
@@ -584,37 +584,37 @@ gfx_is_tv_display_mode_supported(unsigned short width, unsigned short height,
 int
 gfx_get_tv_standard(unsigned long *p_standard)
 {
-   int retval = -1;
+    int retval = -1;
 
 #if GFX_TV_FS451
-   if (gfx_tv_type & GFX_TV_TYPE_FS451)
-      retval = fs450_get_tv_standard(p_standard);
+    if (gfx_tv_type & GFX_TV_TYPE_FS451)
+        retval = fs450_get_tv_standard(p_standard);
 #endif
-   return (retval);
+    return (retval);
 }
 
 int
 gfx_get_available_tv_standards(unsigned long *p_standards)
 {
-   int retval = -1;
+    int retval = -1;
 
 #if GFX_TV_FS451
-   if (gfx_tv_type & GFX_TV_TYPE_FS451)
-      retval = fs450_get_available_tv_standards(p_standards);
+    if (gfx_tv_type & GFX_TV_TYPE_FS451)
+        retval = fs450_get_available_tv_standards(p_standards);
 #endif
-   return (retval);
+    return (retval);
 }
 
 int
 gfx_set_tv_standard(unsigned long standard)
 {
-   int retval = -1;
+    int retval = -1;
 
 #if GFX_TV_FS451
-   if (gfx_tv_type & GFX_TV_TYPE_FS451)
-      retval = fs450_set_tv_standard(standard);
+    if (gfx_tv_type & GFX_TV_TYPE_FS451)
+        retval = fs450_set_tv_standard(standard);
 #endif
-   return (retval);
+    return (retval);
 }
 
 /*
@@ -626,37 +626,37 @@ gfx_set_tv_standard(unsigned long standard)
 int
 gfx_get_tv_vga_mode(unsigned long *p_vga_mode)
 {
-   int retval = -1;
+    int retval = -1;
 
 #if GFX_TV_FS451
-   if (gfx_tv_type & GFX_TV_TYPE_FS451)
-      retval = fs450_get_tv_vga_mode(p_vga_mode);
+    if (gfx_tv_type & GFX_TV_TYPE_FS451)
+        retval = fs450_get_tv_vga_mode(p_vga_mode);
 #endif
-   return (retval);
+    return (retval);
 }
 
 int
 gfx_get_available_tv_vga_modes(unsigned long *p_vga_modes)
 {
-   int retval = -1;
+    int retval = -1;
 
 #if GFX_TV_FS451
-   if (gfx_tv_type & GFX_TV_TYPE_FS451)
-      retval = fs450_get_available_tv_vga_modes(p_vga_modes);
+    if (gfx_tv_type & GFX_TV_TYPE_FS451)
+        retval = fs450_get_available_tv_vga_modes(p_vga_modes);
 #endif
-   return (retval);
+    return (retval);
 }
 
 int
 gfx_set_tv_vga_mode(unsigned long vga_mode)
 {
-   int retval = -1;
+    int retval = -1;
 
 #if GFX_TV_FS451
-   if (gfx_tv_type & GFX_TV_TYPE_FS451)
-      retval = fs450_set_tv_vga_mode(vga_mode);
+    if (gfx_tv_type & GFX_TV_TYPE_FS451)
+        retval = fs450_set_tv_vga_mode(vga_mode);
 #endif
-   return (retval);
+    return (retval);
 }
 
 /*
@@ -668,25 +668,25 @@ gfx_set_tv_vga_mode(unsigned long vga_mode)
 int
 gfx_get_tvout_mode(unsigned long *p_tvout_mode)
 {
-   int retval = -1;
+    int retval = -1;
 
 #if GFX_TV_FS451
-   if (gfx_tv_type & GFX_TV_TYPE_FS451)
-      retval = fs450_get_tvout_mode(p_tvout_mode);
+    if (gfx_tv_type & GFX_TV_TYPE_FS451)
+        retval = fs450_get_tvout_mode(p_tvout_mode);
 #endif
-   return (retval);
+    return (retval);
 }
 
 int
 gfx_set_tvout_mode(unsigned long tvout_mode)
 {
-   int retval = -1;
+    int retval = -1;
 
 #if GFX_TV_FS451
-   if (gfx_tv_type & GFX_TV_TYPE_FS451)
-      retval = fs450_set_tvout_mode(tvout_mode);
+    if (gfx_tv_type & GFX_TV_TYPE_FS451)
+        retval = fs450_set_tvout_mode(tvout_mode);
 #endif
-   return (retval);
+    return (retval);
 }
 
 /*
@@ -697,25 +697,25 @@ gfx_set_tvout_mode(unsigned long tvout_mode)
 int
 gfx_get_sharpness(int *p_sharpness)
 {
-   int retval = -1;
+    int retval = -1;
 
 #if GFX_TV_FS451
-   if (gfx_tv_type & GFX_TV_TYPE_FS451)
-      retval = fs450_get_sharpness(p_sharpness);
+    if (gfx_tv_type & GFX_TV_TYPE_FS451)
+        retval = fs450_get_sharpness(p_sharpness);
 #endif
-   return (retval);
+    return (retval);
 }
 
 int
 gfx_set_sharpness(int sharpness)
 {
-   int retval = -1;
+    int retval = -1;
 
 #if GFX_TV_FS451
-   if (gfx_tv_type & GFX_TV_TYPE_FS451)
-      retval = fs450_set_sharpness(sharpness);
+    if (gfx_tv_type & GFX_TV_TYPE_FS451)
+        retval = fs450_set_sharpness(sharpness);
 #endif
-   return (retval);
+    return (retval);
 }
 
 /*
@@ -727,25 +727,25 @@ gfx_set_sharpness(int sharpness)
 int
 gfx_get_flicker_filter(int *p_flicker)
 {
-   int retval = -1;
+    int retval = -1;
 
 #if GFX_TV_FS451
-   if (gfx_tv_type & GFX_TV_TYPE_FS451)
-      retval = fs450_get_flicker_filter(p_flicker);
+    if (gfx_tv_type & GFX_TV_TYPE_FS451)
+        retval = fs450_get_flicker_filter(p_flicker);
 #endif
-   return (retval);
+    return (retval);
 }
 
 int
 gfx_set_flicker_filter(int flicker)
 {
-   int retval = -1;
+    int retval = -1;
 
 #if GFX_TV_FS451
-   if (gfx_tv_type & GFX_TV_TYPE_FS451)
-      retval = fs450_set_flicker_filter(flicker);
+    if (gfx_tv_type & GFX_TV_TYPE_FS451)
+        retval = fs450_set_flicker_filter(flicker);
 #endif
-   return (retval);
+    return (retval);
 }
 
 /*
@@ -757,50 +757,50 @@ gfx_set_flicker_filter(int flicker)
 int
 gfx_get_overscan(int *p_x, int *p_y)
 {
-   int retval = -1;
+    int retval = -1;
 
 #if GFX_TV_FS451
-   if (gfx_tv_type & GFX_TV_TYPE_FS451)
-      retval = fs450_get_overscan(p_x, p_y);
+    if (gfx_tv_type & GFX_TV_TYPE_FS451)
+        retval = fs450_get_overscan(p_x, p_y);
 #endif
-   return (retval);
+    return (retval);
 
 }
 
 int
 gfx_set_overscan(int x, int y)
 {
-   int retval = -1;
+    int retval = -1;
 
 #if GFX_TV_FS451
-   if (gfx_tv_type & GFX_TV_TYPE_FS451)
-      retval = fs450_set_overscan(x, y);
+    if (gfx_tv_type & GFX_TV_TYPE_FS451)
+        retval = fs450_set_overscan(x, y);
 #endif
-   return (retval);
+    return (retval);
 }
 
 int
 gfx_get_position(int *p_x, int *p_y)
 {
-   int retval = -1;
+    int retval = -1;
 
 #if GFX_TV_FS451
-   if (gfx_tv_type & GFX_TV_TYPE_FS451)
-      retval = fs450_get_position(p_x, p_y);
+    if (gfx_tv_type & GFX_TV_TYPE_FS451)
+        retval = fs450_get_position(p_x, p_y);
 #endif
-   return (retval);
+    return (retval);
 }
 
 int
 gfx_set_position(int x, int y)
 {
-   int retval = -1;
+    int retval = -1;
 
 #if GFX_TV_FS451
-   if (gfx_tv_type & GFX_TV_TYPE_FS451)
-      retval = fs450_set_position(x, y);
+    if (gfx_tv_type & GFX_TV_TYPE_FS451)
+        retval = fs450_set_position(x, y);
 #endif
-   return (retval);
+    return (retval);
 }
 
 /*
@@ -812,73 +812,73 @@ gfx_set_position(int x, int y)
 int
 gfx_get_color(int *p_color)
 {
-   int retval = -1;
+    int retval = -1;
 
 #if GFX_TV_FS451
-   if (gfx_tv_type & GFX_TV_TYPE_FS451)
-      retval = fs450_get_color(p_color);
+    if (gfx_tv_type & GFX_TV_TYPE_FS451)
+        retval = fs450_get_color(p_color);
 #endif
-   return (retval);
+    return (retval);
 }
 
 int
 gfx_set_color(int color)
 {
-   int retval = -1;
+    int retval = -1;
 
 #if GFX_TV_FS451
-   if (gfx_tv_type & GFX_TV_TYPE_FS451)
-      retval = fs450_set_color(color);
+    if (gfx_tv_type & GFX_TV_TYPE_FS451)
+        retval = fs450_set_color(color);
 #endif
-   return (retval);
+    return (retval);
 }
 
 int
 gfx_get_brightness(int *p_brightness)
 {
-   int retval = -1;
+    int retval = -1;
 
 #if GFX_TV_FS451
-   if (gfx_tv_type & GFX_TV_TYPE_FS451)
-      retval = fs450_get_brightness(p_brightness);
+    if (gfx_tv_type & GFX_TV_TYPE_FS451)
+        retval = fs450_get_brightness(p_brightness);
 #endif
-   return (retval);
+    return (retval);
 }
 
 int
 gfx_set_brightness(int brightness)
 {
-   int retval = -1;
+    int retval = -1;
 
 #if GFX_TV_FS451
-   if (gfx_tv_type & GFX_TV_TYPE_FS451)
-      retval = fs450_set_brightness(brightness);
+    if (gfx_tv_type & GFX_TV_TYPE_FS451)
+        retval = fs450_set_brightness(brightness);
 #endif
-   return (retval);
+    return (retval);
 }
 
 int
 gfx_get_contrast(int *p_contrast)
 {
-   int retval = -1;
+    int retval = -1;
 
 #if GFX_TV_FS451
-   if (gfx_tv_type & GFX_TV_TYPE_FS451)
-      retval = fs450_get_contrast(p_contrast);
+    if (gfx_tv_type & GFX_TV_TYPE_FS451)
+        retval = fs450_get_contrast(p_contrast);
 #endif
-   return (retval);
+    return (retval);
 }
 
 int
 gfx_set_contrast(int contrast)
 {
-   int retval = -1;
+    int retval = -1;
 
 #if GFX_TV_FS451
-   if (gfx_tv_type & GFX_TV_TYPE_FS451)
-      retval = fs450_set_contrast(contrast);
+    if (gfx_tv_type & GFX_TV_TYPE_FS451)
+        retval = fs450_set_contrast(contrast);
 #endif
-   return (retval);
+    return (retval);
 }
 
 /*
@@ -890,51 +890,51 @@ gfx_set_contrast(int contrast)
 int
 gfx_get_yc_filter(unsigned int *p_yc_filter)
 {
-   int retval = -1;
+    int retval = -1;
 
 #if GFX_TV_FS451
-   if (gfx_tv_type & GFX_TV_TYPE_FS451)
-      retval = fs450_get_yc_filter(p_yc_filter);
+    if (gfx_tv_type & GFX_TV_TYPE_FS451)
+        retval = fs450_get_yc_filter(p_yc_filter);
 #endif
-   return (retval);
+    return (retval);
 }
 
 int
 gfx_set_yc_filter(unsigned int yc_filter)
 {
-   int retval = -1;
+    int retval = -1;
 
 #if GFX_TV_FS451
-   if (gfx_tv_type & GFX_TV_TYPE_FS451)
-      retval = fs450_set_yc_filter(yc_filter);
+    if (gfx_tv_type & GFX_TV_TYPE_FS451)
+        retval = fs450_set_yc_filter(yc_filter);
 #endif
-   return (retval);
+    return (retval);
 }
 
 int
 gfx_get_aps_trigger_bits(unsigned int *p_trigger_bits)
 {
-   int retval = -1;
+    int retval = -1;
 
 #if GFX_TV_FS451
-   if (gfx_tv_type & GFX_TV_TYPE_FS451)
-      retval = fs450_get_aps_trigger_bits(p_trigger_bits);
+    if (gfx_tv_type & GFX_TV_TYPE_FS451)
+        retval = fs450_get_aps_trigger_bits(p_trigger_bits);
 #endif
-   return (retval);
+    return (retval);
 }
 
 int
 gfx_set_aps_trigger_bits(unsigned int trigger_bits)
 {
-   int retval = -1;
+    int retval = -1;
 
 #if GFX_TV_FS451
-   if (gfx_tv_type & GFX_TV_TYPE_FS451)
-      retval = fs450_set_aps_trigger_bits(trigger_bits);
+    if (gfx_tv_type & GFX_TV_TYPE_FS451)
+        retval = fs450_set_aps_trigger_bits(trigger_bits);
 #endif
-   return (retval);
+    return (retval);
 }
 
-#endif /* GFX_TV_DYNAMIC */
+#endif                          /* GFX_TV_DYNAMIC */
 
 /* END OF FILE */

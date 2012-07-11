@@ -178,13 +178,13 @@
 int
 gfx_set_vip_enable(int enable)
 {
-   int status = GFX_STATUS_UNSUPPORTED;
+    int status = GFX_STATUS_UNSUPPORTED;
 
 #	if GFX_VIP_SC1200
-   if (gfx_vip_type == GFX_VIP_TYPE_SC1200)
-      status = sc1200_set_vip_enable(enable);
+    if (gfx_vip_type == GFX_VIP_TYPE_SC1200)
+        status = sc1200_set_vip_enable(enable);
 #	endif
-   return (status);
+    return (status);
 }
 
 /*-----------------------------------------------------------------------------
@@ -194,13 +194,13 @@ gfx_set_vip_enable(int enable)
 int
 gfx_set_vip_capture_run_mode(int mode)
 {
-   int status = GFX_STATUS_UNSUPPORTED;
+    int status = GFX_STATUS_UNSUPPORTED;
 
 #	if GFX_VIP_SC1200
-   if (gfx_vip_type == GFX_VIP_TYPE_SC1200)
-      status = sc1200_set_vip_capture_run_mode(mode);
+    if (gfx_vip_type == GFX_VIP_TYPE_SC1200)
+        status = sc1200_set_vip_capture_run_mode(mode);
 #	endif
-   return (status);
+    return (status);
 }
 
 /*-----------------------------------------------------------------------------
@@ -210,13 +210,13 @@ gfx_set_vip_capture_run_mode(int mode)
 int
 gfx_set_vip_base(unsigned long even, unsigned long odd)
 {
-   int status = GFX_STATUS_UNSUPPORTED;
+    int status = GFX_STATUS_UNSUPPORTED;
 
 #	if GFX_VIP_SC1200
-   if (gfx_vip_type == GFX_VIP_TYPE_SC1200)
-      status = sc1200_set_vip_base(even, odd);
+    if (gfx_vip_type == GFX_VIP_TYPE_SC1200)
+        status = sc1200_set_vip_base(even, odd);
 #	endif
-   return (status);
+    return (status);
 }
 
 /*-----------------------------------------------------------------------------
@@ -226,13 +226,13 @@ gfx_set_vip_base(unsigned long even, unsigned long odd)
 int
 gfx_set_vip_pitch(unsigned long pitch)
 {
-   int status = GFX_STATUS_UNSUPPORTED;
+    int status = GFX_STATUS_UNSUPPORTED;
 
 #	if GFX_VIP_SC1200
-   if (gfx_vip_type == GFX_VIP_TYPE_SC1200)
-      status = sc1200_set_vip_pitch(pitch);
+    if (gfx_vip_type == GFX_VIP_TYPE_SC1200)
+        status = sc1200_set_vip_pitch(pitch);
 #	endif
-   return (status);
+    return (status);
 }
 
 /*-----------------------------------------------------------------------------
@@ -242,13 +242,13 @@ gfx_set_vip_pitch(unsigned long pitch)
 int
 gfx_set_vip_mode(int mode)
 {
-   int status = GFX_STATUS_UNSUPPORTED;
+    int status = GFX_STATUS_UNSUPPORTED;
 
 #	if GFX_VIP_SC1200
-   if (gfx_vip_type == GFX_VIP_TYPE_SC1200)
-      status = sc1200_set_vip_mode(mode);
+    if (gfx_vip_type == GFX_VIP_TYPE_SC1200)
+        status = sc1200_set_vip_mode(mode);
 #	endif
-   return (status);
+    return (status);
 }
 
 /*-----------------------------------------------------------------------------
@@ -258,13 +258,13 @@ gfx_set_vip_mode(int mode)
 int
 gfx_set_vbi_enable(int enable)
 {
-   int status = GFX_STATUS_UNSUPPORTED;
+    int status = GFX_STATUS_UNSUPPORTED;
 
 #	if GFX_VIP_SC1200
-   if (gfx_vip_type == GFX_VIP_TYPE_SC1200)
-      status = sc1200_set_vbi_enable(enable);
+    if (gfx_vip_type == GFX_VIP_TYPE_SC1200)
+        status = sc1200_set_vbi_enable(enable);
 #	endif
-   return (status);
+    return (status);
 }
 
 /*-----------------------------------------------------------------------------
@@ -274,13 +274,13 @@ gfx_set_vbi_enable(int enable)
 int
 gfx_set_vbi_mode(int mode)
 {
-   int status = GFX_STATUS_UNSUPPORTED;
+    int status = GFX_STATUS_UNSUPPORTED;
 
 #	if GFX_VIP_SC1200
-   if (gfx_vip_type == GFX_VIP_TYPE_SC1200)
-      status = sc1200_set_vbi_mode(mode);
+    if (gfx_vip_type == GFX_VIP_TYPE_SC1200)
+        status = sc1200_set_vbi_mode(mode);
 #	endif
-   return (status);
+    return (status);
 }
 
 /*-----------------------------------------------------------------------------
@@ -290,13 +290,13 @@ gfx_set_vbi_mode(int mode)
 int
 gfx_set_vbi_base(unsigned long even, unsigned long odd)
 {
-   int status = GFX_STATUS_UNSUPPORTED;
+    int status = GFX_STATUS_UNSUPPORTED;
 
 #	if GFX_VIP_SC1200
-   if (gfx_vip_type == GFX_VIP_TYPE_SC1200)
-      status = sc1200_set_vbi_base(even, odd);
+    if (gfx_vip_type == GFX_VIP_TYPE_SC1200)
+        status = sc1200_set_vbi_base(even, odd);
 #	endif
-   return (status);
+    return (status);
 }
 
 /*-----------------------------------------------------------------------------
@@ -306,13 +306,13 @@ gfx_set_vbi_base(unsigned long even, unsigned long odd)
 int
 gfx_set_vbi_pitch(unsigned long pitch)
 {
-   int status = GFX_STATUS_UNSUPPORTED;
+    int status = GFX_STATUS_UNSUPPORTED;
 
 #	if GFX_VIP_SC1200
-   if (gfx_vip_type == GFX_VIP_TYPE_SC1200)
-      status = sc1200_set_vbi_pitch(pitch);
+    if (gfx_vip_type == GFX_VIP_TYPE_SC1200)
+        status = sc1200_set_vbi_pitch(pitch);
 #	endif
-   return (status);
+    return (status);
 }
 
 /*-----------------------------------------------------------------------------
@@ -322,13 +322,13 @@ gfx_set_vbi_pitch(unsigned long pitch)
 int
 gfx_set_vbi_direct(unsigned long even_lines, unsigned long odd_lines)
 {
-   int status = GFX_STATUS_UNSUPPORTED;
+    int status = GFX_STATUS_UNSUPPORTED;
 
 #	if GFX_VIP_SC1200
-   if (gfx_vip_type == GFX_VIP_TYPE_SC1200)
-      status = sc1200_set_vbi_direct(even_lines, odd_lines);
+    if (gfx_vip_type == GFX_VIP_TYPE_SC1200)
+        status = sc1200_set_vbi_direct(even_lines, odd_lines);
 #	endif
-   return (status);
+    return (status);
 }
 
 /*-----------------------------------------------------------------------------
@@ -338,13 +338,13 @@ gfx_set_vbi_direct(unsigned long even_lines, unsigned long odd_lines)
 int
 gfx_set_vbi_interrupt(int enable)
 {
-   int status = GFX_STATUS_UNSUPPORTED;
+    int status = GFX_STATUS_UNSUPPORTED;
 
 #	if GFX_VIP_SC1200
-   if (gfx_vip_type == GFX_VIP_TYPE_SC1200)
-      status = sc1200_set_vbi_interrupt(enable);
+    if (gfx_vip_type == GFX_VIP_TYPE_SC1200)
+        status = sc1200_set_vbi_interrupt(enable);
 #	endif
-   return (status);
+    return (status);
 }
 
 /*-----------------------------------------------------------------------------
@@ -354,13 +354,13 @@ gfx_set_vbi_interrupt(int enable)
 int
 gfx_set_vip_bus_request_threshold_high(int enable)
 {
-   int status = GFX_STATUS_UNSUPPORTED;
+    int status = GFX_STATUS_UNSUPPORTED;
 
 #	if GFX_VIP_SC1200
-   if (gfx_vip_type == GFX_VIP_TYPE_SC1200)
-      status = sc1200_set_vip_bus_request_threshold_high(enable);
+    if (gfx_vip_type == GFX_VIP_TYPE_SC1200)
+        status = sc1200_set_vip_bus_request_threshold_high(enable);
 #	endif
-   return (status);
+    return (status);
 }
 
 /*-----------------------------------------------------------------------------
@@ -370,13 +370,13 @@ gfx_set_vip_bus_request_threshold_high(int enable)
 int
 gfx_set_vip_last_line(int last_line)
 {
-   int status = GFX_STATUS_UNSUPPORTED;
+    int status = GFX_STATUS_UNSUPPORTED;
 
 #	if GFX_VIP_SC1200
-   if (gfx_vip_type == GFX_VIP_TYPE_SC1200)
-      status = sc1200_set_vip_last_line(last_line);
+    if (gfx_vip_type == GFX_VIP_TYPE_SC1200)
+        status = sc1200_set_vip_last_line(last_line);
 #	endif
-   return (status);
+    return (status);
 }
 
 /*-----------------------------------------------------------------------------
@@ -386,13 +386,13 @@ gfx_set_vip_last_line(int last_line)
 int
 gfx_test_vip_odd_field(void)
 {
-   int status = GFX_STATUS_UNSUPPORTED;
+    int status = GFX_STATUS_UNSUPPORTED;
 
 #	if GFX_VIP_SC1200
-   if (gfx_vip_type == GFX_VIP_TYPE_SC1200)
-      status = sc1200_test_vip_odd_field();
+    if (gfx_vip_type == GFX_VIP_TYPE_SC1200)
+        status = sc1200_test_vip_odd_field();
 #	endif
-   return (status);
+    return (status);
 }
 
 /*-----------------------------------------------------------------------------
@@ -402,13 +402,13 @@ gfx_test_vip_odd_field(void)
 int
 gfx_test_vip_bases_updated(void)
 {
-   int status = GFX_STATUS_UNSUPPORTED;
+    int status = GFX_STATUS_UNSUPPORTED;
 
 #	if GFX_VIP_SC1200
-   if (gfx_vip_type == GFX_VIP_TYPE_SC1200)
-      status = sc1200_test_vip_bases_updated();
+    if (gfx_vip_type == GFX_VIP_TYPE_SC1200)
+        status = sc1200_test_vip_bases_updated();
 #	endif
-   return (status);
+    return (status);
 }
 
 /*-----------------------------------------------------------------------------
@@ -418,13 +418,13 @@ gfx_test_vip_bases_updated(void)
 int
 gfx_test_vip_fifo_overflow(void)
 {
-   int status = GFX_STATUS_UNSUPPORTED;
+    int status = GFX_STATUS_UNSUPPORTED;
 
 #	if GFX_VIP_SC1200
-   if (gfx_vip_type == GFX_VIP_TYPE_SC1200)
-      status = sc1200_test_vip_fifo_overflow();
+    if (gfx_vip_type == GFX_VIP_TYPE_SC1200)
+        status = sc1200_test_vip_fifo_overflow();
 #	endif
-   return (status);
+    return (status);
 }
 
 /*-----------------------------------------------------------------------------
@@ -434,13 +434,13 @@ gfx_test_vip_fifo_overflow(void)
 int
 gfx_get_vip_line(void)
 {
-   int status = GFX_STATUS_UNSUPPORTED;
+    int status = GFX_STATUS_UNSUPPORTED;
 
 #	if GFX_VIP_SC1200
-   if (gfx_vip_type == GFX_VIP_TYPE_SC1200)
-      status = sc1200_get_vip_line();
+    if (gfx_vip_type == GFX_VIP_TYPE_SC1200)
+        status = sc1200_get_vip_line();
 #	endif
-   return (status);
+    return (status);
 }
 
 /*-----------------------------------------------------------------------------
@@ -450,13 +450,13 @@ gfx_get_vip_line(void)
 unsigned long
 gfx_get_vip_base(int odd)
 {
-   unsigned long base = 0;
+    unsigned long base = 0;
 
 #	if GFX_VIP_SC1200
-   if (gfx_vip_type == GFX_VIP_TYPE_SC1200)
-      base = sc1200_get_vip_base(odd);
+    if (gfx_vip_type == GFX_VIP_TYPE_SC1200)
+        base = sc1200_get_vip_base(odd);
 #	endif
-   return (base);
+    return (base);
 }
 
 /*-----------------------------------------------------------------------------
@@ -466,13 +466,13 @@ gfx_get_vip_base(int odd)
 unsigned long
 gfx_get_vbi_pitch(void)
 {
-   unsigned long pitch = 0;
+    unsigned long pitch = 0;
 
 #	if GFX_VIP_SC1200
-   if (gfx_vip_type == GFX_VIP_TYPE_SC1200)
-      pitch = sc1200_get_vbi_pitch();
+    if (gfx_vip_type == GFX_VIP_TYPE_SC1200)
+        pitch = sc1200_get_vbi_pitch();
 #	endif
-   return (pitch);
+    return (pitch);
 }
 
 /*************************************************************/
@@ -488,13 +488,13 @@ gfx_get_vbi_pitch(void)
 int
 gfx_get_vip_enable(void)
 {
-   int enable = 0;
+    int enable = 0;
 
 #	if GFX_VIP_SC1200
-   if (gfx_vip_type == GFX_VIP_TYPE_SC1200)
-      enable = sc1200_get_vip_enable();
+    if (gfx_vip_type == GFX_VIP_TYPE_SC1200)
+        enable = sc1200_get_vip_enable();
 #	endif
-   return (enable);
+    return (enable);
 }
 
 /*-----------------------------------------------------------------------------
@@ -504,13 +504,13 @@ gfx_get_vip_enable(void)
 unsigned long
 gfx_get_vip_pitch(void)
 {
-   unsigned long pitch = 0;
+    unsigned long pitch = 0;
 
 #	if GFX_VIP_SC1200
-   if (gfx_vip_type == GFX_VIP_TYPE_SC1200)
-      pitch = sc1200_get_vip_pitch();
+    if (gfx_vip_type == GFX_VIP_TYPE_SC1200)
+        pitch = sc1200_get_vip_pitch();
 #	endif
-   return (pitch);
+    return (pitch);
 }
 
 /*-----------------------------------------------------------------------------
@@ -520,13 +520,13 @@ gfx_get_vip_pitch(void)
 int
 gfx_get_vip_mode(void)
 {
-   int mode = 0;
+    int mode = 0;
 
 #	if GFX_VIP_SC1200
-   if (gfx_vip_type == GFX_VIP_TYPE_SC1200)
-      mode = sc1200_get_vip_mode();
+    if (gfx_vip_type == GFX_VIP_TYPE_SC1200)
+        mode = sc1200_get_vip_mode();
 #	endif
-   return (mode);
+    return (mode);
 }
 
 /*-----------------------------------------------------------------------------
@@ -536,13 +536,13 @@ gfx_get_vip_mode(void)
 int
 gfx_get_vbi_enable(void)
 {
-   int enable = 0;
+    int enable = 0;
 
 #	if GFX_VIP_SC1200
-   if (gfx_vip_type == GFX_VIP_TYPE_SC1200)
-      enable = sc1200_get_vbi_enable();
+    if (gfx_vip_type == GFX_VIP_TYPE_SC1200)
+        enable = sc1200_get_vbi_enable();
 #	endif
-   return (enable);
+    return (enable);
 }
 
 /*-----------------------------------------------------------------------------
@@ -552,13 +552,13 @@ gfx_get_vbi_enable(void)
 int
 gfx_get_vbi_mode(void)
 {
-   int mode = 0;
+    int mode = 0;
 
 #	if GFX_VIP_SC1200
-   if (gfx_vip_type == GFX_VIP_TYPE_SC1200)
-      mode = sc1200_get_vbi_mode();
+    if (gfx_vip_type == GFX_VIP_TYPE_SC1200)
+        mode = sc1200_get_vbi_mode();
 #	endif
-   return (mode);
+    return (mode);
 }
 
 /*-----------------------------------------------------------------------------
@@ -568,13 +568,13 @@ gfx_get_vbi_mode(void)
 unsigned long
 gfx_get_vbi_base(int odd)
 {
-   unsigned long base = 0;
+    unsigned long base = 0;
 
 #	if GFX_VIP_SC1200
-   if (gfx_vip_type == GFX_VIP_TYPE_SC1200)
-      base = sc1200_get_vbi_base(odd);
+    if (gfx_vip_type == GFX_VIP_TYPE_SC1200)
+        base = sc1200_get_vbi_base(odd);
 #	endif
-   return (base);
+    return (base);
 }
 
 /*-----------------------------------------------------------------------------
@@ -584,13 +584,13 @@ gfx_get_vbi_base(int odd)
 unsigned long
 gfx_get_vbi_direct(int odd)
 {
-   unsigned long vbi_direct_lines = 0;
+    unsigned long vbi_direct_lines = 0;
 
 #	if GFX_VIP_SC1200
-   if (gfx_vip_type == GFX_VIP_TYPE_SC1200)
-      vbi_direct_lines = sc1200_get_vbi_direct(odd);
+    if (gfx_vip_type == GFX_VIP_TYPE_SC1200)
+        vbi_direct_lines = sc1200_get_vbi_direct(odd);
 #	endif
-   return (vbi_direct_lines);
+    return (vbi_direct_lines);
 }
 
 /*-----------------------------------------------------------------------------
@@ -600,13 +600,13 @@ gfx_get_vbi_direct(int odd)
 int
 gfx_get_vbi_interrupt(void)
 {
-   int enable = 0;
+    int enable = 0;
 
 #	if GFX_VIP_SC1200
-   if (gfx_vip_type == GFX_VIP_TYPE_SC1200)
-      enable = sc1200_get_vbi_interrupt();
+    if (gfx_vip_type == GFX_VIP_TYPE_SC1200)
+        enable = sc1200_get_vbi_interrupt();
 #	endif
-   return (enable);
+    return (enable);
 }
 
 /*-----------------------------------------------------------------------------
@@ -616,17 +616,17 @@ gfx_get_vbi_interrupt(void)
 int
 gfx_get_vip_bus_request_threshold_high(void)
 {
-   int enable = 0;
+    int enable = 0;
 
 #	if GFX_VIP_SC1200
-   if (gfx_vip_type == GFX_VIP_TYPE_SC1200)
-      enable = sc1200_get_vip_bus_request_threshold_high();
+    if (gfx_vip_type == GFX_VIP_TYPE_SC1200)
+        enable = sc1200_get_vip_bus_request_threshold_high();
 #	endif
-   return (enable);
+    return (enable);
 }
 
-#endif /* GFX_READ_ROUTINES */
+#endif                          /* GFX_READ_ROUTINES */
 
-#endif /* GFX_VIP_DYNAMIC */
+#endif                          /* GFX_VIP_DYNAMIC */
 
 /* END OF FILE */

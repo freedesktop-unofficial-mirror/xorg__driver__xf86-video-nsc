@@ -190,24 +190,24 @@ create_devicenode()
 {
 
 #if 1
-   FILE *pfdevices;
-   char line[200], devname[200];
-   int majdev;
+    FILE *pfdevices;
+    char line[200], devname[200];
+    int majdev;
 
-   /* remove fails if device is open */
-   remove("/dev/nscgal");
+    /* remove fails if device is open */
+    remove("/dev/nscgal");
 
-   if ((pfdevices = fopen("/proc/devices", "r"))) {
-      while (fgets(line, sizeof(line), pfdevices)) {
-	 if (sscanf(line, "%d%*[ \t]%s", &majdev, devname) == 2) {
-	    if (strstr(devname, "nscgal"))
-	       mknod("/dev/nscgal", S_IFCHR | S_IRUSR | S_IWUSR,
-		     makedev(majdev, 0));
-	 }
-      }
-      fclose(pfdevices);
-   }
-   return 1;
+    if ((pfdevices = fopen("/proc/devices", "r"))) {
+        while (fgets(line, sizeof(line), pfdevices)) {
+            if (sscanf(line, "%d%*[ \t]%s", &majdev, devname) == 2) {
+                if (strstr(devname, "nscgal"))
+                    mknod("/dev/nscgal", S_IFCHR | S_IRUSR | S_IWUSR,
+                          makedev(majdev, 0));
+            }
+        }
+        fclose(pfdevices);
+    }
+    return 1;
 #endif
 
 }
@@ -226,10 +226,10 @@ Gal_initialize_interface()
 {
 /*	create_devicenode();  */
 
-   if ((ifbdev_handle = open("/dev/fb0", O_RDONLY)) == -1)
+    if ((ifbdev_handle = open("/dev/fb0", O_RDONLY)) == -1)
 /*	if ((ifbdev_handle = open("FBDEV_NAME", O_RDONLY)) == -1) */
-      return 0;
-   return 1;
+        return 0;
+    return 1;
 }
 
 /*------------------------------------------------------------------------
@@ -243,9 +243,9 @@ Gal_initialize_interface()
 BOOLEAN
 Gal_cleanup_interface()
 {
-   if (ifbdev_handle != -1)
-      close(ifbdev_handle);
-   return 1;
+    if (ifbdev_handle != -1)
+        close(ifbdev_handle);
+    return 1;
 }
 
 /*---------------------------------------------------------------------------
@@ -263,21 +263,21 @@ Gal_cleanup_interface()
  *-------------------------------------------------------------------------*/
 BOOLEAN
 Gal_write_register(int type, unsigned long offset, unsigned long value,
-		   int size)
+                   int size)
 {
-   GAL_HWACCESS hwAccess;
+    GAL_HWACCESS hwAccess;
 
-   INIT_GAL(&hwAccess);
-   hwAccess.dwSubfunction = GALFN_WRITEREG;
-   hwAccess.dwType = type;
-   hwAccess.dwOffset = offset;
-   hwAccess.dwValue = value;
-   hwAccess.dwByteCount = size;
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &hwAccess))
-      return 0;
-   else {
-      return 1;
-   }
+    INIT_GAL(&hwAccess);
+    hwAccess.dwSubfunction = GALFN_WRITEREG;
+    hwAccess.dwType = type;
+    hwAccess.dwOffset = offset;
+    hwAccess.dwValue = value;
+    hwAccess.dwByteCount = size;
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &hwAccess))
+        return 0;
+    else {
+        return 1;
+    }
 }
 
 /*---------------------------------------------------------------------------
@@ -296,22 +296,22 @@ Gal_write_register(int type, unsigned long offset, unsigned long value,
  *-------------------------------------------------------------------------*/
 BOOLEAN
 Gal_read_register(int type, unsigned long offset, unsigned long *value,
-		  int size)
+                  int size)
 {
-   GAL_HWACCESS hwAccess;
+    GAL_HWACCESS hwAccess;
 
-   INIT_GAL(&hwAccess);
-   hwAccess.dwSubfunction = GALFN_READREG;
-   hwAccess.dwType = type;
-   hwAccess.dwOffset = offset;
-   hwAccess.dwByteCount = size;
+    INIT_GAL(&hwAccess);
+    hwAccess.dwSubfunction = GALFN_READREG;
+    hwAccess.dwType = type;
+    hwAccess.dwOffset = offset;
+    hwAccess.dwByteCount = size;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &hwAccess))
-      return 0;
-   else {
-      *value = hwAccess.dwValue;
-      return 1;
-   }
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &hwAccess))
+        return 0;
+    else {
+        *value = hwAccess.dwValue;
+        return 1;
+    }
 }
 
 /*---------------------------------------------------------------------------
@@ -327,15 +327,15 @@ Gal_read_register(int type, unsigned long offset, unsigned long *value,
 BOOLEAN
 Gal_get_adapter_info(PGAL_ADAPTERINFO pAdapterInfo)
 {
-   INIT_GAL(pAdapterInfo);
+    INIT_GAL(pAdapterInfo);
 
-   pAdapterInfo->dwSubfunction = GALFN_GETADAPTERINFO;
+    pAdapterInfo->dwSubfunction = GALFN_GETADAPTERINFO;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, pAdapterInfo))
-      return 0;
-   else {
-      return 1;
-   }
+    if (ioctl(ifbdev_handle, FBIOGAL_API, pAdapterInfo))
+        return 0;
+    else {
+        return 1;
+    }
 }
 
 /*---------------------------------------------------------------------------
@@ -349,15 +349,15 @@ Gal_get_adapter_info(PGAL_ADAPTERINFO pAdapterInfo)
 BOOLEAN
 Gal_set_softvga_state(BOOLEAN bEnable)
 {
-   GAL_SOFTVGASTATE sSoftVgaState;
+    GAL_SOFTVGASTATE sSoftVgaState;
 
-   INIT_GAL(&sSoftVgaState);
-   sSoftVgaState.dwSubfunction = GALFN_SETSOFTVGASTATE;
-   sSoftVgaState.bSoftVgaEnable = bEnable;
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sSoftVgaState))
-      return 0;
-   else
-      return 1;
+    INIT_GAL(&sSoftVgaState);
+    sSoftVgaState.dwSubfunction = GALFN_SETSOFTVGASTATE;
+    sSoftVgaState.bSoftVgaEnable = bEnable;
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sSoftVgaState))
+        return 0;
+    else
+        return 1;
 }
 
 /*---------------------------------------------------------------------------
@@ -371,16 +371,16 @@ Gal_set_softvga_state(BOOLEAN bEnable)
 BOOLEAN
 Gal_get_softvga_state(int *bState)
 {
-   GAL_SOFTVGASTATE sSoftVgaState;
+    GAL_SOFTVGASTATE sSoftVgaState;
 
-   INIT_GAL(&sSoftVgaState);
-   sSoftVgaState.dwSubfunction = GALFN_GETSOFTVGASTATE;
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sSoftVgaState))
-      return 0;
-   else {
-      *bState = sSoftVgaState.bSoftVgaEnable;
-      return 1;
-   }
+    INIT_GAL(&sSoftVgaState);
+    sSoftVgaState.dwSubfunction = GALFN_GETSOFTVGASTATE;
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sSoftVgaState))
+        return 0;
+    else {
+        *bState = sSoftVgaState.bSoftVgaEnable;
+        return 1;
+    }
 }
 
 /*---------------------------------------------------------------------------
@@ -394,16 +394,16 @@ Gal_get_softvga_state(int *bState)
 BOOLEAN
 Gal_vga_test_pci(int *softvga)
 {
-   GAL_VGATESTPCI sVgatestpci;
+    GAL_VGATESTPCI sVgatestpci;
 
-   INIT_GAL(&sVgatestpci);
-   sVgatestpci.dwSubfunction = GALFN_GETSOFTVGASTATE;
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sVgatestpci))
-      return 0;
-   else {
-      *softvga = sVgatestpci.softvga;
-      return 1;
-   }
+    INIT_GAL(&sVgatestpci);
+    sVgatestpci.dwSubfunction = GALFN_GETSOFTVGASTATE;
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sVgatestpci))
+        return 0;
+    else {
+        *softvga = sVgatestpci.softvga;
+        return 1;
+    }
 }
 
 /*---------------------------------------------------------------------------
@@ -417,16 +417,16 @@ Gal_vga_test_pci(int *softvga)
 BOOLEAN
 Gal_vga_get_pci_command(unsigned char *value)
 {
-   GAL_VGAGETPCICOMMAND sVgagetpcicommand;
+    GAL_VGAGETPCICOMMAND sVgagetpcicommand;
 
-   INIT_GAL(&sVgagetpcicommand);
-   sVgagetpcicommand.dwSubfunction = GALFN_VGAGETPCICOMMAND;
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sVgagetpcicommand))
-      return 0;
-   else {
-      *value = sVgagetpcicommand.value;
-      return 1;
-   }
+    INIT_GAL(&sVgagetpcicommand);
+    sVgagetpcicommand.dwSubfunction = GALFN_VGAGETPCICOMMAND;
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sVgagetpcicommand))
+        return 0;
+    else {
+        *value = sVgagetpcicommand.value;
+        return 1;
+    }
 }
 
 /*---------------------------------------------------------------------------
@@ -440,17 +440,17 @@ Gal_vga_get_pci_command(unsigned char *value)
 BOOLEAN
 Gal_vga_seq_reset(int reset)
 {
-   GAL_VGASEQRESET sVgaseqreset;
+    GAL_VGASEQRESET sVgaseqreset;
 
-   INIT_GAL(&sVgaseqreset);
-   sVgaseqreset.dwSubfunction = GALFN_VGASEQRESET;
-   sVgaseqreset.reset = reset;
+    INIT_GAL(&sVgaseqreset);
+    sVgaseqreset.dwSubfunction = GALFN_VGASEQRESET;
+    sVgaseqreset.reset = reset;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sVgaseqreset))
-      return 0;
-   else {
-      return 1;
-   }
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sVgaseqreset))
+        return 0;
+    else {
+        return 1;
+    }
 }
 
 /*---------------------------------------------------------------------------
@@ -464,16 +464,16 @@ Gal_vga_seq_reset(int reset)
 BOOLEAN
 Gal_vga_set_graphics_bits(void)
 {
-   GAL_VGASETGRAPHICSBITS sVgasetgraphics;
+    GAL_VGASETGRAPHICSBITS sVgasetgraphics;
 
-   INIT_GAL(&sVgasetgraphics);
-   sVgasetgraphics.dwSubfunction = GALFN_VGASETGRAPHICSBITS;
+    INIT_GAL(&sVgasetgraphics);
+    sVgasetgraphics.dwSubfunction = GALFN_VGASETGRAPHICSBITS;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sVgasetgraphics))
-      return 0;
-   else {
-      return 1;
-   }
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sVgasetgraphics))
+        return 0;
+    else {
+        return 1;
+    }
 }
 
 /*---------------------------------------------------------------------------
@@ -487,15 +487,15 @@ Gal_vga_set_graphics_bits(void)
 BOOLEAN
 Gal_set_crt_enable(int crtEnable)
 {
-   GAL_CRTENABLE sCrtEnable;
+    GAL_CRTENABLE sCrtEnable;
 
-   INIT_GAL(&sCrtEnable);
-   sCrtEnable.dwSubfunction = GALFN_SETCRTENABLE;
-   sCrtEnable.wCrtEnable = crtEnable;
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sCrtEnable))
-      return 0;
-   else
-      return 1;
+    INIT_GAL(&sCrtEnable);
+    sCrtEnable.dwSubfunction = GALFN_SETCRTENABLE;
+    sCrtEnable.wCrtEnable = crtEnable;
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sCrtEnable))
+        return 0;
+    else
+        return 1;
 }
 
 /*---------------------------------------------------------------------------
@@ -511,24 +511,24 @@ Gal_set_crt_enable(int crtEnable)
  *-------------------------------------------------------------------------*/
 BOOLEAN
 Gal_is_display_mode_supported(int xres, int yres, int bpp, int hz,
-			      int *supported)
+                              int *supported)
 {
-   GAL_DISPLAYMODE sDisplayMode;
+    GAL_DISPLAYMODE sDisplayMode;
 
-   *supported = 0;
-   INIT_GAL(&sDisplayMode);
-   sDisplayMode.dwSubfunction = GALFN_ISDISPLAYMODESUPPORTED;
-   sDisplayMode.wXres = xres;
-   sDisplayMode.wYres = yres;
-   sDisplayMode.wBpp = bpp;
-   sDisplayMode.wRefresh = hz;
+    *supported = 0;
+    INIT_GAL(&sDisplayMode);
+    sDisplayMode.dwSubfunction = GALFN_ISDISPLAYMODESUPPORTED;
+    sDisplayMode.wXres = xres;
+    sDisplayMode.wYres = yres;
+    sDisplayMode.wBpp = bpp;
+    sDisplayMode.wRefresh = hz;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sDisplayMode))
-      return 0;
-   else {
-      *supported = sDisplayMode.dwSupported;
-      return 1;
-   }
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sDisplayMode))
+        return 0;
+    else {
+        *supported = sDisplayMode.dwSupported;
+        return 1;
+    }
 }
 
 /*---------------------------------------------------------------------------
@@ -545,19 +545,19 @@ Gal_is_display_mode_supported(int xres, int yres, int bpp, int hz,
 BOOLEAN
 Gal_set_display_mode(int xres, int yres, int bpp, int hz)
 {
-   GAL_DISPLAYMODE sDisplayMode;
+    GAL_DISPLAYMODE sDisplayMode;
 
-   INIT_GAL(&sDisplayMode);
-   sDisplayMode.dwSubfunction = GALFN_SETDISPLAYMODE;
-   sDisplayMode.wXres = xres;
-   sDisplayMode.wYres = yres;
-   sDisplayMode.wBpp = bpp;
-   sDisplayMode.wRefresh = hz;
+    INIT_GAL(&sDisplayMode);
+    sDisplayMode.dwSubfunction = GALFN_SETDISPLAYMODE;
+    sDisplayMode.wXres = xres;
+    sDisplayMode.wYres = yres;
+    sDisplayMode.wBpp = bpp;
+    sDisplayMode.wRefresh = hz;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sDisplayMode))
-      return 0;
-   else
-      return 1;
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sDisplayMode))
+        return 0;
+    else
+        return 1;
 }
 
 /*---------------------------------------------------------------------------
@@ -574,19 +574,19 @@ Gal_set_display_mode(int xres, int yres, int bpp, int hz)
 BOOLEAN
 Gal_get_display_mode(int *xres, int *yres, int *bpp, int *hz)
 {
-   GAL_DISPLAYMODE sDisplayMode;
+    GAL_DISPLAYMODE sDisplayMode;
 
-   INIT_GAL(&sDisplayMode);
-   sDisplayMode.dwSubfunction = GALFN_GETDISPLAYMODE;
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sDisplayMode))
-      return 0;
-   else {
-      *xres = sDisplayMode.wXres;
-      *yres = sDisplayMode.wYres;
-      *bpp = sDisplayMode.wBpp;
-      *hz = sDisplayMode.wRefresh;
-      return 1;
-   }
+    INIT_GAL(&sDisplayMode);
+    sDisplayMode.dwSubfunction = GALFN_GETDISPLAYMODE;
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sDisplayMode))
+        return 0;
+    else {
+        *xres = sDisplayMode.wXres;
+        *yres = sDisplayMode.wYres;
+        *bpp = sDisplayMode.wBpp;
+        *hz = sDisplayMode.wRefresh;
+        return 1;
+    }
 }
 
 /*---------------------------------------------------------------------------
@@ -601,16 +601,16 @@ Gal_get_display_mode(int *xres, int *yres, int *bpp, int *hz)
 BOOLEAN
 Gal_set_display_bpp(unsigned short bpp)
 {
-   GAL_DISPLAYPARAMS sDisplayParams;
+    GAL_DISPLAYPARAMS sDisplayParams;
 
-   INIT_GAL(&sDisplayParams);
-   sDisplayParams.dwSubfunction = GALFN_SETDISPLAYBPP;
-   sDisplayParams.wBpp = bpp;
+    INIT_GAL(&sDisplayParams);
+    sDisplayParams.dwSubfunction = GALFN_SETDISPLAYBPP;
+    sDisplayParams.wBpp = bpp;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sDisplayParams))
-      return 0;
-   else
-      return 1;
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sDisplayParams))
+        return 0;
+    else
+        return 1;
 }
 
 /*---------------------------------------------------------------------------
@@ -625,16 +625,16 @@ Gal_set_display_bpp(unsigned short bpp)
 BOOLEAN
 Gal_set_bpp(unsigned short bpp)
 {
-   GAL_DISPLAYPARAMS sDisplayParams;
+    GAL_DISPLAYPARAMS sDisplayParams;
 
-   INIT_GAL(&sDisplayParams);
-   sDisplayParams.dwSubfunction = GALFN_SETBPP;
-   sDisplayParams.wBpp = bpp;
+    INIT_GAL(&sDisplayParams);
+    sDisplayParams.dwSubfunction = GALFN_SETBPP;
+    sDisplayParams.wBpp = bpp;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sDisplayParams))
-      return 0;
-   else
-      return 1;
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sDisplayParams))
+        return 0;
+    else
+        return 1;
 }
 
 /*---------------------------------------------------------------------------
@@ -649,17 +649,17 @@ Gal_set_bpp(unsigned short bpp)
 BOOLEAN
 Gal_get_display_bpp(unsigned short *bpp)
 {
-   GAL_DISPLAYPARAMS sDisplayParams;
+    GAL_DISPLAYPARAMS sDisplayParams;
 
-   INIT_GAL(&sDisplayParams);
-   sDisplayParams.dwSubfunction = GALFN_GETDISPLAYBPP;
+    INIT_GAL(&sDisplayParams);
+    sDisplayParams.dwSubfunction = GALFN_GETDISPLAYBPP;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sDisplayParams))
-      return 0;
-   else {
-      *bpp = sDisplayParams.wBpp;
-      return 1;
-   }
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sDisplayParams))
+        return 0;
+    else {
+        *bpp = sDisplayParams.wBpp;
+        return 1;
+    }
 }
 
 /*---------------------------------------------------------------------------
@@ -673,15 +673,15 @@ Gal_get_display_bpp(unsigned short *bpp)
 BOOLEAN
 Gal_set_display_pitch(unsigned short pitch)
 {
-   GAL_DISPLAYPARAMS sDisplayParams;
+    GAL_DISPLAYPARAMS sDisplayParams;
 
-   INIT_GAL(&sDisplayParams);
-   sDisplayParams.dwSubfunction = GALFN_SETDISPLAYPITCH;
-   sDisplayParams.wPitch = pitch;
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sDisplayParams))
-      return 0;
-   else
-      return 1;
+    INIT_GAL(&sDisplayParams);
+    sDisplayParams.dwSubfunction = GALFN_SETDISPLAYPITCH;
+    sDisplayParams.wPitch = pitch;
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sDisplayParams))
+        return 0;
+    else
+        return 1;
 }
 
 /*---------------------------------------------------------------------------
@@ -695,17 +695,17 @@ Gal_set_display_pitch(unsigned short pitch)
 BOOLEAN
 Gal_get_display_pitch(unsigned short *pitch)
 {
-   GAL_DISPLAYPARAMS sDisplayParams;
+    GAL_DISPLAYPARAMS sDisplayParams;
 
-   INIT_GAL(&sDisplayParams);
-   sDisplayParams.dwSubfunction = GALFN_GETDISPLAYPITCH;
+    INIT_GAL(&sDisplayParams);
+    sDisplayParams.dwSubfunction = GALFN_GETDISPLAYPITCH;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sDisplayParams))
-      return 0;
-   else {
-      *pitch = sDisplayParams.wPitch;
-      return 1;
-   }
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sDisplayParams))
+        return 0;
+    else {
+        *pitch = sDisplayParams.wPitch;
+        return 1;
+    }
 }
 
 /*---------------------------------------------------------------------------
@@ -719,16 +719,16 @@ Gal_get_display_pitch(unsigned short *pitch)
 BOOLEAN
 Gal_set_display_offset(unsigned long offset)
 {
-   GAL_DISPLAYPARAMS sDisplayParams;
+    GAL_DISPLAYPARAMS sDisplayParams;
 
-   INIT_GAL(&sDisplayParams);
-   sDisplayParams.dwSubfunction = GALFN_SETDISPLAYOFFSET;
-   sDisplayParams.dwOffset = offset;
+    INIT_GAL(&sDisplayParams);
+    sDisplayParams.dwSubfunction = GALFN_SETDISPLAYOFFSET;
+    sDisplayParams.dwOffset = offset;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sDisplayParams))
-      return 0;
-   else
-      return 1;
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sDisplayParams))
+        return 0;
+    else
+        return 1;
 }
 
 /*---------------------------------------------------------------------------
@@ -742,17 +742,17 @@ Gal_set_display_offset(unsigned long offset)
 BOOLEAN
 Gal_get_display_offset(unsigned long *offset)
 {
-   GAL_DISPLAYPARAMS sDisplayParams;
+    GAL_DISPLAYPARAMS sDisplayParams;
 
-   INIT_GAL(&sDisplayParams);
-   sDisplayParams.dwSubfunction = GALFN_GETDISPLAYOFFSET;
+    INIT_GAL(&sDisplayParams);
+    sDisplayParams.dwSubfunction = GALFN_GETDISPLAYOFFSET;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sDisplayParams))
-      return 0;
-   else {
-      *offset = sDisplayParams.dwOffset;
-      return 1;
-   }
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sDisplayParams))
+        return 0;
+    else {
+        *offset = sDisplayParams.dwOffset;
+        return 1;
+    }
 }
 
 /*---------------------------------------------------------------------------
@@ -769,22 +769,22 @@ Gal_get_display_offset(unsigned long *offset)
  *-------------------------------------------------------------------------*/
 BOOLEAN
 Gal_get_refreshrate_from_dotclock(int xres, int yres, int bpp, int *hz,
-				  unsigned long frequency)
+                                  unsigned long frequency)
 {
-   GAL_DOTCLKTOREFRESH sDclkToRefresh;
+    GAL_DOTCLKTOREFRESH sDclkToRefresh;
 
-   INIT_GAL(&sDclkToRefresh);
-   sDclkToRefresh.dwSubfunction = GALFN_DOTCLKTOREFRESH;
-   sDclkToRefresh.wXres = xres;
-   sDclkToRefresh.wYres = yres;
-   sDclkToRefresh.wBpp = bpp;
-   sDclkToRefresh.dwDotClock = frequency;
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sDclkToRefresh))
-      return 0;
-   else {
-      *hz = sDclkToRefresh.wRefreshRate;
-      return 1;
-   }
+    INIT_GAL(&sDclkToRefresh);
+    sDclkToRefresh.dwSubfunction = GALFN_DOTCLKTOREFRESH;
+    sDclkToRefresh.wXres = xres;
+    sDclkToRefresh.wYres = yres;
+    sDclkToRefresh.wBpp = bpp;
+    sDclkToRefresh.dwDotClock = frequency;
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sDclkToRefresh))
+        return 0;
+    else {
+        *hz = sDclkToRefresh.wRefreshRate;
+        return 1;
+    }
 }
 
 /*---------------------------------------------------------------------------
@@ -798,14 +798,14 @@ Gal_get_refreshrate_from_dotclock(int xres, int yres, int bpp, int *hz,
 BOOLEAN
 Gal_get_display_timing(PGAL_DISPLAYTIMING pDisplayTiming)
 {
-   INIT_GAL(pDisplayTiming);
-   pDisplayTiming->dwSubfunction = GALFN_GETDISPLAYTIMINGS;
+    INIT_GAL(pDisplayTiming);
+    pDisplayTiming->dwSubfunction = GALFN_GETDISPLAYTIMINGS;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, pDisplayTiming))
-      return 0;
-   else {
-      return 1;
-   }
+    if (ioctl(ifbdev_handle, FBIOGAL_API, pDisplayTiming))
+        return 0;
+    else {
+        return 1;
+    }
 }
 
 /*---------------------------------------------------------------------------
@@ -819,13 +819,13 @@ Gal_get_display_timing(PGAL_DISPLAYTIMING pDisplayTiming)
 BOOLEAN
 Gal_set_display_timing(PGAL_DISPLAYTIMING pDisplayTiming)
 {
-   INIT_GAL(pDisplayTiming);
-   pDisplayTiming->dwSubfunction = GALFN_SETDISPLAYTIMINGS;
+    INIT_GAL(pDisplayTiming);
+    pDisplayTiming->dwSubfunction = GALFN_SETDISPLAYTIMINGS;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, pDisplayTiming))
-      return 0;
-   else
-      return 1;
+    if (ioctl(ifbdev_handle, FBIOGAL_API, pDisplayTiming))
+        return 0;
+    else
+        return 1;
 }
 
 /*---------------------------------------------------------------------------
@@ -843,22 +843,22 @@ Gal_set_display_timing(PGAL_DISPLAYTIMING pDisplayTiming)
  *-------------------------------------------------------------------------*/
 BOOLEAN
 Gal_set_fixed_timings(int pnlXres, int pnlYres, int totXres,
-		      int totYres, int bpp)
+                      int totYres, int bpp)
 {
-   GAL_DISPLAYTIMING DisplayTiming;
+    GAL_DISPLAYTIMING DisplayTiming;
 
-   INIT_GAL(&DisplayTiming);
-   DisplayTiming.dwSubfunction = GALFN_SETFIXEDTIMINGS;
-   DisplayTiming.wHActive = pnlXres;	/* panel Xres */
-   DisplayTiming.wVActive = pnlYres;	/* panel Yres */
-   DisplayTiming.wHTotal = totXres;	/* Total Xres */
-   DisplayTiming.wVTotal = totYres;	/* Total Yres */
-   DisplayTiming.wBpp = bpp;
+    INIT_GAL(&DisplayTiming);
+    DisplayTiming.dwSubfunction = GALFN_SETFIXEDTIMINGS;
+    DisplayTiming.wHActive = pnlXres;   /* panel Xres */
+    DisplayTiming.wVActive = pnlYres;   /* panel Yres */
+    DisplayTiming.wHTotal = totXres;    /* Total Xres */
+    DisplayTiming.wVTotal = totYres;    /* Total Yres */
+    DisplayTiming.wBpp = bpp;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &DisplayTiming))
-      return 0;
-   else
-      return 1;
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &DisplayTiming))
+        return 0;
+    else
+        return 1;
 }
 
 /*---------------------------------------------------------------------------
@@ -874,17 +874,17 @@ Gal_set_fixed_timings(int pnlXres, int pnlYres, int totXres,
 BOOLEAN
 Gal_set_display_palette_entry(unsigned long index, unsigned long palette)
 {
-   GAL_PALETTE_ENTRY sPalette;
+    GAL_PALETTE_ENTRY sPalette;
 
-   INIT_GAL(&sPalette);
-   sPalette.dwSubfunction = GALFN_SETPALETTE_ENTRY;
-   sPalette.dwIndex = index;
-   sPalette.dwPalette = palette;
+    INIT_GAL(&sPalette);
+    sPalette.dwSubfunction = GALFN_SETPALETTE_ENTRY;
+    sPalette.dwIndex = index;
+    sPalette.dwPalette = palette;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sPalette))
-      return 0;
-   else
-      return 1;
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sPalette))
+        return 0;
+    else
+        return 1;
 }
 
 /*---------------------------------------------------------------------------
@@ -900,18 +900,18 @@ Gal_set_display_palette_entry(unsigned long index, unsigned long palette)
 BOOLEAN
 Gal_get_display_palette_entry(unsigned long index, unsigned long *palette)
 {
-   GAL_PALETTE_ENTRY sPalette;
+    GAL_PALETTE_ENTRY sPalette;
 
-   INIT_GAL(&sPalette);
-   sPalette.dwSubfunction = GALFN_GETPALETTE_ENTRY;
-   sPalette.dwIndex = index;
+    INIT_GAL(&sPalette);
+    sPalette.dwSubfunction = GALFN_GETPALETTE_ENTRY;
+    sPalette.dwIndex = index;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sPalette))
-      return 0;
-   else {
-      *palette = sPalette.dwPalette;
-      return 1;
-   }
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sPalette))
+        return 0;
+    else {
+        *palette = sPalette.dwPalette;
+        return 1;
+    }
 }
 
 /*---------------------------------------------------------------------------
@@ -926,13 +926,13 @@ Gal_get_display_palette_entry(unsigned long index, unsigned long *palette)
 BOOLEAN
 Gal_set_display_palette(PGAL_PALETTE pPalette)
 {
-   INIT_GAL(pPalette);
-   pPalette->dwSubfunction = GALFN_SETPALETTE;
+    INIT_GAL(pPalette);
+    pPalette->dwSubfunction = GALFN_SETPALETTE;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, pPalette))
-      return 0;
-   else
-      return 1;
+    if (ioctl(ifbdev_handle, FBIOGAL_API, pPalette))
+        return 0;
+    else
+        return 1;
 }
 
 /*---------------------------------------------------------------------------
@@ -947,14 +947,14 @@ Gal_set_display_palette(PGAL_PALETTE pPalette)
 BOOLEAN
 Gal_get_display_palette(PGAL_PALETTE pPalette)
 {
-   INIT_GAL(pPalette);
-   pPalette->dwSubfunction = GALFN_GETPALETTE;
+    INIT_GAL(pPalette);
+    pPalette->dwSubfunction = GALFN_GETPALETTE;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, pPalette))
-      return 0;
-   else {
-      return 1;
-   }
+    if (ioctl(ifbdev_handle, FBIOGAL_API, pPalette))
+        return 0;
+    else {
+        return 1;
+    }
 }
 
 /*---------------------------------------------------------------------------
@@ -967,15 +967,15 @@ Gal_get_display_palette(PGAL_PALETTE pPalette)
 BOOLEAN
 Gal_wait_until_idle(void)
 {
-   GAL_WAITUNTILIDLE sWaitIdle;
+    GAL_WAITUNTILIDLE sWaitIdle;
 
-   INIT_GAL(&sWaitIdle);
-   sWaitIdle.dwSubfunction = GALFN_WAITUNTILIDLE;
+    INIT_GAL(&sWaitIdle);
+    sWaitIdle.dwSubfunction = GALFN_WAITUNTILIDLE;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sWaitIdle))
-      return 0;
-   else
-      return 1;
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sWaitIdle))
+        return 0;
+    else
+        return 1;
 }
 
 /*---------------------------------------------------------------------------
@@ -988,15 +988,15 @@ Gal_wait_until_idle(void)
 BOOLEAN
 Gal_wait_vertical_blank(void)
 {
-   GAL_WAITVERTICALBLANK sWaitVerticalBlank;
+    GAL_WAITVERTICALBLANK sWaitVerticalBlank;
 
-   INIT_GAL(&sWaitVerticalBlank);
-   sWaitVerticalBlank.dwSubfunction = GALFN_WAITVERTICALBLANK;
+    INIT_GAL(&sWaitVerticalBlank);
+    sWaitVerticalBlank.dwSubfunction = GALFN_WAITVERTICALBLANK;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sWaitVerticalBlank))
-      return 0;
-   else
-      return 1;
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sWaitVerticalBlank))
+        return 0;
+    else
+        return 1;
 }
 
 /*--------------------------------------------------------------------------
@@ -1010,15 +1010,15 @@ Gal_wait_vertical_blank(void)
 BOOLEAN
 Gal_set_cursor_enable(int enable)
 {
-   GAL_CURSORENABLE sCursorEnable;
+    GAL_CURSORENABLE sCursorEnable;
 
-   INIT_GAL(&sCursorEnable);
-   sCursorEnable.dwSubfunction = GALFN_SETCURSORENABLE;
-   sCursorEnable.bCursorEnable = enable ? 1 : 0;
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sCursorEnable))
-      return 0;
-   else
-      return 1;
+    INIT_GAL(&sCursorEnable);
+    sCursorEnable.dwSubfunction = GALFN_SETCURSORENABLE;
+    sCursorEnable.bCursorEnable = enable ? 1 : 0;
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sCursorEnable))
+        return 0;
+    else
+        return 1;
 }
 
 /*--------------------------------------------------------------------------
@@ -1035,22 +1035,22 @@ Gal_set_cursor_enable(int enable)
  *-------------------------------------------------------------------------*/
 BOOLEAN
 Gal_set_cursor_position(unsigned long memoffset,
-			unsigned short xpos, unsigned short ypos,
-			unsigned short xhotspot, unsigned short yhotspot)
+                        unsigned short xpos, unsigned short ypos,
+                        unsigned short xhotspot, unsigned short yhotspot)
 {
-   GAL_CURSORPOSITION sCursorPos;
+    GAL_CURSORPOSITION sCursorPos;
 
-   INIT_GAL(&sCursorPos);
-   sCursorPos.dwSubfunction = GALFN_SETCURSORPOSITION;
-   sCursorPos.dwMemOffset = memoffset;
-   sCursorPos.wXPos = xpos;
-   sCursorPos.wYPos = ypos;
-   sCursorPos.wXHot = xhotspot;
-   sCursorPos.wYHot = yhotspot;
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sCursorPos))
-      return 0;
-   else
-      return 1;
+    INIT_GAL(&sCursorPos);
+    sCursorPos.dwSubfunction = GALFN_SETCURSORPOSITION;
+    sCursorPos.dwMemOffset = memoffset;
+    sCursorPos.wXPos = xpos;
+    sCursorPos.wYPos = ypos;
+    sCursorPos.wXHot = xhotspot;
+    sCursorPos.wYHot = yhotspot;
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sCursorPos))
+        return 0;
+    else
+        return 1;
 }
 
 /*--------------------------------------------------------------------------
@@ -1067,23 +1067,23 @@ Gal_set_cursor_position(unsigned long memoffset,
  *-------------------------------------------------------------------------*/
 BOOLEAN
 Gal_get_cursor_position(unsigned long *memoffset,
-			unsigned short *xpos, unsigned short *ypos,
-			unsigned short *xhotspot, unsigned short *yhotspot)
+                        unsigned short *xpos, unsigned short *ypos,
+                        unsigned short *xhotspot, unsigned short *yhotspot)
 {
-   GAL_CURSORPOSITION sCursorPos;
+    GAL_CURSORPOSITION sCursorPos;
 
-   INIT_GAL(&sCursorPos);
-   sCursorPos.dwSubfunction = GALFN_GETCURSORPOSITION;
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sCursorPos))
-      return 0;
-   else {
-      *memoffset = sCursorPos.dwMemOffset;
-      *xpos = sCursorPos.wXPos;
-      *ypos = sCursorPos.wYPos;
-      *xhotspot = sCursorPos.wXHot;
-      *yhotspot = sCursorPos.wYHot;
-      return 1;
-   }
+    INIT_GAL(&sCursorPos);
+    sCursorPos.dwSubfunction = GALFN_GETCURSORPOSITION;
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sCursorPos))
+        return 0;
+    else {
+        *memoffset = sCursorPos.dwMemOffset;
+        *xpos = sCursorPos.wXPos;
+        *ypos = sCursorPos.wYPos;
+        *xhotspot = sCursorPos.wXHot;
+        *yhotspot = sCursorPos.wYHot;
+        return 1;
+    }
 }
 
 /*--------------------------------------------------------------------------
@@ -1098,22 +1098,22 @@ Gal_get_cursor_position(unsigned long *memoffset,
  *-------------------------------------------------------------------------*/
 BOOLEAN
 Gal_set_cursor_shape32(unsigned long memoffset,
-		       unsigned long *andmask, unsigned long *xormask)
+                       unsigned long *andmask, unsigned long *xormask)
 {
-   GAL_SETCURSORSHAPE sCursorShape;
+    GAL_SETCURSORSHAPE sCursorShape;
 
-   INIT_GAL(&sCursorShape);
-   sCursorShape.dwSubfunction = GALFN_SETCURSORSHAPE;
-   sCursorShape.dwMemOffset = memoffset;
+    INIT_GAL(&sCursorShape);
+    sCursorShape.dwSubfunction = GALFN_SETCURSORSHAPE;
+    sCursorShape.dwMemOffset = memoffset;
 
-   memcpy(sCursorShape.dwAndMask, andmask, sizeof(sCursorShape.dwAndMask));
+    memcpy(sCursorShape.dwAndMask, andmask, sizeof(sCursorShape.dwAndMask));
 
-   memcpy(sCursorShape.dwXorMask, xormask, sizeof(sCursorShape.dwXorMask));
+    memcpy(sCursorShape.dwXorMask, xormask, sizeof(sCursorShape.dwXorMask));
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sCursorShape))
-      return 0;
-   else
-      return 1;
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sCursorShape))
+        return 0;
+    else
+        return 1;
 }
 
 /*--------------------------------------------------------------------------
@@ -1127,22 +1127,22 @@ Gal_set_cursor_shape32(unsigned long memoffset,
  *      return:	'1' was returned on success otherwise '0' was returned.
  *-------------------------------------------------------------------------*/ BOOLEAN
 Gal_set_cursor_shape64(unsigned long memoffset,
-		       unsigned long *andmask, unsigned long *xormask)
+                       unsigned long *andmask, unsigned long *xormask)
 {
-   GAL_SETCURSORSHAPE sCursorShape;
+    GAL_SETCURSORSHAPE sCursorShape;
 
-   INIT_GAL(&sCursorShape);
-   sCursorShape.dwSubfunction = GALFN_SETCURSORSHAPE_RCLD;
-   sCursorShape.dwMemOffset = memoffset;
+    INIT_GAL(&sCursorShape);
+    sCursorShape.dwSubfunction = GALFN_SETCURSORSHAPE_RCLD;
+    sCursorShape.dwMemOffset = memoffset;
 
-   memcpy(sCursorShape.dwAndMask, andmask, sizeof(sCursorShape.dwAndMask));
+    memcpy(sCursorShape.dwAndMask, andmask, sizeof(sCursorShape.dwAndMask));
 
-   memcpy(sCursorShape.dwXorMask, xormask, sizeof(sCursorShape.dwXorMask));
+    memcpy(sCursorShape.dwXorMask, xormask, sizeof(sCursorShape.dwXorMask));
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sCursorShape))
-      return 0;
-   else
-      return 1;
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sCursorShape))
+        return 0;
+    else
+        return 1;
 }
 
 /*--------------------------------------------------------------------------
@@ -1157,17 +1157,17 @@ Gal_set_cursor_shape64(unsigned long memoffset,
 BOOLEAN
 Gal_set_cursor_colors(unsigned long bkcolor, unsigned long fgcolor)
 {
-   GAL_CURSORCOLORS sCursorColor;
+    GAL_CURSORCOLORS sCursorColor;
 
-   INIT_GAL(&sCursorColor);
-   sCursorColor.dwSubfunction = GALFN_SETCURSORCOLORS;
-   sCursorColor.dwBgColor = bkcolor;
-   sCursorColor.dwFgColor = fgcolor;
+    INIT_GAL(&sCursorColor);
+    sCursorColor.dwSubfunction = GALFN_SETCURSORCOLORS;
+    sCursorColor.dwBgColor = bkcolor;
+    sCursorColor.dwFgColor = fgcolor;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sCursorColor))
-      return 0;
-   else
-      return 1;
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sCursorColor))
+        return 0;
+    else
+        return 1;
 }
 
 /*--------------------------------------------------------------------------
@@ -1182,18 +1182,18 @@ Gal_set_cursor_colors(unsigned long bkcolor, unsigned long fgcolor)
 BOOLEAN
 Gal_get_cursor_colors(unsigned long *bkcolor, unsigned long *fgcolor)
 {
-   GAL_CURSORCOLORS sCursorColor;
+    GAL_CURSORCOLORS sCursorColor;
 
-   INIT_GAL(&sCursorColor);
-   sCursorColor.dwSubfunction = GALFN_GETCURSORCOLORS;
+    INIT_GAL(&sCursorColor);
+    sCursorColor.dwSubfunction = GALFN_GETCURSORCOLORS;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sCursorColor))
-      return 0;
-   else {
-      *bkcolor = sCursorColor.dwBgColor;
-      *fgcolor = sCursorColor.dwFgColor;
-      return 1;
-   }
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sCursorColor))
+        return 0;
+    else {
+        *bkcolor = sCursorColor.dwBgColor;
+        *fgcolor = sCursorColor.dwFgColor;
+        return 1;
+    }
 }
 
 /*--------------------------------------------------------------------------
@@ -1208,16 +1208,16 @@ Gal_get_cursor_colors(unsigned long *bkcolor, unsigned long *fgcolor)
 BOOLEAN
 Gal_set_solid_pattern(unsigned long color)
 {
-   GAL_SETSOLIDPATTERN sSetSoildPat;
+    GAL_SETSOLIDPATTERN sSetSoildPat;
 
-   INIT_GAL(&sSetSoildPat);
-   sSetSoildPat.dwSubfunction = GALFN_SETSOLIDPATTERN;
-   sSetSoildPat.dwColor = color;
+    INIT_GAL(&sSetSoildPat);
+    sSetSoildPat.dwSubfunction = GALFN_SETSOLIDPATTERN;
+    sSetSoildPat.dwColor = color;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetSoildPat))
-      return 0;
-   else
-      return 1;
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetSoildPat))
+        return 0;
+    else
+        return 1;
 }
 
 /*--------------------------------------------------------------------------
@@ -1233,15 +1233,15 @@ Gal_set_solid_pattern(unsigned long color)
 BOOLEAN
 Gal_set_solid_source(unsigned long color)
 {
-   GAL_SETSOLIDSOURCE sSetSolidSrc;
+    GAL_SETSOLIDSOURCE sSetSolidSrc;
 
-   INIT_GAL(&sSetSolidSrc);
-   sSetSolidSrc.dwSubfunction = GALFN_SETSOLIDSOURCE;
-   sSetSolidSrc.dwColor = color;
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetSolidSrc))
-      return 0;
-   else
-      return 1;
+    INIT_GAL(&sSetSolidSrc);
+    sSetSolidSrc.dwSubfunction = GALFN_SETSOLIDSOURCE;
+    sSetSolidSrc.dwColor = color;
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetSolidSrc))
+        return 0;
+    else
+        return 1;
 }
 
 /*--------------------------------------------------------------------------
@@ -1256,19 +1256,19 @@ Gal_set_solid_source(unsigned long color)
  *------------------------------------------------------------------------*/
 BOOLEAN
 Gal_set_mono_source(unsigned long bgcolor, unsigned long fgcolor,
-		    unsigned char transparency)
+                    unsigned char transparency)
 {
-   GAL_SETMONOSOURCE sSetMonoSrc;
+    GAL_SETMONOSOURCE sSetMonoSrc;
 
-   INIT_GAL(&sSetMonoSrc);
-   sSetMonoSrc.dwSubfunction = GALFN_SETMONOSOURCE;
-   sSetMonoSrc.dwFgColor = fgcolor;
-   sSetMonoSrc.dwBgColor = bgcolor;
-   sSetMonoSrc.cTransparency = transparency;
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetMonoSrc))
-      return 0;
-   else
-      return 1;
+    INIT_GAL(&sSetMonoSrc);
+    sSetMonoSrc.dwSubfunction = GALFN_SETMONOSOURCE;
+    sSetMonoSrc.dwFgColor = fgcolor;
+    sSetMonoSrc.dwBgColor = bgcolor;
+    sSetMonoSrc.cTransparency = transparency;
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetMonoSrc))
+        return 0;
+    else
+        return 1;
 }
 
 /*--------------------------------------------------------------------------
@@ -1286,22 +1286,22 @@ Gal_set_mono_source(unsigned long bgcolor, unsigned long fgcolor,
  *------------------------------------------------------------------------*/
 BOOLEAN
 Gal_set_mono_pattern(unsigned long bgcolor, unsigned long fgcolor,
-		     unsigned long data0, unsigned long data1,
-		     unsigned char transparency)
+                     unsigned long data0, unsigned long data1,
+                     unsigned char transparency)
 {
-   GAL_SETMONOPATTERN sSetMonoPat;
+    GAL_SETMONOPATTERN sSetMonoPat;
 
-   INIT_GAL(&sSetMonoPat);
-   sSetMonoPat.dwSubfunction = GALFN_SETMONOPATTERN;
-   sSetMonoPat.dwFgColor = fgcolor;
-   sSetMonoPat.dwBgColor = bgcolor;
-   sSetMonoPat.dwData0 = data0;
-   sSetMonoPat.dwData1 = data1;
-   sSetMonoPat.cTransparency = transparency;
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetMonoPat))
-      return 0;
-   else
-      return 1;
+    INIT_GAL(&sSetMonoPat);
+    sSetMonoPat.dwSubfunction = GALFN_SETMONOPATTERN;
+    sSetMonoPat.dwFgColor = fgcolor;
+    sSetMonoPat.dwBgColor = bgcolor;
+    sSetMonoPat.dwData0 = data0;
+    sSetMonoPat.dwData1 = data1;
+    sSetMonoPat.cTransparency = transparency;
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetMonoPat))
+        return 0;
+    else
+        return 1;
 }
 
 /*--------------------------------------------------------------------------
@@ -1317,16 +1317,16 @@ Gal_set_mono_pattern(unsigned long bgcolor, unsigned long fgcolor,
 BOOLEAN
 Gal_set_raster_operation(unsigned char rop)
 {
-   GAL_RASTEROPERATION sSetRop;
+    GAL_RASTEROPERATION sSetRop;
 
-   INIT_GAL(&sSetRop);
-   sSetRop.dwSubfunction = GALFN_SETRASTEROPERATION;
-   sSetRop.cRop = rop;
+    INIT_GAL(&sSetRop);
+    sSetRop.dwSubfunction = GALFN_SETRASTEROPERATION;
+    sSetRop.cRop = rop;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetRop))
-      return 0;
-   else
-      return 1;
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetRop))
+        return 0;
+    else
+        return 1;
 }
 
 /*--------------------------------------------------------------------------
@@ -1343,21 +1343,21 @@ Gal_set_raster_operation(unsigned char rop)
  *------------------------------------------------------------------------*/
 BOOLEAN
 Gal_pattern_fill(unsigned short x, unsigned short y,
-		 unsigned short width, unsigned short height)
+                 unsigned short width, unsigned short height)
 {
-   GAL_PATTERNFILL sPatternFill;
+    GAL_PATTERNFILL sPatternFill;
 
-   INIT_GAL(&sPatternFill);
-   sPatternFill.dwSubfunction = GALFN_PATTERNFILL;
-   sPatternFill.wXPos = x;
-   sPatternFill.wYPos = y;
-   sPatternFill.wWidth = width;
-   sPatternFill.wHeight = height;
+    INIT_GAL(&sPatternFill);
+    sPatternFill.dwSubfunction = GALFN_PATTERNFILL;
+    sPatternFill.wXPos = x;
+    sPatternFill.wYPos = y;
+    sPatternFill.wWidth = width;
+    sPatternFill.wHeight = height;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sPatternFill))
-      return 0;
-   else
-      return 1;
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sPatternFill))
+        return 0;
+    else
+        return 1;
 }
 
 /*--------------------------------------------------------------------------
@@ -1376,24 +1376,24 @@ Gal_pattern_fill(unsigned short x, unsigned short y,
  *------------------------------------------------------------------------*/
 BOOLEAN
 Gal_screen_to_screen_blt(unsigned short srcx, unsigned short srcy,
-			 unsigned short dstx, unsigned short dsty,
-			 unsigned short width, unsigned short height)
+                         unsigned short dstx, unsigned short dsty,
+                         unsigned short width, unsigned short height)
 {
-   GAL_SCREENTOSCREENBLT sScreenBlt;
+    GAL_SCREENTOSCREENBLT sScreenBlt;
 
-   INIT_GAL(&sScreenBlt);
-   sScreenBlt.dwSubfunction = GALFN_SCREENTOSCREENBLT;
-   sScreenBlt.wXStart = srcx;
-   sScreenBlt.wYStart = srcy;
-   sScreenBlt.wXEnd = dstx;
-   sScreenBlt.wYEnd = dsty;
-   sScreenBlt.wWidth = width;
-   sScreenBlt.wHeight = height;
+    INIT_GAL(&sScreenBlt);
+    sScreenBlt.dwSubfunction = GALFN_SCREENTOSCREENBLT;
+    sScreenBlt.wXStart = srcx;
+    sScreenBlt.wYStart = srcy;
+    sScreenBlt.wXEnd = dstx;
+    sScreenBlt.wYEnd = dsty;
+    sScreenBlt.wWidth = width;
+    sScreenBlt.wHeight = height;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sScreenBlt))
-      return 0;
-   else
-      return 1;
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sScreenBlt))
+        return 0;
+    else
+        return 1;
 }
 
 /*--------------------------------------------------------------------------
@@ -1413,26 +1413,26 @@ Gal_screen_to_screen_blt(unsigned short srcx, unsigned short srcy,
  *------------------------------------------------------------------------*/
 BOOLEAN
 Gal_screen_to_screen_xblt(unsigned short srcx, unsigned short srcy,
-			  unsigned short dstx, unsigned short dsty,
-			  unsigned short width, unsigned short height,
-			  unsigned long color)
+                          unsigned short dstx, unsigned short dsty,
+                          unsigned short width, unsigned short height,
+                          unsigned long color)
 {
-   GAL_SCREENTOSCREENXBLT sScreenXBlt;
+    GAL_SCREENTOSCREENXBLT sScreenXBlt;
 
-   INIT_GAL(&sScreenXBlt);
-   sScreenXBlt.dwSubfunction = GALFN_SCREENTOSCREENXBLT;
-   sScreenXBlt.wXStart = srcx;
-   sScreenXBlt.wYStart = srcy;
-   sScreenXBlt.wXEnd = dstx;
-   sScreenXBlt.wYEnd = dsty;
-   sScreenXBlt.wWidth = width;
-   sScreenXBlt.wHeight = height;
-   sScreenXBlt.dwColor = color;
+    INIT_GAL(&sScreenXBlt);
+    sScreenXBlt.dwSubfunction = GALFN_SCREENTOSCREENXBLT;
+    sScreenXBlt.wXStart = srcx;
+    sScreenXBlt.wYStart = srcy;
+    sScreenXBlt.wXEnd = dstx;
+    sScreenXBlt.wYEnd = dsty;
+    sScreenXBlt.wWidth = width;
+    sScreenXBlt.wHeight = height;
+    sScreenXBlt.dwColor = color;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sScreenXBlt))
-      return 0;
-   else
-      return 1;
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sScreenXBlt))
+        return 0;
+    else
+        return 1;
 }
 
 /*--------------------------------------------------------------------------
@@ -1454,144 +1454,144 @@ Gal_screen_to_screen_xblt(unsigned short srcx, unsigned short srcy,
  *------------------------------------------------------------------------*/
 BOOLEAN
 Gal_bresenham_line(unsigned short x, unsigned short y,
-		   unsigned short length, unsigned short initerr,
-		   unsigned short axialerr, unsigned short diagerr,
-		   unsigned short flags)
+                   unsigned short length, unsigned short initerr,
+                   unsigned short axialerr, unsigned short diagerr,
+                   unsigned short flags)
 {
-   GAL_BRESENHAMLINE sBresenhamLine;
+    GAL_BRESENHAMLINE sBresenhamLine;
 
-   INIT_GAL(&sBresenhamLine);
-   sBresenhamLine.dwSubfunction = GALFN_BRESENHAMLINE;
-   sBresenhamLine.wX1 = x;
-   sBresenhamLine.wY1 = y;
-   sBresenhamLine.wLength = length;
-   sBresenhamLine.wErr = initerr;
-   sBresenhamLine.wE1 = axialerr;
-   sBresenhamLine.wE2 = diagerr;
-   sBresenhamLine.wFlags = flags;
+    INIT_GAL(&sBresenhamLine);
+    sBresenhamLine.dwSubfunction = GALFN_BRESENHAMLINE;
+    sBresenhamLine.wX1 = x;
+    sBresenhamLine.wY1 = y;
+    sBresenhamLine.wLength = length;
+    sBresenhamLine.wErr = initerr;
+    sBresenhamLine.wE1 = axialerr;
+    sBresenhamLine.wE2 = diagerr;
+    sBresenhamLine.wFlags = flags;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sBresenhamLine))
-      return 0;
-   else
-      return 1;
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sBresenhamLine))
+        return 0;
+    else
+        return 1;
 }
 
 BOOLEAN
 Gal_color_pattern_fill(unsigned short x, unsigned short y,
-		       unsigned short width, unsigned short height,
-		       unsigned long pattern)
+                       unsigned short width, unsigned short height,
+                       unsigned long pattern)
 {
-   GAL_COLOR_PATTERNFILL sColorPat;
+    GAL_COLOR_PATTERNFILL sColorPat;
 
-   INIT_GAL(&sColorPat);
-   sColorPat.dwSubfunction = GALFN_COLOR_PATTERNFILL;
-   sColorPat.wDstx = x;
-   sColorPat.wDsty = y;
-   sColorPat.wWidth = width;
-   sColorPat.wHeight = height;
-   sColorPat.dwPattern = pattern;
+    INIT_GAL(&sColorPat);
+    sColorPat.dwSubfunction = GALFN_COLOR_PATTERNFILL;
+    sColorPat.wDstx = x;
+    sColorPat.wDsty = y;
+    sColorPat.wWidth = width;
+    sColorPat.wHeight = height;
+    sColorPat.dwPattern = pattern;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sColorPat))
-      return 0;
-   else
-      return 1;
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sColorPat))
+        return 0;
+    else
+        return 1;
 }
 
 BOOLEAN
 Gal_color_bitmap_to_screen_blt(unsigned short srcx, unsigned short srcy,
-			       unsigned short dstx, unsigned short dsty,
-			       unsigned short width, unsigned short height,
-			       unsigned long data, long pitch)
+                               unsigned short dstx, unsigned short dsty,
+                               unsigned short width, unsigned short height,
+                               unsigned long data, long pitch)
 {
-   GAL_COLOR_BITMAP_TO_SCREEN_BLT sBmp2Scr;
+    GAL_COLOR_BITMAP_TO_SCREEN_BLT sBmp2Scr;
 
-   INIT_GAL(&sBmp2Scr);
-   sBmp2Scr.dwSubfunction = GALFN_COLOR_BITMAP_TO_SCREEN_BLT;
-   sBmp2Scr.wSrcx = srcx;
-   sBmp2Scr.wSrcy = srcy;
-   sBmp2Scr.wDstx = dstx;
-   sBmp2Scr.wDsty = dsty;
-   sBmp2Scr.wWidth = width;
-   sBmp2Scr.wHeight = height;
-   sBmp2Scr.dwData = data;
-   sBmp2Scr.wPitch = pitch;
+    INIT_GAL(&sBmp2Scr);
+    sBmp2Scr.dwSubfunction = GALFN_COLOR_BITMAP_TO_SCREEN_BLT;
+    sBmp2Scr.wSrcx = srcx;
+    sBmp2Scr.wSrcy = srcy;
+    sBmp2Scr.wDstx = dstx;
+    sBmp2Scr.wDsty = dsty;
+    sBmp2Scr.wWidth = width;
+    sBmp2Scr.wHeight = height;
+    sBmp2Scr.dwData = data;
+    sBmp2Scr.wPitch = pitch;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sBmp2Scr))
-      return 0;
-   else
-      return 1;
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sBmp2Scr))
+        return 0;
+    else
+        return 1;
 }
 
 BOOLEAN
 Gal_color_bitmap_to_screen_xblt(unsigned short srcx, unsigned short srcy,
-				unsigned short dstx, unsigned short dsty,
-				unsigned short width, unsigned short height,
-				unsigned long data, long pitch,
-				unsigned long color)
+                                unsigned short dstx, unsigned short dsty,
+                                unsigned short width, unsigned short height,
+                                unsigned long data, long pitch,
+                                unsigned long color)
 {
-   GAL_COLOR_BITMAP_TO_SCREEN_XBLT sBmp2Scr;
+    GAL_COLOR_BITMAP_TO_SCREEN_XBLT sBmp2Scr;
 
-   INIT_GAL(&sBmp2Scr);
-   sBmp2Scr.dwSubfunction = GALFN_COLOR_BITMAP_TO_SCREEN_XBLT;
-   sBmp2Scr.wSrcx = srcx;
-   sBmp2Scr.wSrcy = srcy;
-   sBmp2Scr.wDstx = dstx;
-   sBmp2Scr.wDsty = dsty;
-   sBmp2Scr.wWidth = width;
-   sBmp2Scr.wHeight = height;
-   sBmp2Scr.dwData = data;
-   sBmp2Scr.wPitch = pitch;
-   sBmp2Scr.dwColor = color;
+    INIT_GAL(&sBmp2Scr);
+    sBmp2Scr.dwSubfunction = GALFN_COLOR_BITMAP_TO_SCREEN_XBLT;
+    sBmp2Scr.wSrcx = srcx;
+    sBmp2Scr.wSrcy = srcy;
+    sBmp2Scr.wDstx = dstx;
+    sBmp2Scr.wDsty = dsty;
+    sBmp2Scr.wWidth = width;
+    sBmp2Scr.wHeight = height;
+    sBmp2Scr.dwData = data;
+    sBmp2Scr.wPitch = pitch;
+    sBmp2Scr.dwColor = color;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sBmp2Scr))
-      return 0;
-   else
-      return 1;
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sBmp2Scr))
+        return 0;
+    else
+        return 1;
 }
 
 BOOLEAN
 Gal_mono_bitmap_to_screen_blt(unsigned short srcx, unsigned short srcy,
-			      unsigned short dstx, unsigned short dsty,
-			      unsigned short width, unsigned short height,
-			      unsigned long data, short pitch)
+                              unsigned short dstx, unsigned short dsty,
+                              unsigned short width, unsigned short height,
+                              unsigned long data, short pitch)
 {
-   GAL_MONO_BITMAP_TO_SCREEN_BLT sBmp2Scr;
+    GAL_MONO_BITMAP_TO_SCREEN_BLT sBmp2Scr;
 
-   INIT_GAL(&sBmp2Scr);
-   sBmp2Scr.dwSubfunction = GALFN_MONO_BITMAP_TO_SCREEN_BLT;
-   sBmp2Scr.wSrcx = srcx;
-   sBmp2Scr.wSrcy = srcy;
-   sBmp2Scr.wDstx = dstx;
-   sBmp2Scr.wDsty = dsty;
-   sBmp2Scr.wWidth = width;
-   sBmp2Scr.wHeight = height;
-   sBmp2Scr.dwData = data;
-   sBmp2Scr.wPitch = pitch;
+    INIT_GAL(&sBmp2Scr);
+    sBmp2Scr.dwSubfunction = GALFN_MONO_BITMAP_TO_SCREEN_BLT;
+    sBmp2Scr.wSrcx = srcx;
+    sBmp2Scr.wSrcy = srcy;
+    sBmp2Scr.wDstx = dstx;
+    sBmp2Scr.wDsty = dsty;
+    sBmp2Scr.wWidth = width;
+    sBmp2Scr.wHeight = height;
+    sBmp2Scr.dwData = data;
+    sBmp2Scr.wPitch = pitch;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sBmp2Scr))
-      return 0;
-   else
-      return 1;
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sBmp2Scr))
+        return 0;
+    else
+        return 1;
 }
 
 BOOLEAN
 Gal_text_blt(unsigned short dstx, unsigned short dsty, unsigned short width,
-	     unsigned short height, unsigned long data)
+             unsigned short height, unsigned long data)
 {
-   GAL_TEXT_BLT sTextBlt;
+    GAL_TEXT_BLT sTextBlt;
 
-   INIT_GAL(&sTextBlt);
-   sTextBlt.dwSubfunction = GALFN_TEXT_BLT;
-   sTextBlt.wDstx = dstx;
-   sTextBlt.wDsty = dsty;
-   sTextBlt.wWidth = width;
-   sTextBlt.wHeight = height;
-   sTextBlt.dwData = data;
+    INIT_GAL(&sTextBlt);
+    sTextBlt.dwSubfunction = GALFN_TEXT_BLT;
+    sTextBlt.wDstx = dstx;
+    sTextBlt.wDsty = dsty;
+    sTextBlt.wWidth = width;
+    sTextBlt.wHeight = height;
+    sTextBlt.dwData = data;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sTextBlt))
-      return 0;
-   else
-      return 1;
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sTextBlt))
+        return 0;
+    else
+        return 1;
 }
 
 /*------------------------------------------------------------------------
@@ -1607,16 +1607,16 @@ Gal_text_blt(unsigned short dstx, unsigned short dsty, unsigned short width,
 BOOLEAN
 Gal_set_compression_enable(BOOLEAN bCompressionState)
 {
-   GAL_COMPRESSIONSTATE sCompState;
+    GAL_COMPRESSIONSTATE sCompState;
 
-   INIT_GAL(&sCompState);
-   sCompState.dwSubfunction = GALFN_SETCOMPRESSIONSTATE;
-   sCompState.bCompressionState = bCompressionState;
+    INIT_GAL(&sCompState);
+    sCompState.dwSubfunction = GALFN_SETCOMPRESSIONSTATE;
+    sCompState.bCompressionState = bCompressionState;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sCompState))
-      return 0;
-   else
-      return 1;
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sCompState))
+        return 0;
+    else
+        return 1;
 }
 
 /*------------------------------------------------------------------------
@@ -1632,17 +1632,17 @@ Gal_set_compression_enable(BOOLEAN bCompressionState)
 BOOLEAN
 Gal_get_compression_enable(int *bCompressionState)
 {
-   GAL_COMPRESSIONSTATE sCompState;
+    GAL_COMPRESSIONSTATE sCompState;
 
-   INIT_GAL(&sCompState);
-   sCompState.dwSubfunction = GALFN_GETCOMPRESSIONSTATE;
+    INIT_GAL(&sCompState);
+    sCompState.dwSubfunction = GALFN_GETCOMPRESSIONSTATE;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sCompState))
-      return 0;
-   else {
-      *bCompressionState = sCompState.bCompressionState;
-      return 1;
-   }
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sCompState))
+        return 0;
+    else {
+        *bCompressionState = sCompState.bCompressionState;
+        return 1;
+    }
 }
 
 /*--------------------------------------------------------------------------
@@ -1661,22 +1661,22 @@ Gal_get_compression_enable(int *bCompressionState)
  *------------------------------------------------------------------------*/
 BOOLEAN
 Gal_set_compression_parameters(unsigned long flags,
-			       unsigned long offset, unsigned short pitch,
-			       unsigned short size)
+                               unsigned long offset, unsigned short pitch,
+                               unsigned short size)
 {
-   GAL_COMPRESSIONPARAMS sCompParams;
+    GAL_COMPRESSIONPARAMS sCompParams;
 
-   INIT_GAL(&sCompParams);
-   sCompParams.dwSubfunction = GALFN_SETCOMPRESSIONPARAMS;
-   sCompParams.dwFlags = flags;
-   sCompParams.dwCompOffset = offset;
-   sCompParams.dwCompPitch = pitch;
-   sCompParams.dwCompSize = size;
+    INIT_GAL(&sCompParams);
+    sCompParams.dwSubfunction = GALFN_SETCOMPRESSIONPARAMS;
+    sCompParams.dwFlags = flags;
+    sCompParams.dwCompOffset = offset;
+    sCompParams.dwCompPitch = pitch;
+    sCompParams.dwCompSize = size;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sCompParams))
-      return 0;
-   else
-      return 1;
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sCompParams))
+        return 0;
+    else
+        return 1;
 }
 
 /*--------------------------------------------------------------------------
@@ -1695,23 +1695,23 @@ Gal_set_compression_parameters(unsigned long flags,
  *------------------------------------------------------------------------*/
 BOOLEAN
 Gal_get_compression_parameters(unsigned long flags,
-			       unsigned long *offset,
-			       unsigned short *pitch, unsigned short *size)
+                               unsigned long *offset,
+                               unsigned short *pitch, unsigned short *size)
 {
-   GAL_COMPRESSIONPARAMS sCompParams;
+    GAL_COMPRESSIONPARAMS sCompParams;
 
-   INIT_GAL(&sCompParams);
-   sCompParams.dwSubfunction = GALFN_GETCOMPRESSIONPARAMS;
-   sCompParams.dwFlags = flags;
+    INIT_GAL(&sCompParams);
+    sCompParams.dwSubfunction = GALFN_GETCOMPRESSIONPARAMS;
+    sCompParams.dwFlags = flags;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sCompParams))
-      return 0;
-   else {
-      *offset = sCompParams.dwCompOffset;
-      *pitch = sCompParams.dwCompPitch;
-      *size = sCompParams.dwCompSize;
-      return 1;
-   }
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sCompParams))
+        return 0;
+    else {
+        *offset = sCompParams.dwCompOffset;
+        *pitch = sCompParams.dwCompPitch;
+        *size = sCompParams.dwCompSize;
+        return 1;
+    }
 }
 
 /*--------------------------------------------------------------------------
@@ -1726,16 +1726,16 @@ Gal_get_compression_parameters(unsigned long flags,
 BOOLEAN
 Gal_vga_mode_switch(int active)
 {
-   GAL_VGAMODEDATA sVgaData;
+    GAL_VGAMODEDATA sVgaData;
 
-   INIT_GAL(&sVgaData);
-   sVgaData.dwSubfunction = GALFN_VGAMODESWITCH;
-   sVgaData.dwFlags = active;
+    INIT_GAL(&sVgaData);
+    sVgaData.dwSubfunction = GALFN_VGAMODESWITCH;
+    sVgaData.dwFlags = active;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sVgaData))
-      return 0;
-   else
-      return 1;
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sVgaData))
+        return 0;
+    else
+        return 1;
 }
 
 /*--------------------------------------------------------------------------
@@ -1748,15 +1748,15 @@ Gal_vga_mode_switch(int active)
 BOOLEAN
 Gal_vga_clear_extended(void)
 {
-   GAL_VGAMODEDATA sVgaData;
+    GAL_VGAMODEDATA sVgaData;
 
-   INIT_GAL(&sVgaData);
-   sVgaData.dwSubfunction = GALFN_VGACLEARCRTEXT;
+    INIT_GAL(&sVgaData);
+    sVgaData.dwSubfunction = GALFN_VGACLEARCRTEXT;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sVgaData))
-      return 0;
-   else
-      return 1;
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sVgaData))
+        return 0;
+    else
+        return 1;
 }
 
 /*--------------------------------------------------------------------------
@@ -1772,15 +1772,15 @@ Gal_vga_clear_extended(void)
 BOOLEAN
 Gal_vga_pitch(PGAL_VGAMODEDATA pVgaData, unsigned short pitch)
 {
-   INIT_GAL(pVgaData);
-   pVgaData->dwSubfunction = GALFN_VGASETPITCH;
-   pVgaData->dwFlags = pitch;
+    INIT_GAL(pVgaData);
+    pVgaData->dwSubfunction = GALFN_VGASETPITCH;
+    pVgaData->dwFlags = pitch;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, pVgaData))
-      return 0;
-   else {
-      return 1;
-   }
+    if (ioctl(ifbdev_handle, FBIOGAL_API, pVgaData))
+        return 0;
+    else {
+        return 1;
+    }
 }
 
 /*--------------------------------------------------------------------------
@@ -1795,13 +1795,13 @@ Gal_vga_pitch(PGAL_VGAMODEDATA pVgaData, unsigned short pitch)
 BOOLEAN
 Gal_vga_restore(PGAL_VGAMODEDATA pVgaData)
 {
-   INIT_GAL(pVgaData);
-   pVgaData->dwSubfunction = GALFN_VGARESTORE;
+    INIT_GAL(pVgaData);
+    pVgaData->dwSubfunction = GALFN_VGARESTORE;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, pVgaData))
-      return 0;
-   else
-      return 1;
+    if (ioctl(ifbdev_handle, FBIOGAL_API, pVgaData))
+        return 0;
+    else
+        return 1;
 }
 
 /*--------------------------------------------------------------------------
@@ -1816,14 +1816,14 @@ Gal_vga_restore(PGAL_VGAMODEDATA pVgaData)
 BOOLEAN
 Gal_vga_save(PGAL_VGAMODEDATA pVgaData)
 {
-   INIT_GAL(pVgaData);
-   pVgaData->dwSubfunction = GALFN_VGASAVE;
+    INIT_GAL(pVgaData);
+    pVgaData->dwSubfunction = GALFN_VGASAVE;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, pVgaData))
-      return 0;
-   else {
-      return 1;
-   }
+    if (ioctl(ifbdev_handle, FBIOGAL_API, pVgaData))
+        return 0;
+    else {
+        return 1;
+    }
 }
 
 /*--------------------------------------------------------------------------
@@ -1838,14 +1838,14 @@ Gal_vga_save(PGAL_VGAMODEDATA pVgaData)
 BOOLEAN
 Gal_vga_mode(PGAL_VGAMODEDATA pVgaData)
 {
-   INIT_GAL(pVgaData);
-   pVgaData->dwSubfunction = GALFN_VGASETMODE;
+    INIT_GAL(pVgaData);
+    pVgaData->dwSubfunction = GALFN_VGASETMODE;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, pVgaData))
-      return 0;
-   else {
-      return 1;
-   }
+    if (ioctl(ifbdev_handle, FBIOGAL_API, pVgaData))
+        return 0;
+    else {
+        return 1;
+    }
 }
 
 /*--------------------------------------------------------------------------
@@ -1860,17 +1860,17 @@ Gal_vga_mode(PGAL_VGAMODEDATA pVgaData)
 BOOLEAN
 Gal_pnl_enabled_in_bios(int *state)
 {
-   GAL_PNLBIOS pStat;
+    GAL_PNLBIOS pStat;
 
-   INIT_GAL(&pStat);
-   pStat.dwSubfunction = GALFN_PNLBIOSENABLE;
+    INIT_GAL(&pStat);
+    pStat.dwSubfunction = GALFN_PNLBIOSENABLE;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &pStat))
-      return 0;
-   else {
-      *state = pStat.state;
-      return 1;
-   }
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &pStat))
+        return 0;
+    else {
+        *state = pStat.state;
+        return 1;
+    }
 }
 
 /*--------------------------------------------------------------------------
@@ -1885,20 +1885,20 @@ Gal_pnl_enabled_in_bios(int *state)
 BOOLEAN
 Gal_pnl_info_from_bios(int *xres, int *yres, int *bpp, int *hz)
 {
-   GAL_PNLBIOS pStat;
+    GAL_PNLBIOS pStat;
 
-   INIT_GAL(&pStat);
-   pStat.dwSubfunction = GALFN_PNLBIOSINFO;
+    INIT_GAL(&pStat);
+    pStat.dwSubfunction = GALFN_PNLBIOSINFO;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &pStat))
-      return 0;
-   else {
-      *xres = pStat.XRes;
-      *yres = pStat.YRes;
-      *bpp = pStat.Bpp;
-      *hz = pStat.Freq;
-      return 1;
-   }
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &pStat))
+        return 0;
+    else {
+        *xres = pStat.XRes;
+        *yres = pStat.YRes;
+        *bpp = pStat.Bpp;
+        *hz = pStat.Freq;
+        return 1;
+    }
 }
 
 /*--------------------------------------------------------------------------
@@ -1913,18 +1913,18 @@ Gal_pnl_info_from_bios(int *xres, int *yres, int *bpp, int *hz)
 BOOLEAN
 Gal_pnl_set_params(unsigned long flags, PPnl_PanelParams pParam)
 {
-   GAL_PNLPARAMS pStat;
+    GAL_PNLPARAMS pStat;
 
-   INIT_GAL(&pStat);
-   pStat.dwSubfunction = GALFN_PNLSETPARAMS;
-   pParam->Flags = flags;
-   memcpy(&(pStat.PanelParams), pParam, sizeof(Pnl_PanelParams));
+    INIT_GAL(&pStat);
+    pStat.dwSubfunction = GALFN_PNLSETPARAMS;
+    pParam->Flags = flags;
+    memcpy(&(pStat.PanelParams), pParam, sizeof(Pnl_PanelParams));
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &pStat))
-      return 0;
-   else {
-      return 1;
-   }
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &pStat))
+        return 0;
+    else {
+        return 1;
+    }
 }
 
 /*--------------------------------------------------------------------------
@@ -1939,19 +1939,19 @@ Gal_pnl_set_params(unsigned long flags, PPnl_PanelParams pParam)
 BOOLEAN
 Gal_pnl_get_params(unsigned long flags, PPnl_PanelParams pParam)
 {
-   GAL_PNLPARAMS pStat;
+    GAL_PNLPARAMS pStat;
 
-   INIT_GAL(&pStat);
-   pStat.dwSubfunction = GALFN_PNLGETPARAMS;
-   memcpy(&(pStat.PanelParams), pParam, sizeof(Pnl_PanelParams));
-   pStat.PanelParams.Flags = flags;
+    INIT_GAL(&pStat);
+    pStat.dwSubfunction = GALFN_PNLGETPARAMS;
+    memcpy(&(pStat.PanelParams), pParam, sizeof(Pnl_PanelParams));
+    pStat.PanelParams.Flags = flags;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &pStat))
-      return 0;
-   else {
-      memcpy(pParam, &(pStat.PanelParams), sizeof(Pnl_PanelParams));
-      return 1;
-   }
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &pStat))
+        return 0;
+    else {
+        memcpy(pParam, &(pStat.PanelParams), sizeof(Pnl_PanelParams));
+        return 1;
+    }
 }
 
 /*--------------------------------------------------------------------------
@@ -1965,16 +1965,16 @@ Gal_pnl_get_params(unsigned long flags, PPnl_PanelParams pParam)
 BOOLEAN
 Gal_pnl_init(PPnl_PanelParams pParam)
 {
-   GAL_PNLPARAMS pStat;
+    GAL_PNLPARAMS pStat;
 
-   INIT_GAL(&pStat);
-   pStat.dwSubfunction = GALFN_PNLINITPANEL;
-   memcpy(&(pStat.PanelParams), pParam, sizeof(Pnl_PanelParams));
+    INIT_GAL(&pStat);
+    pStat.dwSubfunction = GALFN_PNLINITPANEL;
+    memcpy(&(pStat.PanelParams), pParam, sizeof(Pnl_PanelParams));
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &pStat))
-      return 0;
-   else
-      return 1;
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &pStat))
+        return 0;
+    else
+        return 1;
 
 }
 
@@ -1988,16 +1988,16 @@ Gal_pnl_init(PPnl_PanelParams pParam)
 BOOLEAN
 Gal_pnl_save(void)
 {
-   GAL_PNLPARAMS pStat;
+    GAL_PNLPARAMS pStat;
 
-   INIT_GAL(&pStat);
-   pStat.dwSubfunction = GALFN_PNLSAVESTATE;
+    INIT_GAL(&pStat);
+    pStat.dwSubfunction = GALFN_PNLSAVESTATE;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &pStat))
-      return 0;
-   else {
-      return 1;
-   }
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &pStat))
+        return 0;
+    else {
+        return 1;
+    }
 }
 
 /*--------------------------------------------------------------------------
@@ -2010,16 +2010,16 @@ Gal_pnl_save(void)
 BOOLEAN
 Gal_pnl_restore(void)
 {
-   GAL_PNLPARAMS pStat;
+    GAL_PNLPARAMS pStat;
 
-   INIT_GAL(&pStat);
-   pStat.dwSubfunction = GALFN_PNLRESTORESTATE;
+    INIT_GAL(&pStat);
+    pStat.dwSubfunction = GALFN_PNLRESTORESTATE;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &pStat))
-      return 0;
-   else {
-      return 1;
-   }
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &pStat))
+        return 0;
+    else {
+        return 1;
+    }
 }
 
 /*--------------------------------------------------------------------------
@@ -2032,16 +2032,16 @@ Gal_pnl_restore(void)
 BOOLEAN
 Gal_pnl_powerup(void)
 {
-   GAL_BASE pStat;
+    GAL_BASE pStat;
 
-   INIT_GAL(&pStat);
-   pStat.dwSubfunction = GALFN_PNLPOWERUP;
+    INIT_GAL(&pStat);
+    pStat.dwSubfunction = GALFN_PNLPOWERUP;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &pStat))
-      return 0;
-   else {
-      return 1;
-   }
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &pStat))
+        return 0;
+    else {
+        return 1;
+    }
 }
 
 /*--------------------------------------------------------------------------
@@ -2054,16 +2054,16 @@ Gal_pnl_powerup(void)
 BOOLEAN
 Gal_pnl_powerdown(void)
 {
-   GAL_BASE pStat;
+    GAL_BASE pStat;
 
-   INIT_GAL(&pStat);
-   pStat.dwSubfunction = GALFN_PNLPOWERDOWN;
+    INIT_GAL(&pStat);
+    pStat.dwSubfunction = GALFN_PNLPOWERDOWN;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &pStat))
-      return 0;
-   else {
-      return 1;
-   }
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &pStat))
+        return 0;
+    else {
+        return 1;
+    }
 }
 
 /*--------------------------------------------------------------------------
@@ -2079,15 +2079,15 @@ Gal_pnl_powerdown(void)
 BOOLEAN
 Gal_tv_set_params(unsigned long flags, PGAL_TVPARAMS pTV)
 {
-   INIT_GAL(pTV);
-   pTV->dwSubfunction = GALFN_SETTVPARAMS;
-   pTV->dwFlags = flags;
+    INIT_GAL(pTV);
+    pTV->dwSubfunction = GALFN_SETTVPARAMS;
+    pTV->dwFlags = flags;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, pTV))
-      return 0;
-   else {
-      return 1;
-   }
+    if (ioctl(ifbdev_handle, FBIOGAL_API, pTV))
+        return 0;
+    else {
+        return 1;
+    }
 }
 
 /*--------------------------------------------------------------------------
@@ -2103,14 +2103,14 @@ Gal_tv_set_params(unsigned long flags, PGAL_TVPARAMS pTV)
 BOOLEAN
 Gal_tv_get_params(unsigned long flags, PGAL_TVPARAMS pTV)
 {
-   INIT_GAL(pTV);
-   pTV->dwSubfunction = GALFN_GETTVPARAMS;
-   pTV->dwFlags = flags;
+    INIT_GAL(pTV);
+    pTV->dwSubfunction = GALFN_GETTVPARAMS;
+    pTV->dwFlags = flags;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, pTV))
-      return 0;
-   else
-      return 1;
+    if (ioctl(ifbdev_handle, FBIOGAL_API, pTV))
+        return 0;
+    else
+        return 1;
 
 }
 
@@ -2126,15 +2126,15 @@ Gal_tv_get_params(unsigned long flags, PGAL_TVPARAMS pTV)
 BOOLEAN
 Gal_tv_set_timings(unsigned long flags, PGAL_TVTIMING pTV)
 {
-   INIT_GAL(pTV);
-   pTV->dwSubfunction = GALFN_SETTVTIMING;
-   pTV->dwFlags = flags;
+    INIT_GAL(pTV);
+    pTV->dwSubfunction = GALFN_SETTVTIMING;
+    pTV->dwFlags = flags;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, pTV))
-      return 0;
-   else {
-      return 1;
-   }
+    if (ioctl(ifbdev_handle, FBIOGAL_API, pTV))
+        return 0;
+    else {
+        return 1;
+    }
 }
 
 /*--------------------------------------------------------------------------
@@ -2149,15 +2149,15 @@ Gal_tv_set_timings(unsigned long flags, PGAL_TVTIMING pTV)
 BOOLEAN
 Gal_tv_get_timings(unsigned long flags, PGAL_TVTIMING pTV)
 {
-   INIT_GAL(pTV);
-   pTV->dwSubfunction = GALFN_GETTVTIMING;
-   pTV->dwFlags = flags;
+    INIT_GAL(pTV);
+    pTV->dwSubfunction = GALFN_GETTVTIMING;
+    pTV->dwFlags = flags;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, pTV))
-      return 0;
-   else {
-      return 1;
-   }
+    if (ioctl(ifbdev_handle, FBIOGAL_API, pTV))
+        return 0;
+    else {
+        return 1;
+    }
 }
 
 /*--------------------------------------------------------------------------
@@ -2171,17 +2171,17 @@ Gal_tv_get_timings(unsigned long flags, PGAL_TVTIMING pTV)
 BOOLEAN
 Gal_set_tv_enable(int bState)
 {
-   GAL_TVPARAMS pTV;
+    GAL_TVPARAMS pTV;
 
-   INIT_GAL(&pTV);
-   pTV.dwSubfunction = GALFN_SETENABLE;
-   pTV.bState = bState;
+    INIT_GAL(&pTV);
+    pTV.dwSubfunction = GALFN_SETENABLE;
+    pTV.bState = bState;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &pTV))
-      return 0;
-   else {
-      return 1;
-   }
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &pTV))
+        return 0;
+    else {
+        return 1;
+    }
 }
 
 /*--------------------------------------------------------------------------
@@ -2195,18 +2195,19 @@ Gal_set_tv_enable(int bState)
 BOOLEAN
 Gal_get_tv_enable(unsigned int *bState)
 {
-   GAL_TVPARAMS pTV;
+    GAL_TVPARAMS pTV;
 
-   INIT_GAL(&pTV);
-   pTV.dwSubfunction = GALFN_GETENABLE;
+    INIT_GAL(&pTV);
+    pTV.dwSubfunction = GALFN_GETENABLE;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &pTV)) {
-      *bState = 0;
-      return 0;
-   } else {
-      *bState = pTV.bState;
-      return 1;
-   }
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &pTV)) {
+        *bState = 0;
+        return 0;
+    }
+    else {
+        *bState = pTV.bState;
+        return 1;
+    }
 }
 
 /*--------------------------------------------------------------------------
@@ -2221,16 +2222,17 @@ Gal_get_tv_enable(unsigned int *bState)
 BOOLEAN
 Gal_is_tv_mode_supported(unsigned long flags, PGAL_TVPARAMS pTV, int *bState)
 {
-   INIT_GAL(pTV);
-   pTV->dwSubfunction = GALFN_ISTVMODESUPPORTED;
-   pTV->dwFlags = flags;
+    INIT_GAL(pTV);
+    pTV->dwSubfunction = GALFN_ISTVMODESUPPORTED;
+    pTV->dwFlags = flags;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, pTV)) {
-      return 0;
-   } else {
-      *bState = pTV->bState;
-      return 1;
-   }
+    if (ioctl(ifbdev_handle, FBIOGAL_API, pTV)) {
+        return 0;
+    }
+    else {
+        *bState = pTV->bState;
+        return 1;
+    }
 }
 
 /** Video **********************************************************/
@@ -2246,15 +2248,15 @@ Gal_is_tv_mode_supported(unsigned long flags, PGAL_TVPARAMS pTV, int *bState)
 BOOLEAN
 Gal_set_video_enable(int enable)
 {
-   GAL_VIDEOENABLE sSetVideo;
+    GAL_VIDEOENABLE sSetVideo;
 
-   INIT_GAL(&sSetVideo);
-   sSetVideo.dwSubfunction = GALFN_SETVIDEOENABLE;
-   sSetVideo.enable = enable;
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetVideo))
-      return 0;
-   else
-      return 1;
+    INIT_GAL(&sSetVideo);
+    sSetVideo.dwSubfunction = GALFN_SETVIDEOENABLE;
+    sSetVideo.enable = enable;
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetVideo))
+        return 0;
+    else
+        return 1;
 }
 
 /*--------------------------------------------------------------------------
@@ -2268,15 +2270,15 @@ Gal_set_video_enable(int enable)
 BOOLEAN
 Gal_set_video_format(int format)
 {
-   GAL_VIDEOFORMAT sSetVideo;
+    GAL_VIDEOFORMAT sSetVideo;
 
-   INIT_GAL(&sSetVideo);
-   sSetVideo.dwSubfunction = GALFN_SETVIDEOFORMAT;
-   sSetVideo.format = format;
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetVideo))
-      return 0;
-   else
-      return 1;
+    INIT_GAL(&sSetVideo);
+    sSetVideo.dwSubfunction = GALFN_SETVIDEOFORMAT;
+    sSetVideo.format = format;
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetVideo))
+        return 0;
+    else
+        return 1;
 }
 
 /*--------------------------------------------------------------------------
@@ -2291,16 +2293,16 @@ Gal_set_video_format(int format)
 BOOLEAN
 Gal_set_video_size(unsigned short width, unsigned short height)
 {
-   GAL_VIDEOSIZE sSetVideo;
+    GAL_VIDEOSIZE sSetVideo;
 
-   INIT_GAL(&sSetVideo);
-   sSetVideo.dwSubfunction = GALFN_SETVIDEOSIZE;
-   sSetVideo.width = width;
-   sSetVideo.height = height;
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetVideo))
-      return 0;
-   else
-      return 1;
+    INIT_GAL(&sSetVideo);
+    sSetVideo.dwSubfunction = GALFN_SETVIDEOSIZE;
+    sSetVideo.width = width;
+    sSetVideo.height = height;
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetVideo))
+        return 0;
+    else
+        return 1;
 }
 
 /*--------------------------------------------------------------------------
@@ -2314,15 +2316,15 @@ Gal_set_video_size(unsigned short width, unsigned short height)
 BOOLEAN
 Gal_set_video_offset(unsigned long offset)
 {
-   GAL_VIDEOOFFSET sSetVideo;
+    GAL_VIDEOOFFSET sSetVideo;
 
-   INIT_GAL(&sSetVideo);
-   sSetVideo.dwSubfunction = GALFN_SETVIDEOOFFSET;
-   sSetVideo.offset = offset;
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetVideo))
-      return 0;
-   else
-      return 1;
+    INIT_GAL(&sSetVideo);
+    sSetVideo.dwSubfunction = GALFN_SETVIDEOOFFSET;
+    sSetVideo.offset = offset;
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetVideo))
+        return 0;
+    else
+        return 1;
 }
 
 /*--------------------------------------------------------------------------
@@ -2339,18 +2341,18 @@ Gal_set_video_offset(unsigned long offset)
 BOOLEAN
 Gal_set_video_window(short x, short y, short w, short h)
 {
-   GAL_VIDEOWINDOW sSetVideo;
+    GAL_VIDEOWINDOW sSetVideo;
 
-   INIT_GAL(&sSetVideo);
-   sSetVideo.dwSubfunction = GALFN_SETVIDEOWINDOW;
-   sSetVideo.x = x;
-   sSetVideo.y = y;
-   sSetVideo.w = w;
-   sSetVideo.h = h;
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetVideo))
-      return 0;
-   else
-      return 1;
+    INIT_GAL(&sSetVideo);
+    sSetVideo.dwSubfunction = GALFN_SETVIDEOWINDOW;
+    sSetVideo.x = x;
+    sSetVideo.y = y;
+    sSetVideo.w = w;
+    sSetVideo.h = h;
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetVideo))
+        return 0;
+    else
+        return 1;
 }
 
 /*--------------------------------------------------------------------------
@@ -2366,20 +2368,20 @@ Gal_set_video_window(short x, short y, short w, short h)
  *------------------------------------------------------------------------*/
 BOOLEAN
 Gal_set_video_scale(unsigned short srcw, unsigned short srch,
-		    unsigned short dstw, unsigned short dsth)
+                    unsigned short dstw, unsigned short dsth)
 {
-   GAL_VIDEOSCALE sSetVideo;
+    GAL_VIDEOSCALE sSetVideo;
 
-   INIT_GAL(&sSetVideo);
-   sSetVideo.dwSubfunction = GALFN_SETVIDEOSCALE;
-   sSetVideo.srcw = srcw;
-   sSetVideo.srch = srch;
-   sSetVideo.dstw = dstw;
-   sSetVideo.dsth = dsth;
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetVideo))
-      return 0;
-   else
-      return 1;
+    INIT_GAL(&sSetVideo);
+    sSetVideo.dwSubfunction = GALFN_SETVIDEOSCALE;
+    sSetVideo.srcw = srcw;
+    sSetVideo.srch = srch;
+    sSetVideo.dstw = dstw;
+    sSetVideo.dsth = dsth;
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetVideo))
+        return 0;
+    else
+        return 1;
 }
 
 /*--------------------------------------------------------------------------
@@ -2394,16 +2396,16 @@ Gal_set_video_scale(unsigned short srcw, unsigned short srch,
 BOOLEAN
 Gal_set_video_filter(int xfilter, int yfilter)
 {
-   GAL_VIDEOFILTER sSetVideo;
+    GAL_VIDEOFILTER sSetVideo;
 
-   INIT_GAL(&sSetVideo);
-   sSetVideo.dwSubfunction = GALFN_SETVIDEOFILTER;
-   sSetVideo.xfilter = xfilter;
-   sSetVideo.yfilter = yfilter;
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetVideo))
-      return 0;
-   else
-      return 1;
+    INIT_GAL(&sSetVideo);
+    sSetVideo.dwSubfunction = GALFN_SETVIDEOFILTER;
+    sSetVideo.xfilter = xfilter;
+    sSetVideo.yfilter = yfilter;
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetVideo))
+        return 0;
+    else
+        return 1;
 }
 
 /*--------------------------------------------------------------------------
@@ -2419,17 +2421,17 @@ Gal_set_video_filter(int xfilter, int yfilter)
 BOOLEAN
 Gal_set_video_color_key(unsigned long key, unsigned long mask, int bluescreen)
 {
-   GAL_VIDEOCOLORKEY sSetVideo;
+    GAL_VIDEOCOLORKEY sSetVideo;
 
-   INIT_GAL(&sSetVideo);
-   sSetVideo.dwSubfunction = GALFN_SETVIDEOCOLORKEY;
-   sSetVideo.key = key;
-   sSetVideo.mask = mask;
-   sSetVideo.bluescreen = bluescreen;
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetVideo))
-      return 0;
-   else
-      return 1;
+    INIT_GAL(&sSetVideo);
+    sSetVideo.dwSubfunction = GALFN_SETVIDEOCOLORKEY;
+    sSetVideo.key = key;
+    sSetVideo.mask = mask;
+    sSetVideo.bluescreen = bluescreen;
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetVideo))
+        return 0;
+    else
+        return 1;
 }
 
 /*--------------------------------------------------------------------------
@@ -2443,15 +2445,15 @@ Gal_set_video_color_key(unsigned long key, unsigned long mask, int bluescreen)
 BOOLEAN
 Gal_set_video_downscale_enable(int enable)
 {
-   GAL_VIDEODOWNSCALEENABLE sSetVideo;
+    GAL_VIDEODOWNSCALEENABLE sSetVideo;
 
-   INIT_GAL(&sSetVideo);
-   sSetVideo.dwSubfunction = GALFN_SETVIDEODOWNSCALEENABLE;
-   sSetVideo.enable = enable;
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetVideo))
-      return 0;
-   else
-      return 1;
+    INIT_GAL(&sSetVideo);
+    sSetVideo.dwSubfunction = GALFN_SETVIDEODOWNSCALEENABLE;
+    sSetVideo.enable = enable;
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetVideo))
+        return 0;
+    else
+        return 1;
 }
 
 /*--------------------------------------------------------------------------
@@ -2466,16 +2468,16 @@ Gal_set_video_downscale_enable(int enable)
 BOOLEAN
 Gal_set_video_downscale_config(unsigned short type, unsigned short m)
 {
-   GAL_VIDEODOWNSCALECONFIG sSetVideo;
+    GAL_VIDEODOWNSCALECONFIG sSetVideo;
 
-   INIT_GAL(&sSetVideo);
-   sSetVideo.dwSubfunction = GALFN_SETVIDEODOWNSCALECONFIG;
-   sSetVideo.type = type;
-   sSetVideo.m = m;
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetVideo))
-      return 0;
-   else
-      return 1;
+    INIT_GAL(&sSetVideo);
+    sSetVideo.dwSubfunction = GALFN_SETVIDEODOWNSCALECONFIG;
+    sSetVideo.type = type;
+    sSetVideo.m = m;
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetVideo))
+        return 0;
+    else
+        return 1;
 }
 
 /*--------------------------------------------------------------------------
@@ -2491,22 +2493,21 @@ Gal_set_video_downscale_config(unsigned short type, unsigned short m)
  *------------------------------------------------------------------------*/
 BOOLEAN
 Gal_set_video_downscale_coefficients(unsigned short coef1,
-				     unsigned short coef2,
-				     unsigned short coef3,
-				     unsigned short coef4)
+                                     unsigned short coef2,
+                                     unsigned short coef3, unsigned short coef4)
 {
-   GAL_VIDEODOWNSCALECOEFF sSetVideo;
+    GAL_VIDEODOWNSCALECOEFF sSetVideo;
 
-   INIT_GAL(&sSetVideo);
-   sSetVideo.dwSubfunction = GALFN_SETVIDEODOWNSCALECOEFF;
-   sSetVideo.coef1 = coef1;
-   sSetVideo.coef2 = coef2;
-   sSetVideo.coef3 = coef3;
-   sSetVideo.coef4 = coef4;
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetVideo))
-      return 0;
-   else
-      return 1;
+    INIT_GAL(&sSetVideo);
+    sSetVideo.dwSubfunction = GALFN_SETVIDEODOWNSCALECOEFF;
+    sSetVideo.coef1 = coef1;
+    sSetVideo.coef2 = coef2;
+    sSetVideo.coef3 = coef3;
+    sSetVideo.coef4 = coef4;
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetVideo))
+        return 0;
+    else
+        return 1;
 }
 
 /*--------------------------------------------------------------------------
@@ -2521,15 +2522,15 @@ Gal_set_video_downscale_coefficients(unsigned short coef1,
 BOOLEAN
 Gal_set_video_source(int source)
 {
-   GAL_VIDEOSOURCE sSetVideo;
+    GAL_VIDEOSOURCE sSetVideo;
 
-   INIT_GAL(&sSetVideo);
-   sSetVideo.dwSubfunction = GALFN_SETVIDEOSOURCE;
-   sSetVideo.source = source;
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetVideo))
-      return 0;
-   else
-      return 1;
+    INIT_GAL(&sSetVideo);
+    sSetVideo.dwSubfunction = GALFN_SETVIDEOSOURCE;
+    sSetVideo.source = source;
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetVideo))
+        return 0;
+    else
+        return 1;
 }
 
 /*--------------------------------------------------------------------------
@@ -2545,15 +2546,15 @@ Gal_set_video_source(int source)
 BOOLEAN
 Gal_set_video_interlaced(int enable)
 {
-   GAL_SETVIDEOINTERLACED sSetVideo;
+    GAL_SETVIDEOINTERLACED sSetVideo;
 
-   INIT_GAL(&sSetVideo);
-   sSetVideo.dwSubfunction = GALFN_SETVIDEOINTERLACED;
-   sSetVideo.enable = enable;
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetVideo))
-      return 0;
-   else
-      return 1;
+    INIT_GAL(&sSetVideo);
+    sSetVideo.dwSubfunction = GALFN_SETVIDEOINTERLACED;
+    sSetVideo.enable = enable;
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetVideo))
+        return 0;
+    else
+        return 1;
 }
 
 /*--------------------------------------------------------------------------
@@ -2569,15 +2570,15 @@ Gal_set_video_interlaced(int enable)
 BOOLEAN
 Gal_set_color_space_YUV(int colorspace)
 {
-   GAL_COLORSPACEYUV sSetVideo;
+    GAL_COLORSPACEYUV sSetVideo;
 
-   INIT_GAL(&sSetVideo);
-   sSetVideo.dwSubfunction = GALFN_SETVIDEOCOLORSPACE;
-   sSetVideo.colorspace = colorspace;
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetVideo))
-      return 0;
-   else
-      return 1;
+    INIT_GAL(&sSetVideo);
+    sSetVideo.dwSubfunction = GALFN_SETVIDEOCOLORSPACE;
+    sSetVideo.colorspace = colorspace;
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetVideo))
+        return 0;
+    else
+        return 1;
 }
 
 /*--------------------------------------------------------------------------
@@ -2596,23 +2597,23 @@ Gal_set_color_space_YUV(int colorspace)
  *------------------------------------------------------------------------*/
 BOOLEAN
 Gal_set_video_cursor(unsigned long key,
-		     unsigned long mask,
-		     unsigned short select_color2,
-		     unsigned long color1, unsigned long color2)
+                     unsigned long mask,
+                     unsigned short select_color2,
+                     unsigned long color1, unsigned long color2)
 {
-   GAL_VIDEOCURSOR sSetVideo;
+    GAL_VIDEOCURSOR sSetVideo;
 
-   INIT_GAL(&sSetVideo);
-   sSetVideo.dwSubfunction = GALFN_SETVIDEOCURSOR;
-   sSetVideo.key = key;
-   sSetVideo.mask = mask;
-   sSetVideo.select_color2 = select_color2;
-   sSetVideo.color1 = color1;
-   sSetVideo.color2 = color2;
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetVideo))
-      return 0;
-   else
-      return 1;
+    INIT_GAL(&sSetVideo);
+    sSetVideo.dwSubfunction = GALFN_SETVIDEOCURSOR;
+    sSetVideo.key = key;
+    sSetVideo.mask = mask;
+    sSetVideo.select_color2 = select_color2;
+    sSetVideo.color1 = color1;
+    sSetVideo.color2 = color2;
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetVideo))
+        return 0;
+    else
+        return 1;
 }
 
 /*--------------------------------------------------------------------------
@@ -2629,16 +2630,16 @@ Gal_set_video_cursor(unsigned long key,
 BOOLEAN
 Gal_set_video_request(short x, short y)
 {
-   GAL_VIDEOREQUEST sSetVideo;
+    GAL_VIDEOREQUEST sSetVideo;
 
-   INIT_GAL(&sSetVideo);
-   sSetVideo.dwSubfunction = GALFN_SETVIDEOREQUEST;
-   sSetVideo.x = x;
-   sSetVideo.y = y;
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetVideo))
-      return 0;
-   else
-      return 1;
+    INIT_GAL(&sSetVideo);
+    sSetVideo.dwSubfunction = GALFN_SETVIDEOREQUEST;
+    sSetVideo.x = x;
+    sSetVideo.y = y;
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetVideo))
+        return 0;
+    else
+        return 1;
 }
 
 /*--------------------------------------------------------------------------
@@ -2654,15 +2655,15 @@ Gal_set_video_request(short x, short y)
 BOOLEAN
 Gal_set_alpha_enable(int enable)
 {
-   GAL_ALPHAENABLE sSetVideo;
+    GAL_ALPHAENABLE sSetVideo;
 
-   INIT_GAL(&sSetVideo);
-   sSetVideo.dwSubfunction = GALFN_SETALPHAENABLE;
-   sSetVideo.enable = enable;
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetVideo))
-      return 0;
-   else
-      return 1;
+    INIT_GAL(&sSetVideo);
+    sSetVideo.dwSubfunction = GALFN_SETALPHAENABLE;
+    sSetVideo.enable = enable;
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetVideo))
+        return 0;
+    else
+        return 1;
 }
 
 /*--------------------------------------------------------------------------
@@ -2677,17 +2678,17 @@ Gal_set_alpha_enable(int enable)
 BOOLEAN
 Gal_get_alpha_enable(int *enable)
 {
-   GAL_ALPHAENABLE sGetalphaenable;
+    GAL_ALPHAENABLE sGetalphaenable;
 
-   INIT_GAL(&sGetalphaenable);
-   sGetalphaenable.dwSubfunction = GALFN_GETALPHAENABLE;
+    INIT_GAL(&sGetalphaenable);
+    sGetalphaenable.dwSubfunction = GALFN_GETALPHAENABLE;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sGetalphaenable))
-      return 0;
-   else
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sGetalphaenable))
+        return 0;
+    else
 
-      *enable = sGetalphaenable.enable;
-   return 1;
+        *enable = sGetalphaenable.enable;
+    return 1;
 }
 
 /*--------------------------------------------------------------------------
@@ -2704,20 +2705,20 @@ Gal_get_alpha_enable(int *enable)
  *------------------------------------------------------------------------*/
 BOOLEAN
 Gal_set_alpha_window(short x, short y,
-		     unsigned short width, unsigned short height)
+                     unsigned short width, unsigned short height)
 {
-   GAL_ALPHAWINDOW sSetVideo;
+    GAL_ALPHAWINDOW sSetVideo;
 
-   INIT_GAL(&sSetVideo);
-   sSetVideo.dwSubfunction = GALFN_SETALPHAWINDOW;
-   sSetVideo.x = x;
-   sSetVideo.y = y;
-   sSetVideo.width = width;
-   sSetVideo.height = height;
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetVideo))
-      return 0;
-   else
-      return 1;
+    INIT_GAL(&sSetVideo);
+    sSetVideo.dwSubfunction = GALFN_SETALPHAWINDOW;
+    sSetVideo.x = x;
+    sSetVideo.y = y;
+    sSetVideo.width = width;
+    sSetVideo.height = height;
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetVideo))
+        return 0;
+    else
+        return 1;
 }
 
 /*--------------------------------------------------------------------------
@@ -2734,21 +2735,21 @@ Gal_set_alpha_window(short x, short y,
  *------------------------------------------------------------------------*/
 BOOLEAN
 Gal_get_alpha_size(unsigned short *x, unsigned short *y,
-		   unsigned short *width, unsigned short *height)
+                   unsigned short *width, unsigned short *height)
 {
-   GAL_ALPHASIZE sGetalphasize;
+    GAL_ALPHASIZE sGetalphasize;
 
-   INIT_GAL(&sGetalphasize);
-   sGetalphasize.dwSubfunction = GALFN_GETALPHASIZE;
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sGetalphasize))
-      return 0;
-   else {
-      *x = *(sGetalphasize.x);
-      *y = *(sGetalphasize.y);
-      *width = *(sGetalphasize.width);
-      *height = *(sGetalphasize.height);
-      return 1;
-   }
+    INIT_GAL(&sGetalphasize);
+    sGetalphasize.dwSubfunction = GALFN_GETALPHASIZE;
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sGetalphasize))
+        return 0;
+    else {
+        *x = *(sGetalphasize.x);
+        *y = *(sGetalphasize.y);
+        *width = *(sGetalphasize.width);
+        *height = *(sGetalphasize.height);
+        return 1;
+    }
 }
 
 /*--------------------------------------------------------------------------
@@ -2765,16 +2766,16 @@ Gal_get_alpha_size(unsigned short *x, unsigned short *y,
 BOOLEAN
 Gal_set_alpha_value(unsigned char alpha, char delta)
 {
-   GAL_ALPHAVALUE sSetVideo;
+    GAL_ALPHAVALUE sSetVideo;
 
-   INIT_GAL(&sSetVideo);
-   sSetVideo.dwSubfunction = GALFN_SETALPHAVALUE;
-   sSetVideo.alpha = alpha;
-   sSetVideo.delta = delta;
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetVideo))
-      return 0;
-   else
-      return 1;
+    INIT_GAL(&sSetVideo);
+    sSetVideo.dwSubfunction = GALFN_SETALPHAVALUE;
+    sSetVideo.alpha = alpha;
+    sSetVideo.delta = delta;
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetVideo))
+        return 0;
+    else
+        return 1;
 }
 
 /*--------------------------------------------------------------------------
@@ -2791,18 +2792,18 @@ Gal_set_alpha_value(unsigned char alpha, char delta)
 BOOLEAN
 Gal_get_alpha_value(unsigned char *alpha, char *delta)
 {
-   GAL_ALPHAVALUE sGetalphavalue;
+    GAL_ALPHAVALUE sGetalphavalue;
 
-   INIT_GAL(&sGetalphavalue);
-   sGetalphavalue.dwSubfunction = GALFN_GETALPHAVALUE;
+    INIT_GAL(&sGetalphavalue);
+    sGetalphavalue.dwSubfunction = GALFN_GETALPHAVALUE;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sGetalphavalue))
-      return 0;
-   else {
-      *alpha = sGetalphavalue.alpha;
-      *delta = sGetalphavalue.delta;
-      return 1;
-   }
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sGetalphavalue))
+        return 0;
+    else {
+        *alpha = sGetalphavalue.alpha;
+        *delta = sGetalphavalue.delta;
+        return 1;
+    }
 }
 
 /*--------------------------------------------------------------------------
@@ -2817,15 +2818,15 @@ Gal_get_alpha_value(unsigned char *alpha, char *delta)
 BOOLEAN
 Gal_set_alpha_priority(int priority)
 {
-   GAL_ALPHAPRIORITY sSetVideo;
+    GAL_ALPHAPRIORITY sSetVideo;
 
-   INIT_GAL(&sSetVideo);
-   sSetVideo.dwSubfunction = GALFN_SETALPHAPRIORITY;
-   sSetVideo.priority = priority;
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetVideo))
-      return 0;
-   else
-      return 1;
+    INIT_GAL(&sSetVideo);
+    sSetVideo.dwSubfunction = GALFN_SETALPHAPRIORITY;
+    sSetVideo.priority = priority;
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetVideo))
+        return 0;
+    else
+        return 1;
 }
 
 /*--------------------------------------------------------------------------
@@ -2840,16 +2841,16 @@ Gal_set_alpha_priority(int priority)
 BOOLEAN
 Gal_get_alpha_priority(int *priority)
 {
-   GAL_ALPHAPRIORITY sGetalphapriority;
+    GAL_ALPHAPRIORITY sGetalphapriority;
 
-   INIT_GAL(&sGetalphapriority);
-   sGetalphapriority.dwSubfunction = GALFN_GETALPHAPRIORITY;
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sGetalphapriority))
-      return 0;
-   else {
-      *priority = sGetalphapriority.priority;
-      return 1;
-   }
+    INIT_GAL(&sGetalphapriority);
+    sGetalphapriority.dwSubfunction = GALFN_GETALPHAPRIORITY;
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sGetalphapriority))
+        return 0;
+    else {
+        *priority = sGetalphapriority.priority;
+        return 1;
+    }
 }
 
 /*--------------------------------------------------------------------------
@@ -2864,15 +2865,15 @@ Gal_get_alpha_priority(int *priority)
 BOOLEAN
 Gal_set_alpha_color(unsigned long color)
 {
-   GAL_ALPHACOLOR sSetVideo;
+    GAL_ALPHACOLOR sSetVideo;
 
-   INIT_GAL(&sSetVideo);
-   sSetVideo.dwSubfunction = GALFN_SETALPHACOLOR;
-   sSetVideo.color = color;
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetVideo))
-      return 0;
-   else
-      return 1;
+    INIT_GAL(&sSetVideo);
+    sSetVideo.dwSubfunction = GALFN_SETALPHACOLOR;
+    sSetVideo.color = color;
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetVideo))
+        return 0;
+    else
+        return 1;
 }
 
 /*--------------------------------------------------------------------------
@@ -2887,17 +2888,17 @@ Gal_set_alpha_color(unsigned long color)
 BOOLEAN
 Gal_get_alpha_color(unsigned long *color)
 {
-   GAL_ALPHACOLOR sGetalphacolor;
+    GAL_ALPHACOLOR sGetalphacolor;
 
-   INIT_GAL(&sGetalphacolor);
-   sGetalphacolor.dwSubfunction = GALFN_GETALPHACOLOR;
+    INIT_GAL(&sGetalphacolor);
+    sGetalphacolor.dwSubfunction = GALFN_GETALPHACOLOR;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sGetalphacolor))
-      return 0;
-   else {
-      *color = sGetalphacolor.color;
-      return 1;
-   }
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sGetalphacolor))
+        return 0;
+    else {
+        *color = sGetalphacolor.color;
+        return 1;
+    }
 }
 
 /*--------------------------------------------------------------------------
@@ -2912,15 +2913,15 @@ Gal_get_alpha_color(unsigned long *color)
 BOOLEAN
 Gal_select_alpha_region(int region)
 {
-   GAL_ALPHAREGION sSetVideo;
+    GAL_ALPHAREGION sSetVideo;
 
-   INIT_GAL(&sSetVideo);
-   sSetVideo.dwSubfunction = GALFN_SETALPHAREGION;
-   sSetVideo.region = region;
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetVideo))
-      return 0;
-   else
-      return 1;
+    INIT_GAL(&sSetVideo);
+    sSetVideo.dwSubfunction = GALFN_SETALPHAREGION;
+    sSetVideo.region = region;
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetVideo))
+        return 0;
+    else
+        return 1;
 }
 
 /*--------------------------------------------------------------------------
@@ -2934,15 +2935,15 @@ Gal_select_alpha_region(int region)
 BOOLEAN
 Gal_set_video_outside_alpha(int enable)
 {
-   GAL_VIDEOOUTSIDEALPHA sSetVideo;
+    GAL_VIDEOOUTSIDEALPHA sSetVideo;
 
-   INIT_GAL(&sSetVideo);
-   sSetVideo.dwSubfunction = GALFN_SETVIDEOOUTSIDEALPHA;
-   sSetVideo.enable = enable;
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetVideo))
-      return 0;
-   else
-      return 1;
+    INIT_GAL(&sSetVideo);
+    sSetVideo.dwSubfunction = GALFN_SETVIDEOOUTSIDEALPHA;
+    sSetVideo.enable = enable;
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetVideo))
+        return 0;
+    else
+        return 1;
 }
 
 /*--------------------------------------------------------------------------
@@ -2956,22 +2957,23 @@ Gal_set_video_outside_alpha(int enable)
 BOOLEAN
 Gal_set_video_palette(unsigned long *palette)
 {
-   GAL_VIDEOPALETTE sSetVideo;
+    GAL_VIDEOPALETTE sSetVideo;
 
-   INIT_GAL(&sSetVideo);
-   sSetVideo.dwSubfunction = GALFN_SETVIDEOPALETTE;
+    INIT_GAL(&sSetVideo);
+    sSetVideo.dwSubfunction = GALFN_SETVIDEOPALETTE;
 
-   if (palette == NULL) {
-      sSetVideo.identity = 1;
-   } else {
-      sSetVideo.identity = 0;
-      memcpy(sSetVideo.palette, palette, 256 * sizeof(*palette));
-   }
+    if (palette == NULL) {
+        sSetVideo.identity = 1;
+    }
+    else {
+        sSetVideo.identity = 0;
+        memcpy(sSetVideo.palette, palette, 256 * sizeof(*palette));
+    }
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetVideo))
-      return 0;
-   else
-      return 1;
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetVideo))
+        return 0;
+    else
+        return 1;
 }
 
 /** Video **********************************************************/
@@ -2989,16 +2991,17 @@ Gal_set_video_palette(unsigned long *palette)
 BOOLEAN
 Gal_set_icon_enable(int enable)
 {
-   GAL_ICONENABLE sSetIconenable;
+    GAL_ICONENABLE sSetIconenable;
 
-   INIT_GAL(&sSetIconenable);
-   sSetIconenable.dwSubfunction = GALFN_SETICONENABLE;
-   sSetIconenable.enable = enable;
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetIconenable)) {
-      return 0;
-   } else {
-      return 1;
-   }
+    INIT_GAL(&sSetIconenable);
+    sSetIconenable.dwSubfunction = GALFN_SETICONENABLE;
+    sSetIconenable.enable = enable;
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetIconenable)) {
+        return 0;
+    }
+    else {
+        return 1;
+    }
 }
 
 /*--------------------------------------------------------------------------
@@ -3013,20 +3016,21 @@ Gal_set_icon_enable(int enable)
  *------------------------------------------------------------------------*/
 BOOLEAN
 Gal_set_icon_colors(unsigned long color0, unsigned long color1,
-		    unsigned long color2)
+                    unsigned long color2)
 {
-   GAL_ICONCOLORS sSetIconcolors;
+    GAL_ICONCOLORS sSetIconcolors;
 
-   INIT_GAL(&sSetIconcolors);
-   sSetIconcolors.dwSubfunction = GALFN_SETICONCOLORS;
-   sSetIconcolors.color0 = color0;
-   sSetIconcolors.color1 = color1;
-   sSetIconcolors.color2 = color2;
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetIconcolors)) {
-      return 0;
-   } else {
-      return 1;
-   }
+    INIT_GAL(&sSetIconcolors);
+    sSetIconcolors.dwSubfunction = GALFN_SETICONCOLORS;
+    sSetIconcolors.color0 = color0;
+    sSetIconcolors.color1 = color1;
+    sSetIconcolors.color2 = color2;
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetIconcolors)) {
+        return 0;
+    }
+    else {
+        return 1;
+    }
 }
 
 /*--------------------------------------------------------------------------
@@ -3041,17 +3045,18 @@ Gal_set_icon_colors(unsigned long color0, unsigned long color1,
 BOOLEAN
 Gal_set_icon_position(unsigned long memoffset, unsigned short xpos)
 {
-   GAL_ICONPOSITION sSetIconposi;
+    GAL_ICONPOSITION sSetIconposi;
 
-   INIT_GAL(&sSetIconposi);
-   sSetIconposi.dwSubfunction = GALFN_SETICONPOSITION;
-   sSetIconposi.memoffset = memoffset;
-   sSetIconposi.xpos = xpos;
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetIconposi)) {
-      return 0;
-   } else {
-      return 1;
-   }
+    INIT_GAL(&sSetIconposi);
+    sSetIconposi.dwSubfunction = GALFN_SETICONPOSITION;
+    sSetIconposi.memoffset = memoffset;
+    sSetIconposi.xpos = xpos;
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetIconposi)) {
+        return 0;
+    }
+    else {
+        return 1;
+    }
 }
 
 /*--------------------------------------------------------------------------
@@ -3068,22 +3073,23 @@ Gal_set_icon_position(unsigned long memoffset, unsigned short xpos)
  *------------------------------------------------------------------------*/
 BOOLEAN
 Gal_set_icon_shape64(unsigned long memoffset, unsigned long *andmask,
-		     unsigned long *xormask, unsigned int lines)
+                     unsigned long *xormask, unsigned int lines)
 {
-   GAL_ICONSHAPE64 sSetIconshape64;
+    GAL_ICONSHAPE64 sSetIconshape64;
 
-   INIT_GAL(&sSetIconshape64);
-   sSetIconshape64.dwSubfunction = GALFN_SETICONSHAPE64;
-   sSetIconshape64.memoffset = memoffset;
-   *(sSetIconshape64.andmask) = *andmask;
-   *(sSetIconshape64.xormask) = *xormask;
-   sSetIconshape64.lines = lines;
+    INIT_GAL(&sSetIconshape64);
+    sSetIconshape64.dwSubfunction = GALFN_SETICONSHAPE64;
+    sSetIconshape64.memoffset = memoffset;
+    *(sSetIconshape64.andmask) = *andmask;
+    *(sSetIconshape64.xormask) = *xormask;
+    sSetIconshape64.lines = lines;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetIconshape64)) {
-      return 0;
-   } else {
-      return 1;
-   }
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetIconshape64)) {
+        return 0;
+    }
+    else {
+        return 1;
+    }
 }
 
 /*  VIP Functions */
@@ -3102,16 +3108,17 @@ Gal_set_icon_shape64(unsigned long memoffset, unsigned long *andmask,
 BOOLEAN
 Gal_set_vip_enable(int enable)
 {
-   GAL_VIPENABLE sSetVipenable;
+    GAL_VIPENABLE sSetVipenable;
 
-   INIT_GAL(&sSetVipenable);
-   sSetVipenable.dwSubfunction = GALFN_SETVIPENABLE;
-   sSetVipenable.enable = enable;
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetVipenable)) {
-      return 0;
-   } else {
-      return 1;
-   }
+    INIT_GAL(&sSetVipenable);
+    sSetVipenable.dwSubfunction = GALFN_SETVIPENABLE;
+    sSetVipenable.enable = enable;
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetVipenable)) {
+        return 0;
+    }
+    else {
+        return 1;
+    }
 }
 
 /*--------------------------------------------------------------------------
@@ -3126,17 +3133,18 @@ Gal_set_vip_enable(int enable)
 BOOLEAN
 Gal_get_vip_enable(int *enable)
 {
-   GAL_VIPENABLE sGetVipenable;
+    GAL_VIPENABLE sGetVipenable;
 
-   INIT_GAL(&sGetVipenable);
-   sGetVipenable.dwSubfunction = GALFN_GETVIPENABLE;
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sGetVipenable)) {
-      return 0;
-   } else {
+    INIT_GAL(&sGetVipenable);
+    sGetVipenable.dwSubfunction = GALFN_GETVIPENABLE;
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sGetVipenable)) {
+        return 0;
+    }
+    else {
 
-      *enable = sGetVipenable.enable;
-      return 1;
-   }
+        *enable = sGetVipenable.enable;
+        return 1;
+    }
 }
 
 /*--------------------------------------------------------------------------
@@ -3151,17 +3159,18 @@ Gal_get_vip_enable(int *enable)
 BOOLEAN
 Gal_set_vip_capture_run_mode(int mode)
 {
-   GAL_VIPCAPTURERUNMODE sSetVipcapturerunmode;
+    GAL_VIPCAPTURERUNMODE sSetVipcapturerunmode;
 
-   INIT_GAL(&sSetVipcapturerunmode);
-   sSetVipcapturerunmode.dwSubfunction = GALFN_SETVIPCAPTURERUNMODE;
-   sSetVipcapturerunmode.mode = mode;
+    INIT_GAL(&sSetVipcapturerunmode);
+    sSetVipcapturerunmode.dwSubfunction = GALFN_SETVIPCAPTURERUNMODE;
+    sSetVipcapturerunmode.mode = mode;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetVipcapturerunmode)) {
-      return 0;
-   } else {
-      return 1;
-   }
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetVipcapturerunmode)) {
+        return 0;
+    }
+    else {
+        return 1;
+    }
 }
 
 /*--------------------------------------------------------------------------
@@ -3177,18 +3186,19 @@ Gal_set_vip_capture_run_mode(int mode)
 BOOLEAN
 Gal_set_vip_base(unsigned long even, unsigned long odd)
 {
-   GAL_VIPBASE sSetVipBase;
+    GAL_VIPBASE sSetVipBase;
 
-   INIT_GAL(&sSetVipBase);
-   sSetVipBase.dwSubfunction = GALFN_SETVIPBASE;
-   sSetVipBase.even = even;
-   sSetVipBase.odd = odd;
+    INIT_GAL(&sSetVipBase);
+    sSetVipBase.dwSubfunction = GALFN_SETVIPBASE;
+    sSetVipBase.even = even;
+    sSetVipBase.odd = odd;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetVipBase)) {
-      return 0;
-   } else {
-      return 1;
-   }
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetVipBase)) {
+        return 0;
+    }
+    else {
+        return 1;
+    }
 }
 
 /*--------------------------------------------------------------------------
@@ -3204,18 +3214,19 @@ Gal_set_vip_base(unsigned long even, unsigned long odd)
 BOOLEAN
 Gal_get_vip_base(unsigned long *address, int odd)
 {
-   GAL_VIPBASE sGetVipBase;
+    GAL_VIPBASE sGetVipBase;
 
-   INIT_GAL(&sGetVipBase);
-   sGetVipBase.dwSubfunction = GALFN_GETVIPBASE;
-   sGetVipBase.odd = odd;
+    INIT_GAL(&sGetVipBase);
+    sGetVipBase.dwSubfunction = GALFN_GETVIPBASE;
+    sGetVipBase.odd = odd;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sGetVipBase)) {
-      return 0;
-   } else {
-      *address = sGetVipBase.address;
-      return 1;
-   }
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sGetVipBase)) {
+        return 0;
+    }
+    else {
+        *address = sGetVipBase.address;
+        return 1;
+    }
 }
 
 /*--------------------------------------------------------------------------
@@ -3230,17 +3241,18 @@ Gal_get_vip_base(unsigned long *address, int odd)
 BOOLEAN
 Gal_set_vip_pitch(unsigned long pitch)
 {
-   GAL_VIPPITCH sSetVipPitch;
+    GAL_VIPPITCH sSetVipPitch;
 
-   INIT_GAL(&sSetVipPitch);
-   sSetVipPitch.dwSubfunction = GALFN_SETVIPPITCH;
-   sSetVipPitch.pitch = pitch;
+    INIT_GAL(&sSetVipPitch);
+    sSetVipPitch.dwSubfunction = GALFN_SETVIPPITCH;
+    sSetVipPitch.pitch = pitch;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetVipPitch)) {
-      return 0;
-   } else {
-      return 1;
-   }
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetVipPitch)) {
+        return 0;
+    }
+    else {
+        return 1;
+    }
 }
 
 /*--------------------------------------------------------------------------
@@ -3255,18 +3267,19 @@ Gal_set_vip_pitch(unsigned long pitch)
 BOOLEAN
 Gal_get_vip_pitch(unsigned long *pitch)
 {
-   GAL_VIPPITCH sGetVipPitch;
+    GAL_VIPPITCH sGetVipPitch;
 
-   INIT_GAL(&sGetVipPitch);
-   sGetVipPitch.dwSubfunction = GALFN_GETVIPPITCH;
+    INIT_GAL(&sGetVipPitch);
+    sGetVipPitch.dwSubfunction = GALFN_GETVIPPITCH;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sGetVipPitch)) {
-      return 0;
-   } else {
-      *pitch = sGetVipPitch.pitch;
-      return 1;
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sGetVipPitch)) {
+        return 0;
+    }
+    else {
+        *pitch = sGetVipPitch.pitch;
+        return 1;
 
-   }
+    }
 }
 
 /*--------------------------------------------------------------------------
@@ -3280,17 +3293,18 @@ Gal_get_vip_pitch(unsigned long *pitch)
 BOOLEAN
 Gal_set_vip_mode(int mode)
 {
-   GAL_VIPMODE sSetVipMode;
+    GAL_VIPMODE sSetVipMode;
 
-   INIT_GAL(&sSetVipMode);
-   sSetVipMode.dwSubfunction = GALFN_SETVIPMODE;
-   sSetVipMode.mode = mode;
+    INIT_GAL(&sSetVipMode);
+    sSetVipMode.dwSubfunction = GALFN_SETVIPMODE;
+    sSetVipMode.mode = mode;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetVipMode)) {
-      return 0;
-   } else {
-      return 1;
-   }
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetVipMode)) {
+        return 0;
+    }
+    else {
+        return 1;
+    }
 }
 
 /*--------------------------------------------------------------------------
@@ -3304,18 +3318,19 @@ Gal_set_vip_mode(int mode)
 BOOLEAN
 Gal_get_vip_mode(int *mode)
 {
-   GAL_VIPMODE sGetVipMode;
+    GAL_VIPMODE sGetVipMode;
 
-   INIT_GAL(&sGetVipMode);
-   sGetVipMode.dwSubfunction = GALFN_GETVIPMODE;
+    INIT_GAL(&sGetVipMode);
+    sGetVipMode.dwSubfunction = GALFN_GETVIPMODE;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sGetVipMode)) {
-      return 0;
-   } else {
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sGetVipMode)) {
+        return 0;
+    }
+    else {
 
-      *mode = sGetVipMode.mode;
-      return 1;
-   }
+        *mode = sGetVipMode.mode;
+        return 1;
+    }
 }
 
 /*--------------------------------------------------------------------------
@@ -3330,17 +3345,18 @@ Gal_get_vip_mode(int *mode)
 BOOLEAN
 Gal_set_vip_bus_request_threshold_high(int enable)
 {
-   GAL_VIPBUS_RTH sSetVipBRTH;
+    GAL_VIPBUS_RTH sSetVipBRTH;
 
-   INIT_GAL(&sSetVipBRTH);
-   sSetVipBRTH.dwSubfunction = GALFN_SETVIPBRTH;
-   sSetVipBRTH.enable = enable;
+    INIT_GAL(&sSetVipBRTH);
+    sSetVipBRTH.dwSubfunction = GALFN_SETVIPBRTH;
+    sSetVipBRTH.enable = enable;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetVipBRTH)) {
-      return 0;
-   } else {
-      return 1;
-   }
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetVipBRTH)) {
+        return 0;
+    }
+    else {
+        return 1;
+    }
 }
 
 /*--------------------------------------------------------------------------
@@ -3355,18 +3371,19 @@ Gal_set_vip_bus_request_threshold_high(int enable)
 BOOLEAN
 Gal_get_vip_bus_request_threshold_high(int *enable)
 {
-   GAL_VIPBUS_RTH sGetVipBRTH;
+    GAL_VIPBUS_RTH sGetVipBRTH;
 
-   INIT_GAL(&sGetVipBRTH);
-   sGetVipBRTH.dwSubfunction = GALFN_GETVIPBRTH;
+    INIT_GAL(&sGetVipBRTH);
+    sGetVipBRTH.dwSubfunction = GALFN_GETVIPBRTH;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sGetVipBRTH)) {
-      return 0;
-   } else {
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sGetVipBRTH)) {
+        return 0;
+    }
+    else {
 
-      *enable = sGetVipBRTH.enable;
-      return 1;
-   }
+        *enable = sGetVipBRTH.enable;
+        return 1;
+    }
 }
 
 /*--------------------------------------------------------------------------
@@ -3382,17 +3399,18 @@ Gal_get_vip_bus_request_threshold_high(int *enable)
 BOOLEAN
 Gal_set_vip_last_line(int last_line)
 {
-   GAL_VIPLASTLINE sSetViplastline;
+    GAL_VIPLASTLINE sSetViplastline;
 
-   INIT_GAL(&sSetViplastline);
-   sSetViplastline.dwSubfunction = GALFN_SETVIPLASTLINE;
-   sSetViplastline.last_line = last_line;
+    INIT_GAL(&sSetViplastline);
+    sSetViplastline.dwSubfunction = GALFN_SETVIPLASTLINE;
+    sSetViplastline.last_line = last_line;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetViplastline)) {
-      return 0;
-   } else {
-      return 1;
-   }
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetViplastline)) {
+        return 0;
+    }
+    else {
+        return 1;
+    }
 }
 
 /*--------------------------------------------------------------------------
@@ -3408,17 +3426,18 @@ Gal_set_vip_last_line(int last_line)
 BOOLEAN
 Gal_get_vip_line(int *vip_line)
 {
-   GAL_VIPLINE sGetVipline;
+    GAL_VIPLINE sGetVipline;
 
-   INIT_GAL(&sGetVipline);
-   sGetVipline.dwSubfunction = GALFN_GETVIPLINE;
+    INIT_GAL(&sGetVipline);
+    sGetVipline.dwSubfunction = GALFN_GETVIPLINE;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sGetVipline)) {
-      return 0;
-   } else {
-      *vip_line = sGetVipline.status;
-      return 1;
-   }
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sGetVipline)) {
+        return 0;
+    }
+    else {
+        *vip_line = sGetVipline.status;
+        return 1;
+    }
 }
 
 /*--------------------------------------------------------------------------
@@ -3433,17 +3452,18 @@ Gal_get_vip_line(int *vip_line)
 BOOLEAN
 Gal_test_vip_odd_field(int *status)
 {
-   GAL_TESTVIPODDFIELD sTestVipoddfield;
+    GAL_TESTVIPODDFIELD sTestVipoddfield;
 
-   INIT_GAL(&sTestVipoddfield);
-   sTestVipoddfield.dwSubfunction = GALFN_TESTVIPODDFIELD;
+    INIT_GAL(&sTestVipoddfield);
+    sTestVipoddfield.dwSubfunction = GALFN_TESTVIPODDFIELD;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sTestVipoddfield)) {
-      return 0;
-   } else {
-      *status = sTestVipoddfield.status;
-      return 1;
-   }
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sTestVipoddfield)) {
+        return 0;
+    }
+    else {
+        *status = sTestVipoddfield.status;
+        return 1;
+    }
 }
 
 /*--------------------------------------------------------------------------
@@ -3458,17 +3478,18 @@ Gal_test_vip_odd_field(int *status)
 BOOLEAN
 Gal_test_vip_bases_updated(int *status)
 {
-   GAL_TESTVIPBASESUPDATED sTestVipbasesupdated;
+    GAL_TESTVIPBASESUPDATED sTestVipbasesupdated;
 
-   INIT_GAL(&sTestVipbasesupdated);
-   sTestVipbasesupdated.dwSubfunction = GALFN_TESTVIPBASESUPDATED;
+    INIT_GAL(&sTestVipbasesupdated);
+    sTestVipbasesupdated.dwSubfunction = GALFN_TESTVIPBASESUPDATED;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sTestVipbasesupdated)) {
-      return 0;
-   } else {
-      *status = sTestVipbasesupdated.status;
-      return 1;
-   }
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sTestVipbasesupdated)) {
+        return 0;
+    }
+    else {
+        *status = sTestVipbasesupdated.status;
+        return 1;
+    }
 }
 
 /*--------------------------------------------------------------------------
@@ -3483,17 +3504,18 @@ Gal_test_vip_bases_updated(int *status)
 BOOLEAN
 Gal_test_vip_fifo_overflow(int *status)
 {
-   GAL_TESTVIPOVERFLOW sTestVipoverflow;
+    GAL_TESTVIPOVERFLOW sTestVipoverflow;
 
-   INIT_GAL(&sTestVipoverflow);
-   sTestVipoverflow.dwSubfunction = GALFN_TESTVIPFIFOOVERFLOW;
+    INIT_GAL(&sTestVipoverflow);
+    sTestVipoverflow.dwSubfunction = GALFN_TESTVIPFIFOOVERFLOW;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sTestVipoverflow)) {
-      return 0;
-   } else {
-      *status = sTestVipoverflow.status;
-      return 1;
-   }
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sTestVipoverflow)) {
+        return 0;
+    }
+    else {
+        *status = sTestVipoverflow.status;
+        return 1;
+    }
 }
 
 /*--------------------------------------------------------------------------
@@ -3508,16 +3530,17 @@ Gal_test_vip_fifo_overflow(int *status)
 BOOLEAN
 Gal_set_vbi_enable(int enable)
 {
-   GAL_VBIENABLE sSetVbienable;
+    GAL_VBIENABLE sSetVbienable;
 
-   INIT_GAL(&sSetVbienable);
-   sSetVbienable.dwSubfunction = GALFN_SETVBIENABLE;
-   sSetVbienable.enable = enable;
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetVbienable)) {
-      return 0;
-   } else {
-      return 1;
-   }
+    INIT_GAL(&sSetVbienable);
+    sSetVbienable.dwSubfunction = GALFN_SETVBIENABLE;
+    sSetVbienable.enable = enable;
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetVbienable)) {
+        return 0;
+    }
+    else {
+        return 1;
+    }
 }
 
 /*--------------------------------------------------------------------------
@@ -3532,17 +3555,18 @@ Gal_set_vbi_enable(int enable)
 BOOLEAN
 Gal_get_vbi_enable(int *enable)
 {
-   GAL_VBIENABLE sGetVbienable;
+    GAL_VBIENABLE sGetVbienable;
 
-   INIT_GAL(&sGetVbienable);
-   sGetVbienable.dwSubfunction = GALFN_GETVBIENABLE;
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sGetVbienable)) {
-      return 0;
-   } else {
+    INIT_GAL(&sGetVbienable);
+    sGetVbienable.dwSubfunction = GALFN_GETVBIENABLE;
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sGetVbienable)) {
+        return 0;
+    }
+    else {
 
-      *enable = sGetVbienable.enable;
-      return 1;
-   }
+        *enable = sGetVbienable.enable;
+        return 1;
+    }
 }
 
 /*--------------------------------------------------------------------------
@@ -3558,18 +3582,19 @@ Gal_get_vbi_enable(int *enable)
 BOOLEAN
 Gal_set_vbi_base(unsigned long even, unsigned long odd)
 {
-   GAL_VBIBASE sSetVbiBase;
+    GAL_VBIBASE sSetVbiBase;
 
-   INIT_GAL(&sSetVbiBase);
-   sSetVbiBase.dwSubfunction = GALFN_SETVBIBASE;
-   sSetVbiBase.even = even;
-   sSetVbiBase.odd = odd;
+    INIT_GAL(&sSetVbiBase);
+    sSetVbiBase.dwSubfunction = GALFN_SETVBIBASE;
+    sSetVbiBase.even = even;
+    sSetVbiBase.odd = odd;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetVbiBase)) {
-      return 0;
-   } else {
-      return 1;
-   }
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetVbiBase)) {
+        return 0;
+    }
+    else {
+        return 1;
+    }
 }
 
 /*--------------------------------------------------------------------------
@@ -3585,18 +3610,19 @@ Gal_set_vbi_base(unsigned long even, unsigned long odd)
 BOOLEAN
 Gal_get_vbi_base(unsigned long *address, int odd)
 {
-   GAL_VBIBASE sGetVbiBase;
+    GAL_VBIBASE sGetVbiBase;
 
-   INIT_GAL(&sGetVbiBase);
-   sGetVbiBase.dwSubfunction = GALFN_GETVBIBASE;
-   sGetVbiBase.odd = odd;
+    INIT_GAL(&sGetVbiBase);
+    sGetVbiBase.dwSubfunction = GALFN_GETVBIBASE;
+    sGetVbiBase.odd = odd;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sGetVbiBase)) {
-      return 0;
-   } else {
-      *address = sGetVbiBase.address;
-      return 1;
-   }
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sGetVbiBase)) {
+        return 0;
+    }
+    else {
+        *address = sGetVbiBase.address;
+        return 1;
+    }
 }
 
 /*--------------------------------------------------------------------------
@@ -3612,17 +3638,18 @@ Gal_get_vbi_base(unsigned long *address, int odd)
 BOOLEAN
 Gal_set_vbi_pitch(unsigned long pitch)
 {
-   GAL_VBIPITCH sSetVbiPitch;
+    GAL_VBIPITCH sSetVbiPitch;
 
-   INIT_GAL(&sSetVbiPitch);
-   sSetVbiPitch.dwSubfunction = GALFN_SETVBIPITCH;
-   sSetVbiPitch.pitch = pitch;
+    INIT_GAL(&sSetVbiPitch);
+    sSetVbiPitch.dwSubfunction = GALFN_SETVBIPITCH;
+    sSetVbiPitch.pitch = pitch;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetVbiPitch)) {
-      return 0;
-   } else {
-      return 1;
-   }
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetVbiPitch)) {
+        return 0;
+    }
+    else {
+        return 1;
+    }
 }
 
 /*--------------------------------------------------------------------------
@@ -3638,18 +3665,19 @@ Gal_set_vbi_pitch(unsigned long pitch)
 BOOLEAN
 Gal_get_vbi_pitch(unsigned long *pitch)
 {
-   GAL_VBIPITCH sGetVbiPitch;
+    GAL_VBIPITCH sGetVbiPitch;
 
-   INIT_GAL(&sGetVbiPitch);
-   sGetVbiPitch.dwSubfunction = GALFN_GETVBIPITCH;
+    INIT_GAL(&sGetVbiPitch);
+    sGetVbiPitch.dwSubfunction = GALFN_GETVBIPITCH;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sGetVbiPitch)) {
-      return 0;
-   } else {
-      *pitch = sGetVbiPitch.pitch;
-      return 1;
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sGetVbiPitch)) {
+        return 0;
+    }
+    else {
+        *pitch = sGetVbiPitch.pitch;
+        return 1;
 
-   }
+    }
 }
 
 /*--------------------------------------------------------------------------
@@ -3664,17 +3692,18 @@ Gal_get_vbi_pitch(unsigned long *pitch)
 BOOLEAN
 Gal_set_vbi_mode(int mode)
 {
-   GAL_VBIMODE sSetVbiMode;
+    GAL_VBIMODE sSetVbiMode;
 
-   INIT_GAL(&sSetVbiMode);
-   sSetVbiMode.dwSubfunction = GALFN_SETVBIMODE;
-   sSetVbiMode.mode = mode;
+    INIT_GAL(&sSetVbiMode);
+    sSetVbiMode.dwSubfunction = GALFN_SETVBIMODE;
+    sSetVbiMode.mode = mode;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetVbiMode)) {
-      return 0;
-   } else {
-      return 1;
-   }
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetVbiMode)) {
+        return 0;
+    }
+    else {
+        return 1;
+    }
 }
 
 /*--------------------------------------------------------------------------
@@ -3689,18 +3718,19 @@ Gal_set_vbi_mode(int mode)
 BOOLEAN
 Gal_get_vbi_mode(int *mode)
 {
-   GAL_VBIMODE sGetVbiMode;
+    GAL_VBIMODE sGetVbiMode;
 
-   INIT_GAL(&sGetVbiMode);
-   sGetVbiMode.dwSubfunction = GALFN_GETVBIMODE;
+    INIT_GAL(&sGetVbiMode);
+    sGetVbiMode.dwSubfunction = GALFN_GETVBIMODE;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sGetVbiMode)) {
-      return 0;
-   } else {
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sGetVbiMode)) {
+        return 0;
+    }
+    else {
 
-      *mode = sGetVbiMode.mode;
-      return 1;
-   }
+        *mode = sGetVbiMode.mode;
+        return 1;
+    }
 }
 
 /*--------------------------------------------------------------------------
@@ -3717,48 +3747,50 @@ Gal_get_vbi_mode(int *mode)
 BOOLEAN
 Gal_set_vbi_direct(unsigned long even_lines, unsigned long odd_lines)
 {
-   GAL_SETVBIDIRECT sSetVbidirect;
+    GAL_SETVBIDIRECT sSetVbidirect;
 
-   INIT_GAL(&sSetVbidirect);
-   sSetVbidirect.dwSubfunction = GALFN_SETVBIDIRECT;
-   sSetVbidirect.even_lines = even_lines;
-   sSetVbidirect.odd_lines = odd_lines;
+    INIT_GAL(&sSetVbidirect);
+    sSetVbidirect.dwSubfunction = GALFN_SETVBIDIRECT;
+    sSetVbidirect.even_lines = even_lines;
+    sSetVbidirect.odd_lines = odd_lines;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetVbidirect)) {
-      return 0;
-   } else {
-      return 1;
-   }
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetVbidirect)) {
+        return 0;
+    }
+    else {
+        return 1;
+    }
 }
+
 BOOLEAN
 Gal2_set_destination_stride(unsigned short stride)
 {
-   GAL_STRIDE sSetStride;
+    GAL_STRIDE sSetStride;
 
-   INIT_GAL(&sSetStride);
-   sSetStride.dwSubfunction = GALFN_SETDESTINATIONSTRIDE;
+    INIT_GAL(&sSetStride);
+    sSetStride.dwSubfunction = GALFN_SETDESTINATIONSTRIDE;
 
-   sSetStride.stride = stride;
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetStride))
-      return 0;
-   else
-      return 1;
+    sSetStride.stride = stride;
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetStride))
+        return 0;
+    else
+        return 1;
 }
 
 BOOLEAN
 Gal2_set_pattern_origin(int x, int y)
 {
-   GAL_PATTERNORIGIN sSetPatOrigin;
+    GAL_PATTERNORIGIN sSetPatOrigin;
 
-   INIT_GAL(&sSetPatOrigin);
-   sSetPatOrigin.dwSubfunction = GALFN_SETPATTERNORIGIN;
+    INIT_GAL(&sSetPatOrigin);
+    sSetPatOrigin.dwSubfunction = GALFN_SETPATTERNORIGIN;
 
-   sSetPatOrigin.x = x;
-   sSetPatOrigin.y = y;
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetPatOrigin))
-      return 0;
-   else
-      return 1;
+    sSetPatOrigin.x = x;
+    sSetPatOrigin.y = y;
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetPatOrigin))
+        return 0;
+    else
+        return 1;
 }
 
 /*--------------------------------------------------------------------------
@@ -3775,18 +3807,19 @@ Gal2_set_pattern_origin(int x, int y)
 BOOLEAN
 Gal_get_vbi_direct(int odd, unsigned long *direct_lines)
 {
-   GAL_GETVBIDIRECT sGetVbidirect;
+    GAL_GETVBIDIRECT sGetVbidirect;
 
-   INIT_GAL(&sGetVbidirect);
-   sGetVbidirect.dwSubfunction = GALFN_GETVBIDIRECT;
-   sGetVbidirect.odd = odd;
+    INIT_GAL(&sGetVbidirect);
+    sGetVbidirect.dwSubfunction = GALFN_GETVBIDIRECT;
+    sGetVbidirect.odd = odd;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sGetVbidirect)) {
-      return 0;
-   } else {
-      *direct_lines = sGetVbidirect.direct_lines;
-      return 1;
-   }
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sGetVbidirect)) {
+        return 0;
+    }
+    else {
+        *direct_lines = sGetVbidirect.direct_lines;
+        return 1;
+    }
 }
 
 /*--------------------------------------------------------------------------
@@ -3801,16 +3834,17 @@ Gal_get_vbi_direct(int odd, unsigned long *direct_lines)
 BOOLEAN
 Gal_set_vbi_interrupt(int enable)
 {
-   GAL_VBIINTERRUPT sSetVbiinterrupt;
+    GAL_VBIINTERRUPT sSetVbiinterrupt;
 
-   INIT_GAL(&sSetVbiinterrupt);
-   sSetVbiinterrupt.dwSubfunction = GALFN_SETVBIINTERRUPT;
-   sSetVbiinterrupt.enable = enable;
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetVbiinterrupt)) {
-      return 0;
-   } else {
-      return 1;
-   }
+    INIT_GAL(&sSetVbiinterrupt);
+    sSetVbiinterrupt.dwSubfunction = GALFN_SETVBIINTERRUPT;
+    sSetVbiinterrupt.enable = enable;
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetVbiinterrupt)) {
+        return 0;
+    }
+    else {
+        return 1;
+    }
 }
 
 /*--------------------------------------------------------------------------
@@ -3825,17 +3859,18 @@ Gal_set_vbi_interrupt(int enable)
 BOOLEAN
 Gal_get_vbi_interrupt(int *enable)
 {
-   GAL_VBIINTERRUPT sGetVbiinterrupt;
+    GAL_VBIINTERRUPT sGetVbiinterrupt;
 
-   INIT_GAL(&sGetVbiinterrupt);
-   sGetVbiinterrupt.dwSubfunction = GALFN_GETVBIINTERRUPT;
+    INIT_GAL(&sGetVbiinterrupt);
+    sGetVbiinterrupt.dwSubfunction = GALFN_GETVBIINTERRUPT;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sGetVbiinterrupt)) {
-      return 0;
-   } else {
-      *enable = sGetVbiinterrupt.enable;
-      return 1;
-   }
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sGetVbiinterrupt)) {
+        return 0;
+    }
+    else {
+        *enable = sGetVbiinterrupt.enable;
+        return 1;
+    }
 }
 
 /*--------------------------------------------------------------------------
@@ -3851,18 +3886,19 @@ Gal_get_vbi_interrupt(int *enable)
 BOOLEAN
 Gal2_set_source_stride(unsigned short stride)
 {
-   GAL_STRIDE sSetsourcestride;
+    GAL_STRIDE sSetsourcestride;
 
-   INIT_GAL(&sSetsourcestride);
-   sSetsourcestride.dwSubfunction = GALFN_SETSOURCESTRIDE;
+    INIT_GAL(&sSetsourcestride);
+    sSetsourcestride.dwSubfunction = GALFN_SETSOURCESTRIDE;
 
-   sSetsourcestride.stride = stride;
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetsourcestride)) {
-      return 0;
-   } else {
+    sSetsourcestride.stride = stride;
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetsourcestride)) {
+        return 0;
+    }
+    else {
 
-      return 1;
-   }
+        return 1;
+    }
 }
 
 /*--------------------------------------------------------------------------
@@ -3880,19 +3916,20 @@ Gal2_set_source_stride(unsigned short stride)
 BOOLEAN
 Gal2_set_source_transparency(unsigned long color, unsigned long mask)
 {
-   GAL_SOURCETRANSPARENCY sSetsourcetransparency;
+    GAL_SOURCETRANSPARENCY sSetsourcetransparency;
 
-   INIT_GAL(&sSetsourcetransparency);
-   sSetsourcetransparency.dwSubfunction = GALFN_SETSOURCETRANSPARENCY;
+    INIT_GAL(&sSetsourcetransparency);
+    sSetsourcetransparency.dwSubfunction = GALFN_SETSOURCETRANSPARENCY;
 
-   sSetsourcetransparency.color = color;
-   sSetsourcetransparency.mask = mask;
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetsourcetransparency)) {
-      return 0;
-   } else {
+    sSetsourcetransparency.color = color;
+    sSetsourcetransparency.mask = mask;
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetsourcetransparency)) {
+        return 0;
+    }
+    else {
 
-      return 1;
-   }
+        return 1;
+    }
 }
 
 /*--------------------------------------------------------------------------
@@ -3906,17 +3943,18 @@ Gal2_set_source_transparency(unsigned long color, unsigned long mask)
 BOOLEAN
 Gal2_set_alpha_mode(int mode)
 {
-   GAL_GFX2ALPHAMODE sSetalphamode;
+    GAL_GFX2ALPHAMODE sSetalphamode;
 
-   INIT_GAL(&sSetalphamode);
-   sSetalphamode.dwSubfunction = GALFN_GFX2SETALPHAMODE;
+    INIT_GAL(&sSetalphamode);
+    sSetalphamode.dwSubfunction = GALFN_GFX2SETALPHAMODE;
 
-   sSetalphamode.mode = mode;
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetalphamode)) {
-      return 0;
-   } else {
-      return 1;
-   }
+    sSetalphamode.mode = mode;
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetalphamode)) {
+        return 0;
+    }
+    else {
+        return 1;
+    }
 }
 
 /*--------------------------------------------------------------------------
@@ -3931,17 +3969,18 @@ Gal2_set_alpha_mode(int mode)
 BOOLEAN
 Gal2_set_alpha_value(unsigned char value)
 {
-   GAL_GFX2ALPHAVALUE sSetalphavalue;
+    GAL_GFX2ALPHAVALUE sSetalphavalue;
 
-   INIT_GAL(&sSetalphavalue);
-   sSetalphavalue.dwSubfunction = GALFN_GFX2SETALPHAVALUE;
+    INIT_GAL(&sSetalphavalue);
+    sSetalphavalue.dwSubfunction = GALFN_GFX2SETALPHAVALUE;
 
-   sSetalphavalue.value = value;
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetalphavalue)) {
-      return 0;
-   } else {
-      return 1;
-   }
+    sSetalphavalue.value = value;
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetalphavalue)) {
+        return 0;
+    }
+    else {
+        return 1;
+    }
 }
 
 /*--------------------------------------------------------------------------
@@ -3959,21 +3998,22 @@ Gal2_set_alpha_value(unsigned char value)
  *------------------------------------------------------------------------*/
 BOOLEAN
 Gal_gfx2_pattern_fill(unsigned long dstoffset, unsigned short width,
-		      unsigned short height)
+                      unsigned short height)
 {
-   GAL_GFX2PATTERNFILL sPatternfill;
+    GAL_GFX2PATTERNFILL sPatternfill;
 
-   INIT_GAL(&sPatternfill);
-   sPatternfill.dwSubfunction = GALFN_GFX2PATTERNFILL;
+    INIT_GAL(&sPatternfill);
+    sPatternfill.dwSubfunction = GALFN_GFX2PATTERNFILL;
 
-   sPatternfill.dstoffset = dstoffset;
-   sPatternfill.width = width;
-   sPatternfill.height = height;
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sPatternfill)) {
-      return 0;
-   } else {
-      return 1;
-   }
+    sPatternfill.dstoffset = dstoffset;
+    sPatternfill.width = width;
+    sPatternfill.height = height;
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sPatternfill)) {
+        return 0;
+    }
+    else {
+        return 1;
+    }
 }
 
 /*--------------------------------------------------------------------------
@@ -3992,24 +4032,25 @@ Gal_gfx2_pattern_fill(unsigned long dstoffset, unsigned short width,
  *------------------------------------------------------------------------*/
 BOOLEAN
 Gal2_screen_to_screen_blt(unsigned long srcoffset,
-			  unsigned long dstoffset, unsigned short width,
-			  unsigned short height, int flags)
+                          unsigned long dstoffset, unsigned short width,
+                          unsigned short height, int flags)
 {
-   GAL_GFX2SCREENTOSCREENBLT sScreentoScreenblt;
+    GAL_GFX2SCREENTOSCREENBLT sScreentoScreenblt;
 
-   INIT_GAL(&sScreentoScreenblt);
-   sScreentoScreenblt.dwSubfunction = GALFN_GFX2SCREENTOSCREENBLT;
+    INIT_GAL(&sScreentoScreenblt);
+    sScreentoScreenblt.dwSubfunction = GALFN_GFX2SCREENTOSCREENBLT;
 
-   sScreentoScreenblt.srcoffset = srcoffset;
-   sScreentoScreenblt.dstoffset = dstoffset;
-   sScreentoScreenblt.width = width;
-   sScreentoScreenblt.height = height;
-   sScreentoScreenblt.flags = flags;
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sScreentoScreenblt)) {
-      return 0;
-   } else {
-      return 1;
-   }
+    sScreentoScreenblt.srcoffset = srcoffset;
+    sScreentoScreenblt.dstoffset = dstoffset;
+    sScreentoScreenblt.width = width;
+    sScreentoScreenblt.height = height;
+    sScreentoScreenblt.flags = flags;
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sScreentoScreenblt)) {
+        return 0;
+    }
+    else {
+        return 1;
+    }
 }
 
 /*--------------------------------------------------------------------------
@@ -4028,28 +4069,29 @@ Gal2_screen_to_screen_blt(unsigned long srcoffset,
  *------------------------------------------------------------------------*/
 BOOLEAN
 Gal2_mono_expand_blt(unsigned long srcbase, unsigned short srcx,
-		     unsigned short srcy, unsigned long dstoffset,
-		     unsigned short width, unsigned short height,
-		     int byte_packed)
+                     unsigned short srcy, unsigned long dstoffset,
+                     unsigned short width, unsigned short height,
+                     int byte_packed)
 {
-   GAL_GFX2MONOEXPANDBLT sMonoexpandblt;
+    GAL_GFX2MONOEXPANDBLT sMonoexpandblt;
 
-   INIT_GAL(&sMonoexpandblt);
-   sMonoexpandblt.dwSubfunction = GALFN_GFX2MONOEXPANDBLT;
-   sMonoexpandblt.srcbase = srcbase;
-   sMonoexpandblt.srcx = srcx;
-   sMonoexpandblt.srcy = srcy;
-   sMonoexpandblt.dstoffset = dstoffset;
-   sMonoexpandblt.width = width;
-   sMonoexpandblt.height = height;
-   sMonoexpandblt.byte_packed = byte_packed;
+    INIT_GAL(&sMonoexpandblt);
+    sMonoexpandblt.dwSubfunction = GALFN_GFX2MONOEXPANDBLT;
+    sMonoexpandblt.srcbase = srcbase;
+    sMonoexpandblt.srcx = srcx;
+    sMonoexpandblt.srcy = srcy;
+    sMonoexpandblt.dstoffset = dstoffset;
+    sMonoexpandblt.width = width;
+    sMonoexpandblt.height = height;
+    sMonoexpandblt.byte_packed = byte_packed;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sMonoexpandblt)) {
-      return 0;
-   } else {
-      return 1;
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sMonoexpandblt)) {
+        return 0;
+    }
+    else {
+        return 1;
 
-   }
+    }
 }
 
 /*--------------------------------------------------------------------------
@@ -4068,29 +4110,30 @@ Gal2_mono_expand_blt(unsigned long srcbase, unsigned short srcx,
  *------------------------------------------------------------------------*/
 BOOLEAN
 Gal2_color_bitmap_to_screen_blt(unsigned short srcx,
-				unsigned short srcy,
-				unsigned long dstoffset,
-				unsigned short width,
-				unsigned short height,
-				unsigned char *data, unsigned short pitch)
+                                unsigned short srcy,
+                                unsigned long dstoffset,
+                                unsigned short width,
+                                unsigned short height,
+                                unsigned char *data, unsigned short pitch)
 {
-   GAL_GFX2COLORBMPTOSCRBLT sColorbmptoscrblt;
+    GAL_GFX2COLORBMPTOSCRBLT sColorbmptoscrblt;
 
-   INIT_GAL(&sColorbmptoscrblt);
-   sColorbmptoscrblt.dwSubfunction = GALFN_GFX2COLORBMPTOSCRBLT;
-   sColorbmptoscrblt.srcx = srcx;
-   sColorbmptoscrblt.srcy = srcy;
-   sColorbmptoscrblt.dstoffset = dstoffset;
-   sColorbmptoscrblt.width = width;
-   sColorbmptoscrblt.height = height;
-   sColorbmptoscrblt.data = *data;
-   sColorbmptoscrblt.pitch = pitch;
+    INIT_GAL(&sColorbmptoscrblt);
+    sColorbmptoscrblt.dwSubfunction = GALFN_GFX2COLORBMPTOSCRBLT;
+    sColorbmptoscrblt.srcx = srcx;
+    sColorbmptoscrblt.srcy = srcy;
+    sColorbmptoscrblt.dstoffset = dstoffset;
+    sColorbmptoscrblt.width = width;
+    sColorbmptoscrblt.height = height;
+    sColorbmptoscrblt.data = *data;
+    sColorbmptoscrblt.pitch = pitch;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sColorbmptoscrblt)) {
-      return 0;
-   } else {
-      return 1;
-   }
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sColorbmptoscrblt)) {
+        return 0;
+    }
+    else {
+        return 1;
+    }
 }
 
 /*--------------------------------------------------------------------------
@@ -4109,29 +4152,30 @@ Gal2_color_bitmap_to_screen_blt(unsigned short srcx,
  *------------------------------------------------------------------------*/
 BOOLEAN
 Gal2_mono_bitmap_to_screen_blt(unsigned short srcx,
-			       unsigned short srcy,
-			       unsigned long dstoffset,
-			       unsigned short width,
-			       unsigned short height,
-			       unsigned char *data, unsigned short pitch)
+                               unsigned short srcy,
+                               unsigned long dstoffset,
+                               unsigned short width,
+                               unsigned short height,
+                               unsigned char *data, unsigned short pitch)
 {
-   GAL_GFX2MONOBMPTOSCRBLT sMonobmptoscrblt;
+    GAL_GFX2MONOBMPTOSCRBLT sMonobmptoscrblt;
 
-   INIT_GAL(&sMonobmptoscrblt);
-   sMonobmptoscrblt.dwSubfunction = GALFN_GFX2MONOBMPTOSCRBLT;
-   sMonobmptoscrblt.srcx = srcx;
-   sMonobmptoscrblt.srcy = srcy;
-   sMonobmptoscrblt.dstoffset = dstoffset;
-   sMonobmptoscrblt.width = width;
-   sMonobmptoscrblt.height = height;
-   sMonobmptoscrblt.data = *data;
-   sMonobmptoscrblt.pitch = pitch;
+    INIT_GAL(&sMonobmptoscrblt);
+    sMonobmptoscrblt.dwSubfunction = GALFN_GFX2MONOBMPTOSCRBLT;
+    sMonobmptoscrblt.srcx = srcx;
+    sMonobmptoscrblt.srcy = srcy;
+    sMonobmptoscrblt.dstoffset = dstoffset;
+    sMonobmptoscrblt.width = width;
+    sMonobmptoscrblt.height = height;
+    sMonobmptoscrblt.data = *data;
+    sMonobmptoscrblt.pitch = pitch;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sMonobmptoscrblt)) {
-      return 0;
-   } else {
-      return 1;
-   }
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sMonobmptoscrblt)) {
+        return 0;
+    }
+    else {
+        return 1;
+    }
 }
 
 /*--------------------------------------------------------------------------
@@ -4150,25 +4194,26 @@ Gal2_mono_bitmap_to_screen_blt(unsigned short srcx,
  *------------------------------------------------------------------------*/
 BOOLEAN
 Gal2_bresenham_line(unsigned long dstoffset, unsigned short length,
-		    unsigned short initerr, unsigned short axialerr,
-		    unsigned short diagerr, unsigned short flags)
+                    unsigned short initerr, unsigned short axialerr,
+                    unsigned short diagerr, unsigned short flags)
 {
-   GAL_GFX2BRESENHAMLINE sBresenhamline;
+    GAL_GFX2BRESENHAMLINE sBresenhamline;
 
-   INIT_GAL(&sBresenhamline);
-   sBresenhamline.dwSubfunction = GALFN_GFX2BRESENHAMLINE;
-   sBresenhamline.dstoffset = dstoffset;
-   sBresenhamline.length = length;
-   sBresenhamline.initerr = initerr;
-   sBresenhamline.axialerr = axialerr;
-   sBresenhamline.diagerr = diagerr;
-   sBresenhamline.flags = flags;
+    INIT_GAL(&sBresenhamline);
+    sBresenhamline.dwSubfunction = GALFN_GFX2BRESENHAMLINE;
+    sBresenhamline.dstoffset = dstoffset;
+    sBresenhamline.length = length;
+    sBresenhamline.initerr = initerr;
+    sBresenhamline.axialerr = axialerr;
+    sBresenhamline.diagerr = diagerr;
+    sBresenhamline.flags = flags;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sBresenhamline)) {
-      return 0;
-   } else {
-      return 1;
-   }
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sBresenhamline)) {
+        return 0;
+    }
+    else {
+        return 1;
+    }
 }
 
 /*--------------------------------------------------------------------------
@@ -4182,16 +4227,17 @@ Gal2_bresenham_line(unsigned long dstoffset, unsigned short length,
 BOOLEAN
 Gal2_sync_to_vblank(void)
 {
-   GAL_GFX2SYNCTOVBLANK sSynctovblank;
+    GAL_GFX2SYNCTOVBLANK sSynctovblank;
 
-   INIT_GAL(&sSynctovblank);
-   sSynctovblank.dwSubfunction = GALFN_GFX2SYNCTOVBLANK;
+    INIT_GAL(&sSynctovblank);
+    sSynctovblank.dwSubfunction = GALFN_GFX2SYNCTOVBLANK;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sSynctovblank)) {
-      return 0;
-   } else {
-      return 1;
-   }
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sSynctovblank)) {
+        return 0;
+    }
+    else {
+        return 1;
+    }
 }
 
 /* Video routines */
@@ -4209,18 +4255,19 @@ Gal2_sync_to_vblank(void)
 BOOLEAN
 Gal_set_video_yuv_pitch(unsigned long y_pitch, unsigned long uv_pitch)
 {
-   GAL_VIDEOYUVPITCH sSetVideoyuvpitch;
+    GAL_VIDEOYUVPITCH sSetVideoyuvpitch;
 
-   INIT_GAL(&sSetVideoyuvpitch);
-   sSetVideoyuvpitch.dwSubfunction = GALFN_SETVIDEOYUVPITCH;
-   sSetVideoyuvpitch.y_pitch = y_pitch;
-   sSetVideoyuvpitch.uv_pitch = uv_pitch;
+    INIT_GAL(&sSetVideoyuvpitch);
+    sSetVideoyuvpitch.dwSubfunction = GALFN_SETVIDEOYUVPITCH;
+    sSetVideoyuvpitch.y_pitch = y_pitch;
+    sSetVideoyuvpitch.uv_pitch = uv_pitch;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetVideoyuvpitch)) {
-      return 0;
-   } else {
-      return 1;
-   }
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetVideoyuvpitch)) {
+        return 0;
+    }
+    else {
+        return 1;
+    }
 }
 
 /*--------------------------------------------------------------------------
@@ -4236,19 +4283,20 @@ Gal_set_video_yuv_pitch(unsigned long y_pitch, unsigned long uv_pitch)
 BOOLEAN
 Gal_get_video_yuv_pitch(unsigned long *y_pitch, unsigned long *uv_pitch)
 {
-   GAL_VIDEOYUVPITCH sGetVideoyuvpitch;
+    GAL_VIDEOYUVPITCH sGetVideoyuvpitch;
 
-   INIT_GAL(&sGetVideoyuvpitch);
-   sGetVideoyuvpitch.dwSubfunction = GALFN_GETVIDEOYUVPITCH;
+    INIT_GAL(&sGetVideoyuvpitch);
+    sGetVideoyuvpitch.dwSubfunction = GALFN_GETVIDEOYUVPITCH;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sGetVideoyuvpitch)) {
-      return 0;
-   } else {
-      *y_pitch = sGetVideoyuvpitch.y_pitch;
-      *uv_pitch = sGetVideoyuvpitch.uv_pitch;
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sGetVideoyuvpitch)) {
+        return 0;
+    }
+    else {
+        *y_pitch = sGetVideoyuvpitch.y_pitch;
+        *uv_pitch = sGetVideoyuvpitch.uv_pitch;
 
-      return 1;
-   }
+        return 1;
+    }
 }
 
 /*--------------------------------------------------------------------------
@@ -4264,21 +4312,22 @@ Gal_get_video_yuv_pitch(unsigned long *y_pitch, unsigned long *uv_pitch)
  *------------------------------------------------------------------------*/
 BOOLEAN
 Gal_set_video_yuv_offsets(unsigned long y_offset, unsigned long u_offset,
-			  unsigned long v_offset)
+                          unsigned long v_offset)
 {
-   GAL_VIDEOYUVOFFSETS sSetVideoyuvoffsets;
+    GAL_VIDEOYUVOFFSETS sSetVideoyuvoffsets;
 
-   INIT_GAL(&sSetVideoyuvoffsets);
-   sSetVideoyuvoffsets.dwSubfunction = GALFN_SETVIDEOYUVOFFSETS;
-   sSetVideoyuvoffsets.dwYoffset = y_offset;
-   sSetVideoyuvoffsets.dwUoffset = u_offset;
-   sSetVideoyuvoffsets.dwVoffset = v_offset;
+    INIT_GAL(&sSetVideoyuvoffsets);
+    sSetVideoyuvoffsets.dwSubfunction = GALFN_SETVIDEOYUVOFFSETS;
+    sSetVideoyuvoffsets.dwYoffset = y_offset;
+    sSetVideoyuvoffsets.dwUoffset = u_offset;
+    sSetVideoyuvoffsets.dwVoffset = v_offset;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetVideoyuvoffsets)) {
-      return 0;
-   } else {
-      return 1;
-   }
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetVideoyuvoffsets)) {
+        return 0;
+    }
+    else {
+        return 1;
+    }
 }
 
 /*--------------------------------------------------------------------------
@@ -4293,21 +4342,22 @@ Gal_set_video_yuv_offsets(unsigned long y_offset, unsigned long u_offset,
  *       return: '1' was returned on success otherwise '0' was returned.
  *------------------------------------------------------------------------*/ BOOLEAN
 Gal_get_video_yuv_offsets(unsigned long *y_offset,
-			  unsigned long *u_offset, unsigned long *v_offset)
+                          unsigned long *u_offset, unsigned long *v_offset)
 {
-   GAL_VIDEOYUVOFFSETS sGetVideoyuvoffsets;
+    GAL_VIDEOYUVOFFSETS sGetVideoyuvoffsets;
 
-   INIT_GAL(&sGetVideoyuvoffsets);
-   sGetVideoyuvoffsets.dwSubfunction = GALFN_GETVIDEOYUVOFFSETS;
+    INIT_GAL(&sGetVideoyuvoffsets);
+    sGetVideoyuvoffsets.dwSubfunction = GALFN_GETVIDEOYUVOFFSETS;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sGetVideoyuvoffsets)) {
-      return 0;
-   } else {
-      *y_offset = sGetVideoyuvoffsets.dwYoffset;
-      *u_offset = sGetVideoyuvoffsets.dwUoffset;
-      *v_offset = sGetVideoyuvoffsets.dwVoffset;
-      return 1;
-   }
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sGetVideoyuvoffsets)) {
+        return 0;
+    }
+    else {
+        *y_offset = sGetVideoyuvoffsets.dwYoffset;
+        *u_offset = sGetVideoyuvoffsets.dwUoffset;
+        *v_offset = sGetVideoyuvoffsets.dwVoffset;
+        return 1;
+    }
 }
 
 /*--------------------------------------------------------------------------
@@ -4322,17 +4372,18 @@ Gal_get_video_yuv_offsets(unsigned long *y_offset,
  *------------------------------------------------------------------------*/ BOOLEAN
 Gal_set_video_left_crop(unsigned short x)
 {
-   GAL_VIDEOLEFTCROP sSetVideoleftcrop;;
+    GAL_VIDEOLEFTCROP sSetVideoleftcrop;;
 
-   INIT_GAL(&sSetVideoleftcrop);
-   sSetVideoleftcrop.dwSubfunction = GALFN_SETVIDEOLEFTCROP;
-   sSetVideoleftcrop.x = x;
+    INIT_GAL(&sSetVideoleftcrop);
+    sSetVideoleftcrop.dwSubfunction = GALFN_SETVIDEOLEFTCROP;
+    sSetVideoleftcrop.x = x;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetVideoleftcrop)) {
-      return 0;
-   } else {
-      return 1;
-   }
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetVideoleftcrop)) {
+        return 0;
+    }
+    else {
+        return 1;
+    }
 }
 
 /*--------------------------------------------------------------------------
@@ -4348,18 +4399,19 @@ Gal_set_video_left_crop(unsigned short x)
  *------------------------------------------------------------------------*/ BOOLEAN
 Gal_set_video_vertical_downscale(unsigned short srch, unsigned short dsth)
 {
-   GAL_VIDEOVERTICALDOWNSCALE sSetVideoverticaldownscale;
+    GAL_VIDEOVERTICALDOWNSCALE sSetVideoverticaldownscale;
 
-   INIT_GAL(&sSetVideoverticaldownscale);
-   sSetVideoverticaldownscale.dwSubfunction = GALFN_SETVIDEOVERTICALDOWNSCALE;
-   sSetVideoverticaldownscale.srch = srch;
-   sSetVideoverticaldownscale.dsth = dsth;
+    INIT_GAL(&sSetVideoverticaldownscale);
+    sSetVideoverticaldownscale.dwSubfunction = GALFN_SETVIDEOVERTICALDOWNSCALE;
+    sSetVideoverticaldownscale.srch = srch;
+    sSetVideoverticaldownscale.dsth = dsth;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetVideoverticaldownscale)) {
-      return 0;
-   } else {
-      return 1;
-   }
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetVideoverticaldownscale)) {
+        return 0;
+    }
+    else {
+        return 1;
+    }
 }
 
 /*--------------------------------------------------------------------------
@@ -4373,17 +4425,18 @@ Gal_set_video_vertical_downscale(unsigned short srch, unsigned short dsth)
  *------------------------------------------------------------------------*/ BOOLEAN
 Gal_set_vbi_source(VbiSourceType source)
 {
-   GAL_VBISOURCE sSetVbisource;
+    GAL_VBISOURCE sSetVbisource;
 
-   INIT_GAL(&sSetVbisource);
-   sSetVbisource.dwSubfunction = GALFN_SETVBISOURCE;
-   sSetVbisource.source = source;
+    INIT_GAL(&sSetVbisource);
+    sSetVbisource.dwSubfunction = GALFN_SETVBISOURCE;
+    sSetVbisource.source = source;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetVbisource)) {
-      return 0;
-   } else {
-      return 1;
-   }
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetVbisource)) {
+        return 0;
+    }
+    else {
+        return 1;
+    }
 }
 
 /*--------------------------------------------------------------------------
@@ -4398,18 +4451,19 @@ Gal_set_vbi_source(VbiSourceType source)
 BOOLEAN
 Gal_get_vbi_source(VbiSourceType * source)
 {
-   GAL_VBISOURCE sGetVbisource;
+    GAL_VBISOURCE sGetVbisource;
 
-   INIT_GAL(&sGetVbisource);
-   sGetVbisource.dwSubfunction = GALFN_GETVBISOURCE;
+    INIT_GAL(&sGetVbisource);
+    sGetVbisource.dwSubfunction = GALFN_GETVBISOURCE;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sGetVbisource)) {
-      return 0;
-   } else {
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sGetVbisource)) {
+        return 0;
+    }
+    else {
 
-      *source = sGetVbisource.source;
-      return 1;
-   }
+        *source = sGetVbisource.source;
+        return 1;
+    }
 }
 
 /*--------------------------------------------------------------------------
@@ -4425,18 +4479,19 @@ Gal_get_vbi_source(VbiSourceType * source)
 BOOLEAN
 Gal_set_vbi_lines(unsigned long even, unsigned long odd)
 {
-   GAL_VBILINES sSetVbilines;
+    GAL_VBILINES sSetVbilines;
 
-   INIT_GAL(&sSetVbilines);
-   sSetVbilines.dwSubfunction = GALFN_SETVBILINES;
-   sSetVbilines.even = even;
-   sSetVbilines.odd = odd;
+    INIT_GAL(&sSetVbilines);
+    sSetVbilines.dwSubfunction = GALFN_SETVBILINES;
+    sSetVbilines.even = even;
+    sSetVbilines.odd = odd;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetVbilines)) {
-      return 0;
-   } else {
-      return 1;
-   }
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetVbilines)) {
+        return 0;
+    }
+    else {
+        return 1;
+    }
 }
 
 /*--------------------------------------------------------------------------
@@ -4451,18 +4506,19 @@ Gal_set_vbi_lines(unsigned long even, unsigned long odd)
  *------------------------------------------------------------------------*/ BOOLEAN
 Gal_get_vbi_lines(int odd, unsigned long *lines)
 {
-   GAL_VBILINES sGetVbilines;
+    GAL_VBILINES sGetVbilines;
 
-   INIT_GAL(&sGetVbilines);
-   sGetVbilines.dwSubfunction = GALFN_GETVBILINES;
-   sGetVbilines.odd = odd;
+    INIT_GAL(&sGetVbilines);
+    sGetVbilines.dwSubfunction = GALFN_GETVBILINES;
+    sGetVbilines.odd = odd;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sGetVbilines)) {
-      return 0;
-   } else {
-      *lines = sGetVbilines.lines;
-      return 1;
-   }
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sGetVbilines)) {
+        return 0;
+    }
+    else {
+        *lines = sGetVbilines.lines;
+        return 1;
+    }
 }
 
 /*--------------------------------------------------------------------------
@@ -4479,18 +4535,19 @@ Gal_get_vbi_lines(int odd, unsigned long *lines)
 BOOLEAN
 Gal_set_vbi_total(unsigned long even, unsigned long odd)
 {
-   GAL_VBITOTAL sSetVbitotal;
+    GAL_VBITOTAL sSetVbitotal;
 
-   INIT_GAL(&sSetVbitotal);
-   sSetVbitotal.dwSubfunction = GALFN_SETVBITOTAL;
-   sSetVbitotal.even = even;
-   sSetVbitotal.odd = odd;
+    INIT_GAL(&sSetVbitotal);
+    sSetVbitotal.dwSubfunction = GALFN_SETVBITOTAL;
+    sSetVbitotal.even = even;
+    sSetVbitotal.odd = odd;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetVbitotal)) {
-      return 0;
-   } else {
-      return 1;
-   }
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetVbitotal)) {
+        return 0;
+    }
+    else {
+        return 1;
+    }
 }
 
 /*--------------------------------------------------------------------------
@@ -4506,18 +4563,19 @@ Gal_set_vbi_total(unsigned long even, unsigned long odd)
  *------------------------------------------------------------------------*/ BOOLEAN
 Gal_get_vbi_total(int odd, unsigned long *total)
 {
-   GAL_VBITOTAL sGetVbitotal;
+    GAL_VBITOTAL sGetVbitotal;
 
-   INIT_GAL(&sGetVbitotal);
-   sGetVbitotal.dwSubfunction = GALFN_GETVBITOTAL;
-   sGetVbitotal.odd = odd;
+    INIT_GAL(&sGetVbitotal);
+    sGetVbitotal.dwSubfunction = GALFN_GETVBITOTAL;
+    sGetVbitotal.odd = odd;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sGetVbitotal)) {
-      return 0;
-   } else {
-      *total = sGetVbitotal.total;
-      return 1;
-   }
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sGetVbitotal)) {
+        return 0;
+    }
+    else {
+        *total = sGetVbitotal.total;
+        return 1;
+    }
 }
 
 /*--------------------------------------------------------------------------
@@ -4531,17 +4589,18 @@ Gal_get_vbi_total(int odd, unsigned long *total)
  *------------------------------------------------------------------------*/ BOOLEAN
 Gal_set_vertical_scaler_offset(char offset)
 {
-   GAL_VSCALEROFFSET sSetVscaleroffset;
+    GAL_VSCALEROFFSET sSetVscaleroffset;
 
-   INIT_GAL(&sSetVscaleroffset);
-   sSetVscaleroffset.dwSubfunction = GALFN_SETVSCALEROFFSET;
-   sSetVscaleroffset.offset = offset;
+    INIT_GAL(&sSetVscaleroffset);
+    sSetVscaleroffset.dwSubfunction = GALFN_SETVSCALEROFFSET;
+    sSetVscaleroffset.offset = offset;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetVscaleroffset)) {
-      return 0;
-   } else {
-      return 1;
-   }
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetVscaleroffset)) {
+        return 0;
+    }
+    else {
+        return 1;
+    }
 }
 
 /*--------------------------------------------------------------------------
@@ -4555,18 +4614,19 @@ Gal_set_vertical_scaler_offset(char offset)
  *------------------------------------------------------------------------*/ BOOLEAN
 Gal_get_vertical_scaler_offset(char *offset)
 {
-   GAL_VSCALEROFFSET sGetVscaleroffset;
+    GAL_VSCALEROFFSET sGetVscaleroffset;
 
-   INIT_GAL(&sGetVscaleroffset);
-   sGetVscaleroffset.dwSubfunction = GALFN_GETVSCALEROFFSET;
+    INIT_GAL(&sGetVscaleroffset);
+    sGetVscaleroffset.dwSubfunction = GALFN_GETVSCALEROFFSET;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sGetVscaleroffset)) {
-      return 0;
-   } else {
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sGetVscaleroffset)) {
+        return 0;
+    }
+    else {
 
-      *offset = sGetVscaleroffset.offset;
-      return 1;
-   }
+        *offset = sGetVscaleroffset.offset;
+        return 1;
+    }
 }
 
 /*--------------------------------------------------------------------------
@@ -4580,17 +4640,18 @@ Gal_get_vertical_scaler_offset(char *offset)
 BOOLEAN
 Gal_get_video_interlaced(int *interlaced)
 {
-   GAL_GETVIDEOINTERLACED sGetvideointerlaced;
+    GAL_GETVIDEOINTERLACED sGetvideointerlaced;
 
-   INIT_GAL(&sGetvideointerlaced);
-   sGetvideointerlaced.dwSubfunction = GALFN_GETVIDEOINTERLACED;
+    INIT_GAL(&sGetvideointerlaced);
+    sGetvideointerlaced.dwSubfunction = GALFN_GETVIDEOINTERLACED;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sGetvideointerlaced)) {
-      return 0;
-   } else {
-      *interlaced = sGetvideointerlaced.interlaced;
-      return 1;
-   }
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sGetvideointerlaced)) {
+        return 0;
+    }
+    else {
+        *interlaced = sGetvideointerlaced.interlaced;
+        return 1;
+    }
 }
 
 /*--------------------------------------------------------------------------
@@ -4604,17 +4665,18 @@ Gal_get_video_interlaced(int *interlaced)
 BOOLEAN
 Gal_get_color_space_YUV(int *colorspace)
 {
-   GAL_COLORSPACEYUV sGetcolorspaceyuv;
+    GAL_COLORSPACEYUV sGetcolorspaceyuv;
 
-   INIT_GAL(&sGetcolorspaceyuv);
-   sGetcolorspaceyuv.dwSubfunction = GALFN_GETCOLORSPACEYUV;
+    INIT_GAL(&sGetcolorspaceyuv);
+    sGetcolorspaceyuv.dwSubfunction = GALFN_GETCOLORSPACEYUV;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sGetcolorspaceyuv)) {
-      return 0;
-   } else {
-      *colorspace = sGetcolorspaceyuv.colorspace;
-      return 1;
-   }
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sGetcolorspaceyuv)) {
+        return 0;
+    }
+    else {
+        *colorspace = sGetcolorspaceyuv.colorspace;
+        return 1;
+    }
 }
 
 /*--------------------------------------------------------------------------
@@ -4628,17 +4690,18 @@ Gal_get_color_space_YUV(int *colorspace)
 BOOLEAN
 Gal_get_genlock_enable(int *enable)
 {
-   GAL_GENLOCKENABLE sGetgenlockenable;
+    GAL_GENLOCKENABLE sGetgenlockenable;
 
-   INIT_GAL(&sGetgenlockenable);
-   sGetgenlockenable.dwSubfunction = GALFN_GETGENLOCKENABLE;
+    INIT_GAL(&sGetgenlockenable);
+    sGetgenlockenable.dwSubfunction = GALFN_GETGENLOCKENABLE;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sGetgenlockenable)) {
-      return 0;
-   } else {
-      *enable = sGetgenlockenable.enable;
-      return 1;
-   }
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sGetgenlockenable)) {
+        return 0;
+    }
+    else {
+        *enable = sGetgenlockenable.enable;
+        return 1;
+    }
 }
 
 /*--------------------------------------------------------------------------
@@ -4653,17 +4716,18 @@ Gal_get_genlock_enable(int *enable)
 BOOLEAN
 Gal_set_genlock_enable(int enable)
 {
-   GAL_GENLOCKENABLE sSetgenlockenable;
+    GAL_GENLOCKENABLE sSetgenlockenable;
 
-   INIT_GAL(&sSetgenlockenable);
-   sSetgenlockenable.dwSubfunction = GALFN_SETGENLOCKENABLE;
+    INIT_GAL(&sSetgenlockenable);
+    sSetgenlockenable.dwSubfunction = GALFN_SETGENLOCKENABLE;
 
-   sSetgenlockenable.enable = enable;
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetgenlockenable)) {
-      return 0;
-   } else {
-      return 1;
-   }
+    sSetgenlockenable.enable = enable;
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetgenlockenable)) {
+        return 0;
+    }
+    else {
+        return 1;
+    }
 }
 
 /*--------------------------------------------------------------------------
@@ -4677,17 +4741,18 @@ Gal_set_genlock_enable(int enable)
 BOOLEAN
 Gal_get_genlock_delay(unsigned long *delay)
 {
-   GAL_GENLOCKDELAY sGetgenlockdelay;
+    GAL_GENLOCKDELAY sGetgenlockdelay;
 
-   INIT_GAL(&sGetgenlockdelay);
-   sGetgenlockdelay.dwSubfunction = GALFN_GETGENLOCKDELAY;
+    INIT_GAL(&sGetgenlockdelay);
+    sGetgenlockdelay.dwSubfunction = GALFN_GETGENLOCKDELAY;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sGetgenlockdelay)) {
-      return 0;
-   } else {
-      *delay = sGetgenlockdelay.delay;
-      return 1;
-   }
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sGetgenlockdelay)) {
+        return 0;
+    }
+    else {
+        *delay = sGetgenlockdelay.delay;
+        return 1;
+    }
 }
 
 /*--------------------------------------------------------------------------
@@ -4701,33 +4766,35 @@ Gal_get_genlock_delay(unsigned long *delay)
 BOOLEAN
 Gal_set_genlock_delay(unsigned long delay)
 {
-   GAL_GENLOCKDELAY sSetgenlockdelay;
+    GAL_GENLOCKDELAY sSetgenlockdelay;
 
-   INIT_GAL(&sSetgenlockdelay);
-   sSetgenlockdelay.dwSubfunction = GALFN_SETGENLOCKDELAY;
+    INIT_GAL(&sSetgenlockdelay);
+    sSetgenlockdelay.dwSubfunction = GALFN_SETGENLOCKDELAY;
 
-   sSetgenlockdelay.delay = delay;
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetgenlockdelay)) {
-      return 0;
-   } else {
-      return 1;
-   }
+    sSetgenlockdelay.delay = delay;
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetgenlockdelay)) {
+        return 0;
+    }
+    else {
+        return 1;
+    }
 }
 
 BOOLEAN
 Gal_set_top_line_in_odd(int enable)
 {
-   GAL_TOPLINEINODD sSettoplineinodd;
+    GAL_TOPLINEINODD sSettoplineinodd;
 
-   INIT_GAL(&sSettoplineinodd);
-   sSettoplineinodd.dwSubfunction = GALFN_SETTOPLINEINODD;
+    INIT_GAL(&sSettoplineinodd);
+    sSettoplineinodd.dwSubfunction = GALFN_SETTOPLINEINODD;
 
-   sSettoplineinodd.enable = enable;
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sSettoplineinodd)) {
-      return 0;
-   } else {
-      return 1;
-   }
+    sSettoplineinodd.enable = enable;
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sSettoplineinodd)) {
+        return 0;
+    }
+    else {
+        return 1;
+    }
 }
 
 /*--------------------------------------------------------------------------
@@ -4745,25 +4812,26 @@ Gal_set_top_line_in_odd(int enable)
  *------------------------------------------------------------------------*/
 BOOLEAN
 Gal_get_video_cursor(unsigned long *key,
-		     unsigned long *mask,
-		     unsigned short *select_color2,
-		     unsigned long *color1, unsigned long *color2)
+                     unsigned long *mask,
+                     unsigned short *select_color2,
+                     unsigned long *color1, unsigned long *color2)
 {
-   GAL_VIDEOCURSOR sGetvideocursor;
+    GAL_VIDEOCURSOR sGetvideocursor;
 
-   INIT_GAL(&sGetvideocursor);
-   sGetvideocursor.dwSubfunction = GALFN_GETVIDEOCURSOR;
+    INIT_GAL(&sGetvideocursor);
+    sGetvideocursor.dwSubfunction = GALFN_GETVIDEOCURSOR;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sGetvideocursor)) {
-      return 0;
-   } else {
-      *key = sGetvideocursor.key;
-      *mask = sGetvideocursor.mask;
-      *select_color2 = sGetvideocursor.select_color2;
-      *color1 = sGetvideocursor.color1;
-      *color2 = sGetvideocursor.color2;
-      return 1;
-   }
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sGetvideocursor)) {
+        return 0;
+    }
+    else {
+        *key = sGetvideocursor.key;
+        *mask = sGetvideocursor.mask;
+        *select_color2 = sGetvideocursor.select_color2;
+        *color1 = sGetvideocursor.color1;
+        *color2 = sGetvideocursor.color2;
+        return 1;
+    }
 }
 
 /*--------------------------------------------------------------------------
@@ -4778,17 +4846,18 @@ Gal_get_video_cursor(unsigned long *key,
 BOOLEAN
 Gal_read_crc(unsigned long *crc)
 {
-   GAL_READCRC sReadcrc;
+    GAL_READCRC sReadcrc;
 
-   INIT_GAL(&sReadcrc);
-   sReadcrc.dwSubfunction = GALFN_READCRC;
+    INIT_GAL(&sReadcrc);
+    sReadcrc.dwSubfunction = GALFN_READCRC;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sReadcrc)) {
-      return 0;
-   } else {
-      *crc = sReadcrc.crc;
-      return 1;
-   }
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sReadcrc)) {
+        return 0;
+    }
+    else {
+        *crc = sReadcrc.crc;
+        return 1;
+    }
 }
 
 /*--------------------------------------------------------------------------
@@ -4808,25 +4877,26 @@ Gal_read_crc(unsigned long *crc)
  *------------------------------------------------------------------------*/
 BOOLEAN
 Gal_read_window_crc(int source, unsigned short x, unsigned short y,
-		    unsigned short width, unsigned short height,
-		    int crc32, unsigned long *crc)
+                    unsigned short width, unsigned short height,
+                    int crc32, unsigned long *crc)
 {
-   GAL_READWINDOWCRC sReadwindowcrc;
+    GAL_READWINDOWCRC sReadwindowcrc;
 
-   INIT_GAL(&sReadwindowcrc);
-   sReadwindowcrc.dwSubfunction = GALFN_READWINDOWCRC;
-   sReadwindowcrc.source = source;
-   sReadwindowcrc.x = x;
-   sReadwindowcrc.y = y;
-   sReadwindowcrc.width = width;
-   sReadwindowcrc.height = height;
-   sReadwindowcrc.crc32 = crc32;
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sReadwindowcrc)) {
-      return 0;
-   } else {
-      *crc = sReadwindowcrc.crc;
-      return 1;
-   }
+    INIT_GAL(&sReadwindowcrc);
+    sReadwindowcrc.dwSubfunction = GALFN_READWINDOWCRC;
+    sReadwindowcrc.source = source;
+    sReadwindowcrc.x = x;
+    sReadwindowcrc.y = y;
+    sReadwindowcrc.width = width;
+    sReadwindowcrc.height = height;
+    sReadwindowcrc.crc32 = crc32;
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sReadwindowcrc)) {
+        return 0;
+    }
+    else {
+        *crc = sReadwindowcrc.crc;
+        return 1;
+    }
 }
 
 /*--------------------------------------------------------------------------
@@ -4841,17 +4911,18 @@ Gal_read_window_crc(int source, unsigned short x, unsigned short y,
 BOOLEAN
 Gal_get_macrovision_enable(int *enable)
 {
-   GAL_MACROVISIONENABLE sGetmacrovisionenable;
+    GAL_MACROVISIONENABLE sGetmacrovisionenable;
 
-   INIT_GAL(&sGetmacrovisionenable);
-   sGetmacrovisionenable.dwSubfunction = GALFN_GETMACROVISIONENABLE;
+    INIT_GAL(&sGetmacrovisionenable);
+    sGetmacrovisionenable.dwSubfunction = GALFN_GETMACROVISIONENABLE;
 
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sGetmacrovisionenable)) {
-      return 0;
-   } else {
-      *enable = sGetmacrovisionenable.enable;
-      return 1;
-   }
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sGetmacrovisionenable)) {
+        return 0;
+    }
+    else {
+        *enable = sGetmacrovisionenable.enable;
+        return 1;
+    }
 }
 
 /*--------------------------------------------------------------------------
@@ -4866,15 +4937,16 @@ Gal_get_macrovision_enable(int *enable)
 BOOLEAN
 Gal_set_macrovision_enable(int enable)
 {
-   GAL_MACROVISIONENABLE sSetmacrovisionenable;
+    GAL_MACROVISIONENABLE sSetmacrovisionenable;
 
-   INIT_GAL(&sSetmacrovisionenable);
-   sSetmacrovisionenable.dwSubfunction = GALFN_SETMACROVISIONENABLE;
+    INIT_GAL(&sSetmacrovisionenable);
+    sSetmacrovisionenable.dwSubfunction = GALFN_SETMACROVISIONENABLE;
 
-   sSetmacrovisionenable.enable = enable;
-   if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetmacrovisionenable)) {
-      return 0;
-   } else {
-      return 1;
-   }
+    sSetmacrovisionenable.enable = enable;
+    if (ioctl(ifbdev_handle, FBIOGAL_API, &sSetmacrovisionenable)) {
+        return 0;
+    }
+    else {
+        return 1;
+    }
 }

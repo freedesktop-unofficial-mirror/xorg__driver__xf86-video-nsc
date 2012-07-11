@@ -174,15 +174,15 @@ int
 gfx_set_vip_enable(int enable)
 #endif
 {
-   unsigned long value;
+    unsigned long value;
 
-   value = READ_VIP32(SC1200_VIP_CONTROL);
-   if (enable)
-      value |= SC1200_VIP_DATA_CAPTURE_EN;
-   else
-      value &= ~SC1200_VIP_DATA_CAPTURE_EN;
-   WRITE_VIP32(SC1200_VIP_CONTROL, value);
-   return (0);
+    value = READ_VIP32(SC1200_VIP_CONTROL);
+    if (enable)
+        value |= SC1200_VIP_DATA_CAPTURE_EN;
+    else
+        value &= ~SC1200_VIP_DATA_CAPTURE_EN;
+    WRITE_VIP32(SC1200_VIP_CONTROL, value);
+    return (0);
 }
 
 /*-----------------------------------------------------------------------------
@@ -199,25 +199,25 @@ int
 gfx_set_vip_capture_run_mode(int mode)
 #endif
 {
-   unsigned long value;
+    unsigned long value;
 
-   value = READ_VIP32(SC1200_VIP_CONTROL);
-   value &= ~SC1200_CAPTURE_RUN_MODE_MASK;
-   switch (mode) {
-   case VIP_CAPTURE_STOP_LINE:
-      value |= SC1200_CAPTURE_RUN_MODE_STOP_LINE;
-      break;
-   case VIP_CAPTURE_STOP_FIELD:
-      value |= SC1200_CAPTURE_RUN_MODE_STOP_FIELD;
-      break;
-   case VIP_CAPTURE_START_FIELD:
-      value |= SC1200_CAPTURE_RUN_MODE_START;
-      break;
-   default:
-      return GFX_STATUS_BAD_PARAMETER;
-   }
-   WRITE_VIP32(SC1200_VIP_CONTROL, value);
-   return (0);
+    value = READ_VIP32(SC1200_VIP_CONTROL);
+    value &= ~SC1200_CAPTURE_RUN_MODE_MASK;
+    switch (mode) {
+    case VIP_CAPTURE_STOP_LINE:
+        value |= SC1200_CAPTURE_RUN_MODE_STOP_LINE;
+        break;
+    case VIP_CAPTURE_STOP_FIELD:
+        value |= SC1200_CAPTURE_RUN_MODE_STOP_FIELD;
+        break;
+    case VIP_CAPTURE_START_FIELD:
+        value |= SC1200_CAPTURE_RUN_MODE_START;
+        break;
+    default:
+        return GFX_STATUS_BAD_PARAMETER;
+    }
+    WRITE_VIP32(SC1200_VIP_CONTROL, value);
+    return (0);
 }
 
 /*-----------------------------------------------------------------------------
@@ -235,13 +235,14 @@ int
 gfx_set_vip_base(unsigned long even, unsigned long odd)
 #endif
 {
-   /* TRUE OFFSET IS SPECIFIED, NEED TO SET BIT 23 FOR HARDWARE */
+    /* TRUE OFFSET IS SPECIFIED, NEED TO SET BIT 23 FOR HARDWARE */
 
-   if (even)
-      WRITE_VIP32(SC1200_VIP_EVEN_BASE, even + (unsigned long)gfx_phys_fbptr);
-   if (odd)
-      WRITE_VIP32(SC1200_VIP_ODD_BASE, odd + (unsigned long)gfx_phys_fbptr);
-   return (0);
+    if (even)
+        WRITE_VIP32(SC1200_VIP_EVEN_BASE,
+                    even + (unsigned long) gfx_phys_fbptr);
+    if (odd)
+        WRITE_VIP32(SC1200_VIP_ODD_BASE, odd + (unsigned long) gfx_phys_fbptr);
+    return (0);
 }
 
 /*-----------------------------------------------------------------------------
@@ -258,8 +259,8 @@ int
 gfx_set_vip_pitch(unsigned long pitch)
 #endif
 {
-   WRITE_VIP32(SC1200_VIP_PITCH, pitch & SC1200_VIP_PITCH_MASK);
-   return (0);
+    WRITE_VIP32(SC1200_VIP_PITCH, pitch & SC1200_VIP_PITCH_MASK);
+    return (0);
 }
 
 /*-----------------------------------------------------------------------------
@@ -276,18 +277,18 @@ int
 gfx_set_vip_mode(int mode)
 #endif
 {
-   unsigned long config;
+    unsigned long config;
 
-   config = READ_VIP32(SC1200_VIP_CONFIG);
-   config &= ~SC1200_VIP_MODE_MASK;
-   switch (mode) {
-   case VIP_MODE_C:
-      WRITE_VIP32(SC1200_VIP_CONFIG, config | SC1200_VIP_MODE_C);
-      break;
-   default:
-      return GFX_STATUS_BAD_PARAMETER;
-   }
-   return (0);
+    config = READ_VIP32(SC1200_VIP_CONFIG);
+    config &= ~SC1200_VIP_MODE_MASK;
+    switch (mode) {
+    case VIP_MODE_C:
+        WRITE_VIP32(SC1200_VIP_CONFIG, config | SC1200_VIP_MODE_C);
+        break;
+    default:
+        return GFX_STATUS_BAD_PARAMETER;
+    }
+    return (0);
 }
 
 /*-----------------------------------------------------------------------------
@@ -304,15 +305,15 @@ int
 gfx_set_vbi_enable(int enable)
 #endif
 {
-   unsigned long value;
+    unsigned long value;
 
-   value = READ_VIP32(SC1200_VIP_CONTROL);
-   if (enable)
-      value |= SC1200_VIP_VBI_CAPTURE_EN;
-   else
-      value &= ~SC1200_VIP_VBI_CAPTURE_EN;
-   WRITE_VIP32(SC1200_VIP_CONTROL, value);
-   return (0);
+    value = READ_VIP32(SC1200_VIP_CONTROL);
+    if (enable)
+        value |= SC1200_VIP_VBI_CAPTURE_EN;
+    else
+        value &= ~SC1200_VIP_VBI_CAPTURE_EN;
+    WRITE_VIP32(SC1200_VIP_CONTROL, value);
+    return (0);
 }
 
 /*-----------------------------------------------------------------------------
@@ -330,21 +331,21 @@ int
 gfx_set_vbi_mode(int mode)
 #endif
 {
-   unsigned long config;
+    unsigned long config;
 
-   config = READ_VIP32(SC1200_VIP_CONFIG);
-   config &=
-	 ~(SC1200_VBI_ANCILLARY_TO_MEMORY | SC1200_VBI_TASK_A_TO_MEMORY |
-	   SC1200_VBI_TASK_B_TO_MEMORY);
+    config = READ_VIP32(SC1200_VIP_CONFIG);
+    config &=
+        ~(SC1200_VBI_ANCILLARY_TO_MEMORY | SC1200_VBI_TASK_A_TO_MEMORY |
+          SC1200_VBI_TASK_B_TO_MEMORY);
 
-   if (mode & VBI_ANCILLARY)
-      config |= SC1200_VBI_ANCILLARY_TO_MEMORY;
-   if (mode & VBI_TASK_A)
-      config |= SC1200_VBI_TASK_A_TO_MEMORY;
-   if (mode & VBI_TASK_B)
-      config |= SC1200_VBI_TASK_B_TO_MEMORY;
-   WRITE_VIP32(SC1200_VIP_CONFIG, config);
-   return (0);
+    if (mode & VBI_ANCILLARY)
+        config |= SC1200_VBI_ANCILLARY_TO_MEMORY;
+    if (mode & VBI_TASK_A)
+        config |= SC1200_VBI_TASK_A_TO_MEMORY;
+    if (mode & VBI_TASK_B)
+        config |= SC1200_VBI_TASK_B_TO_MEMORY;
+    WRITE_VIP32(SC1200_VIP_CONFIG, config);
+    return (0);
 }
 
 /*-----------------------------------------------------------------------------
@@ -363,14 +364,14 @@ int
 gfx_set_vbi_base(unsigned long even, unsigned long odd)
 #endif
 {
-   /* VIP HW REQUIRES THAT BASE ADDRESSES BE 16-BYTE ALIGNED */
+    /* VIP HW REQUIRES THAT BASE ADDRESSES BE 16-BYTE ALIGNED */
 
-   if (even)
-      WRITE_VIP32(SC1200_VBI_EVEN_BASE, even & ~0xf);
-   if (odd)
-      WRITE_VIP32(SC1200_VBI_ODD_BASE, odd & ~0xf);
+    if (even)
+        WRITE_VIP32(SC1200_VBI_EVEN_BASE, even & ~0xf);
+    if (odd)
+        WRITE_VIP32(SC1200_VBI_ODD_BASE, odd & ~0xf);
 
-   return (0);
+    return (0);
 }
 
 /*-----------------------------------------------------------------------------
@@ -387,8 +388,8 @@ int
 gfx_set_vbi_pitch(unsigned long pitch)
 #endif
 {
-   WRITE_VIP32(SC1200_VBI_PITCH, pitch & SC1200_VBI_PITCH_MASK);
-   return (0);
+    WRITE_VIP32(SC1200_VBI_PITCH, pitch & SC1200_VBI_PITCH_MASK);
+    return (0);
 }
 
 /*-----------------------------------------------------------------------------
@@ -405,11 +406,11 @@ int
 gfx_set_vbi_direct(unsigned long even_lines, unsigned long odd_lines)
 #endif
 {
-   WRITE_VIP32(SC1200_EVEN_DIRECT_VBI_LINE_ENABLE,
-	       even_lines & SC1200_DIRECT_VBI_LINE_ENABLE_MASK);
-   WRITE_VIP32(SC1200_ODD_DIRECT_VBI_LINE_ENABLE,
-	       odd_lines & SC1200_DIRECT_VBI_LINE_ENABLE_MASK);
-   return (0);
+    WRITE_VIP32(SC1200_EVEN_DIRECT_VBI_LINE_ENABLE,
+                even_lines & SC1200_DIRECT_VBI_LINE_ENABLE_MASK);
+    WRITE_VIP32(SC1200_ODD_DIRECT_VBI_LINE_ENABLE,
+                odd_lines & SC1200_DIRECT_VBI_LINE_ENABLE_MASK);
+    return (0);
 }
 
 /*-----------------------------------------------------------------------------
@@ -426,15 +427,15 @@ int
 gfx_set_vbi_interrupt(int enable)
 #endif
 {
-   unsigned long value;
+    unsigned long value;
 
-   value = READ_VIP32(SC1200_VIP_CONTROL);
-   if (enable)
-      value |= SC1200_VIP_VBI_FIELD_INTERRUPT_EN;
-   else
-      value &= ~SC1200_VIP_VBI_FIELD_INTERRUPT_EN;
-   WRITE_VIP32(SC1200_VIP_CONTROL, value);
-   return (0);
+    value = READ_VIP32(SC1200_VIP_CONTROL);
+    if (enable)
+        value |= SC1200_VIP_VBI_FIELD_INTERRUPT_EN;
+    else
+        value &= ~SC1200_VIP_VBI_FIELD_INTERRUPT_EN;
+    WRITE_VIP32(SC1200_VIP_CONTROL, value);
+    return (0);
 }
 
 /*-----------------------------------------------------------------------------
@@ -453,15 +454,15 @@ int
 gfx_set_vip_bus_request_threshold_high(int enable)
 #endif
 {
-   unsigned long value;
+    unsigned long value;
 
-   value = READ_VIP32(SC1200_VIP_CONFIG);
-   if (enable)
-      value &= ~SC1200_VIP_BUS_REQUEST_THRESHOLD;
-   else
-      value |= SC1200_VIP_BUS_REQUEST_THRESHOLD;
-   WRITE_VIP32(SC1200_VIP_CONFIG, value);
-   return (0);
+    value = READ_VIP32(SC1200_VIP_CONFIG);
+    if (enable)
+        value &= ~SC1200_VIP_BUS_REQUEST_THRESHOLD;
+    else
+        value |= SC1200_VIP_BUS_REQUEST_THRESHOLD;
+    WRITE_VIP32(SC1200_VIP_CONFIG, value);
+    return (0);
 }
 
 /*-----------------------------------------------------------------------------
@@ -478,17 +479,17 @@ int
 gfx_set_vip_last_line(int last_line)
 #endif
 {
-   unsigned long value;
+    unsigned long value;
 
-   /* This feature is implemented in Rev C1 */
-   if (gfx_chip_revision < SC1200_REV_C1)
-      return (GFX_STATUS_OK);
+    /* This feature is implemented in Rev C1 */
+    if (gfx_chip_revision < SC1200_REV_C1)
+        return (GFX_STATUS_OK);
 
-   value = READ_VIP32(SC1200_VIP_LINE_TARGET);
-   value &= ~SC1200_VIP_LAST_LINE_MASK;
-   value |= ((last_line & 0x3FF) << 16);
-   WRITE_VIP32(SC1200_VIP_LINE_TARGET, value);
-   return (GFX_STATUS_OK);
+    value = READ_VIP32(SC1200_VIP_LINE_TARGET);
+    value &= ~SC1200_VIP_LAST_LINE_MASK;
+    value |= ((last_line & 0x3FF) << 16);
+    WRITE_VIP32(SC1200_VIP_LINE_TARGET, value);
+    return (GFX_STATUS_OK);
 }
 
 /*-----------------------------------------------------------------------------
@@ -505,10 +506,10 @@ int
 gfx_test_vip_odd_field(void)
 #endif
 {
-   if (READ_VIP32(SC1200_VIP_STATUS) & SC1200_VIP_CURRENT_FIELD_ODD)
-      return (1);
-   else
-      return (0);
+    if (READ_VIP32(SC1200_VIP_STATUS) & SC1200_VIP_CURRENT_FIELD_ODD)
+        return (1);
+    else
+        return (0);
 }
 
 /*-----------------------------------------------------------------------------
@@ -527,10 +528,10 @@ int
 gfx_test_vip_bases_updated(void)
 #endif
 {
-   if (READ_VIP32(SC1200_VIP_STATUS) & SC1200_VIP_BASE_NOT_UPDATED)
-      return (0);
-   else
-      return (1);
+    if (READ_VIP32(SC1200_VIP_STATUS) & SC1200_VIP_BASE_NOT_UPDATED)
+        return (0);
+    else
+        return (1);
 }
 
 /*-----------------------------------------------------------------------------
@@ -549,13 +550,14 @@ int
 gfx_test_vip_fifo_overflow(void)
 #endif
 {
-   if (READ_VIP32(SC1200_VIP_STATUS) & SC1200_VIP_FIFO_OVERFLOW) {
-      /* Bits in vip status register are either read only or reset by writing 1 */
-      WRITE_VIP32(SC1200_VIP_STATUS, SC1200_VIP_FIFO_OVERFLOW);
-      return (1);
-   } else {
-      return (0);
-   }
+    if (READ_VIP32(SC1200_VIP_STATUS) & SC1200_VIP_FIFO_OVERFLOW) {
+        /* Bits in vip status register are either read only or reset by writing 1 */
+        WRITE_VIP32(SC1200_VIP_STATUS, SC1200_VIP_FIFO_OVERFLOW);
+        return (1);
+    }
+    else {
+        return (0);
+    }
 }
 
 /*-----------------------------------------------------------------------------
@@ -573,8 +575,8 @@ int
 gfx_get_vip_line(void)
 #endif
 {
-   return (int)(READ_VIP32(SC1200_VIP_CURRENT_LINE) &
-		SC1200_VIP_CURRENT_LINE_MASK);
+    return (int) (READ_VIP32(SC1200_VIP_CURRENT_LINE) &
+                  SC1200_VIP_CURRENT_LINE_MASK);
 }
 
 /*-----------------------------------------------------------------------------
@@ -589,11 +591,11 @@ unsigned long
 gfx_get_vip_base(int odd)
 #endif
 {
-   /* MASK BIT 23 AND ABOVE TO MAKE IT A TRUE OFFSET */
+    /* MASK BIT 23 AND ABOVE TO MAKE IT A TRUE OFFSET */
 
-   if (odd)
-      return (READ_VIP32(SC1200_VIP_ODD_BASE));
-   return (READ_VIP32(SC1200_VIP_EVEN_BASE));
+    if (odd)
+        return (READ_VIP32(SC1200_VIP_ODD_BASE));
+    return (READ_VIP32(SC1200_VIP_EVEN_BASE));
 }
 
 /*-----------------------------------------------------------------------------
@@ -608,7 +610,7 @@ unsigned long
 gfx_get_vbi_pitch(void)
 #endif
 {
-   return (READ_VIP32(SC1200_VBI_PITCH) & SC1200_VBI_PITCH_MASK);
+    return (READ_VIP32(SC1200_VBI_PITCH) & SC1200_VBI_PITCH_MASK);
 }
 
 /*************************************************************/
@@ -629,9 +631,9 @@ int
 gfx_get_vip_enable(void)
 #endif
 {
-   if (READ_VIP32(SC1200_VIP_CONTROL) & SC1200_VIP_DATA_CAPTURE_EN)
-      return (1);
-   return (0);
+    if (READ_VIP32(SC1200_VIP_CONTROL) & SC1200_VIP_DATA_CAPTURE_EN)
+        return (1);
+    return (0);
 }
 
 /*-----------------------------------------------------------------------------
@@ -646,7 +648,7 @@ unsigned long
 gfx_get_vip_pitch(void)
 #endif
 {
-   return (READ_VIP32(SC1200_VIP_PITCH) & SC1200_VIP_PITCH_MASK);
+    return (READ_VIP32(SC1200_VIP_PITCH) & SC1200_VIP_PITCH_MASK);
 }
 
 /*-----------------------------------------------------------------------------
@@ -661,12 +663,12 @@ int
 gfx_get_vip_mode(void)
 #endif
 {
-   switch (READ_VIP32(SC1200_VIP_CONFIG) & SC1200_VIP_MODE_MASK) {
-   case SC1200_VIP_MODE_C:
-      return VIP_MODE_C;
-   default:
-      return (0);
-   }
+    switch (READ_VIP32(SC1200_VIP_CONFIG) & SC1200_VIP_MODE_MASK) {
+    case SC1200_VIP_MODE_C:
+        return VIP_MODE_C;
+    default:
+        return (0);
+    }
 }
 
 /*-----------------------------------------------------------------------------
@@ -681,9 +683,9 @@ int
 gfx_get_vbi_enable(void)
 #endif
 {
-   if (READ_VIP32(SC1200_VIP_CONTROL) & SC1200_VIP_VBI_CAPTURE_EN)
-      return (1);
-   return (0);
+    if (READ_VIP32(SC1200_VIP_CONTROL) & SC1200_VIP_VBI_CAPTURE_EN)
+        return (1);
+    return (0);
 }
 
 /*-----------------------------------------------------------------------------
@@ -698,20 +700,20 @@ int
 gfx_get_vbi_mode(void)
 #endif
 {
-   int config;
-   int mode = 0;
+    int config;
+    int mode = 0;
 
-   config =
-	 (int)(READ_VIP32(SC1200_VIP_CONFIG) &
-	       (SC1200_VBI_ANCILLARY_TO_MEMORY | SC1200_VBI_TASK_A_TO_MEMORY |
-		SC1200_VBI_TASK_B_TO_MEMORY));
-   if (config & SC1200_VBI_ANCILLARY_TO_MEMORY)
-      mode |= VBI_ANCILLARY;
-   if (config & SC1200_VBI_TASK_A_TO_MEMORY)
-      mode |= VBI_TASK_A;
-   if (config & SC1200_VBI_TASK_B_TO_MEMORY)
-      mode |= VBI_TASK_B;
-   return mode;
+    config =
+        (int) (READ_VIP32(SC1200_VIP_CONFIG) &
+               (SC1200_VBI_ANCILLARY_TO_MEMORY | SC1200_VBI_TASK_A_TO_MEMORY |
+                SC1200_VBI_TASK_B_TO_MEMORY));
+    if (config & SC1200_VBI_ANCILLARY_TO_MEMORY)
+        mode |= VBI_ANCILLARY;
+    if (config & SC1200_VBI_TASK_A_TO_MEMORY)
+        mode |= VBI_TASK_A;
+    if (config & SC1200_VBI_TASK_B_TO_MEMORY)
+        mode |= VBI_TASK_B;
+    return mode;
 }
 
 /*-----------------------------------------------------------------------------
@@ -726,11 +728,11 @@ unsigned long
 gfx_get_vbi_base(int odd)
 #endif
 {
-   /* MASK BIT 23 AND ABOVE TO MAKE IT A TRUE OFFSET */
+    /* MASK BIT 23 AND ABOVE TO MAKE IT A TRUE OFFSET */
 
-   if (odd)
-      return (READ_VIP32(SC1200_VBI_ODD_BASE));
-   return (READ_VIP32(SC1200_VBI_EVEN_BASE));
+    if (odd)
+        return (READ_VIP32(SC1200_VBI_ODD_BASE));
+    return (READ_VIP32(SC1200_VBI_EVEN_BASE));
 }
 
 /*-----------------------------------------------------------------------------
@@ -745,13 +747,13 @@ unsigned long
 gfx_get_vbi_direct(int odd)
 #endif
 {
-   /* MASK BIT 23 AND ABOVE TO MAKE IT A TRUE OFFSET */
+    /* MASK BIT 23 AND ABOVE TO MAKE IT A TRUE OFFSET */
 
-   if (odd)
-      return (READ_VIP32(SC1200_ODD_DIRECT_VBI_LINE_ENABLE) &
-	      SC1200_DIRECT_VBI_LINE_ENABLE_MASK);
-   return (READ_VIP32(SC1200_EVEN_DIRECT_VBI_LINE_ENABLE) &
-	   SC1200_DIRECT_VBI_LINE_ENABLE_MASK);
+    if (odd)
+        return (READ_VIP32(SC1200_ODD_DIRECT_VBI_LINE_ENABLE) &
+                SC1200_DIRECT_VBI_LINE_ENABLE_MASK);
+    return (READ_VIP32(SC1200_EVEN_DIRECT_VBI_LINE_ENABLE) &
+            SC1200_DIRECT_VBI_LINE_ENABLE_MASK);
 }
 
 /*-----------------------------------------------------------------------------
@@ -766,9 +768,9 @@ int
 gfx_get_vbi_interrupt(void)
 #endif
 {
-   if (READ_VIP32(SC1200_VIP_CONTROL) & SC1200_VIP_VBI_FIELD_INTERRUPT_EN)
-      return (1);
-   return (0);
+    if (READ_VIP32(SC1200_VIP_CONTROL) & SC1200_VIP_VBI_FIELD_INTERRUPT_EN)
+        return (1);
+    return (0);
 }
 
 /*-----------------------------------------------------------------------------
@@ -783,11 +785,11 @@ int
 gfx_get_vip_bus_request_threshold_high(void)
 #endif
 {
-   if (READ_VIP32(SC1200_VIP_CONFIG) & SC1200_VIP_BUS_REQUEST_THRESHOLD)
-      return (1);
-   return (0);
+    if (READ_VIP32(SC1200_VIP_CONFIG) & SC1200_VIP_BUS_REQUEST_THRESHOLD)
+        return (1);
+    return (0);
 }
 
-#endif /* GFX_READ_ROUTINES */
+#endif                          /* GFX_READ_ROUTINES */
 
 /* END OF FILE */

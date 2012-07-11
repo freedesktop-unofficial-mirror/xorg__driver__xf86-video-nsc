@@ -177,13 +177,13 @@
 int
 gfx_set_decoder_defaults(void)
 {
-   int status = GFX_STATUS_UNSUPPORTED;
+    int status = GFX_STATUS_UNSUPPORTED;
 
 #	if	GFX_DECODER_SAA7114
-   if (gfx_decoder_type == GFX_DECODER_SAA7114)
-      status = saa7114_set_decoder_defaults();
+    if (gfx_decoder_type == GFX_DECODER_SAA7114)
+        status = saa7114_set_decoder_defaults();
 #	endif
-   return (status);
+    return (status);
 }
 
 /*-----------------------------------------------------------------------------
@@ -193,13 +193,13 @@ gfx_set_decoder_defaults(void)
 int
 gfx_set_decoder_analog_input(unsigned char input)
 {
-   int status = GFX_STATUS_UNSUPPORTED;
+    int status = GFX_STATUS_UNSUPPORTED;
 
 #	if	GFX_DECODER_SAA7114
-   if (gfx_decoder_type == GFX_DECODER_SAA7114)
-      status = saa7114_set_decoder_analog_input(input);
+    if (gfx_decoder_type == GFX_DECODER_SAA7114)
+        status = saa7114_set_decoder_analog_input(input);
 #	endif
-   return (status);
+    return (status);
 }
 
 /*-----------------------------------------------------------------------------
@@ -209,13 +209,13 @@ gfx_set_decoder_analog_input(unsigned char input)
 int
 gfx_set_decoder_brightness(unsigned char brightness)
 {
-   int status = GFX_STATUS_UNSUPPORTED;
+    int status = GFX_STATUS_UNSUPPORTED;
 
 #	if	GFX_DECODER_SAA7114
-   if (gfx_decoder_type == GFX_DECODER_SAA7114)
-      status = saa7114_set_decoder_brightness(brightness);
+    if (gfx_decoder_type == GFX_DECODER_SAA7114)
+        status = saa7114_set_decoder_brightness(brightness);
 #	endif
-   return (status);
+    return (status);
 }
 
 /*-----------------------------------------------------------------------------
@@ -225,13 +225,13 @@ gfx_set_decoder_brightness(unsigned char brightness)
 int
 gfx_set_decoder_contrast(unsigned char contrast)
 {
-   int status = GFX_STATUS_UNSUPPORTED;
+    int status = GFX_STATUS_UNSUPPORTED;
 
 #	if	GFX_DECODER_SAA7114
-   if (gfx_decoder_type == GFX_DECODER_SAA7114)
-      status = saa7114_set_decoder_contrast(contrast);
+    if (gfx_decoder_type == GFX_DECODER_SAA7114)
+        status = saa7114_set_decoder_contrast(contrast);
 #	endif
-   return (status);
+    return (status);
 }
 
 /*-----------------------------------------------------------------------------
@@ -241,13 +241,13 @@ gfx_set_decoder_contrast(unsigned char contrast)
 int
 gfx_set_decoder_hue(char hue)
 {
-   int status = GFX_STATUS_UNSUPPORTED;
+    int status = GFX_STATUS_UNSUPPORTED;
 
 #	if	GFX_DECODER_SAA7114
-   if (gfx_decoder_type == GFX_DECODER_SAA7114)
-      status = saa7114_set_decoder_hue(hue);
+    if (gfx_decoder_type == GFX_DECODER_SAA7114)
+        status = saa7114_set_decoder_hue(hue);
 #	endif
-   return (status);
+    return (status);
 }
 
 /*-----------------------------------------------------------------------------
@@ -257,13 +257,13 @@ gfx_set_decoder_hue(char hue)
 int
 gfx_set_decoder_saturation(unsigned char saturation)
 {
-   int status = GFX_STATUS_UNSUPPORTED;
+    int status = GFX_STATUS_UNSUPPORTED;
 
 #	if	GFX_DECODER_SAA7114
-   if (gfx_decoder_type == GFX_DECODER_SAA7114)
-      status = saa7114_set_decoder_saturation(saturation);
+    if (gfx_decoder_type == GFX_DECODER_SAA7114)
+        status = saa7114_set_decoder_saturation(saturation);
 #	endif
-   return (status);
+    return (status);
 }
 
 /*-----------------------------------------------------------------------------
@@ -273,13 +273,13 @@ gfx_set_decoder_saturation(unsigned char saturation)
 int
 gfx_set_decoder_input_offset(unsigned short x, unsigned short y)
 {
-   int status = GFX_STATUS_UNSUPPORTED;
+    int status = GFX_STATUS_UNSUPPORTED;
 
 #	if	GFX_DECODER_SAA7114
-   if (gfx_decoder_type == GFX_DECODER_SAA7114)
-      status = saa7114_set_decoder_input_offset(x, y);
+    if (gfx_decoder_type == GFX_DECODER_SAA7114)
+        status = saa7114_set_decoder_input_offset(x, y);
 #	endif
-   return (status);
+    return (status);
 }
 
 /*-----------------------------------------------------------------------------
@@ -289,13 +289,13 @@ gfx_set_decoder_input_offset(unsigned short x, unsigned short y)
 int
 gfx_set_decoder_input_size(unsigned short width, unsigned short height)
 {
-   int status = GFX_STATUS_UNSUPPORTED;
+    int status = GFX_STATUS_UNSUPPORTED;
 
 #	if	GFX_DECODER_SAA7114
-   if (gfx_decoder_type == GFX_DECODER_SAA7114)
-      status = saa7114_set_decoder_input_size(width, height);
+    if (gfx_decoder_type == GFX_DECODER_SAA7114)
+        status = saa7114_set_decoder_input_size(width, height);
 #	endif
-   return (status);
+    return (status);
 }
 
 /*-----------------------------------------------------------------------------
@@ -305,13 +305,13 @@ gfx_set_decoder_input_size(unsigned short width, unsigned short height)
 int
 gfx_set_decoder_output_size(unsigned short width, unsigned short height)
 {
-   int status = GFX_STATUS_UNSUPPORTED;
+    int status = GFX_STATUS_UNSUPPORTED;
 
 #	if	GFX_DECODER_SAA7114
-   if (gfx_decoder_type == GFX_DECODER_SAA7114)
-      status = saa7114_set_decoder_output_size(width, height);
+    if (gfx_decoder_type == GFX_DECODER_SAA7114)
+        status = saa7114_set_decoder_output_size(width, height);
 #	endif
-   return (status);
+    return (status);
 }
 
 /*-----------------------------------------------------------------------------
@@ -320,15 +320,15 @@ gfx_set_decoder_output_size(unsigned short width, unsigned short height)
  */
 int
 gfx_set_decoder_scale(unsigned short srcw, unsigned short srch,
-		      unsigned short dstw, unsigned short dsth)
+                      unsigned short dstw, unsigned short dsth)
 {
-   int status = GFX_STATUS_UNSUPPORTED;
+    int status = GFX_STATUS_UNSUPPORTED;
 
 #	if	GFX_DECODER_SAA7114
-   if (gfx_decoder_type == GFX_DECODER_SAA7114)
-      status = saa7114_set_decoder_scale(srcw, srch, dstw, dsth);
+    if (gfx_decoder_type == GFX_DECODER_SAA7114)
+        status = saa7114_set_decoder_scale(srcw, srch, dstw, dsth);
 #	endif
-   return (status);
+    return (status);
 }
 
 /*-----------------------------------------------------------------------------
@@ -338,13 +338,13 @@ gfx_set_decoder_scale(unsigned short srcw, unsigned short srch,
 int
 gfx_set_decoder_vbi_format(int start, int end, int format)
 {
-   int status = GFX_STATUS_UNSUPPORTED;
+    int status = GFX_STATUS_UNSUPPORTED;
 
 #	if	GFX_DECODER_SAA7114
-   if (gfx_decoder_type == GFX_DECODER_SAA7114)
-      status = saa7114_set_decoder_vbi_format(start, end, format);
+    if (gfx_decoder_type == GFX_DECODER_SAA7114)
+        status = saa7114_set_decoder_vbi_format(start, end, format);
 #	endif
-   return (status);
+    return (status);
 }
 
 /*-----------------------------------------------------------------------------
@@ -354,13 +354,13 @@ gfx_set_decoder_vbi_format(int start, int end, int format)
 int
 gfx_set_decoder_vbi_enable(int enable)
 {
-   int status = GFX_STATUS_UNSUPPORTED;
+    int status = GFX_STATUS_UNSUPPORTED;
 
 #	if	GFX_DECODER_SAA7114
-   if (gfx_decoder_type == GFX_DECODER_SAA7114)
-      status = saa7114_set_decoder_vbi_enable(enable);
+    if (gfx_decoder_type == GFX_DECODER_SAA7114)
+        status = saa7114_set_decoder_vbi_enable(enable);
 #	endif
-   return (status);
+    return (status);
 }
 
 /*-----------------------------------------------------------------------------
@@ -370,13 +370,13 @@ gfx_set_decoder_vbi_enable(int enable)
 int
 gfx_set_decoder_vbi_upscale(void)
 {
-   int status = GFX_STATUS_UNSUPPORTED;
+    int status = GFX_STATUS_UNSUPPORTED;
 
 #	if	GFX_DECODER_SAA7114
-   if (gfx_decoder_type == GFX_DECODER_SAA7114)
-      status = saa7114_set_decoder_vbi_upscale();
+    if (gfx_decoder_type == GFX_DECODER_SAA7114)
+        status = saa7114_set_decoder_vbi_upscale();
 #	endif
-   return (status);
+    return (status);
 }
 
 /*-----------------------------------------------------------------------------
@@ -386,13 +386,13 @@ gfx_set_decoder_vbi_upscale(void)
 int
 gfx_set_decoder_TV_standard(TVStandardType TVStandard)
 {
-   int status = GFX_STATUS_UNSUPPORTED;
+    int status = GFX_STATUS_UNSUPPORTED;
 
 #	if	GFX_DECODER_SAA7114
-   if (gfx_decoder_type == GFX_DECODER_SAA7114)
-      status = saa7114_set_decoder_TV_standard(TVStandard);
+    if (gfx_decoder_type == GFX_DECODER_SAA7114)
+        status = saa7114_set_decoder_TV_standard(TVStandard);
 #	endif
-   return (status);
+    return (status);
 }
 
 /*-----------------------------------------------------------------------------
@@ -402,13 +402,13 @@ gfx_set_decoder_TV_standard(TVStandardType TVStandard)
 int
 gfx_set_decoder_luminance_filter(unsigned char lufi)
 {
-   int status = GFX_STATUS_UNSUPPORTED;
+    int status = GFX_STATUS_UNSUPPORTED;
 
 #	if	GFX_DECODER_SAA7114
-   if (gfx_decoder_type == GFX_DECODER_SAA7114)
-      status = saa7114_set_decoder_luminance_filter(lufi);
+    if (gfx_decoder_type == GFX_DECODER_SAA7114)
+        status = saa7114_set_decoder_luminance_filter(lufi);
 #	endif
-   return (status);
+    return (status);
 }
 
 /*-----------------------------------------------------------------------------
@@ -418,13 +418,13 @@ gfx_set_decoder_luminance_filter(unsigned char lufi)
 int
 gfx_decoder_software_reset(void)
 {
-   int status = GFX_STATUS_UNSUPPORTED;
+    int status = GFX_STATUS_UNSUPPORTED;
 
 #	if	GFX_DECODER_SAA7114
-   if (gfx_decoder_type == GFX_DECODER_SAA7114)
-      status = saa7114_decoder_software_reset();
+    if (gfx_decoder_type == GFX_DECODER_SAA7114)
+        status = saa7114_decoder_software_reset();
 #	endif
-   return (status);
+    return (status);
 }
 
 /*-----------------------------------------------------------------------------
@@ -434,13 +434,13 @@ gfx_decoder_software_reset(void)
 int
 gfx_decoder_detect_macrovision(void)
 {
-   int status = GFX_STATUS_UNSUPPORTED;
+    int status = GFX_STATUS_UNSUPPORTED;
 
 #	if	GFX_DECODER_SAA7114
-   if (gfx_decoder_type == GFX_DECODER_SAA7114)
-      status = saa7114_decoder_detect_macrovision();
+    if (gfx_decoder_type == GFX_DECODER_SAA7114)
+        status = saa7114_decoder_detect_macrovision();
 #	endif
-   return (status);
+    return (status);
 }
 
 /*-----------------------------------------------------------------------------
@@ -450,13 +450,13 @@ gfx_decoder_detect_macrovision(void)
 int
 gfx_decoder_detect_video(void)
 {
-   int status = GFX_STATUS_UNSUPPORTED;
+    int status = GFX_STATUS_UNSUPPORTED;
 
 #	if	GFX_DECODER_SAA7114
-   if (gfx_decoder_type == GFX_DECODER_SAA7114)
-      status = saa7114_decoder_detect_video();
+    if (gfx_decoder_type == GFX_DECODER_SAA7114)
+        status = saa7114_decoder_detect_video();
 #	endif
-   return (status);
+    return (status);
 }
 
 /*************************************************************/
@@ -472,13 +472,13 @@ gfx_decoder_detect_video(void)
 unsigned char
 gfx_get_decoder_brightness(void)
 {
-   unsigned char brightness = 0;
+    unsigned char brightness = 0;
 
 #	if	GFX_DECODER_SAA7114
-   if (gfx_decoder_type == GFX_DECODER_SAA7114)
-      brightness = saa7114_get_decoder_brightness();
+    if (gfx_decoder_type == GFX_DECODER_SAA7114)
+        brightness = saa7114_get_decoder_brightness();
 #	endif
-   return (brightness);
+    return (brightness);
 }
 
 /*-----------------------------------------------------------------------------
@@ -488,13 +488,13 @@ gfx_get_decoder_brightness(void)
 unsigned char
 gfx_get_decoder_contrast(void)
 {
-   unsigned char contrast = 0;
+    unsigned char contrast = 0;
 
 #	if	GFX_DECODER_SAA7114
-   if (gfx_decoder_type == GFX_DECODER_SAA7114)
-      contrast = saa7114_get_decoder_contrast();
+    if (gfx_decoder_type == GFX_DECODER_SAA7114)
+        contrast = saa7114_get_decoder_contrast();
 #	endif
-   return (contrast);
+    return (contrast);
 }
 
 /*-----------------------------------------------------------------------------
@@ -504,13 +504,13 @@ gfx_get_decoder_contrast(void)
 char
 gfx_get_decoder_hue(void)
 {
-   unsigned char hue = 0;
+    unsigned char hue = 0;
 
 #	if	GFX_DECODER_SAA7114
-   if (gfx_decoder_type == GFX_DECODER_SAA7114)
-      hue = saa7114_get_decoder_hue();
+    if (gfx_decoder_type == GFX_DECODER_SAA7114)
+        hue = saa7114_get_decoder_hue();
 #	endif
-   return ((char)hue);
+    return ((char) hue);
 }
 
 /*-----------------------------------------------------------------------------
@@ -520,13 +520,13 @@ gfx_get_decoder_hue(void)
 unsigned char
 gfx_get_decoder_saturation(void)
 {
-   unsigned char saturation = 0;
+    unsigned char saturation = 0;
 
 #	if	GFX_DECODER_SAA7114
-   if (gfx_decoder_type == GFX_DECODER_SAA7114)
-      saturation = saa7114_get_decoder_saturation();
+    if (gfx_decoder_type == GFX_DECODER_SAA7114)
+        saturation = saa7114_get_decoder_saturation();
 #	endif
-   return (saturation);
+    return (saturation);
 }
 
 /*-----------------------------------------------------------------------------
@@ -536,13 +536,13 @@ gfx_get_decoder_saturation(void)
 unsigned long
 gfx_get_decoder_input_offset()
 {
-   unsigned long offset = 0;
+    unsigned long offset = 0;
 
 #	if	GFX_DECODER_SAA7114
-   if (gfx_decoder_type == GFX_DECODER_SAA7114)
-      offset = saa7114_get_decoder_input_offset();
+    if (gfx_decoder_type == GFX_DECODER_SAA7114)
+        offset = saa7114_get_decoder_input_offset();
 #	endif
-   return (offset);
+    return (offset);
 }
 
 /*-----------------------------------------------------------------------------
@@ -552,13 +552,13 @@ gfx_get_decoder_input_offset()
 unsigned long
 gfx_get_decoder_input_size()
 {
-   unsigned long size = 0;
+    unsigned long size = 0;
 
 #	if	GFX_DECODER_SAA7114
-   if (gfx_decoder_type == GFX_DECODER_SAA7114)
-      size = saa7114_get_decoder_input_size();
+    if (gfx_decoder_type == GFX_DECODER_SAA7114)
+        size = saa7114_get_decoder_input_size();
 #	endif
-   return (size);
+    return (size);
 }
 
 /*-----------------------------------------------------------------------------
@@ -568,13 +568,13 @@ gfx_get_decoder_input_size()
 unsigned long
 gfx_get_decoder_output_size()
 {
-   unsigned long size = 0;
+    unsigned long size = 0;
 
 #	if	GFX_DECODER_SAA7114
-   if (gfx_decoder_type == GFX_DECODER_SAA7114)
-      size = saa7114_get_decoder_output_size();
+    if (gfx_decoder_type == GFX_DECODER_SAA7114)
+        size = saa7114_get_decoder_output_size();
 #	endif
-   return (size);
+    return (size);
 }
 
 /*-----------------------------------------------------------------------------
@@ -584,17 +584,17 @@ gfx_get_decoder_output_size()
 int
 gfx_get_decoder_vbi_format(int line)
 {
-   int format = 0;
+    int format = 0;
 
 #	if	GFX_DECODER_SAA7114
-   if (gfx_decoder_type == GFX_DECODER_SAA7114)
-      format = saa7114_get_decoder_vbi_format(line);
+    if (gfx_decoder_type == GFX_DECODER_SAA7114)
+        format = saa7114_get_decoder_vbi_format(line);
 #	endif
-   return (format);
+    return (format);
 }
 
-#endif /* GFX_READ_ROUTINES */
+#endif                          /* GFX_READ_ROUTINES */
 
-#endif /* GFX_DECODER_DYNAMIC */
+#endif                          /* GFX_DECODER_DYNAMIC */
 
 /* END OF FILE */

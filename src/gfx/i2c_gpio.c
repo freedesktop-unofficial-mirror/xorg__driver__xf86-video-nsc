@@ -136,11 +136,11 @@ int gpio_data = 0;
 
 static int g_initialized = 0;
 
-#define	I2CWRITE		0x00	/* Write address */
-#define	I2CREAD			0x01	/* Read address */
+#define	I2CWRITE		0x00    /* Write address */
+#define	I2CREAD			0x01    /* Read address */
 
-#define	I2CACK			0x00	/* Ack value */
-#define	I2CNACK			0x01	/* Not - ack value */
+#define	I2CACK			0x00    /* Ack value */
+#define	I2CNACK			0x01    /* Not - ack value */
 
 #define		CS5530_ID	(0x80000000 | (0x00<<16) | (0x12<<11) | (0<<8) | 0x00)
 #define		CS5530_GPIO	(0x80000000 | (0x00<<16) | (0x12<<11) | (0<<8) | 0x90)
@@ -153,9 +153,9 @@ int I2C_init(void);
 void I2C_cleanup(void);
 
 int I2C_Read(unsigned char address, unsigned int reg, unsigned long *p_value,
-	     unsigned int bytes);
+             unsigned int bytes);
 int I2C_Write(unsigned char address, unsigned int reg, unsigned long value,
-	      unsigned int bytes);
+              unsigned int bytes);
 int I2CAL_init(void);
 void I2CAL_cleanup(void);
 
@@ -177,11 +177,11 @@ unsigned char ReceiveI2CData(void);
 
 int gpio_i2c_reset(unsigned char busnum, short adr, char freq);
 int gpio_i2c_write(unsigned char busnum, unsigned char chipadr,
-		   unsigned char subadr, unsigned char bytes,
-		   unsigned char *data);
+                   unsigned char subadr, unsigned char bytes,
+                   unsigned char *data);
 int gpio_i2c_read(unsigned char busnum, unsigned char chipadr,
-		  unsigned char subadr, unsigned char bytes,
-		  unsigned char *data);
+                  unsigned char subadr, unsigned char bytes,
+                  unsigned char *data);
 int gpio_i2c_select_gpio(int clock, int data);
 int gpio_i2c_init(void);
 void gpio_i2c_cleanup(void);
@@ -203,8 +203,8 @@ int
 gfx_i2c_reset(unsigned char busnum, short adr, char freq)
 #endif
 {
-   /* ### ADD ### Any code needed to reset the state of the GPIOs. */
-   return GFX_STATUS_OK;
+    /* ### ADD ### Any code needed to reset the state of the GPIOs. */
+    return GFX_STATUS_OK;
 }
 
 /*---------------------------------------------------------------------------
@@ -221,9 +221,9 @@ int
 gfx_i2c_select_gpio(int clock, int data)
 #endif
 {
-   gpio_clock = clock;
-   gpio_data = data;
-   return (0);
+    gpio_clock = clock;
+    gpio_data = data;
+    return (0);
 }
 
 /*---------------------------------------------------------------------------
@@ -235,59 +235,59 @@ gfx_i2c_select_gpio(int clock, int data)
 #if GFX_I2C_DYNAMIC
 int
 gpio_i2c_write(unsigned char busnum, unsigned char address, unsigned char reg,
-	       unsigned char bytes, unsigned char *value)
+               unsigned char bytes, unsigned char *value)
 #else
 int
 gfx_i2c_write(unsigned char busnum, unsigned char address, unsigned char reg,
-	      unsigned char bytes, unsigned char *value)
+              unsigned char bytes, unsigned char *value)
 #endif
 {
-   /* ### ADD ### CODE TO WRITE BYTE TO I2B BUS */
+    /* ### ADD ### CODE TO WRITE BYTE TO I2B BUS */
 
-   int restart_count = 0;
+    int restart_count = 0;
 
-   while (restart_count++ < 5) {
-      /* set the access pointer register. */
-      /* The address is shifted left by one to make room for Read/Write bit */
-      SendI2CStart();
-      SendI2CData((char)((address << 1) | I2CWRITE));
-      if (!ReceiveI2CAck()) {
-	 SendI2CStop();
-	 gfx_delay_milliseconds(10);
-	 continue;
-      }
-      SendI2CData((unsigned char)reg);
-      if (!ReceiveI2CAck()) {
-	 SendI2CStop();
-	 gfx_delay_milliseconds(10);
-	 continue;
-      }
+    while (restart_count++ < 5) {
+        /* set the access pointer register. */
+        /* The address is shifted left by one to make room for Read/Write bit */
+        SendI2CStart();
+        SendI2CData((char) ((address << 1) | I2CWRITE));
+        if (!ReceiveI2CAck()) {
+            SendI2CStop();
+            gfx_delay_milliseconds(10);
+            continue;
+        }
+        SendI2CData((unsigned char) reg);
+        if (!ReceiveI2CAck()) {
+            SendI2CStop();
+            gfx_delay_milliseconds(10);
+            continue;
+        }
 
-      /* write the first byte */
-      SendI2CData(*value);
-      if (!ReceiveI2CAck()) {
-	 SendI2CStop();
-	 gfx_delay_milliseconds(10);
-	 continue;
-      }
+        /* write the first byte */
+        SendI2CData(*value);
+        if (!ReceiveI2CAck()) {
+            SendI2CStop();
+            gfx_delay_milliseconds(10);
+            continue;
+        }
 
-      /* write the second byte. */
-      if (bytes == 2) {
-	 SendI2CData(*(value + 1));
-	 if (!ReceiveI2CAck()) {
-	    SendI2CStop();
-	    gfx_delay_milliseconds(10);
-	    continue;
-	 }
-      }
+        /* write the second byte. */
+        if (bytes == 2) {
+            SendI2CData(*(value + 1));
+            if (!ReceiveI2CAck()) {
+                SendI2CStop();
+                gfx_delay_milliseconds(10);
+                continue;
+            }
+        }
 
-      /* done. */
-      SendI2CStop();
+        /* done. */
+        SendI2CStop();
 
-      return 0;
-   }
+        return 0;
+    }
 
-   return (0);
+    return (0);
 
 }
 
@@ -300,58 +300,58 @@ gfx_i2c_write(unsigned char busnum, unsigned char address, unsigned char reg,
 #if GFX_I2C_DYNAMIC
 int
 gpio_i2c_read(unsigned char busnum, unsigned char address, unsigned char reg,
-	      unsigned char bytes, unsigned char *p_value)
+              unsigned char bytes, unsigned char *p_value)
 #else
 int
 gfx_i2c_read(unsigned char busnum, unsigned char address, unsigned char reg,
-	     unsigned char bytes, unsigned char *p_value)
+             unsigned char bytes, unsigned char *p_value)
 #endif
 {
-   /* ### ADD ### CODE TO WRITE BYTE TO I2B BUS */
-   /* For now return clock and data pins */
+    /* ### ADD ### CODE TO WRITE BYTE TO I2B BUS */
+    /* For now return clock and data pins */
 
-   int restart_count = 0;
+    int restart_count = 0;
 
-   if (!p_value)
-      return (1);
+    if (!p_value)
+        return (1);
 
-   while (restart_count++ < 5) {
-      /* set the access pointer register. */
-      /* The address is shifted left by one to make room for Read/Write bit  */
-      SendI2CStart();
-      SendI2CData((char)((address << 1) | I2CWRITE));
-      if (!ReceiveI2CAck()) {
-	 SendI2CStop();
-	 gfx_delay_milliseconds(10);
-	 continue;
-      }
-      SendI2CData((unsigned char)(reg & 0xFF));
-      SendI2CNack();
+    while (restart_count++ < 5) {
+        /* set the access pointer register. */
+        /* The address is shifted left by one to make room for Read/Write bit  */
+        SendI2CStart();
+        SendI2CData((char) ((address << 1) | I2CWRITE));
+        if (!ReceiveI2CAck()) {
+            SendI2CStop();
+            gfx_delay_milliseconds(10);
+            continue;
+        }
+        SendI2CData((unsigned char) (reg & 0xFF));
+        SendI2CNack();
 
-      /* read the first data byte. */
-      SendI2CStart();
-      SendI2CData((char)((address << 1) | I2CREAD));
-      if (!ReceiveI2CAck()) {
-	 SendI2CStop();
-	 gfx_delay_milliseconds(10);
-	 continue;
-      }
-      *p_value = ReceiveI2CData();
+        /* read the first data byte. */
+        SendI2CStart();
+        SendI2CData((char) ((address << 1) | I2CREAD));
+        if (!ReceiveI2CAck()) {
+            SendI2CStop();
+            gfx_delay_milliseconds(10);
+            continue;
+        }
+        *p_value = ReceiveI2CData();
 
-      /* read the second byte. */
-      if (bytes == 2) {
-	 SendI2CAck();
-	 *(p_value + 1) = ReceiveI2CData();
-      }
+        /* read the second byte. */
+        if (bytes == 2) {
+            SendI2CAck();
+            *(p_value + 1) = ReceiveI2CData();
+        }
 
-      /* done. */
-      SendI2CNack();
-      SendI2CStop();
+        /* done. */
+        SendI2CNack();
+        SendI2CStop();
 
-      return 0;
-   }
+        return 0;
+    }
 
-   return (1);
+    return (1);
 }
 
 /* Added i2c/gpio code to test fs451 chip. */
@@ -368,10 +368,10 @@ gfx_i2c_read(unsigned char busnum, unsigned char address, unsigned char reg,
 void
 SendI2CStart(void)
 {
-   I2CAL_output_data(1);
-   I2CAL_output_clock(1);
-   I2CAL_output_data(0);
-   I2CAL_output_clock(0);
+    I2CAL_output_data(1);
+    I2CAL_output_clock(1);
+    I2CAL_output_data(0);
+    I2CAL_output_clock(0);
 }
 
 /*
@@ -386,9 +386,9 @@ SendI2CStart(void)
 void
 SendI2CStop(void)
 {
-   I2CAL_output_data(0);
-   I2CAL_output_clock(1);
-   I2CAL_output_data(1);
+    I2CAL_output_data(0);
+    I2CAL_output_clock(1);
+    I2CAL_output_data(1);
 }
 
 /*
@@ -403,9 +403,9 @@ SendI2CStop(void)
 void
 SendI2CAck(void)
 {
-   I2CAL_output_data(0);
-   I2CAL_output_clock(1);
-   I2CAL_output_clock(0);
+    I2CAL_output_data(0);
+    I2CAL_output_clock(1);
+    I2CAL_output_clock(0);
 }
 
 /*
@@ -420,9 +420,9 @@ SendI2CAck(void)
 void
 SendI2CNack(void)
 {
-   I2CAL_output_data(1);
-   I2CAL_output_clock(1);
-   I2CAL_output_clock(0);
+    I2CAL_output_data(1);
+    I2CAL_output_clock(1);
+    I2CAL_output_clock(0);
 }
 
 /*
@@ -441,18 +441,18 @@ SendI2CNack(void)
 void
 SendI2CData(unsigned char inData)
 {
-   unsigned char bit;
+    unsigned char bit;
 
-   /* Send all 8 bits of data byte, MSB to LSB */
-   for (bit = 0x80; bit != 0; bit >>= 1) {
-      if (inData & bit)
-	 I2CAL_output_data(1);
-      else
-	 I2CAL_output_data(0);
+    /* Send all 8 bits of data byte, MSB to LSB */
+    for (bit = 0x80; bit != 0; bit >>= 1) {
+        if (inData & bit)
+            I2CAL_output_data(1);
+        else
+            I2CAL_output_data(0);
 
-      I2CAL_output_clock(1);
-      I2CAL_output_clock(0);
-   }
+        I2CAL_output_clock(1);
+        I2CAL_output_clock(0);
+    }
 }
 
 /*
@@ -469,16 +469,16 @@ SendI2CData(unsigned char inData)
 unsigned char
 ReceiveI2CAck(void)
 {
-   unsigned char bit;
+    unsigned char bit;
 
-   /* Test for Ack/Nack */
-   I2CAL_set_data_for_input();
-   I2CAL_output_data(1);
-   I2CAL_output_clock(1);
-   bit = I2CAL_input_data();
-   I2CAL_output_clock(0);
-   I2CAL_set_data_for_output();
-   return !bit;
+    /* Test for Ack/Nack */
+    I2CAL_set_data_for_input();
+    I2CAL_output_data(1);
+    I2CAL_output_clock(1);
+    bit = I2CAL_input_data();
+    I2CAL_output_clock(0);
+    I2CAL_set_data_for_output();
+    return !bit;
 }
 
 /*	
@@ -495,25 +495,25 @@ ReceiveI2CAck(void)
 unsigned char
 ReceiveI2CData(void)
 {
-   unsigned char data = 0;
-   unsigned char x;
+    unsigned char data = 0;
+    unsigned char x;
 
-   /* make sure the data line is released */
-   I2CAL_set_data_for_input();
-   I2CAL_output_data(1);
+    /* make sure the data line is released */
+    I2CAL_set_data_for_input();
+    I2CAL_output_data(1);
 
-   /* shift in the data */
-   for (x = 0; x < 8; x++) {
-      /* shift the data left   */
-      I2CAL_output_clock(1);
-      data <<= 1;
-      data |= I2CAL_input_data();
-      I2CAL_output_clock(0);
-   }
+    /* shift in the data */
+    for (x = 0; x < 8; x++) {
+        /* shift the data left   */
+        I2CAL_output_clock(1);
+        data <<= 1;
+        data |= I2CAL_input_data();
+        I2CAL_output_clock(0);
+    }
 
-   I2CAL_set_data_for_output();
-   I2CAL_output_data(1);
-   return data;
+    I2CAL_set_data_for_output();
+    I2CAL_output_data(1);
+    return data;
 }
 
 /*
@@ -535,25 +535,25 @@ int
 gfx_i2c_init(void)
 #endif
 {
-   int errc;
+    int errc;
 
-   /* init I2CAL */
-   errc = I2CAL_init();
-   if (errc)
-      return errc;
+    /* init I2CAL */
+    errc = I2CAL_init();
+    if (errc)
+        return errc;
 
-   /* set the clock and data lines to the proper states */
-   I2CAL_output_clock(1);
-   I2CAL_output_data(1);
-   I2CAL_set_data_for_output();
+    /* set the clock and data lines to the proper states */
+    I2CAL_output_clock(1);
+    I2CAL_output_data(1);
+    I2CAL_set_data_for_output();
 
-   SendI2CStart();
-   SendI2CStop();
-   SendI2CStop();
+    SendI2CStart();
+    SendI2CStop();
+    SendI2CStop();
 
-   g_initialized = 1;
+    g_initialized = 1;
 
-   return 0;
+    return 0;
 }
 
 /*
@@ -575,50 +575,50 @@ void
 gfx_i2c_cleanup(void)
 #endif
 {
-   if (g_initialized) {
+    if (g_initialized) {
 
-      /* set the clock and data lines to a harmless state */
-      I2CAL_output_clock(1);
-      I2CAL_output_data(1);
+        /* set the clock and data lines to a harmless state */
+        I2CAL_output_clock(1);
+        I2CAL_output_data(1);
 
-      g_initialized = 0;
-   }
+        g_initialized = 0;
+    }
 
-   I2CAL_cleanup();
+    I2CAL_cleanup();
 }
 
 int
 I2CAL_init(void)
 {
-   unsigned long l_reg;
-   unsigned short reg;
+    unsigned long l_reg;
+    unsigned short reg;
 
-   /* initialize the i2c port. */
-   l_reg = gfx_pci_config_read(CS5530_GPIO);
+    /* initialize the i2c port. */
+    l_reg = gfx_pci_config_read(CS5530_GPIO);
 
-   if (l_reg != 0x01001078)
-      return 1;
+    if (l_reg != 0x01001078)
+        return 1;
 
-   l_reg = gfx_pci_config_read(CS5530_GPIO);
-   reg = (unsigned short)l_reg;
+    l_reg = gfx_pci_config_read(CS5530_GPIO);
+    reg = (unsigned short) l_reg;
 
-   /* both outputs, both high. */
-   reg |= (SDADIR | SCLDIR | SDA | SCL);
-   l_reg = reg;
-   gfx_pci_config_write(CS5530_GPIO, l_reg);
+    /* both outputs, both high. */
+    reg |= (SDADIR | SCLDIR | SDA | SCL);
+    l_reg = reg;
+    gfx_pci_config_write(CS5530_GPIO, l_reg);
 
-   g_initialized = 1;
+    g_initialized = 1;
 
-   return 0;
+    return 0;
 }
 
 void
 I2CAL_cleanup(void)
 {
-   if (g_initialized) {
+    if (g_initialized) {
 
-      g_initialized = 0;
-   }
+        g_initialized = 0;
+    }
 }
 
 /*
@@ -631,23 +631,24 @@ I2CAL_cleanup(void)
 void
 I2CAL_output_clock(int inState)
 {
-   unsigned short reg;
-   unsigned long value;
+    unsigned short reg;
+    unsigned long value;
 
-   value = gfx_pci_config_read(CS5530_GPIO);
-   reg = (unsigned short)value;
+    value = gfx_pci_config_read(CS5530_GPIO);
+    reg = (unsigned short) value;
 
-   if (inState) {			/* write a 1. */
-      reg |= SCL;
-   } else {				/* write a 0. */
-      reg &= ~SCL;
-   }
+    if (inState) {              /* write a 1. */
+        reg |= SCL;
+    }
+    else {                      /* write a 0. */
+        reg &= ~SCL;
+    }
 
-   value = reg;
-   gfx_pci_config_write(CS5530_GPIO, value);
+    value = reg;
+    gfx_pci_config_write(CS5530_GPIO, value);
 
-   /* hold it for a minimum of 4.7us */
-   gfx_delay_microseconds(5);
+    /* hold it for a minimum of 4.7us */
+    gfx_delay_microseconds(5);
 }
 
 /*
@@ -660,23 +661,24 @@ I2CAL_output_clock(int inState)
 void
 I2CAL_output_data(int inState)
 {
-   unsigned short reg;
-   unsigned long value;
+    unsigned short reg;
+    unsigned long value;
 
-   value = gfx_pci_config_read(CS5530_GPIO);
-   reg = (unsigned short)value;
+    value = gfx_pci_config_read(CS5530_GPIO);
+    reg = (unsigned short) value;
 
-   if (inState) {			/* write a 1. */
-      reg |= SDA;
-   } else {
-      /* write a 0. */
-      reg &= ~SDA;
-   }
-   value = reg;
-   gfx_pci_config_write(CS5530_GPIO, value);
+    if (inState) {              /* write a 1. */
+        reg |= SDA;
+    }
+    else {
+        /* write a 0. */
+        reg &= ~SDA;
+    }
+    value = reg;
+    gfx_pci_config_write(CS5530_GPIO, value);
 
-   /* 250 ns setup time */
-   gfx_delay_microseconds(1);
+    /* 250 ns setup time */
+    gfx_delay_microseconds(1);
 }
 
 /*
@@ -689,16 +691,16 @@ I2CAL_output_data(int inState)
 unsigned char
 I2CAL_input_data(void)
 {
-   unsigned short reg;
-   unsigned long value;
+    unsigned short reg;
+    unsigned long value;
 
-   value = gfx_pci_config_read(CS5530_GPIO);
-   reg = (unsigned short)value;
+    value = gfx_pci_config_read(CS5530_GPIO);
+    reg = (unsigned short) value;
 
-   if (reg & SDA)
-      return 1;
-   else
-      return 0;
+    if (reg & SDA)
+        return 1;
+    else
+        return 0;
 }
 
 /*
@@ -711,17 +713,17 @@ I2CAL_input_data(void)
 void
 I2CAL_set_data_for_input(void)
 {
-   unsigned short reg;
-   unsigned long value;
+    unsigned short reg;
+    unsigned long value;
 
-   value = gfx_pci_config_read(CS5530_GPIO);
-   reg = (unsigned short)value;
+    value = gfx_pci_config_read(CS5530_GPIO);
+    reg = (unsigned short) value;
 
-   reg &= ~SDADIR;
+    reg &= ~SDADIR;
 
-   value = reg;
+    value = reg;
 
-   gfx_pci_config_write(CS5530_GPIO, value);
+    gfx_pci_config_write(CS5530_GPIO, value);
 }
 
 /*
@@ -734,15 +736,15 @@ I2CAL_set_data_for_input(void)
 void
 I2CAL_set_data_for_output(void)
 {
-   unsigned short reg;
-   unsigned long value;
+    unsigned short reg;
+    unsigned long value;
 
-   value = gfx_pci_config_read(CS5530_GPIO);
-   reg = (unsigned short)value;
-   reg |= SDADIR;
-   value = reg;
+    value = gfx_pci_config_read(CS5530_GPIO);
+    reg = (unsigned short) value;
+    reg |= SDADIR;
+    value = reg;
 
-   gfx_pci_config_write(CS5530_GPIO, value);
+    gfx_pci_config_write(CS5530_GPIO, value);
 
 }
 

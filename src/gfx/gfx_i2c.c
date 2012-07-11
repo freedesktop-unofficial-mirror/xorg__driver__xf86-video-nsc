@@ -154,17 +154,17 @@
 int
 gfx_i2c_reset(unsigned char busnum, short adr, char freq)
 {
-   int status = GFX_STATUS_UNSUPPORTED;
+    int status = GFX_STATUS_UNSUPPORTED;
 
 #if GFX_I2C_ACCESS
-   if (gfx_i2c_type & GFX_I2C_TYPE_ACCESS)
-      status = acc_i2c_reset(busnum, adr, freq);
+    if (gfx_i2c_type & GFX_I2C_TYPE_ACCESS)
+        status = acc_i2c_reset(busnum, adr, freq);
 #endif
 #if GFX_I2C_GPIO
-   if (gfx_i2c_type & GFX_I2C_TYPE_GPIO)
-      status = gpio_i2c_reset(busnum, adr, freq);
+    if (gfx_i2c_type & GFX_I2C_TYPE_GPIO)
+        status = gpio_i2c_reset(busnum, adr, freq);
 #endif
-   return (status);
+    return (status);
 }
 
 /*---------------------------------------------------------------------------
@@ -175,14 +175,14 @@ int
 gfx_i2c_select_gpio(int clock, int data)
 {
 #if GFX_I2C_ACCESS
-   if (gfx_i2c_type & GFX_I2C_TYPE_ACCESS)
-      acc_i2c_select_gpio(clock, data);
+    if (gfx_i2c_type & GFX_I2C_TYPE_ACCESS)
+        acc_i2c_select_gpio(clock, data);
 #endif
 #if GFX_I2C_GPIO
-   if (gfx_i2c_type & GFX_I2C_TYPE_GPIO)
-      gpio_i2c_select_gpio(clock, data);
+    if (gfx_i2c_type & GFX_I2C_TYPE_GPIO)
+        gpio_i2c_select_gpio(clock, data);
 #endif
-   return (0);
+    return (0);
 }
 
 /*---------------------------------------------------------------------------
@@ -191,19 +191,19 @@ gfx_i2c_select_gpio(int clock, int data)
  */
 int
 gfx_i2c_write(unsigned char busnum, unsigned char chipadr,
-	      unsigned char subadr, unsigned char bytes, unsigned char *data)
+              unsigned char subadr, unsigned char bytes, unsigned char *data)
 {
-   int status = -1;
+    int status = -1;
 
 #if GFX_I2C_ACCESS
-   if (gfx_i2c_type & GFX_I2C_TYPE_ACCESS)
-      status = acc_i2c_write(busnum, chipadr, subadr, bytes, data);
+    if (gfx_i2c_type & GFX_I2C_TYPE_ACCESS)
+        status = acc_i2c_write(busnum, chipadr, subadr, bytes, data);
 #endif
 #if GFX_I2C_GPIO
-   if (gfx_i2c_type & GFX_I2C_TYPE_GPIO)
-      status = gpio_i2c_write(busnum, chipadr, subadr, bytes, data);
+    if (gfx_i2c_type & GFX_I2C_TYPE_GPIO)
+        status = gpio_i2c_write(busnum, chipadr, subadr, bytes, data);
 #endif
-   return (status);
+    return (status);
 }
 
 /*---------------------------------------------------------------------------
@@ -212,19 +212,19 @@ gfx_i2c_write(unsigned char busnum, unsigned char chipadr,
  */
 int
 gfx_i2c_read(unsigned char busnum, unsigned char chipadr,
-	     unsigned char subadr, unsigned char bytes, unsigned char *data)
+             unsigned char subadr, unsigned char bytes, unsigned char *data)
 {
-   int status = -1;
+    int status = -1;
 
 #if GFX_I2C_ACCESS
-   if (gfx_i2c_type & GFX_I2C_TYPE_ACCESS)
-      status = acc_i2c_read(busnum, chipadr, subadr, bytes, data);
+    if (gfx_i2c_type & GFX_I2C_TYPE_ACCESS)
+        status = acc_i2c_read(busnum, chipadr, subadr, bytes, data);
 #endif
 #if GFX_I2C_GPIO
-   if (gfx_i2c_type & GFX_I2C_TYPE_GPIO)
-      status = gpio_i2c_read(busnum, chipadr, subadr, bytes, data);
+    if (gfx_i2c_type & GFX_I2C_TYPE_GPIO)
+        status = gpio_i2c_read(busnum, chipadr, subadr, bytes, data);
 #endif
-   return (status);
+    return (status);
 }
 
 /*---------------------------------------------------------------------------
@@ -234,17 +234,17 @@ gfx_i2c_read(unsigned char busnum, unsigned char chipadr,
 int
 gfx_i2c_init(void)
 {
-   int status = -1;
+    int status = -1;
 
 #if GFX_I2C_ACCESS
-   if (gfx_i2c_type & GFX_I2C_TYPE_ACCESS)
-      status = acc_i2c_init();
+    if (gfx_i2c_type & GFX_I2C_TYPE_ACCESS)
+        status = acc_i2c_init();
 #endif
 #if GFX_I2C_GPIO
-   if (gfx_i2c_type & GFX_I2C_TYPE_GPIO)
-      status = gpio_i2c_init();
+    if (gfx_i2c_type & GFX_I2C_TYPE_GPIO)
+        status = gpio_i2c_init();
 #endif
-   return (status);
+    return (status);
 }
 
 /*---------------------------------------------------------------------------
@@ -255,15 +255,15 @@ void
 gfx_i2c_cleanup(void)
 {
 #if GFX_I2C_ACCESS
-   if (gfx_i2c_type & GFX_I2C_TYPE_ACCESS)
-      acc_i2c_cleanup();
+    if (gfx_i2c_type & GFX_I2C_TYPE_ACCESS)
+        acc_i2c_cleanup();
 #endif
 #if GFX_I2C_GPIO
-   if (gfx_i2c_type & GFX_I2C_TYPE_GPIO)
-      gpio_i2c_cleanup();
+    if (gfx_i2c_type & GFX_I2C_TYPE_GPIO)
+        gpio_i2c_cleanup();
 #endif
 }
 
-#endif /* GFX_I2C_DYNAMIC */
+#endif                          /* GFX_I2C_DYNAMIC */
 
 /* END OF FILE */

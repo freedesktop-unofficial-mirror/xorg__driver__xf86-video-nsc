@@ -18,50 +18,48 @@
  *----------------------------------------------------------------------------
  */
 
-typedef struct tagSC1400PLL
-{
-   long frequency;			/* 16.16 fixed point frequency */
-   unsigned long clock_select;		/* clock select register (0x2C) */
-}
-SC1400PLL;
+typedef struct tagSC1400PLL {
+    long frequency;             /* 16.16 fixed point frequency */
+    unsigned long clock_select; /* clock select register (0x2C) */
+} SC1400PLL;
 
 SC1400PLL gfx_sc1400_clock_table[] = {
-   {0x00192CCC, 0x00000000},		/*  25.1750 */
-   {0x001C526E, 0x00010000},		/*  28.3220 */
-   {0x001F8000, 0x00020000},		/*  31.5000 */
-   {0x00240000, 0x000E0000},		/*  36.0000 */
-   {0x00258000, 0x0010110C},		/*  37.5000 */
-   {0x00280000, 0x00040000},		/*  40.0000 */
-   {0x002CE666, 0x00090000},		/*  44.9000 */
-   {0x00320000, 0x00100C06},		/*  50.0000 */
-   {0x00325999, 0x0050600C},		/*  50.3500 */
-   {0x00360000, 0x00100100},		/*  54.0000 */
-   {0x0038643F, 0x0010160A},		/*  56.3916 */
-   {0x0038A3D7, 0x00506C0C},		/*  56.6440 */
-   {0x003B0000, 0x0010170A},		/*  59.6583 */
-   {0x003BA886, 0x00100A04},		/*  59.6583 */
-   {0x003F0000, 0x00100602},		/*  63.0000 */
-   {0x00410000, 0x00060000},		/*  65.0000 */
-   {0x00438000, 0x00100401},		/*  67.5000 */
-   {0x0046CCCC, 0x00101407},		/*  70.8000 */
-   {0x00480000, 0x00100702},		/*  72.0000 */
-   {0x004B0000, 0x00070000},		/*  75.0000 */
-   {0x004EC000, 0x0010220B},		/*  78.7500 */
-   {0x00500000, 0x00304C0C},		/*  80.0000 */
-   {0x00510000, 0x00100200},		/*  81.0000 */
-   {0x00550000, 0x00080000},		/*  85.0000 */
-   {0x0059CCCC, 0x00100902},		/*  89.8000 */
-   {0x00630000, 0x00100A02},		/*  99.0000 */
-   {0x00640000, 0x00102409},		/* 100.0000 */
-   {0x006C0000, 0x00100300},		/* 108.0000 */
-   {0x00870000, 0x00050000},		/* 135.0000 */
-   {0x009D8000, 0x00102205},		/* 157.5000 */
-   {0x00A20000, 0x00100500},		/* 162.0000 */
-   {0x00AA0000, 0x000B0000},		/* 170.0000 */
-   {0x00AF0000, 0x00100C01},		/* 175.0000 */
-   {0x00BD0000, 0x00100600},		/* 189.0000 */
-   {0x00CA0000, 0x00100E01},		/* 202.0000 */
-   {0x00E80000, 0x00102A04},		/* 232.0000 */
+    {0x00192CCC, 0x00000000},   /*  25.1750 */
+    {0x001C526E, 0x00010000},   /*  28.3220 */
+    {0x001F8000, 0x00020000},   /*  31.5000 */
+    {0x00240000, 0x000E0000},   /*  36.0000 */
+    {0x00258000, 0x0010110C},   /*  37.5000 */
+    {0x00280000, 0x00040000},   /*  40.0000 */
+    {0x002CE666, 0x00090000},   /*  44.9000 */
+    {0x00320000, 0x00100C06},   /*  50.0000 */
+    {0x00325999, 0x0050600C},   /*  50.3500 */
+    {0x00360000, 0x00100100},   /*  54.0000 */
+    {0x0038643F, 0x0010160A},   /*  56.3916 */
+    {0x0038A3D7, 0x00506C0C},   /*  56.6440 */
+    {0x003B0000, 0x0010170A},   /*  59.6583 */
+    {0x003BA886, 0x00100A04},   /*  59.6583 */
+    {0x003F0000, 0x00100602},   /*  63.0000 */
+    {0x00410000, 0x00060000},   /*  65.0000 */
+    {0x00438000, 0x00100401},   /*  67.5000 */
+    {0x0046CCCC, 0x00101407},   /*  70.8000 */
+    {0x00480000, 0x00100702},   /*  72.0000 */
+    {0x004B0000, 0x00070000},   /*  75.0000 */
+    {0x004EC000, 0x0010220B},   /*  78.7500 */
+    {0x00500000, 0x00304C0C},   /*  80.0000 */
+    {0x00510000, 0x00100200},   /*  81.0000 */
+    {0x00550000, 0x00080000},   /*  85.0000 */
+    {0x0059CCCC, 0x00100902},   /*  89.8000 */
+    {0x00630000, 0x00100A02},   /*  99.0000 */
+    {0x00640000, 0x00102409},   /* 100.0000 */
+    {0x006C0000, 0x00100300},   /* 108.0000 */
+    {0x00870000, 0x00050000},   /* 135.0000 */
+    {0x009D8000, 0x00102205},   /* 157.5000 */
+    {0x00A20000, 0x00100500},   /* 162.0000 */
+    {0x00AA0000, 0x000B0000},   /* 170.0000 */
+    {0x00AF0000, 0x00100C01},   /* 175.0000 */
+    {0x00BD0000, 0x00100600},   /* 189.0000 */
+    {0x00CA0000, 0x00100E01},   /* 202.0000 */
+    {0x00E80000, 0x00102A04},   /* 232.0000 */
 };
 
 #define NUM_SC1400_FREQUENCIES sizeof(gfx_sc1400_clock_table)/sizeof(SC1400PLL)
@@ -81,7 +79,7 @@ void
 gfx_reset_video(void)
 #endif
 {
-   gfx_set_video_enable(0);
+    gfx_set_video_enable(0);
 }
 
 /*---------------------------------------------------------------------------
@@ -100,32 +98,32 @@ void
 gfx_set_clock_frequency(unsigned long frequency)
 #endif
 {
-   int index;
-   unsigned long value;
-   long min, diff;
+    int index;
+    unsigned long value;
+    long min, diff;
 
-   /* FIND THE REGISTER VALUES FOR THE DESIRED FREQUENCY */
-   /* Search the table for the closest frequency (16.16 format). */
+    /* FIND THE REGISTER VALUES FOR THE DESIRED FREQUENCY */
+    /* Search the table for the closest frequency (16.16 format). */
 
-   value = gfx_sc1400_clock_table[0].clock_select;
-   min = (long)gfx_sc1400_clock_table[0].frequency - frequency;
-   if (min < 0L)
-      min = -min;
-   for (index = 1; index < NUM_SC1400_FREQUENCIES; index++) {
-      diff = (long)gfx_sc1400_clock_table[index].frequency - frequency;
-      if (diff < 0L)
-	 diff = -diff;
-      if (diff < min) {
-	 min = diff;
-	 value = gfx_sc1400_clock_table[index].clock_select;
-      }
-   }
+    value = gfx_sc1400_clock_table[0].clock_select;
+    min = (long) gfx_sc1400_clock_table[0].frequency - frequency;
+    if (min < 0L)
+        min = -min;
+    for (index = 1; index < NUM_SC1400_FREQUENCIES; index++) {
+        diff = (long) gfx_sc1400_clock_table[index].frequency - frequency;
+        if (diff < 0L)
+            diff = -diff;
+        if (diff < min) {
+            min = diff;
+            value = gfx_sc1400_clock_table[index].clock_select;
+        }
+    }
 
-   /* SET THE DOT CLOCK REGISTER */
+    /* SET THE DOT CLOCK REGISTER */
 
-   WRITE_VID32(SC1400_VID_MISC, 0x00001000);
-   WRITE_VID32(SC1400_VID_CLOCK_SELECT, value);
-   return;
+    WRITE_VID32(SC1400_VID_MISC, 0x00001000);
+    WRITE_VID32(SC1400_VID_CLOCK_SELECT, value);
+    return;
 }
 
 /*-----------------------------------------------------------------------------
@@ -142,46 +140,47 @@ int
 gfx_set_video_enable(int enable)
 #endif
 {
-   unsigned long vcfg;
+    unsigned long vcfg;
 
-   /* WAIT FOR VERTICAL BLANK TO START */
-   /* Otherwise a glitch can be observed. */
+    /* WAIT FOR VERTICAL BLANK TO START */
+    /* Otherwise a glitch can be observed. */
 
-   if (gfx_test_timing_active()) {
-      if (!gfx_test_vertical_active()) {
-	 while (!gfx_test_vertical_active()) ;
-      }
-      while (gfx_test_vertical_active()) ;
-   }
-   vcfg = READ_VID32(SC1400_VIDEO_CONFIG);
-   if (enable) {
-      /* ENABLE VIDEO OVERLAY FROM DISPLAY CONTROLLER */
-      /* Use private routine to abstract the display controller. */
+    if (gfx_test_timing_active()) {
+        if (!gfx_test_vertical_active()) {
+            while (!gfx_test_vertical_active());
+        }
+        while (gfx_test_vertical_active());
+    }
+    vcfg = READ_VID32(SC1400_VIDEO_CONFIG);
+    if (enable) {
+        /* ENABLE VIDEO OVERLAY FROM DISPLAY CONTROLLER */
+        /* Use private routine to abstract the display controller. */
 
-      gfx_set_display_video_enable(1);
+        gfx_set_display_video_enable(1);
 
-      /* SET SC1400 BUS CONTROL PARAMETERS */
-      /* Currently always high speed, 8-bit interface. */
+        /* SET SC1400 BUS CONTROL PARAMETERS */
+        /* Currently always high speed, 8-bit interface. */
 
-      vcfg |= SC1400_VCFG_HIGH_SPD_INT;
-      vcfg &= ~(SC1400_VCFG_EARLY_VID_RDY | SC1400_VCFG_16_BIT_EN);
+        vcfg |= SC1400_VCFG_HIGH_SPD_INT;
+        vcfg &= ~(SC1400_VCFG_EARLY_VID_RDY | SC1400_VCFG_16_BIT_EN);
 
-      /* ENABLE SC1400 VIDEO OVERLAY */
+        /* ENABLE SC1400 VIDEO OVERLAY */
 
-      vcfg |= SC1400_VCFG_VID_EN;
-      WRITE_VID32(SC1400_VIDEO_CONFIG, vcfg);
-   } else {
-      /* DISABLE SC1400 VIDEO OVERLAY */
+        vcfg |= SC1400_VCFG_VID_EN;
+        WRITE_VID32(SC1400_VIDEO_CONFIG, vcfg);
+    }
+    else {
+        /* DISABLE SC1400 VIDEO OVERLAY */
 
-      vcfg &= ~SC1400_VCFG_VID_EN;
-      WRITE_VID32(SC1400_VIDEO_CONFIG, vcfg);
+        vcfg &= ~SC1400_VCFG_VID_EN;
+        WRITE_VID32(SC1400_VIDEO_CONFIG, vcfg);
 
-      /* DISABLE VIDEO OVERLAY FROM DISPLAY CONTROLLER */
-      /* Use private routine to abstract the display controller. */
+        /* DISABLE VIDEO OVERLAY FROM DISPLAY CONTROLLER */
+        /* Use private routine to abstract the display controller. */
 
-      gfx_set_display_video_enable(0);
-   }
-   return (0);
+        gfx_set_display_video_enable(0);
+    }
+    return (0);
 }
 
 /*-----------------------------------------------------------------------------
@@ -198,19 +197,19 @@ int
 gfx_set_video_format(unsigned long format)
 #endif
 {
-   unsigned long vcfg = 0;
+    unsigned long vcfg = 0;
 
-   /* SET THE SC1400 VIDEO INPUT FORMAT */
+    /* SET THE SC1400 VIDEO INPUT FORMAT */
 
-   vcfg = READ_VID32(SC1400_VIDEO_CONFIG);
-   vcfg &= ~(SC1400_VCFG_VID_INP_FORMAT | SC1400_VCFG_4_2_0_MODE);
-   vcfg &= ~(SC1400_VCFG_CSC_BYPASS);
-   if (format < 4)
-      vcfg |= (format << 2);
-   else
-      vcfg |= SC1400_VCFG_CSC_BYPASS;
-   WRITE_VID32(SC1400_VIDEO_CONFIG, vcfg);
-   return (0);
+    vcfg = READ_VID32(SC1400_VIDEO_CONFIG);
+    vcfg &= ~(SC1400_VCFG_VID_INP_FORMAT | SC1400_VCFG_4_2_0_MODE);
+    vcfg &= ~(SC1400_VCFG_CSC_BYPASS);
+    if (format < 4)
+        vcfg |= (format << 2);
+    else
+        vcfg |= SC1400_VCFG_CSC_BYPASS;
+    WRITE_VID32(SC1400_VIDEO_CONFIG, vcfg);
+    return (0);
 }
 
 /*-----------------------------------------------------------------------------
@@ -229,23 +228,23 @@ int
 gfx_set_video_size(unsigned short width, unsigned short height)
 #endif
 {
-   unsigned long size, vcfg;
+    unsigned long size, vcfg;
 
-   /* SET THE SC1400 VIDEO LINE SIZE */
+    /* SET THE SC1400 VIDEO LINE SIZE */
 
-   vcfg = READ_VID32(SC1400_VIDEO_CONFIG);
-   vcfg &= ~(SC1400_VCFG_LINE_SIZE_LOWER_MASK | SC1400_VCFG_LINE_SIZE_UPPER);
-   size = (width >> 1);
-   vcfg |= (size & 0x00FF) << 8;
-   if (size & 0x0100)
-      vcfg |= SC1400_VCFG_LINE_SIZE_UPPER;
-   WRITE_VID32(SC1400_VIDEO_CONFIG, vcfg);
+    vcfg = READ_VID32(SC1400_VIDEO_CONFIG);
+    vcfg &= ~(SC1400_VCFG_LINE_SIZE_LOWER_MASK | SC1400_VCFG_LINE_SIZE_UPPER);
+    size = (width >> 1);
+    vcfg |= (size & 0x00FF) << 8;
+    if (size & 0x0100)
+        vcfg |= SC1400_VCFG_LINE_SIZE_UPPER;
+    WRITE_VID32(SC1400_VIDEO_CONFIG, vcfg);
 
-   /* SET TOTAL VIDEO BUFFER SIZE IN DISPLAY CONTROLLER */
-   /* Use private routine to abstract the display controller. */
+    /* SET TOTAL VIDEO BUFFER SIZE IN DISPLAY CONTROLLER */
+    /* Use private routine to abstract the display controller. */
 
-   gfx_set_display_video_size(width, height);
-   return (0);
+    gfx_set_display_video_size(width, height);
+    return (0);
 }
 
 /*-----------------------------------------------------------------------------
@@ -263,15 +262,15 @@ int
 gfx_set_video_offset(unsigned long offset)
 #endif
 {
-   /* SAVE VALUE FOR FUTURE CLIPPING OF THE TOP OF THE VIDEO WINDOW */
+    /* SAVE VALUE FOR FUTURE CLIPPING OF THE TOP OF THE VIDEO WINDOW */
 
-   gfx_vid_offset = offset;
+    gfx_vid_offset = offset;
 
-   /* SET VIDEO BUFFER OFFSET IN DISPLAY CONTROLLER */
-   /* Use private routine to abstract the display controller. */
+    /* SET VIDEO BUFFER OFFSET IN DISPLAY CONTROLLER */
+    /* Use private routine to abstract the display controller. */
 
-   gfx_set_display_video_offset(offset);
-   return (0);
+    gfx_set_display_video_offset(offset);
+    return (0);
 }
 
 /*---------------------------------------------------------------------------
@@ -284,44 +283,44 @@ gfx_set_video_offset(unsigned long offset)
 #if GFX_VIDEO_DYNAMIC
 int
 sc1400_set_video_scale(unsigned short srcw, unsigned short srch,
-		       unsigned short dstw, unsigned short dsth)
+                       unsigned short dstw, unsigned short dsth)
 #else
 int
 gfx_set_video_scale(unsigned short srcw, unsigned short srch,
-		    unsigned short dstw, unsigned short dsth)
+                    unsigned short dstw, unsigned short dsth)
 #endif
 {
-   unsigned long xscale, yscale;
+    unsigned long xscale, yscale;
 
-   /* SAVE PARAMETERS */
-   /* These are needed for clipping the video window later. */
+    /* SAVE PARAMETERS */
+    /* These are needed for clipping the video window later. */
 
-   gfx_vid_srcw = srcw;
-   gfx_vid_srch = srch;
-   gfx_vid_dstw = dstw;
-   gfx_vid_dsth = dsth;
+    gfx_vid_srcw = srcw;
+    gfx_vid_srch = srch;
+    gfx_vid_dstw = dstw;
+    gfx_vid_dsth = dsth;
 
-   /* CALCULATE SC1400 SCALE FACTORS */
-   /* No downscaling in SC1400 so force to 1x if attempted. */
+    /* CALCULATE SC1400 SCALE FACTORS */
+    /* No downscaling in SC1400 so force to 1x if attempted. */
 
-   if (srcw < dstw)
-      xscale = (0x2000 * (srcw - 1)) / (dstw - 1);
-   else
-      xscale = 0x1FFF;
-   if (srch < dsth)
-      yscale = (0x2000 * (srch - 1)) / (dsth - 1);
-   else
-      yscale = 0x1FFF;
-   WRITE_VID32(SC1400_VIDEO_SCALE, (yscale << 16) | xscale);
+    if (srcw < dstw)
+        xscale = (0x2000 * (srcw - 1)) / (dstw - 1);
+    else
+        xscale = 0x1FFF;
+    if (srch < dsth)
+        yscale = (0x2000 * (srch - 1)) / (dsth - 1);
+    else
+        yscale = 0x1FFF;
+    WRITE_VID32(SC1400_VIDEO_SCALE, (yscale << 16) | xscale);
 
-   /* CALL ROUTINE TO UPDATE WINDOW POSITION */
-   /* This is required because the scale values effect the number of */
-   /* source data pixels that need to be clipped, as well as the */
-   /* amount of data that needs to be transferred. */
+    /* CALL ROUTINE TO UPDATE WINDOW POSITION */
+    /* This is required because the scale values effect the number of */
+    /* source data pixels that need to be clipped, as well as the */
+    /* amount of data that needs to be transferred. */
 
-   gfx_set_video_window(gfx_vid_xpos, gfx_vid_ypos, gfx_vid_width,
-			gfx_vid_height);
-   return (0);
+    gfx_set_video_window(gfx_vid_xpos, gfx_vid_ypos, gfx_vid_width,
+                         gfx_vid_height);
+    return (0);
 }
 
 /*---------------------------------------------------------------------------
@@ -341,95 +340,97 @@ int
 gfx_set_video_window(short x, short y, unsigned short w, unsigned short h)
 #endif
 {
-   unsigned long vcfg = 0;
-   unsigned long hadjust, vadjust;
-   unsigned long initread;
-   unsigned long xstart, ystart, xend, yend;
-   unsigned long offset, line_size;
+    unsigned long vcfg = 0;
+    unsigned long hadjust, vadjust;
+    unsigned long initread;
+    unsigned long xstart, ystart, xend, yend;
+    unsigned long offset, line_size;
 
-   /* SAVE PARAMETERS */
-   /* These are needed to call this routine if the scale value changes. */
+    /* SAVE PARAMETERS */
+    /* These are needed to call this routine if the scale value changes. */
 
-   gfx_vid_xpos = x;
-   gfx_vid_ypos = y;
-   gfx_vid_width = w;
-   gfx_vid_height = h;
+    gfx_vid_xpos = x;
+    gfx_vid_ypos = y;
+    gfx_vid_width = w;
+    gfx_vid_height = h;
 
-   /* GET ADJUSTMENT VALUES */
-   /* Use routines to abstract version of display controller. */
+    /* GET ADJUSTMENT VALUES */
+    /* Use routines to abstract version of display controller. */
 
-   hadjust = gfx_get_htotal() - gfx_get_hsync_end() - 13;
-   vadjust = gfx_get_vtotal() - gfx_get_vsync_end() + 1;
+    hadjust = gfx_get_htotal() - gfx_get_hsync_end() - 13;
+    vadjust = gfx_get_vtotal() - gfx_get_vsync_end() + 1;
 
-   if (x > 0) {
-      /* NO CLIPPING ON LEFT */
+    if (x > 0) {
+        /* NO CLIPPING ON LEFT */
 
-      xstart = x + hadjust;
-      initread = 0;
-   } else {
-      /* CLIPPING ON LEFT */
-      /* Adjust initial read for scale, checking for divide by zero */
+        xstart = x + hadjust;
+        initread = 0;
+    }
+    else {
+        /* CLIPPING ON LEFT */
+        /* Adjust initial read for scale, checking for divide by zero */
 
-      xstart = hadjust;
-      initread = -x;
-      if (gfx_vid_dstw)
-	 initread = ((-x) * gfx_vid_srcw) / gfx_vid_dstw;
-      else
-	 initread = 0;
-   }
+        xstart = hadjust;
+        initread = -x;
+        if (gfx_vid_dstw)
+            initread = ((-x) * gfx_vid_srcw) / gfx_vid_dstw;
+        else
+            initread = 0;
+    }
 
-   /* CLIPPING ON RIGHT */
+    /* CLIPPING ON RIGHT */
 
-   xend = x + w;
-   if (xend > gfx_get_hactive())
-      xend = gfx_get_hactive();
-   xend += hadjust;
+    xend = x + w;
+    if (xend > gfx_get_hactive())
+        xend = gfx_get_hactive();
+    xend += hadjust;
 
-   /* CLIPPING ON TOP */
+    /* CLIPPING ON TOP */
 
-   offset = gfx_vid_offset;
-   if (y >= 0) {
-      ystart = y + vadjust;
-   } else {
-      ystart = vadjust;
-      line_size = (READ_VID32(SC1400_VIDEO_CONFIG) >> 7) & 0x000001FE;
-      if (READ_VID32(SC1400_VIDEO_CONFIG) & SC1400_VCFG_LINE_SIZE_UPPER)
-	 line_size += 512;
-      if (gfx_vid_dsth)
-	 offset = gfx_vid_offset + (line_size << 1) *
-	       (((-y) * gfx_vid_srch) / gfx_vid_dsth);
-   }
+    offset = gfx_vid_offset;
+    if (y >= 0) {
+        ystart = y + vadjust;
+    }
+    else {
+        ystart = vadjust;
+        line_size = (READ_VID32(SC1400_VIDEO_CONFIG) >> 7) & 0x000001FE;
+        if (READ_VID32(SC1400_VIDEO_CONFIG) & SC1400_VCFG_LINE_SIZE_UPPER)
+            line_size += 512;
+        if (gfx_vid_dsth)
+            offset = gfx_vid_offset + (line_size << 1) *
+                (((-y) * gfx_vid_srch) / gfx_vid_dsth);
+    }
 
-   /* CLIPPING ON BOTTOM */
+    /* CLIPPING ON BOTTOM */
 
-   yend = y + h;
-   if (yend >= gfx_get_vactive())
-      yend = gfx_get_vactive();
-   yend += vadjust;
+    yend = y + h;
+    if (yend >= gfx_get_vactive())
+        yend = gfx_get_vactive();
+    yend += vadjust;
 
-   /* SET VIDEO BUFFER OFFSET IN DISPLAY CONTROLLER */
-   /* Use private routine to abstract the display controller. */
+    /* SET VIDEO BUFFER OFFSET IN DISPLAY CONTROLLER */
+    /* Use private routine to abstract the display controller. */
 
-   gfx_set_display_video_offset(offset);
+    gfx_set_display_video_offset(offset);
 
-   /* DISABLE REGISTER UPDATES */
+    /* DISABLE REGISTER UPDATES */
 
-   vcfg = READ_VID32(SC1400_VIDEO_CONFIG);
-   vcfg &= ~SC1400_VCFG_VID_REG_UPDATE;
-   WRITE_VID32(SC1400_VIDEO_CONFIG, vcfg);
+    vcfg = READ_VID32(SC1400_VIDEO_CONFIG);
+    vcfg &= ~SC1400_VCFG_VID_REG_UPDATE;
+    WRITE_VID32(SC1400_VIDEO_CONFIG, vcfg);
 
-   /* SET VIDEO POSITION */
+    /* SET VIDEO POSITION */
 
-   WRITE_VID32(SC1400_VIDEO_X_POS, (xend << 16) | xstart);
-   WRITE_VID32(SC1400_VIDEO_Y_POS, (yend << 16) | ystart);
+    WRITE_VID32(SC1400_VIDEO_X_POS, (xend << 16) | xstart);
+    WRITE_VID32(SC1400_VIDEO_Y_POS, (yend << 16) | ystart);
 
-   /* SET INITIAL READ ADDRESS AND ENABLE REGISTER UPDATES */
+    /* SET INITIAL READ ADDRESS AND ENABLE REGISTER UPDATES */
 
-   vcfg &= ~SC1400_VCFG_INIT_READ_MASK;
-   vcfg |= (initread << 15) & SC1400_VCFG_INIT_READ_MASK;
-   vcfg |= SC1400_VCFG_VID_REG_UPDATE;
-   WRITE_VID32(SC1400_VIDEO_CONFIG, vcfg);
-   return (0);
+    vcfg &= ~SC1400_VCFG_INIT_READ_MASK;
+    vcfg |= (initread << 15) & SC1400_VCFG_INIT_READ_MASK;
+    vcfg |= SC1400_VCFG_VID_REG_UPDATE;
+    WRITE_VID32(SC1400_VIDEO_CONFIG, vcfg);
+    return (0);
 }
 
 /*---------------------------------------------------------------------------
@@ -448,29 +449,28 @@ gfx_set_video_window(short x, short y, unsigned short w, unsigned short h)
  */
 #if GFX_VIDEO_DYNAMIC
 int
-sc1400_set_video_color_key(unsigned long key, unsigned long mask,
-			   int graphics)
+sc1400_set_video_color_key(unsigned long key, unsigned long mask, int graphics)
 #else
 int
 gfx_set_video_color_key(unsigned long key, unsigned long mask, int graphics)
 #endif
 {
-   unsigned long dcfg = 0;
+    unsigned long dcfg = 0;
 
-   /* SET SC1400 COLOR KEY VALUE */
+    /* SET SC1400 COLOR KEY VALUE */
 
-   WRITE_VID32(SC1400_VIDEO_COLOR_KEY, key);
-   WRITE_VID32(SC1400_VIDEO_COLOR_MASK, mask);
+    WRITE_VID32(SC1400_VIDEO_COLOR_KEY, key);
+    WRITE_VID32(SC1400_VIDEO_COLOR_MASK, mask);
 
-   /* SELECT GRAPHICS OR VIDEO DATA TO COMPARE TO THE COLOR KEY */
+    /* SELECT GRAPHICS OR VIDEO DATA TO COMPARE TO THE COLOR KEY */
 
-   dcfg = READ_VID32(SC1400_DISPLAY_CONFIG);
-   if (graphics & 0x01)
-      dcfg &= ~SC1400_DCFG_VG_CK;
-   else
-      dcfg |= SC1400_DCFG_VG_CK;
-   WRITE_VID32(SC1400_DISPLAY_CONFIG, dcfg);
-   return (0);
+    dcfg = READ_VID32(SC1400_DISPLAY_CONFIG);
+    if (graphics & 0x01)
+        dcfg &= ~SC1400_DCFG_VG_CK;
+    else
+        dcfg |= SC1400_DCFG_VG_CK;
+    WRITE_VID32(SC1400_DISPLAY_CONFIG, dcfg);
+    return (0);
 }
 
 /*---------------------------------------------------------------------------
@@ -487,18 +487,18 @@ int
 gfx_set_video_filter(int xfilter, int yfilter)
 #endif
 {
-   unsigned long vcfg = 0;
+    unsigned long vcfg = 0;
 
-   /* ENABLE OR DISABLE SC1400 VIDEO OVERLAY FILTERS */
+    /* ENABLE OR DISABLE SC1400 VIDEO OVERLAY FILTERS */
 
-   vcfg = READ_VID32(SC1400_VIDEO_CONFIG);
-   vcfg &= ~(SC1400_VCFG_X_FILTER_EN | SC1400_VCFG_Y_FILTER_EN);
-   if (xfilter)
-      vcfg |= SC1400_VCFG_X_FILTER_EN;
-   if (yfilter)
-      vcfg |= SC1400_VCFG_Y_FILTER_EN;
-   WRITE_VID32(SC1400_VIDEO_CONFIG, vcfg);
-   return (0);
+    vcfg = READ_VID32(SC1400_VIDEO_CONFIG);
+    vcfg &= ~(SC1400_VCFG_X_FILTER_EN | SC1400_VCFG_Y_FILTER_EN);
+    if (xfilter)
+        vcfg |= SC1400_VCFG_X_FILTER_EN;
+    if (yfilter)
+        vcfg |= SC1400_VCFG_Y_FILTER_EN;
+    WRITE_VID32(SC1400_VIDEO_CONFIG, vcfg);
+    return (0);
 }
 
 /*---------------------------------------------------------------------------
@@ -517,19 +517,19 @@ int
 gfx_set_video_palette(unsigned long *palette)
 #endif
 {
-   unsigned long i, entry;
+    unsigned long i, entry;
 
-   /* LOAD SC1400 VIDEO PALETTE */
+    /* LOAD SC1400 VIDEO PALETTE */
 
-   WRITE_VID32(SC1400_PALETTE_ADDRESS, 0);
-   for (i = 0; i < 256; i++) {
-      if (palette)
-	 entry = palette[i];
-      else
-	 entry = i | (i << 8) | (i << 16);
-      WRITE_VID32(SC1400_PALETTE_DATA, entry);
-   }
-   return (0);
+    WRITE_VID32(SC1400_PALETTE_ADDRESS, 0);
+    for (i = 0; i < 256; i++) {
+        if (palette)
+            entry = palette[i];
+        else
+            entry = i | (i << 8) | (i << 16);
+        WRITE_VID32(SC1400_PALETTE_DATA, entry);
+    }
+    return (0);
 }
 
 /*************************************************************/
@@ -554,13 +554,13 @@ int
 gfx_get_sync_polarities(void)
 #endif
 {
-   int polarities = 0;
+    int polarities = 0;
 
-   if (READ_VID32(SC1400_DISPLAY_CONFIG) & 0x00000100)
-      polarities |= 1;
-   if (READ_VID32(SC1400_DISPLAY_CONFIG) & 0x00000200)
-      polarities |= 2;
-   return (polarities);
+    if (READ_VID32(SC1400_DISPLAY_CONFIG) & 0x00000100)
+        polarities |= 1;
+    if (READ_VID32(SC1400_DISPLAY_CONFIG) & 0x00000200)
+        polarities |= 2;
+    return (polarities);
 }
 
 /*-----------------------------------------------------------------------------
@@ -578,9 +578,9 @@ int
 gfx_get_video_enable(void)
 #endif
 {
-   if (READ_VID32(SC1400_VIDEO_CONFIG) & SC1400_VCFG_VID_EN)
-      return (1);
-   return (0);
+    if (READ_VID32(SC1400_VIDEO_CONFIG) & SC1400_VCFG_VID_EN)
+        return (1);
+    return (0);
 }
 
 /*-----------------------------------------------------------------------------
@@ -597,13 +597,13 @@ int
 gfx_get_video_format(void)
 #endif
 {
-   unsigned long vcfg;
+    unsigned long vcfg;
 
-   vcfg = READ_VID32(SC1400_VIDEO_CONFIG);
-   if (vcfg & SC1400_VCFG_CSC_BYPASS)
-      return (4);
-   else
-      return ((vcfg >> 2) & 3);
+    vcfg = READ_VID32(SC1400_VIDEO_CONFIG);
+    if (vcfg & SC1400_VCFG_CSC_BYPASS)
+        return (4);
+    else
+        return ((vcfg >> 2) & 3);
 }
 
 /*-----------------------------------------------------------------------------
@@ -621,21 +621,21 @@ unsigned long
 gfx_get_video_src_size(void)
 #endif
 {
-   unsigned long width = 0, height = 0;
+    unsigned long width = 0, height = 0;
 
-   /* DETERMINE SOURCE WIDTH FROM THE SC1400 VIDEO LINE SIZE */
+    /* DETERMINE SOURCE WIDTH FROM THE SC1400 VIDEO LINE SIZE */
 
-   width = (READ_VID32(SC1400_VIDEO_CONFIG) >> 7) & 0x000001FE;
-   if (READ_VID32(SC1400_VIDEO_CONFIG) & SC1400_VCFG_LINE_SIZE_UPPER)
-      width += 512;
+    width = (READ_VID32(SC1400_VIDEO_CONFIG) >> 7) & 0x000001FE;
+    if (READ_VID32(SC1400_VIDEO_CONFIG) & SC1400_VCFG_LINE_SIZE_UPPER)
+        width += 512;
 
-   if (width) {
-      /* DETERMINE HEIGHT BY DIVIDING TOTAL SIZE BY WIDTH */
-      /* Get total size from display controller - abtracted. */
+    if (width) {
+        /* DETERMINE HEIGHT BY DIVIDING TOTAL SIZE BY WIDTH */
+        /* Get total size from display controller - abtracted. */
 
-      height = gfx_get_display_video_size() / (width << 1);
-   }
-   return ((height << 16) | width);
+        height = gfx_get_display_video_size() / (width << 1);
+    }
+    return ((height << 16) | width);
 }
 
 /*-----------------------------------------------------------------------------
@@ -653,14 +653,14 @@ unsigned long
 gfx_get_video_line_size(void)
 #endif
 {
-   unsigned long width = 0;
+    unsigned long width = 0;
 
-   /* DETERMINE SOURCE WIDTH FROM THE SC1400 VIDEO LINE SIZE */
+    /* DETERMINE SOURCE WIDTH FROM THE SC1400 VIDEO LINE SIZE */
 
-   width = (READ_VID32(SC1400_VIDEO_CONFIG) >> 7) & 0x000001FE;
-   if (READ_VID32(SC1400_VIDEO_CONFIG) & SC1400_VCFG_LINE_SIZE_UPPER)
-      width += 512;
-   return (width);
+    width = (READ_VID32(SC1400_VIDEO_CONFIG) >> 7) & 0x000001FE;
+    if (READ_VID32(SC1400_VIDEO_CONFIG) & SC1400_VCFG_LINE_SIZE_UPPER)
+        width += 512;
+    return (width);
 }
 
 /*-----------------------------------------------------------------------------
@@ -678,12 +678,12 @@ unsigned long
 gfx_get_video_xclip(void)
 #endif
 {
-   unsigned long clip = 0;
+    unsigned long clip = 0;
 
-   /* DETERMINE SOURCE WIDTH FROM THE SC1400 VIDEO LINE SIZE */
+    /* DETERMINE SOURCE WIDTH FROM THE SC1400 VIDEO LINE SIZE */
 
-   clip = (READ_VID32(SC1400_VIDEO_CONFIG) >> 14) & 0x000007FC;
-   return (clip);
+    clip = (READ_VID32(SC1400_VIDEO_CONFIG) >> 14) & 0x000007FC;
+    return (clip);
 }
 
 /*-----------------------------------------------------------------------------
@@ -700,7 +700,7 @@ unsigned long
 gfx_get_video_offset(void)
 #endif
 {
-   return (gfx_get_display_video_offset());
+    return (gfx_get_display_video_offset());
 }
 
 /*---------------------------------------------------------------------------
@@ -717,7 +717,7 @@ unsigned long
 gfx_get_video_scale(void)
 #endif
 {
-   return (READ_VID32(SC1400_VIDEO_SCALE));
+    return (READ_VID32(SC1400_VIDEO_SCALE));
 }
 
 /*---------------------------------------------------------------------------
@@ -734,13 +734,13 @@ unsigned long
 gfx_get_video_dst_size(void)
 #endif
 {
-   unsigned long xsize, ysize;
+    unsigned long xsize, ysize;
 
-   xsize = READ_VID32(SC1400_VIDEO_X_POS);
-   xsize = ((xsize >> 16) & 0x3FF) - (xsize & 0x03FF);
-   ysize = READ_VID32(SC1400_VIDEO_Y_POS);
-   ysize = ((ysize >> 16) & 0x3FF) - (ysize & 0x03FF);
-   return ((ysize << 16) | xsize);
+    xsize = READ_VID32(SC1400_VIDEO_X_POS);
+    xsize = ((xsize >> 16) & 0x3FF) - (xsize & 0x03FF);
+    ysize = READ_VID32(SC1400_VIDEO_Y_POS);
+    ysize = ((ysize >> 16) & 0x3FF) - (ysize & 0x03FF);
+    return ((ysize << 16) | xsize);
 }
 
 /*---------------------------------------------------------------------------
@@ -758,22 +758,22 @@ unsigned long
 gfx_get_video_position(void)
 #endif
 {
-   unsigned long hadjust, vadjust;
-   unsigned long xpos, ypos;
+    unsigned long hadjust, vadjust;
+    unsigned long xpos, ypos;
 
-   /* READ HARDWARE POSITION */
+    /* READ HARDWARE POSITION */
 
-   xpos = READ_VID32(SC1400_VIDEO_X_POS) & 0x000003FF;
-   ypos = READ_VID32(SC1400_VIDEO_Y_POS) & 0x000003FF;
+    xpos = READ_VID32(SC1400_VIDEO_X_POS) & 0x000003FF;
+    ypos = READ_VID32(SC1400_VIDEO_Y_POS) & 0x000003FF;
 
-   /* GET ADJUSTMENT VALUES */
-   /* Use routines to abstract version of display controller. */
+    /* GET ADJUSTMENT VALUES */
+    /* Use routines to abstract version of display controller. */
 
-   hadjust = gfx_get_htotal() - gfx_get_hsync_end() - 13;
-   vadjust = gfx_get_vtotal() - gfx_get_vsync_end() + 1;
-   xpos -= hadjust;
-   ypos -= vadjust;
-   return ((ypos << 16) | (xpos & 0x0000FFFF));
+    hadjust = gfx_get_htotal() - gfx_get_hsync_end() - 13;
+    vadjust = gfx_get_vtotal() - gfx_get_vsync_end() + 1;
+    xpos -= hadjust;
+    ypos -= vadjust;
+    return ((ypos << 16) | (xpos & 0x0000FFFF));
 }
 
 /*---------------------------------------------------------------------------
@@ -790,7 +790,7 @@ unsigned long
 gfx_get_video_color_key(void)
 #endif
 {
-   return (READ_VID32(SC1400_VIDEO_COLOR_KEY));
+    return (READ_VID32(SC1400_VIDEO_COLOR_KEY));
 }
 
 /*---------------------------------------------------------------------------
@@ -807,7 +807,7 @@ unsigned long
 gfx_get_video_color_key_mask(void)
 #endif
 {
-   return (READ_VID32(SC1400_VIDEO_COLOR_MASK));
+    return (READ_VID32(SC1400_VIDEO_COLOR_MASK));
 }
 
 /*---------------------------------------------------------------------------
@@ -824,9 +824,9 @@ int
 gfx_get_video_color_key_src(void)
 #endif
 {
-   if (READ_VID32(SC1400_DISPLAY_CONFIG) & SC1400_DCFG_VG_CK)
-      return (0);
-   return (1);
+    if (READ_VID32(SC1400_DISPLAY_CONFIG) & SC1400_DCFG_VG_CK)
+        return (0);
+    return (1);
 }
 
 /*---------------------------------------------------------------------------
@@ -843,13 +843,13 @@ int
 gfx_get_video_filter(void)
 #endif
 {
-   int retval = 0;
+    int retval = 0;
 
-   if (READ_VID32(SC1400_VIDEO_CONFIG) & SC1400_VCFG_X_FILTER_EN)
-      retval |= 1;
-   if (READ_VID32(SC1400_VIDEO_CONFIG) & SC1400_VCFG_Y_FILTER_EN)
-      retval |= 2;
-   return (retval);
+    if (READ_VID32(SC1400_VIDEO_CONFIG) & SC1400_VCFG_X_FILTER_EN)
+        retval |= 1;
+    if (READ_VID32(SC1400_VIDEO_CONFIG) & SC1400_VCFG_Y_FILTER_EN)
+        retval |= 2;
+    return (retval);
 }
 
 /*---------------------------------------------------------------------------
@@ -868,16 +868,16 @@ unsigned long
 gfx_get_clock_frequency(void)
 #endif
 {
-   int index;
-   unsigned long value, mask;
+    int index;
+    unsigned long value, mask;
 
-   mask = 0x007FFF0F;
-   value = READ_VID32(SC1400_VID_CLOCK_SELECT) & mask;
-   for (index = 0; index < NUM_SC1400_FREQUENCIES; index++) {
-      if ((gfx_sc1400_clock_table[index].clock_select & mask) == value)
-	 return (gfx_sc1400_clock_table[index].frequency);
-   }
-   return (0);
+    mask = 0x007FFF0F;
+    value = READ_VID32(SC1400_VID_CLOCK_SELECT) & mask;
+    for (index = 0; index < NUM_SC1400_FREQUENCIES; index++) {
+        if ((gfx_sc1400_clock_table[index].clock_select & mask) == value)
+            return (gfx_sc1400_clock_table[index].frequency);
+    }
+    return (0);
 }
 
 /*---------------------------------------------------------------------------
@@ -896,29 +896,29 @@ unsigned long
 gfx_read_crc(void)
 #endif
 {
-   unsigned long crc = 0xFFFFFFFF;
+    unsigned long crc = 0xFFFFFFFF;
 
-   if (gfx_test_timing_active()) {
-      // WAIT UNTIL ACTIVE DISPLAY
+    if (gfx_test_timing_active()) {
+        // WAIT UNTIL ACTIVE DISPLAY
 
-      while (!gfx_test_vertical_active()) ;
+        while (!gfx_test_vertical_active());
 
-      // RESET CRC DURING ACTIVE DISPLAY
+        // RESET CRC DURING ACTIVE DISPLAY
 
-      WRITE_VID32(SC1400_VID_CRC, 0);
-      WRITE_VID32(SC1400_VID_CRC, 1);
+        WRITE_VID32(SC1400_VID_CRC, 0);
+        WRITE_VID32(SC1400_VID_CRC, 1);
 
-      // WAIT UNTIL NOT ACTIVE, THEN ACTIVE, NOT ACTIVE, THEN ACTIVE
+        // WAIT UNTIL NOT ACTIVE, THEN ACTIVE, NOT ACTIVE, THEN ACTIVE
 
-      while (gfx_test_vertical_active()) ;
-      while (!gfx_test_vertical_active()) ;
-      while (gfx_test_vertical_active()) ;
-      while (!gfx_test_vertical_active()) ;
-      crc = READ_VID32(SC1400_VID_CRC) >> 8;
-   }
-   return (crc);
+        while (gfx_test_vertical_active());
+        while (!gfx_test_vertical_active());
+        while (gfx_test_vertical_active());
+        while (!gfx_test_vertical_active());
+        crc = READ_VID32(SC1400_VID_CRC) >> 8;
+    }
+    return (crc);
 }
 
-#endif /* GFX_READ_ROUTINES */
+#endif                          /* GFX_READ_ROUTINES */
 
 /* END OF FILE */

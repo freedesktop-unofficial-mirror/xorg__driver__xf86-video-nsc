@@ -155,12 +155,10 @@
 #define PLT_READ_DWORDS  7
 #define PLT_UNKNOWN	 ((SYS_BOARD) 0xFFFF)
 
-typedef struct
-{
-   char sys_board_name[SYS_BOARD_NAME_LEN];
-   SYS_BOARD sys_board;
-}
-SYS_BOARD_INFO;
+typedef struct {
+    char sys_board_name[SYS_BOARD_NAME_LEN];
+    SYS_BOARD sys_board;
+} SYS_BOARD_INFO;
 
 static SYS_BOARD_INFO Sys_info;
 
@@ -173,15 +171,15 @@ static SYS_BOARD_INFO Sys_info;
  */
 
 SYS_BOARD_INFO Sys_board_info_array[] = {
-   {"Marmot", MARMOT_PLATFORM},
-   {"Unicorn", UNICORN_PLATFORM},
-   {"Centaurus", CENTAURUS_PLATFORM},
-   {"Aries", ARIES_PLATFORM},
-   {"Carmel", CARMEL_PLATFORM},
-   {"Hyrda", HYDRA_PLATFORM},
-   {"Dorado", DORADO_PLATFORM},
-   {"Redcloud", REDCLOUD_PLATFORM},
-   {"Other", OTHER_PLATFORM}
+    {"Marmot", MARMOT_PLATFORM},
+    {"Unicorn", UNICORN_PLATFORM},
+    {"Centaurus", CENTAURUS_PLATFORM},
+    {"Aries", ARIES_PLATFORM},
+    {"Carmel", CARMEL_PLATFORM},
+    {"Hyrda", HYDRA_PLATFORM},
+    {"Dorado", DORADO_PLATFORM},
+    {"Redcloud", REDCLOUD_PLATFORM},
+    {"Other", OTHER_PLATFORM}
 };
 
 #define NUM_SYS_BOARD_TYPES sizeof(Sys_board_info_array)/sizeof(SYS_BOARD_INFO)
@@ -195,62 +193,65 @@ static unsigned char get_sys_board_type(SYS_BOARD_INFO *, SYS_BOARD_INFO *);
 int
 Detect_Platform(void)
 {
-   /* See if we can find the board name using Xpressrom */
-   if (get_sys_board_type(&Sys_info, Sys_board_array_base) == TRUE) {
+    /* See if we can find the board name using Xpressrom */
+    if (get_sys_board_type(&Sys_info, Sys_board_array_base) == TRUE) {
 #if 0
-      if (Sys_info.sys_board == CENTAURUS_PLATFORM) {
-	 printk("CENTAURUS Platform Found\n");
-      } else if (Sys_info.sys_board == DORADO_PLATFORM) {
-	 printk("DORADO Platform Found \n");
-      } else {
-	 printk("UNKNOWN Platform Found \n");
-      }
+        if (Sys_info.sys_board == CENTAURUS_PLATFORM) {
+            printk("CENTAURUS Platform Found\n");
+        }
+        else if (Sys_info.sys_board == DORADO_PLATFORM) {
+            printk("DORADO Platform Found \n");
+        }
+        else {
+            printk("UNKNOWN Platform Found \n");
+        }
 #endif
-   }
+    }
 
-   return (Sys_info.sys_board);
+    return (Sys_info.sys_board);
 }
 
 static int
 Strncmp(char *str1, char *str2, int len)
 {
-   int i;
+    int i;
 
-   if ((str1 == 0x0) || (str2 == 0x0) || (len == 0))
-      return (1);
-   for (i = 0; i < len; i++) {
-      if (*(str1 + i) > *(str2 + i)) {
-	 return 1;
-      } else if (*(str1 + i) < *(str2 + i)) {
-	 return -1;
-      }
-   }
-   return 0;
+    if ((str1 == 0x0) || (str2 == 0x0) || (len == 0))
+        return (1);
+    for (i = 0; i < len; i++) {
+        if (*(str1 + i) > *(str2 + i)) {
+            return 1;
+        }
+        else if (*(str1 + i) < *(str2 + i)) {
+            return -1;
+        }
+    }
+    return 0;
 }
 
 static char *
 Strcpy(char *dst, char *src)
 {
-   int i;
+    int i;
 
-   if ((dst == 0x0) || (src == 0x0))
-      return (0);
-   for (i = 0; src[i] != 0x0; i++) {
-      dst[i] = src[i];
-   }
-   dst[i] = 0x0;			/* NULL termination */
-   return dst;
+    if ((dst == 0x0) || (src == 0x0))
+        return (0);
+    for (i = 0; src[i] != 0x0; i++) {
+        dst[i] = src[i];
+    }
+    dst[i] = 0x0;               /* NULL termination */
+    return dst;
 }
 
 static int
 Strlen(char *str)
 {
-   int i;
+    int i;
 
-   if (str == 0x0)
-      return 0;
-   for (i = 0; str[i] != 0x0; i++) ;
-   return i;
+    if (str == 0x0)
+        return 0;
+    for (i = 0; str[i] != 0x0; i++);
+    return i;
 }
 
 /***********************************************************************/
@@ -270,37 +271,37 @@ Strlen(char *str)
 int
 FindStringInSeg(unsigned int segment_address, char *string_ptr)
 {
-   int string_length = Strlen(string_ptr);
-   char *psegment_buf;
-   unsigned long mem_ptr = (unsigned long)segment_address << 16;
-   char segment_buffer[SEGMENT_LENGTH + 1];
-   int i, cursor = 0;
+    int string_length = Strlen(string_ptr);
+    char *psegment_buf;
+    unsigned long mem_ptr = (unsigned long) segment_address << 16;
+    char segment_buffer[SEGMENT_LENGTH + 1];
+    int i, cursor = 0;
 
-   /* silence compiler */
-   (void)cursor;
-   (void)mem_ptr;
-   (void)segment_buffer;
+    /* silence compiler */
+    (void) cursor;
+    (void) mem_ptr;
+    (void) segment_buffer;
 
-   psegment_buf = (char *)XpressROMPtr;
+    psegment_buf = (char *) XpressROMPtr;
 
-   /* Now search for the first character of the string_ptr */
-   for (i = 0; i < SEGMENT_LENGTH + 1; i++) {
-      if (*(psegment_buf + i) == *string_ptr) {
+    /* Now search for the first character of the string_ptr */
+    for (i = 0; i < SEGMENT_LENGTH + 1; i++) {
+        if (*(psegment_buf + i) == *string_ptr) {
 
-	 /* If we match the first character, do a
-	  * string compare.
-	  */
+            /* If we match the first character, do a
+             * string compare.
+             */
 
-	 if (!Strncmp(string_ptr, (psegment_buf + i), string_length)) {
-	    /* They match! */
-	    return (1);
-	 }
-      }
-   }
-   /* if we got this far we didn't find anything.  Return NULL. */
-   return (0);
+            if (!Strncmp(string_ptr, (psegment_buf + i), string_length)) {
+                /* They match! */
+                return (1);
+            }
+        }
+    }
+    /* if we got this far we didn't find anything.  Return NULL. */
+    return (0);
 
-}					/* end FindStringInSeg() */
+}                               /* end FindStringInSeg() */
 
 /**********************************************************************
 
@@ -319,42 +320,44 @@ FindStringInSeg(unsigned int segment_address, char *string_ptr)
 
 static unsigned char
 get_sys_board_type(SYS_BOARD_INFO * sys_info,
-		   SYS_BOARD_INFO * sys_board_array_base)
+                   SYS_BOARD_INFO * sys_board_array_base)
 {
-   int index;
-   char *xpress_rom_string_ptr = "XpressStart";
-   unsigned int segment = LINUX_ROM_SEGMENT;
+    int index;
+    char *xpress_rom_string_ptr = "XpressStart";
+    unsigned int segment = LINUX_ROM_SEGMENT;
 
-   /* See if XpressStart is present in the BIOS area. 
-    * If it is, search for a board string.  If not, Xpressrom is 
-    * not present, set system_board information to UNKNOWN and 
-    * return FALSE. 
-    */
+    /* See if XpressStart is present in the BIOS area. 
+     * If it is, search for a board string.  If not, Xpressrom is 
+     * not present, set system_board information to UNKNOWN and 
+     * return FALSE. 
+     */
 
-   if (!FindStringInSeg(segment, xpress_rom_string_ptr)) {
-      sys_info->sys_board = PLT_UNKNOWN;
-      Strcpy(sys_info->sys_board_name, "Unknown");
-      return (FALSE);
-   } else {
+    if (!FindStringInSeg(segment, xpress_rom_string_ptr)) {
+        sys_info->sys_board = PLT_UNKNOWN;
+        Strcpy(sys_info->sys_board_name, "Unknown");
+        return (FALSE);
+    }
+    else {
 
-      /* we have Xpressrom, so look for a board */
-      for (index = 0; index < Num_sys_board_type; index++) {
-	 if (!FindStringInSeg(segment, (sys_board_array_base +
-					index)->sys_board_name)) {
-	    continue;
-	 } else {
+        /* we have Xpressrom, so look for a board */
+        for (index = 0; index < Num_sys_board_type; index++) {
+            if (!FindStringInSeg(segment, (sys_board_array_base +
+                                           index)->sys_board_name)) {
+                continue;
+            }
+            else {
 
-	    /* a match!! */
-	    sys_info->sys_board = (sys_board_array_base + index)->sys_board;
-	    Strcpy(sys_info->sys_board_name,
-		   (sys_board_array_base + index)->sys_board_name);
-	    return (TRUE);
-	 }
-      }					/* end for() */
-   }					/* end else */
+                /* a match!! */
+                sys_info->sys_board = (sys_board_array_base + index)->sys_board;
+                Strcpy(sys_info->sys_board_name,
+                       (sys_board_array_base + index)->sys_board_name);
+                return (TRUE);
+            }
+        }                       /* end for() */
+    }                           /* end else */
 
-   /* if we are here we have failed */
-   sys_info->sys_board = PLT_UNKNOWN;
-   Strcpy(sys_info->sys_board_name, "Unknown");
-   return (FALSE);
-}					/* end get_sys_board_type() */
+    /* if we are here we have failed */
+    sys_info->sys_board = PLT_UNKNOWN;
+    Strcpy(sys_info->sys_board_name, "Unknown");
+    return (FALSE);
+}                               /* end get_sys_board_type() */

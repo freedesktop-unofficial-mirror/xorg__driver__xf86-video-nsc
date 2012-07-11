@@ -154,14 +154,14 @@
 int
 gfx_msr_init()
 {
-   int ret_value = 0;
+    int ret_value = 0;
 
 #	if GFX_MSR_REDCLOUD
-   if (gfx_msr_type & GFX_MSR_TYPE_REDCLOUD)
-      ret_value = redcloud_msr_init();
+    if (gfx_msr_type & GFX_MSR_TYPE_REDCLOUD)
+        ret_value = redcloud_msr_init();
 #	endif
 
-   return ret_value;
+    return ret_value;
 }
 
 /*-----------------------------------------------------------------------------
@@ -171,14 +171,14 @@ gfx_msr_init()
 DEV_STATUS
 gfx_id_msr_device(MSR * pDev, unsigned long address)
 {
-   DEV_STATUS ret_value = NOT_KNOWN;
+    DEV_STATUS ret_value = NOT_KNOWN;
 
 #	if GFX_MSR_REDCLOUD
-   if (gfx_msr_type & GFX_MSR_TYPE_REDCLOUD)
-      ret_value = redcloud_id_msr_device(pDev, address);
+    if (gfx_msr_type & GFX_MSR_TYPE_REDCLOUD)
+        ret_value = redcloud_id_msr_device(pDev, address);
 #	endif
 
-   return ret_value;
+    return ret_value;
 }
 
 /*-----------------------------------------------------------------------------
@@ -188,14 +188,14 @@ gfx_id_msr_device(MSR * pDev, unsigned long address)
 DEV_STATUS
 gfx_get_msr_dev_address(unsigned int device, unsigned long *address)
 {
-   DEV_STATUS ret_value = NOT_KNOWN;
+    DEV_STATUS ret_value = NOT_KNOWN;
 
 #	if GFX_MSR_REDCLOUD
-   if (gfx_msr_type & GFX_MSR_TYPE_REDCLOUD)
-      ret_value = redcloud_get_msr_dev_address(device, address);
+    if (gfx_msr_type & GFX_MSR_TYPE_REDCLOUD)
+        ret_value = redcloud_get_msr_dev_address(device, address);
 #	endif
 
-   return ret_value;
+    return ret_value;
 }
 
 /*-----------------------------------------------------------------------------
@@ -205,14 +205,14 @@ gfx_get_msr_dev_address(unsigned int device, unsigned long *address)
 DEV_STATUS
 gfx_get_glink_id_at_address(unsigned int *device, unsigned long address)
 {
-   DEV_STATUS ret_value = NOT_KNOWN;
+    DEV_STATUS ret_value = NOT_KNOWN;
 
 #	if GFX_MSR_REDCLOUD
-   if (gfx_msr_type & GFX_MSR_TYPE_REDCLOUD)
-      ret_value = redcloud_get_glink_id_at_address(device, address);
+    if (gfx_msr_type & GFX_MSR_TYPE_REDCLOUD)
+        ret_value = redcloud_get_glink_id_at_address(device, address);
 #	endif
 
-   return ret_value;
+    return ret_value;
 }
 
 /*-----------------------------------------------------------------------------
@@ -222,14 +222,14 @@ gfx_get_glink_id_at_address(unsigned int *device, unsigned long address)
 DEV_STATUS
 gfx_msr_read(unsigned int device, unsigned int msrRegister, Q_WORD * msrValue)
 {
-   DEV_STATUS ret_value = NOT_KNOWN;
+    DEV_STATUS ret_value = NOT_KNOWN;
 
 #	if GFX_MSR_REDCLOUD
-   if (gfx_msr_type & GFX_MSR_TYPE_REDCLOUD)
-      ret_value = redcloud_msr_read(device, msrRegister, msrValue);
+    if (gfx_msr_type & GFX_MSR_TYPE_REDCLOUD)
+        ret_value = redcloud_msr_read(device, msrRegister, msrValue);
 #	endif
 
-   return ret_value;
+    return ret_value;
 }
 
 /*-----------------------------------------------------------------------------
@@ -237,17 +237,16 @@ gfx_msr_read(unsigned int device, unsigned int msrRegister, Q_WORD * msrValue)
  *-----------------------------------------------------------------------------
  */
 DEV_STATUS
-gfx_msr_write(unsigned int device, unsigned int msrRegister,
-	      Q_WORD * msrValue)
+gfx_msr_write(unsigned int device, unsigned int msrRegister, Q_WORD * msrValue)
 {
-   DEV_STATUS ret_value = NOT_KNOWN;
+    DEV_STATUS ret_value = NOT_KNOWN;
 
 #	if GFX_MSR_REDCLOUD
-   if (gfx_msr_type & GFX_MSR_TYPE_REDCLOUD)
-      ret_value = redcloud_msr_write(device, msrRegister, msrValue);
+    if (gfx_msr_type & GFX_MSR_TYPE_REDCLOUD)
+        ret_value = redcloud_msr_write(device, msrRegister, msrValue);
 #	endif
 
-   return ret_value;
+    return ret_value;
 }
 
 #endif

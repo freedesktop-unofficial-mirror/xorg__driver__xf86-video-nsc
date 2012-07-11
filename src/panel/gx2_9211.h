@@ -144,50 +144,50 @@
  */
 
 #define GX2_FP_LCD_OFFSET       0x00000400
-#define CS9211_REDCLOUD         0x0400	/* Moved 9211 Rev C3 up to next major no. */
+#define CS9211_REDCLOUD         0x0400  /* Moved 9211 Rev C3 up to next major no. */
 
-#define GX2_FP_PAN_TIMING1      0x0400	/* FP timings 1 */
-#define GX2_FP_PAN_TIMING2      0x0408	/* FP timings 2 */
-#define GX2_FP_PWR_MAN          0x0410	/* FP power management */
-#define GX2_FP_DITH_FR_CNTRL    0x0418	/* FP dither and frame rate */
-#define GX2_FP_BLFSR            0x0420	/* Blue LFSR seed */
-#define GX2_FP_RLFSR            0x0428	/* Red and Green LFSR seed */
-#define GX2_FP_FMI              0x0430	/* FRM Memory Index */
-#define GX2_FP_FMD              0x0438	/* FRM Memory Data */
-#define GX2_FP_DCA              0x0448	/* Dither ram control and address */
-#define GX2_FP_DMD              0x0450	/* Dither memory data */
-#define GX2_FP_PAN_CRC_SIG      0x0458	/* FP CRC signature */
-#define GX2_FP_FBB              0x0460	/* Frame Buffer Base Address */
+#define GX2_FP_PAN_TIMING1      0x0400  /* FP timings 1 */
+#define GX2_FP_PAN_TIMING2      0x0408  /* FP timings 2 */
+#define GX2_FP_PWR_MAN          0x0410  /* FP power management */
+#define GX2_FP_DITH_FR_CNTRL    0x0418  /* FP dither and frame rate */
+#define GX2_FP_BLFSR            0x0420  /* Blue LFSR seed */
+#define GX2_FP_RLFSR            0x0428  /* Red and Green LFSR seed */
+#define GX2_FP_FMI              0x0430  /* FRM Memory Index */
+#define GX2_FP_FMD              0x0438  /* FRM Memory Data */
+#define GX2_FP_DCA              0x0448  /* Dither ram control and address */
+#define GX2_FP_DMD              0x0450  /* Dither memory data */
+#define GX2_FP_PAN_CRC_SIG      0x0458  /* FP CRC signature */
+#define GX2_FP_FBB              0x0460  /* Frame Buffer Base Address */
 
 /* GX2_FP_PAN_TIMING2 bits */
 
-#define GX2_FP_TFT_PASS_THRU		0x40000000	/* TFT pass through enable */
-#define GX2_FP_PT2_PIX_OUT_MASK		0xFFF8FFFF	/* panel output bit formats */
-#define GX2_FP_PT2_PIX_OUT_TFT		0x00000000	/* 8 BIT DSTN or TFT panel */
-#define GX2_FP_PT2_COLOR_MONO		0x00080000	/* color or monochrome */
-#define GX2_FP_PT2_DSTN_TFT_MASK	0xFFCFFFFF	/* panel type bits */
-#define GX2_FP_PT2_DSTN_TFT_TFT		0x00100000	/* TFT panel */
-#define GX2_FP_PT2_PSH_CLK_CTL		0x08000000	/* shift clock retrace activity control */
+#define GX2_FP_TFT_PASS_THRU		0x40000000      /* TFT pass through enable */
+#define GX2_FP_PT2_PIX_OUT_MASK		0xFFF8FFFF      /* panel output bit formats */
+#define GX2_FP_PT2_PIX_OUT_TFT		0x00000000      /* 8 BIT DSTN or TFT panel */
+#define GX2_FP_PT2_COLOR_MONO		0x00080000      /* color or monochrome */
+#define GX2_FP_PT2_DSTN_TFT_MASK	0xFFCFFFFF      /* panel type bits */
+#define GX2_FP_PT2_DSTN_TFT_TFT		0x00100000      /* TFT panel */
+#define GX2_FP_PT2_PSH_CLK_CTL		0x08000000      /* shift clock retrace activity control */
 
 /*  GX2_FP_PWR_MAN bits */
 
-#define GX2_FP_PM_SHFCLK_INVERT		0x00002000	/* Invert shfclk to panel */
-#define GX2_FP_PM_VSYNC_DELAY		0x0000C000	/* Vert Sync delay */
-#define GX2_FP_PM_HSYNC_DELAY		0x00030000	/* Horiz Sync delay */
-#define GX2_FP_PM_PWRDN_PHASE_BIT0	0x00040000	/* panel power down phase bit 0 */
-#define GX2_FP_PM_PWRDN_PHASE_BIT1	0x00080000	/* panel power down phase bit 1 */
-#define GX2_FP_PM_PWRDN_PHASE_BIT2	0x00100000	/* panel power down phase bit 2 */
-#define GX2_FP_PM_PWRUP_PHASE_BIT0	0x00200000	/* panel power up phase bit 0 */
-#define GX2_FP_PM_PWRUP_PHASE_BIT1	0x00400000	/* panel power up phase bit 1 */
-#define GX2_FP_PM_PWRUP_PHASE_BIT2	0x00800000	/* panel power up phase bit 2 */
-#define GX2_FP_PM_PWR_ON			0x01000000	/* panel power ON */
-#define GX2_FP_PM_DIS_OFF_CTL		0x02000000	/* disable the panel back light */
-#define GX2_FP_PM_EXT_PWR_SEQ		0x08000000	/* external power sequence */
+#define GX2_FP_PM_SHFCLK_INVERT		0x00002000      /* Invert shfclk to panel */
+#define GX2_FP_PM_VSYNC_DELAY		0x0000C000      /* Vert Sync delay */
+#define GX2_FP_PM_HSYNC_DELAY		0x00030000      /* Horiz Sync delay */
+#define GX2_FP_PM_PWRDN_PHASE_BIT0	0x00040000      /* panel power down phase bit 0 */
+#define GX2_FP_PM_PWRDN_PHASE_BIT1	0x00080000      /* panel power down phase bit 1 */
+#define GX2_FP_PM_PWRDN_PHASE_BIT2	0x00100000      /* panel power down phase bit 2 */
+#define GX2_FP_PM_PWRUP_PHASE_BIT0	0x00200000      /* panel power up phase bit 0 */
+#define GX2_FP_PM_PWRUP_PHASE_BIT1	0x00400000      /* panel power up phase bit 1 */
+#define GX2_FP_PM_PWRUP_PHASE_BIT2	0x00800000      /* panel power up phase bit 2 */
+#define GX2_FP_PM_PWR_ON			0x01000000      /* panel power ON */
+#define GX2_FP_PM_DIS_OFF_CTL		0x02000000      /* disable the panel back light */
+#define GX2_FP_PM_EXT_PWR_SEQ		0x08000000      /* external power sequence */
 
 /*  GX2_FP_PAN_CRC_SIG bits */
 
-#define GX2_FP_PAN_CRC_SIGE         0x00000001	/* CRC Sig Enable */
-#define GX2_FP_PAN_CRC_SFR          0x00000002	/* CRC Sig Free Run */
+#define GX2_FP_PAN_CRC_SIGE         0x00000001  /* CRC Sig Enable */
+#define GX2_FP_PAN_CRC_SFR          0x00000002  /* CRC Sig Free Run */
 
 /* This define is used by the hardware CRC mechanism */
 #define GX2_FP_CRC_PASS_THRU_MASK	0x00000070
@@ -198,8 +198,8 @@
 void SetFPBaseAddr(unsigned long);
 void Redcloud_9211init(Pnl_PanelStat *);
 void protected_mode_access(unsigned long mode,
-              unsigned long width,
-              unsigned long addr, char *pdata);
+                           unsigned long width,
+                           unsigned long addr, char *pdata);
 void write_video_reg64_low(unsigned long offset, unsigned long value);
 unsigned long read_video_reg64_low(unsigned long offset);
 void Redcloud_fp_reg(int mode, unsigned long address, unsigned long *data);

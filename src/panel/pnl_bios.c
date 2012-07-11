@@ -141,7 +141,7 @@
 
 #include "panel.h"
 
-#if defined(_WIN32)			/* windows */
+#if defined(_WIN32)             /* windows */
 extern unsigned long gfx_cpu_version;
 extern void gfx_outw(unsigned short port, unsigned short data);
 extern unsigned short gfx_inw(unsigned short port);
@@ -156,56 +156,56 @@ extern unsigned short gfx_inw(unsigned short port);
 #define VR_INDEX                0xAC1C
 #define VR_DATA                 0xAC1E
 #define VR_UNLOCK               0xFC53
-#define VRC_VG                  0x0002	/* SoftVG Virtual Register Class    */
-#define VG_MEM_SIZE             0x0000	/* MemSize Virtual Register */
+#define VRC_VG                  0x0002  /* SoftVG Virtual Register Class    */
+#define VG_MEM_SIZE             0x0000  /* MemSize Virtual Register */
 #define FP_DETECT_MASK          0x8000
 
-#define VG_FP_TYPE      0x0002		/* Flat Panel Info Virtual Register */
+#define VG_FP_TYPE      0x0002  /* Flat Panel Info Virtual Register */
 
-#define FP_DEV_MASK     0x0003		/* Flat Panel type */
-#define FP_TYPE_SSTN	0x0000		/* SSTN panel type value */
-#define FP_TYPE_DSTN	0x0001		/* DSTN panel type value */
-#define FP_TYPE_TFT		0x0002	/* TFT panel type value */
-#define FP_TYPE_LVDS	0x0003		/* LVDS panel type value */
+#define FP_DEV_MASK     0x0003  /* Flat Panel type */
+#define FP_TYPE_SSTN	0x0000  /* SSTN panel type value */
+#define FP_TYPE_DSTN	0x0001  /* DSTN panel type value */
+#define FP_TYPE_TFT		0x0002  /* TFT panel type value */
+#define FP_TYPE_LVDS	0x0003  /* LVDS panel type value */
 
 #define FP_RESOLUTION_MASK      0x0038
-#define FP_RES_6X4		0x0000	/* 640x480 resolution value */
-#define FP_RES_8X6		0x0008	/* 800x600 resolution value */
-#define FP_RES_10X7		0x0010	/* 1024x768 resolution value */
-#define FP_RES_12X10	0x0018		/* 1280x1024 resolution value */
-#define FP_RES_16X12	0x0020		/* 1600x1200 resolution value */
+#define FP_RES_6X4		0x0000  /* 640x480 resolution value */
+#define FP_RES_8X6		0x0008  /* 800x600 resolution value */
+#define FP_RES_10X7		0x0010  /* 1024x768 resolution value */
+#define FP_RES_12X10	0x0018  /* 1280x1024 resolution value */
+#define FP_RES_16X12	0x0020  /* 1600x1200 resolution value */
 
 #define FP_WIDTH_MASK   0x01C0
-#define FP_WIDTH_8		0x0000	/* 8 bit data bus width */
-#define FP_WIDTH_9		0x0040	/* 9 bit data bus width */
-#define FP_WIDTH_12		0x0080	/* 12 bit data bus width */
-#define FP_WIDTH_18		0x00C0	/* 18 bit data bus width */
-#define FP_WIDTH_24		0x0100	/* 24 bit data bus width */
-#define FP_WIDTH_16		0x0140	/* 16 bit data bus width - 16 bit Mono DSTN only */
+#define FP_WIDTH_8		0x0000  /* 8 bit data bus width */
+#define FP_WIDTH_9		0x0040  /* 9 bit data bus width */
+#define FP_WIDTH_12		0x0080  /* 12 bit data bus width */
+#define FP_WIDTH_18		0x00C0  /* 18 bit data bus width */
+#define FP_WIDTH_24		0x0100  /* 24 bit data bus width */
+#define FP_WIDTH_16		0x0140  /* 16 bit data bus width - 16 bit Mono DSTN only */
 
 #define FP_COLOR_MASK   0x0200
-#define FP_COLOR_COLOR	0x0000		/* Color panel */
-#define FP_COLOR_MONO	0x0200		/* Mono Panel */
+#define FP_COLOR_COLOR	0x0000  /* Color panel */
+#define FP_COLOR_MONO	0x0200  /* Mono Panel */
 
 #define FP_PPC_MASK     0x0400
-#define FP_PPC_1PPC		0x0000	/* One pixel per clock */
-#define FP_PPC_2PPC		0x0400	/* Two pixels per clock */
+#define FP_PPC_1PPC		0x0000  /* One pixel per clock */
+#define FP_PPC_2PPC		0x0400  /* Two pixels per clock */
 
 #define FP_HPOL_MASK    0x0800
-#define	FP_H_POL_LGH	0x0000		/* HSync at panel, normally low, active high */
-#define FP_H_POL_HGL	0x0800		/* HSync at panel, normally high, active low */
+#define	FP_H_POL_LGH	0x0000  /* HSync at panel, normally low, active high */
+#define FP_H_POL_HGL	0x0800  /* HSync at panel, normally high, active low */
 
 #define FP_VPOL_MASK    0x1000
-#define FP_V_POL_LGH	0x0000		/* VSync at panel, normally low, active high */
-#define FP_V_POL_HGL	0x1000		/* VSync at panel, normally high, active low */
+#define FP_V_POL_LGH	0x0000  /* VSync at panel, normally low, active high */
+#define FP_V_POL_HGL	0x1000  /* VSync at panel, normally high, active low */
 
 #define FP_REF_MASK     0xD000
-#define FP_REF_60		0x0000	/* 60Hz refresh rate */
-#define FP_REF_65		0x2000	/* 65Hz refresh rate */
-#define FP_REF_70		0x4000	/* 70Hz refresh rate */
-#define FP_REF_72		0x6000	/* 72Hz refresh rate */
-#define FP_REF_75		0x8000	/* 75Hz refresh rate */
-#define FP_REF_85		0xA000	/* 85Hz refresh rate */
+#define FP_REF_60		0x0000  /* 60Hz refresh rate */
+#define FP_REF_65		0x2000  /* 65Hz refresh rate */
+#define FP_REF_70		0x4000  /* 70Hz refresh rate */
+#define FP_REF_72		0x6000  /* 72Hz refresh rate */
+#define FP_REF_75		0x8000  /* 75Hz refresh rate */
+#define FP_REF_85		0xA000  /* 85Hz refresh rate */
 
 /*-----------------------------------------------------------------
  * Pnl_IsPanelEnabledInBIOS
@@ -218,29 +218,30 @@ extern unsigned short gfx_inw(unsigned short port);
 int
 Pnl_IsPanelEnabledInBIOS(void)
 {
-   unsigned char ret = 0;
+    unsigned char ret = 0;
 
-   if ((gfx_cpu_version & 0xFF) == GFX_CPU_REDCLOUD) {
-      unsigned short data;
+    if ((gfx_cpu_version & 0xFF) == GFX_CPU_REDCLOUD) {
+        unsigned short data;
 
-      gfx_outw(VR_INDEX, VR_UNLOCK);
-      gfx_outw(VR_INDEX, (VRC_VG << 8) | VG_MEM_SIZE);
-      data = gfx_inw(VR_DATA);
-      if (data & FP_DETECT_MASK)
-	 ret = 1;
-   } else {
-      unsigned short crtcindex, crtcdata;
+        gfx_outw(VR_INDEX, VR_UNLOCK);
+        gfx_outw(VR_INDEX, (VRC_VG << 8) | VG_MEM_SIZE);
+        data = gfx_inw(VR_DATA);
+        if (data & FP_DETECT_MASK)
+            ret = 1;
+    }
+    else {
+        unsigned short crtcindex, crtcdata;
 
-      crtcindex = (gfx_inb(0x3CC) & 0x01) ? 0x3D4 : 0x3B4;
-      crtcdata = crtcindex + 1;
+        crtcindex = (gfx_inb(0x3CC) & 0x01) ? 0x3D4 : 0x3B4;
+        crtcdata = crtcindex + 1;
 
-      /* CHECK DisplayEnable Reg in SoftVGA */
+        /* CHECK DisplayEnable Reg in SoftVGA */
 
-      gfx_outb(crtcindex, (unsigned char)SOFTVGA_DISPLAY_ENABLE);
-      ret = gfx_inb(crtcdata);
-   }
+        gfx_outb(crtcindex, (unsigned char) SOFTVGA_DISPLAY_ENABLE);
+        ret = gfx_inb(crtcdata);
+    }
 
-   return (ret & 0x1);
+    return (ret & 0x1);
 }
 
 /*-----------------------------------------------------------------
@@ -258,120 +259,121 @@ Pnl_IsPanelEnabledInBIOS(void)
 void
 Pnl_GetPanelInfoFromBIOS(int *xres, int *yres, int *bpp, int *hz)
 {
-   unsigned short crtcindex, crtcdata;
-   unsigned short ret;
+    unsigned short crtcindex, crtcdata;
+    unsigned short ret;
 
-   if ((gfx_cpu_version & 0xFF) == GFX_CPU_REDCLOUD) {
-      gfx_outw(VR_INDEX, VR_UNLOCK);
-      gfx_outw(VR_INDEX, (VRC_VG << 8) | VG_FP_TYPE);
-      ret = gfx_inw(VR_DATA);
-      switch (ret & FP_RESOLUTION_MASK) {
-      case FP_RES_6X4:
-	 *xres = 640;
-	 *yres = 480;
-	 break;
-      case FP_RES_8X6:
-	 *xres = 800;
-	 *yres = 600;
-	 break;
-      case FP_RES_10X7:
-	 *xres = 1024;
-	 *yres = 768;
-	 break;
-      case FP_RES_12X10:
-	 *xres = 1280;
-	 *yres = 1024;
-	 break;
-      case FP_RES_16X12:
-	 *xres = 1600;
-	 *yres = 1200;
-	 break;
-      }
+    if ((gfx_cpu_version & 0xFF) == GFX_CPU_REDCLOUD) {
+        gfx_outw(VR_INDEX, VR_UNLOCK);
+        gfx_outw(VR_INDEX, (VRC_VG << 8) | VG_FP_TYPE);
+        ret = gfx_inw(VR_DATA);
+        switch (ret & FP_RESOLUTION_MASK) {
+        case FP_RES_6X4:
+            *xres = 640;
+            *yres = 480;
+            break;
+        case FP_RES_8X6:
+            *xres = 800;
+            *yres = 600;
+            break;
+        case FP_RES_10X7:
+            *xres = 1024;
+            *yres = 768;
+            break;
+        case FP_RES_12X10:
+            *xres = 1280;
+            *yres = 1024;
+            break;
+        case FP_RES_16X12:
+            *xres = 1600;
+            *yres = 1200;
+            break;
+        }
 
-      switch (ret & FP_WIDTH_MASK) {
-      case FP_WIDTH_8:
-	 *bpp = 8;
-	 break;
-      case FP_WIDTH_9:
-	 *bpp = 9;
-	 break;
-      case FP_WIDTH_12:
-	 *bpp = 12;
-	 break;
-      case FP_WIDTH_18:
-	 *bpp = 18;
-	 break;
-      case FP_WIDTH_24:
-	 *bpp = 24;
-	 break;
-      case FP_WIDTH_16:
-	 *bpp = 16;
-	 break;
-      }
+        switch (ret & FP_WIDTH_MASK) {
+        case FP_WIDTH_8:
+            *bpp = 8;
+            break;
+        case FP_WIDTH_9:
+            *bpp = 9;
+            break;
+        case FP_WIDTH_12:
+            *bpp = 12;
+            break;
+        case FP_WIDTH_18:
+            *bpp = 18;
+            break;
+        case FP_WIDTH_24:
+            *bpp = 24;
+            break;
+        case FP_WIDTH_16:
+            *bpp = 16;
+            break;
+        }
 
-      switch (ret & FP_REF_MASK) {
-      case FP_REF_60:
-	 *hz = 60;
-	 break;
-      case FP_REF_65:
-	 *hz = 65;
-	 break;
-      case FP_REF_70:
-	 *hz = 70;
-	 break;
-      case FP_REF_72:
-	 *hz = 72;
-	 break;
-      case FP_REF_75:
-	 *hz = 75;
-	 break;
-      case FP_REF_85:
-	 *hz = 85;
-	 break;
-      }
+        switch (ret & FP_REF_MASK) {
+        case FP_REF_60:
+            *hz = 60;
+            break;
+        case FP_REF_65:
+            *hz = 65;
+            break;
+        case FP_REF_70:
+            *hz = 70;
+            break;
+        case FP_REF_72:
+            *hz = 72;
+            break;
+        case FP_REF_75:
+            *hz = 75;
+            break;
+        case FP_REF_85:
+            *hz = 85;
+            break;
+        }
 
-   } else {
-      crtcindex = (gfx_inb(0x3CC) & 0x01) ? 0x3D4 : 0x3B4;
-      crtcdata = crtcindex + 1;
+    }
+    else {
+        crtcindex = (gfx_inb(0x3CC) & 0x01) ? 0x3D4 : 0x3B4;
+        crtcdata = crtcindex + 1;
 
-      /* CHECK FPResolution Reg in SoftVGA */
+        /* CHECK FPResolution Reg in SoftVGA */
 
-      gfx_outb(crtcindex, (unsigned char)SOFTVGA_FPRESOLUTION);
-      ret = gfx_inb(crtcdata);
+        gfx_outb(crtcindex, (unsigned char) SOFTVGA_FPRESOLUTION);
+        ret = gfx_inb(crtcdata);
 
-      switch (ret & 0x3) {
-      case 0:
-	 *xres = 640;
-	 *yres = 480;
-	 break;
-      case 1:
-	 *xres = 800;
-	 *yres = 600;
-	 break;
-      case 2:
-	 *xres = 1024;
-	 *yres = 768;
-	 break;
-      }
+        switch (ret & 0x3) {
+        case 0:
+            *xres = 640;
+            *yres = 480;
+            break;
+        case 1:
+            *xres = 800;
+            *yres = 600;
+            break;
+        case 2:
+            *xres = 1024;
+            *yres = 768;
+            break;
+        }
 
-      switch ((ret >> 4) & 0x3) {
-      case 0:
-	 *bpp = 12;
-	 break;
-      case 1:
-	 *bpp = 18;
-	 break;
-      case 2:
-	 *bpp = 16;
-	 break;
-      case 3:
-	 *bpp = 8;
-	 break;
-      }
+        switch ((ret >> 4) & 0x3) {
+        case 0:
+            *bpp = 12;
+            break;
+        case 1:
+            *bpp = 18;
+            break;
+        case 2:
+            *bpp = 16;
+            break;
+        case 3:
+            *bpp = 8;
+            break;
+        }
 
-      /* CHECK FPClockFrequency Reg in SoftVGA */
+        /* CHECK FPClockFrequency Reg in SoftVGA */
 
-      gfx_outb(crtcindex, (unsigned char)SOFTVGA_FPCLOCKFREQUENCY);
-      *hz = gfx_inb(crtcdata);
-   }
+        gfx_outb(crtcindex, (unsigned char) SOFTVGA_FPCLOCKFREQUENCY);
+        *hz = gfx_inb(crtcdata);
+    }
 }

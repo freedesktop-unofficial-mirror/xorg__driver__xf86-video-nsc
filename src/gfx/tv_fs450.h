@@ -132,33 +132,32 @@
 #define __FS450_H__
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
 /* ==========================================================================*/
 /*	Init and cleanup functions*/
 
-   int FS450_init(void);
-   void FS450_cleanup(void);
-   /* call FS450_init at startup to probe for and initialize FS450. */
-   /* returns 0 if successful. */
+    int FS450_init(void);
+    void FS450_cleanup(void);
+    /* call FS450_init at startup to probe for and initialize FS450. */
+    /* returns 0 if successful. */
 
 /* ==========================================================================*/
 /*	TV output on or off*/
 
-   int FS450_get_tv_enable(unsigned int *p_on);
-   int FS450_set_tv_enable(unsigned int on);
-   /* on is 1 for TV on, 0 for off */
+    int FS450_get_tv_enable(unsigned int *p_on);
+    int FS450_set_tv_enable(unsigned int on);
+    /* on is 1 for TV on, 0 for off */
 
 /* ==========================================================================*/
 /*	TV standard*/
 
-   int FS450_get_tv_standard(unsigned long *p_standard);
-   int FS450_get_available_tv_standards(unsigned long *p_standards);
-   int FS450_set_tv_standard(unsigned long standard);
-   /* standard is one of the FS450_TV_STANDARD constants */
-   /* standards is a bitmask of zero or more FS450_TV_STANDARD constants */
+    int FS450_get_tv_standard(unsigned long *p_standard);
+    int FS450_get_available_tv_standards(unsigned long *p_standards);
+    int FS450_set_tv_standard(unsigned long standard);
+    /* standard is one of the FS450_TV_STANDARD constants */
+    /* standards is a bitmask of zero or more FS450_TV_STANDARD constants */
 
 /* FS450 TV Standard flags*/
 #define FS450_TV_STANDARD_NTSC_M 0x0001
@@ -174,11 +173,11 @@ extern "C"
 /* ==========================================================================*/
 /*	VGA mode assumed by FS450*/
 
-   int FS450_get_vga_mode(unsigned long *p_vga_mode);
-   int FS450_get_available_vga_modes(unsigned long *p_vga_modes);
-   int FS450_set_vga_mode(unsigned long vga_mode);
-   /* vga_mode is one of the FS450_VGA_MODE constants */
-   /* vga_modes is a bitmask of zero or more FS450_VGA_MODE constants */
+    int FS450_get_vga_mode(unsigned long *p_vga_mode);
+    int FS450_get_available_vga_modes(unsigned long *p_vga_modes);
+    int FS450_set_vga_mode(unsigned long vga_mode);
+    /* vga_mode is one of the FS450_VGA_MODE constants */
+    /* vga_modes is a bitmask of zero or more FS450_VGA_MODE constants */
 
 /* FS450 VGA Mode flags*/
 #define FS450_VGA_MODE_UNKNOWN 0
@@ -191,9 +190,9 @@ extern "C"
 /* ==========================================================================*/
 /*	TVout mode*/
 
-   int FS450_get_tvout_mode(unsigned long *p_tvout_mode);
-   int FS450_set_tvout_mode(unsigned long tvout_mode);
-   /* tvout_mode is a bitmask of FS450_TVOUT_MODE constants */
+    int FS450_get_tvout_mode(unsigned long *p_tvout_mode);
+    int FS450_set_tvout_mode(unsigned long tvout_mode);
+    /* tvout_mode is a bitmask of FS450_TVOUT_MODE constants */
 
 /* FS450 TVout mode flags*/
 #define FS450_TVOUT_MODE_CVBS 0x0001
@@ -204,44 +203,44 @@ extern "C"
 /* ==========================================================================*/
 /*	Flicker control*/
 
-   int FS450_get_sharpness(int *p_sharpness);
-   int FS450_set_sharpness(int sharpness);
-   /* sharpness is a percentage in tenths of a percent, 0 to 1000 */
+    int FS450_get_sharpness(int *p_sharpness);
+    int FS450_set_sharpness(int sharpness);
+    /* sharpness is a percentage in tenths of a percent, 0 to 1000 */
 
-   int FS450_get_flicker_filter(int *p_flicker);
-   int FS450_set_flicker_filter(int flicker);
-   /* flicker_filter is a percentage in tenths of a percent, 0 to 1000 */
+    int FS450_get_flicker_filter(int *p_flicker);
+    int FS450_set_flicker_filter(int flicker);
+    /* flicker_filter is a percentage in tenths of a percent, 0 to 1000 */
 
 /* ==========================================================================*/
 /*	Size and Position*/
 
-   int FS450_get_overscan(int *p_x, int *p_y);
-   int FS450_set_overscan(int x, int y);
-   int FS450_get_position(int *p_x, int *p_y);
-   int FS450_set_position(int x, int y);
-   /* x and y are horizontal and vertical adjustments, -1000 to +1000 */
+    int FS450_get_overscan(int *p_x, int *p_y);
+    int FS450_set_overscan(int x, int y);
+    int FS450_get_position(int *p_x, int *p_y);
+    int FS450_set_position(int x, int y);
+    /* x and y are horizontal and vertical adjustments, -1000 to +1000 */
 
 /* ==========================================================================*/
 /*	Visual adjustments*/
 
-   int FS450_get_color(int *p_color);
-   int FS450_set_color(int color);
-   /* color is a percentage, 0 to 100 */
+    int FS450_get_color(int *p_color);
+    int FS450_set_color(int color);
+    /* color is a percentage, 0 to 100 */
 
-   int FS450_get_brightness(int *p_brightness);
-   int FS450_set_brightness(int brightness);
-   /* brightness is a percentage, 0 to 100 */
+    int FS450_get_brightness(int *p_brightness);
+    int FS450_set_brightness(int brightness);
+    /* brightness is a percentage, 0 to 100 */
 
-   int FS450_get_contrast(int *p_contrast);
-   int FS450_set_contrast(int constrast);
-   /* contrast is a percentage, 0 to 100 */
+    int FS450_get_contrast(int *p_contrast);
+    int FS450_set_contrast(int constrast);
+    /* contrast is a percentage, 0 to 100 */
 
 /* ==========================================================================*/
 /*	Luma and Chroma filter*/
 
-   int FS450_get_yc_filter(unsigned int *p_yc_filter);
-   int FS450_set_yc_filter(unsigned int yc_filter);
-   /* yc_filter is a bitmask of FS450_LUMA_FILTER and/or FS450_CHROMA_FILTER */
+    int FS450_get_yc_filter(unsigned int *p_yc_filter);
+    int FS450_set_yc_filter(unsigned int yc_filter);
+    /* yc_filter is a bitmask of FS450_LUMA_FILTER and/or FS450_CHROMA_FILTER */
 
 /* FS450 Luma and Chroma Filters*/
 #define FS450_LUMA_FILTER 0x0001
@@ -250,9 +249,9 @@ extern "C"
 /* ==========================================================================*/
 /*	Macrovision*/
 
-   int FS450_get_aps_trigger_bits(unsigned int *p_trigger_bits);
-   int FS450_set_aps_trigger_bits(unsigned int trigger_bits);
-   /* trigger_bits is one of the FS450_APS_TRIGGER constants */
+    int FS450_get_aps_trigger_bits(unsigned int *p_trigger_bits);
+    int FS450_set_aps_trigger_bits(unsigned int trigger_bits);
+    /* trigger_bits is one of the FS450_APS_TRIGGER constants */
 
 /* APS Trigger Bits*/
 #define FS450_APS_TRIGGER_OFF 0
@@ -271,17 +270,15 @@ extern "C"
 #define SOURCE_HOUSTON 0
 #define SOURCE_GCC 1
 
-   typedef struct _S_REG_INFO
-   {
-      int source;
-      unsigned int size;
-      unsigned long offset;
-      unsigned long value;
-   }
-   S_REG_INFO;
+    typedef struct _S_REG_INFO {
+        int source;
+        unsigned int size;
+        unsigned long offset;
+        unsigned long value;
+    } S_REG_INFO;
 
-   int FS450_ReadRegister(S_REG_INFO * p_reg);
-   int FS450_WriteRegister(S_REG_INFO * p_reg);
+    int FS450_ReadRegister(S_REG_INFO * p_reg);
+    int FS450_WriteRegister(S_REG_INFO * p_reg);
 
 #endif
 
@@ -303,5 +300,4 @@ extern "C"
 #ifdef __cplusplus
 }
 #endif
-
 #endif

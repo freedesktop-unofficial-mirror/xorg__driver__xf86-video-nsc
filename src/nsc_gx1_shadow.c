@@ -181,26 +181,26 @@ void GX1RefreshArea32(ScrnInfoPtr pScrn, int num, BoxPtr pbox);
 void
 GX1RefreshArea(ScrnInfoPtr pScrn, int num, BoxPtr pbox)
 {
-   GeodePtr pGeode = GEODEPTR(pScrn);
-   int width, height, Bpp, FBPitch;
-   unsigned char *src, *dst;
+    GeodePtr pGeode = GEODEPTR(pScrn);
+    int width, height, Bpp, FBPitch;
+    unsigned char *src, *dst;
 
-   Bpp = pScrn->bitsPerPixel >> 3;
-   FBPitch = BitmapBytePad(pScrn->displayWidth * pScrn->bitsPerPixel);
-   while (num--) {
-      width = (pbox->x2 - pbox->x1) * Bpp;
-      height = pbox->y2 - pbox->y1;
-      src = pGeode->ShadowPtr + (pbox->y1 * pGeode->ShadowPitch) +
-	    (pbox->x1 * Bpp);
-      dst = pGeode->FBBase + (pbox->y1 * FBPitch) + (pbox->x1 * Bpp);
-      while (height--) {
-	 memcpy(dst, src, width);
-	 dst += FBPitch;
-	 src += pGeode->ShadowPitch;
-      }
+    Bpp = pScrn->bitsPerPixel >> 3;
+    FBPitch = BitmapBytePad(pScrn->displayWidth * pScrn->bitsPerPixel);
+    while (num--) {
+        width = (pbox->x2 - pbox->x1) * Bpp;
+        height = pbox->y2 - pbox->y1;
+        src = pGeode->ShadowPtr + (pbox->y1 * pGeode->ShadowPitch) +
+            (pbox->x1 * Bpp);
+        dst = pGeode->FBBase + (pbox->y1 * FBPitch) + (pbox->x1 * Bpp);
+        while (height--) {
+            memcpy(dst, src, width);
+            dst += FBPitch;
+            src += pGeode->ShadowPitch;
+        }
 
-      pbox++;
-   }
+        pbox++;
+    }
 }
 
 /*----------------------------------------------------------------------------
@@ -221,18 +221,19 @@ GX1RefreshArea(ScrnInfoPtr pScrn, int num, BoxPtr pbox)
 void
 GX1PointerMoved(int index, int x, int y)
 {
-   ScrnInfoPtr pScrn = xf86Screens[index];
-   GeodePtr pGeode = GEODEPTR(pScrn);
-   int newX, newY;
+    ScrnInfoPtr pScrn = xf86Screens[index];
+    GeodePtr pGeode = GEODEPTR(pScrn);
+    int newX, newY;
 
-   if (pGeode->Rotate == 1) {
-      newX = pScrn->pScreen->height - y - 1;
-      newY = x;
-   } else {
-      newX = y;
-      newY = pScrn->pScreen->width - x - 1;
-   }
-   (*pGeode->PointerMoved) (index, newX, newY);
+    if (pGeode->Rotate == 1) {
+        newX = pScrn->pScreen->height - y - 1;
+        newY = x;
+    }
+    else {
+        newX = y;
+        newY = pScrn->pScreen->width - x - 1;
+    }
+    (*pGeode->PointerMoved) (index, newX, newY);
 }
 
 /*----------------------------------------------------------------------------
@@ -253,46 +254,47 @@ GX1PointerMoved(int index, int x, int y)
 void
 GX1RefreshArea8(ScrnInfoPtr pScrn, int num, BoxPtr pbox)
 {
-   GeodePtr pGeode = GEODEPTR(pScrn);
-   int count, width, height, y1, y2, dstPitch, srcPitch, srcPitch2,
-	 srcPitch3, srcPitch4;
-   CARD8 *dstPtr, *srcPtr, *src;
-   CARD32 *dst;
+    GeodePtr pGeode = GEODEPTR(pScrn);
+    int count, width, height, y1, y2, dstPitch, srcPitch, srcPitch2,
+        srcPitch3, srcPitch4;
+    CARD8 *dstPtr, *srcPtr, *src;
+    CARD32 *dst;
 
-   dstPitch = pScrn->displayWidth;
-   srcPitch = -pGeode->Rotate * pGeode->ShadowPitch;
-   srcPitch2 = srcPitch * 2;
-   srcPitch3 = srcPitch * 3;
-   srcPitch4 = srcPitch * 4;
-   while (num--) {
-      width = pbox->x2 - pbox->x1;
-      y1 = pbox->y1 & ~3;
-      y2 = (pbox->y2 + 3) & ~3;
-      height = (y2 - y1) >> 2;		/* in dwords */
+    dstPitch = pScrn->displayWidth;
+    srcPitch = -pGeode->Rotate * pGeode->ShadowPitch;
+    srcPitch2 = srcPitch * 2;
+    srcPitch3 = srcPitch * 3;
+    srcPitch4 = srcPitch * 4;
+    while (num--) {
+        width = pbox->x2 - pbox->x1;
+        y1 = pbox->y1 & ~3;
+        y2 = (pbox->y2 + 3) & ~3;
+        height = (y2 - y1) >> 2;        /* in dwords */
 
-      if (pGeode->Rotate == 1) {
-	 dstPtr = pGeode->FBBase +
-	       (pbox->x1 * dstPitch) + pScrn->virtualX - y2;
-	 srcPtr = pGeode->ShadowPtr + ((1 - y2) * srcPitch) + pbox->x1;
-      } else {
-	 dstPtr = pGeode->FBBase +
-	       ((pScrn->virtualY - pbox->x2) * dstPitch) + y1;
-	 srcPtr = pGeode->ShadowPtr + (y1 * srcPitch) + pbox->x2 - 1;
-      }
-      while (width--) {
-	 src = srcPtr;
-	 dst = (CARD32 *) dstPtr;
-	 count = height;
-	 while (count--) {
-	    *(dst++) = src[0] | (src[srcPitch] << 8) |
-		  (src[srcPitch2] << 16) | (src[srcPitch3] << 24);
-	    src += srcPitch4;
-	 }
-	 srcPtr += pGeode->Rotate;
-	 dstPtr += dstPitch;
-      }
-      pbox++;
-   }
+        if (pGeode->Rotate == 1) {
+            dstPtr = pGeode->FBBase +
+                (pbox->x1 * dstPitch) + pScrn->virtualX - y2;
+            srcPtr = pGeode->ShadowPtr + ((1 - y2) * srcPitch) + pbox->x1;
+        }
+        else {
+            dstPtr = pGeode->FBBase +
+                ((pScrn->virtualY - pbox->x2) * dstPitch) + y1;
+            srcPtr = pGeode->ShadowPtr + (y1 * srcPitch) + pbox->x2 - 1;
+        }
+        while (width--) {
+            src = srcPtr;
+            dst = (CARD32 *) dstPtr;
+            count = height;
+            while (count--) {
+                *(dst++) = src[0] | (src[srcPitch] << 8) |
+                    (src[srcPitch2] << 16) | (src[srcPitch3] << 24);
+                src += srcPitch4;
+            }
+            srcPtr += pGeode->Rotate;
+            dstPtr += dstPitch;
+        }
+        pbox++;
+    }
 }
 
 /*----------------------------------------------------------------------------
@@ -313,45 +315,46 @@ GX1RefreshArea8(ScrnInfoPtr pScrn, int num, BoxPtr pbox)
 void
 GX1RefreshArea16(ScrnInfoPtr pScrn, int num, BoxPtr pbox)
 {
-   GeodePtr pGeode = GEODEPTR(pScrn);
-   int count, width, height, y1, y2, dstPitch, srcPitch, srcPitch2;
-   CARD16 *dstPtr, *srcPtr, *src;
-   CARD32 *dst;
+    GeodePtr pGeode = GEODEPTR(pScrn);
+    int count, width, height, y1, y2, dstPitch, srcPitch, srcPitch2;
+    CARD16 *dstPtr, *srcPtr, *src;
+    CARD32 *dst;
 
-   dstPitch = pScrn->displayWidth;
-   srcPitch = -pGeode->Rotate * pGeode->ShadowPitch >> 1;
-   srcPitch2 = srcPitch * 2;
-   while (num--) {
-      width = pbox->x2 - pbox->x1;
-      y1 = pbox->y1 & ~1;
-      y2 = (pbox->y2 + 1) & ~1;
-      height = (y2 - y1) >> 1;		/* in dwords */
-      if (pGeode->Rotate == 1) {
-	 dstPtr = (CARD16 *) pGeode->FBBase +
-	       (pbox->x1 * dstPitch) + pScrn->virtualX - y2;
-	 srcPtr = (CARD16 *) pGeode->ShadowPtr +
-	       ((1 - y2) * srcPitch) + pbox->x1;
-      } else {
-	 dstPtr = (CARD16 *) pGeode->FBBase +
-	       ((pScrn->virtualY - pbox->x2) * dstPitch) + y1;
-	 srcPtr = (CARD16 *) pGeode->ShadowPtr +
-	       (y1 * srcPitch) + pbox->x2 - 1;
-      }
+    dstPitch = pScrn->displayWidth;
+    srcPitch = -pGeode->Rotate * pGeode->ShadowPitch >> 1;
+    srcPitch2 = srcPitch * 2;
+    while (num--) {
+        width = pbox->x2 - pbox->x1;
+        y1 = pbox->y1 & ~1;
+        y2 = (pbox->y2 + 1) & ~1;
+        height = (y2 - y1) >> 1;        /* in dwords */
+        if (pGeode->Rotate == 1) {
+            dstPtr = (CARD16 *) pGeode->FBBase +
+                (pbox->x1 * dstPitch) + pScrn->virtualX - y2;
+            srcPtr = (CARD16 *) pGeode->ShadowPtr +
+                ((1 - y2) * srcPitch) + pbox->x1;
+        }
+        else {
+            dstPtr = (CARD16 *) pGeode->FBBase +
+                ((pScrn->virtualY - pbox->x2) * dstPitch) + y1;
+            srcPtr = (CARD16 *) pGeode->ShadowPtr +
+                (y1 * srcPitch) + pbox->x2 - 1;
+        }
 
-      while (width--) {
-	 src = srcPtr;
-	 dst = (CARD32 *) dstPtr;
-	 count = height;
-	 while (count--) {
-	    *(dst++) = src[0] | (src[srcPitch] << 16);
-	    src += srcPitch2;
-	 }
-	 srcPtr += pGeode->Rotate;
-	 dstPtr += dstPitch;
-      }
+        while (width--) {
+            src = srcPtr;
+            dst = (CARD32 *) dstPtr;
+            count = height;
+            while (count--) {
+                *(dst++) = src[0] | (src[srcPitch] << 16);
+                src += srcPitch2;
+            }
+            srcPtr += pGeode->Rotate;
+            dstPtr += dstPitch;
+        }
 
-      pbox++;
-   }
+        pbox++;
+    }
 }
 
 /*----------------------------------------------------------------------------
@@ -372,48 +375,49 @@ GX1RefreshArea16(ScrnInfoPtr pScrn, int num, BoxPtr pbox)
 void
 GX1RefreshArea24(ScrnInfoPtr pScrn, int num, BoxPtr pbox)
 {
-   GeodePtr pGeode = GEODEPTR(pScrn);
-   int count, width, height, y1, y2, dstPitch, srcPitch, srcPitch2, srcPitch3;
-   CARD8 *dstPtr, *srcPtr, *src;
-   CARD32 *dst;
+    GeodePtr pGeode = GEODEPTR(pScrn);
+    int count, width, height, y1, y2, dstPitch, srcPitch, srcPitch2, srcPitch3;
+    CARD8 *dstPtr, *srcPtr, *src;
+    CARD32 *dst;
 
-   dstPitch = BitmapBytePad(pScrn->displayWidth * 24);
-   srcPitch = -pGeode->Rotate * pGeode->ShadowPitch;
-   srcPitch2 = srcPitch * 2;
-   srcPitch3 = srcPitch * 3;
-   while (num--) {
-      width = pbox->x2 - pbox->x1;
-      y1 = pbox->y1 & ~3;
-      y2 = (pbox->y2 + 3) & ~3;
-      height = (y2 - y1) >> 2;		/* blocks of 3 dwords */
-      if (pGeode->Rotate == 1) {
-	 dstPtr = pGeode->FBBase +
-	       (pbox->x1 * dstPitch) + ((pScrn->virtualX - y2) * 3);
-	 srcPtr = pGeode->ShadowPtr + ((1 - y2) * srcPitch) + (pbox->x1 * 3);
-      } else {
-	 dstPtr = pGeode->FBBase +
-	       ((pScrn->virtualY - pbox->x2) * dstPitch) + (y1 * 3);
-	 srcPtr = pGeode->ShadowPtr + (y1 * srcPitch) + (pbox->x2 * 3) - 3;
-      }
-      while (width--) {
-	 src = srcPtr;
-	 dst = (CARD32 *) dstPtr;
-	 count = height;
-	 while (count--) {
-	    dst[0] = src[0] | (src[1] << 8) | (src[2] << 16) |
-		  (src[srcPitch] << 24);
-	    dst[1] = src[srcPitch + 1] | (src[srcPitch + 2] << 8) |
-		  (src[srcPitch2] << 16) | (src[srcPitch2 + 1] << 24);
-	    dst[2] = src[srcPitch2 + 2] | (src[srcPitch3] << 8) |
-		  (src[srcPitch3 + 1] << 16) | (src[srcPitch3 + 2] << 24);
-	    dst += 3;
-	    src += srcPitch << 2;
-	 }
-	 srcPtr += pGeode->Rotate * 3;
-	 dstPtr += dstPitch;
-      }
-      pbox++;
-   }
+    dstPitch = BitmapBytePad(pScrn->displayWidth * 24);
+    srcPitch = -pGeode->Rotate * pGeode->ShadowPitch;
+    srcPitch2 = srcPitch * 2;
+    srcPitch3 = srcPitch * 3;
+    while (num--) {
+        width = pbox->x2 - pbox->x1;
+        y1 = pbox->y1 & ~3;
+        y2 = (pbox->y2 + 3) & ~3;
+        height = (y2 - y1) >> 2;        /* blocks of 3 dwords */
+        if (pGeode->Rotate == 1) {
+            dstPtr = pGeode->FBBase +
+                (pbox->x1 * dstPitch) + ((pScrn->virtualX - y2) * 3);
+            srcPtr = pGeode->ShadowPtr + ((1 - y2) * srcPitch) + (pbox->x1 * 3);
+        }
+        else {
+            dstPtr = pGeode->FBBase +
+                ((pScrn->virtualY - pbox->x2) * dstPitch) + (y1 * 3);
+            srcPtr = pGeode->ShadowPtr + (y1 * srcPitch) + (pbox->x2 * 3) - 3;
+        }
+        while (width--) {
+            src = srcPtr;
+            dst = (CARD32 *) dstPtr;
+            count = height;
+            while (count--) {
+                dst[0] = src[0] | (src[1] << 8) | (src[2] << 16) |
+                    (src[srcPitch] << 24);
+                dst[1] = src[srcPitch + 1] | (src[srcPitch + 2] << 8) |
+                    (src[srcPitch2] << 16) | (src[srcPitch2 + 1] << 24);
+                dst[2] = src[srcPitch2 + 2] | (src[srcPitch3] << 8) |
+                    (src[srcPitch3 + 1] << 16) | (src[srcPitch3 + 2] << 24);
+                dst += 3;
+                src += srcPitch << 2;
+            }
+            srcPtr += pGeode->Rotate * 3;
+            dstPtr += dstPitch;
+        }
+        pbox++;
+    }
 }
 
 /*----------------------------------------------------------------------------
@@ -434,40 +438,41 @@ GX1RefreshArea24(ScrnInfoPtr pScrn, int num, BoxPtr pbox)
 void
 GX1RefreshArea32(ScrnInfoPtr pScrn, int num, BoxPtr pbox)
 {
-   GeodePtr pGeode = GEODEPTR(pScrn);
-   int count, width, height, dstPitch, srcPitch;
-   CARD32 *dstPtr, *srcPtr, *src, *dst;
+    GeodePtr pGeode = GEODEPTR(pScrn);
+    int count, width, height, dstPitch, srcPitch;
+    CARD32 *dstPtr, *srcPtr, *src, *dst;
 
-   dstPitch = pScrn->displayWidth;
-   srcPitch = -pGeode->Rotate * pGeode->ShadowPitch >> 2;
-   while (num--) {
-      width = pbox->x2 - pbox->x1;
-      height = pbox->y2 - pbox->y1;
+    dstPitch = pScrn->displayWidth;
+    srcPitch = -pGeode->Rotate * pGeode->ShadowPitch >> 2;
+    while (num--) {
+        width = pbox->x2 - pbox->x1;
+        height = pbox->y2 - pbox->y1;
 
-      if (pGeode->Rotate == 1) {
-	 dstPtr = (CARD32 *) pGeode->FBBase +
-	       (pbox->x1 * dstPitch) + pScrn->virtualX - pbox->y2;
-	 srcPtr = (CARD32 *) pGeode->ShadowPtr +
-	       ((1 - pbox->y2) * srcPitch) + pbox->x1;
-      } else {
-	 dstPtr = (CARD32 *) pGeode->FBBase +
-	       ((pScrn->virtualY - pbox->x2) * dstPitch) + pbox->y1;
-	 srcPtr = (CARD32 *) pGeode->ShadowPtr +
-	       (pbox->y1 * srcPitch) + pbox->x2 - 1;
-      }
-      while (width--) {
-	 src = srcPtr;
-	 dst = dstPtr;
-	 count = height;
-	 while (count--) {
-	    *(dst++) = *src;
-	    src += srcPitch;
-	 }
-	 srcPtr += pGeode->Rotate;
-	 dstPtr += dstPitch;
-      }
-      pbox++;
-   }
+        if (pGeode->Rotate == 1) {
+            dstPtr = (CARD32 *) pGeode->FBBase +
+                (pbox->x1 * dstPitch) + pScrn->virtualX - pbox->y2;
+            srcPtr = (CARD32 *) pGeode->ShadowPtr +
+                ((1 - pbox->y2) * srcPitch) + pbox->x1;
+        }
+        else {
+            dstPtr = (CARD32 *) pGeode->FBBase +
+                ((pScrn->virtualY - pbox->x2) * dstPitch) + pbox->y1;
+            srcPtr = (CARD32 *) pGeode->ShadowPtr +
+                (pbox->y1 * srcPitch) + pbox->x2 - 1;
+        }
+        while (width--) {
+            src = srcPtr;
+            dst = dstPtr;
+            count = height;
+            while (count--) {
+                *(dst++) = *src;
+                src += srcPitch;
+            }
+            srcPtr += pGeode->Rotate;
+            dstPtr += dstPitch;
+        }
+        pbox++;
+    }
 }
 
 /* End of file */

@@ -132,136 +132,136 @@
 /*  FIRST GENERATION GRAPHICS UNIT  */
 /*----------------------------------*/
 
-#define GP_DST_XCOOR			0x8100	/* x destination origin         */
-#define GP_DST_YCOOR			0x8102	/* y destination origin         */
-#define GP_WIDTH				0x8104	/* pixel width                          */
-#define GP_HEIGHT				0x8106	/* pixel height                         */
-#define GP_SRC_XCOOR			0x8108	/* x source origin                      */
-#define GP_SRC_YCOOR			0x810A	/* y source origin                      */
+#define GP_DST_XCOOR			0x8100  /* x destination origin         */
+#define GP_DST_YCOOR			0x8102  /* y destination origin         */
+#define GP_WIDTH				0x8104  /* pixel width                          */
+#define GP_HEIGHT				0x8106  /* pixel height                         */
+#define GP_SRC_XCOOR			0x8108  /* x source origin                      */
+#define GP_SRC_YCOOR			0x810A  /* y source origin                      */
 
-#define GP_VECTOR_LENGTH		0x8104	/* vector length                        */
-#define GP_INIT_ERROR			0x8106	/* vector initial error         */
-#define GP_AXIAL_ERROR			0x8108	/* axial error increment        */
-#define GP_DIAG_ERROR			0x810A	/* diagonal error increment */
+#define GP_VECTOR_LENGTH		0x8104  /* vector length                        */
+#define GP_INIT_ERROR			0x8106  /* vector initial error         */
+#define GP_AXIAL_ERROR			0x8108  /* axial error increment        */
+#define GP_DIAG_ERROR			0x810A  /* diagonal error increment */
 
-#define GP_SRC_COLOR_0			0x810C	/* source color 0                       */
-#define GP_SRC_COLOR_1			0x810E	/* source color 1                       */
-#define GP_PAT_COLOR_0			0x8110	/* pattern color 0          */
-#define GP_PAT_COLOR_1			0x8112	/* pattern color 1          */
-#define GP_PAT_COLOR_2			0x8114	/* pattern color 2          */
-#define GP_PAT_COLOR_3			0x8116	/* pattern color 3          */
-#define GP_PAT_DATA_0			0x8120	/* bits 31:0 of pattern         */
-#define GP_PAT_DATA_1			0x8124	/* bits 63:32 of pattern        */
-#define GP_PAT_DATA_2			0x8128	/* bits 95:64 of pattern        */
-#define GP_PAT_DATA_3			0x812C	/* bits 127:96 of pattern       */
+#define GP_SRC_COLOR_0			0x810C  /* source color 0                       */
+#define GP_SRC_COLOR_1			0x810E  /* source color 1                       */
+#define GP_PAT_COLOR_0			0x8110  /* pattern color 0          */
+#define GP_PAT_COLOR_1			0x8112  /* pattern color 1          */
+#define GP_PAT_COLOR_2			0x8114  /* pattern color 2          */
+#define GP_PAT_COLOR_3			0x8116  /* pattern color 3          */
+#define GP_PAT_DATA_0			0x8120  /* bits 31:0 of pattern         */
+#define GP_PAT_DATA_1			0x8124  /* bits 63:32 of pattern        */
+#define GP_PAT_DATA_2			0x8128  /* bits 95:64 of pattern        */
+#define GP_PAT_DATA_3			0x812C  /* bits 127:96 of pattern       */
 
-#define GP_VGA_WRITE			0x8140	/* VGA write path control   */
-#define GP_VGA_READ				0x8144	/* VGA read path control    */
+#define GP_VGA_WRITE			0x8140  /* VGA write path control   */
+#define GP_VGA_READ				0x8144  /* VGA read path control    */
 
-#define GP_RASTER_MODE			0x8200	/* raster operation                     */
-#define GP_VECTOR_MODE			0x8204	/* vector mode register         */
-#define GP_BLIT_MODE			0x8208	/* blit mode register           */
-#define GP_BLIT_STATUS			0x820C	/* blit status register         */
+#define GP_RASTER_MODE			0x8200  /* raster operation                     */
+#define GP_VECTOR_MODE			0x8204  /* vector mode register         */
+#define GP_BLIT_MODE			0x8208  /* blit mode register           */
+#define GP_BLIT_STATUS			0x820C  /* blit status register         */
 
-#define GP_VGA_BASE				0x8210	/* VGA memory offset (x64K) */
-#define GP_VGA_LATCH			0x8214	/* VGA display latch        */
+#define GP_VGA_BASE				0x8210  /* VGA memory offset (x64K) */
+#define GP_VGA_LATCH			0x8214  /* VGA display latch        */
 
 /* "GP_VECTOR_MODE" BIT DEFINITIONS */
 
-#define VM_X_MAJOR				0x0000	/* X major vector                       */
-#define VM_Y_MAJOR				0x0001	/* Y major vector                       */
-#define VM_MAJOR_INC			0x0002	/* positive major axis step */
-#define VM_MINOR_INC			0x0004	/* positive minor axis step */
-#define VM_READ_DST_FB			0x0008	/* read destination data        */
+#define VM_X_MAJOR				0x0000  /* X major vector                       */
+#define VM_Y_MAJOR				0x0001  /* Y major vector                       */
+#define VM_MAJOR_INC			0x0002  /* positive major axis step */
+#define VM_MINOR_INC			0x0004  /* positive minor axis step */
+#define VM_READ_DST_FB			0x0008  /* read destination data        */
 
 /* "GP_RASTER_MODE" BIT DEFINITIONS */
 
-#define RM_PAT_DISABLE			0x0000	/* pattern is disabled          */
-#define RM_PAT_MONO				0x0100	/* 1BPP pattern expansion       */
-#define RM_PAT_DITHER			0x0200	/* 2BPP pattern expansion       */
-#define RM_PAT_COLOR			0x0300	/* 8BPP or 16BPP pattern        */
-#define RM_PAT_MASK				0x0300	/* mask for pattern mode        */
-#define RM_PAT_TRANSPARENT		0x0400	/* transparent 1BPP pattern     */
-#define RM_SRC_TRANSPARENT		0x0800	/* transparent 1BPP source      */
+#define RM_PAT_DISABLE			0x0000  /* pattern is disabled          */
+#define RM_PAT_MONO				0x0100  /* 1BPP pattern expansion       */
+#define RM_PAT_DITHER			0x0200  /* 2BPP pattern expansion       */
+#define RM_PAT_COLOR			0x0300  /* 8BPP or 16BPP pattern        */
+#define RM_PAT_MASK				0x0300  /* mask for pattern mode        */
+#define RM_PAT_TRANSPARENT		0x0400  /* transparent 1BPP pattern     */
+#define RM_SRC_TRANSPARENT		0x0800  /* transparent 1BPP source      */
 
 /* "GP_BLIT_STATUS" BIT DEFINITIONS */
 
-#define BS_BLIT_BUSY			0x0001	/* blit engine is busy          */
-#define BS_PIPELINE_BUSY		0x0002	/* graphics pipeline is busy */
-#define BS_BLIT_PENDING			0x0004	/* blit pending                         */
-#define BC_FLUSH				0x0080	/* flush pipeline requests  */
-#define BC_8BPP					0x0000	/* 8BPP mode                            */
-#define BC_16BPP				0x0100	/* 16BPP mode                           */
-#define BC_FB_WIDTH_1024		0x0000	/* framebuffer width = 1024 */
-#define BC_FB_WIDTH_2048		0x0200	/* framebuffer width = 2048 */
-#define BC_FB_WIDTH_4096		0x0400	/* framebuffer width = 4096     */
+#define BS_BLIT_BUSY			0x0001  /* blit engine is busy          */
+#define BS_PIPELINE_BUSY		0x0002  /* graphics pipeline is busy */
+#define BS_BLIT_PENDING			0x0004  /* blit pending                         */
+#define BC_FLUSH				0x0080  /* flush pipeline requests  */
+#define BC_8BPP					0x0000  /* 8BPP mode                            */
+#define BC_16BPP				0x0100  /* 16BPP mode                           */
+#define BC_FB_WIDTH_1024		0x0000  /* framebuffer width = 1024 */
+#define BC_FB_WIDTH_2048		0x0200  /* framebuffer width = 2048 */
+#define BC_FB_WIDTH_4096		0x0400  /* framebuffer width = 4096     */
 
 /* "GP_BLIT_MODE" BIT DEFINITIONS */
 
-#define	BM_READ_SRC_NONE		0x0000	/* source foreground color      */
-#define BM_READ_SRC_FB			0x0001	/* read source from FB          */
-#define BM_READ_SRC_BB0			0x0002	/* read source from BB0         */
-#define BM_READ_SRC_BB1			0x0003	/* read source from BB1         */
-#define BM_READ_SRC_MASK		0x0003	/* read source mask                     */
+#define	BM_READ_SRC_NONE		0x0000  /* source foreground color      */
+#define BM_READ_SRC_FB			0x0001  /* read source from FB          */
+#define BM_READ_SRC_BB0			0x0002  /* read source from BB0         */
+#define BM_READ_SRC_BB1			0x0003  /* read source from BB1         */
+#define BM_READ_SRC_MASK		0x0003  /* read source mask                     */
 
-#define	BM_READ_DST_NONE		0x0000	/* no destination data          */
-#define BM_READ_DST_BB0			0x0008	/* destination from BB0         */
-#define BM_READ_DST_BB1			0x000C	/* destination from BB1         */
-#define BM_READ_DST_FB0			0x0010	/* dest from FB (store BB0) */
-#define BM_READ_DST_FB1			0x0014	/* dest from FB (store BB1) */
-#define BM_READ_DST_MASK		0x001C	/* read destination mask        */
+#define	BM_READ_DST_NONE		0x0000  /* no destination data          */
+#define BM_READ_DST_BB0			0x0008  /* destination from BB0         */
+#define BM_READ_DST_BB1			0x000C  /* destination from BB1         */
+#define BM_READ_DST_FB0			0x0010  /* dest from FB (store BB0) */
+#define BM_READ_DST_FB1			0x0014  /* dest from FB (store BB1) */
+#define BM_READ_DST_MASK		0x001C  /* read destination mask        */
 
-#define BM_WRITE_FB				0x0000	/* write to framebuffer         */
-#define	BM_WRITE_MEM			0x0020	/* write to memory                      */
-#define BM_WRITE_MASK			0x0020	/* write mask                           */
+#define BM_WRITE_FB				0x0000  /* write to framebuffer         */
+#define	BM_WRITE_MEM			0x0020  /* write to memory                      */
+#define BM_WRITE_MASK			0x0020  /* write mask                           */
 
-#define	BM_SOURCE_COLOR			0x0000	/* source is 8BPP or 16BPP      */
-#define BM_SOURCE_EXPAND		0x0040	/* source is 1BPP                       */
-#define BM_SOURCE_TEXT			0x00C0	/* source is 1BPP text          */
-#define BM_SOURCE_MASK			0x00C0	/* source mask                          */
+#define	BM_SOURCE_COLOR			0x0000  /* source is 8BPP or 16BPP      */
+#define BM_SOURCE_EXPAND		0x0040  /* source is 1BPP                       */
+#define BM_SOURCE_TEXT			0x00C0  /* source is 1BPP text          */
+#define BM_SOURCE_MASK			0x00C0  /* source mask                          */
 
-#define BM_REVERSE_Y			0x0100	/* reverse Y direction          */
+#define BM_REVERSE_Y			0x0100  /* reverse Y direction          */
 
 /*---------------------------------------*/
 /*  FIRST GENERATION DISPLAY CONTROLLER  */
 /*---------------------------------------*/
 
-#define DC_UNLOCK				0x8300	/* lock register                        */
-#define DC_GENERAL_CFG			0x8304	/* config registers...          */
+#define DC_UNLOCK				0x8300  /* lock register                        */
+#define DC_GENERAL_CFG			0x8304  /* config registers...          */
 #define DC_TIMING_CFG			0x8308
 #define DC_OUTPUT_CFG			0x830C
 
-#define DC_FB_ST_OFFSET			0x8310	/* framebuffer start offset */
-#define DC_CB_ST_OFFSET			0x8314	/* compression start offset */
-#define DC_CURS_ST_OFFSET		0x8318	/* cursor start offset          */
-#define DC_ICON_ST_OFFSET		0x831C	/* icon start offset            */
-#define DC_VID_ST_OFFSET		0x8320	/* video start offset           */
-#define DC_LINE_DELTA			0x8324	/* fb and cb skip counts        */
-#define DC_BUF_SIZE				0x8328	/* fb and cb line size          */
+#define DC_FB_ST_OFFSET			0x8310  /* framebuffer start offset */
+#define DC_CB_ST_OFFSET			0x8314  /* compression start offset */
+#define DC_CURS_ST_OFFSET		0x8318  /* cursor start offset          */
+#define DC_ICON_ST_OFFSET		0x831C  /* icon start offset            */
+#define DC_VID_ST_OFFSET		0x8320  /* video start offset           */
+#define DC_LINE_DELTA			0x8324  /* fb and cb skip counts        */
+#define DC_BUF_SIZE				0x8328  /* fb and cb line size          */
 
-#define DC_H_TIMING_1			0x8330	/* horizontal timing...         */
+#define DC_H_TIMING_1			0x8330  /* horizontal timing...         */
 #define DC_H_TIMING_2			0x8334
 #define DC_H_TIMING_3			0x8338
 #define DC_FP_H_TIMING			0x833C
 
-#define DC_V_TIMING_1			0x8340	/* vertical timing...           */
+#define DC_V_TIMING_1			0x8340  /* vertical timing...           */
 #define DC_V_TIMING_2			0x8344
 #define DC_V_TIMING_3			0x8348
 #define DC_FP_V_TIMING			0x834C
 
-#define DC_CURSOR_X				0x8350	/* cursor x position            */
-#define DC_ICON_X				0x8354	/* HACK - 1.3 definition        */
-#define DC_V_LINE_CNT			0x8354	/* vertical line counter        */
-#define DC_CURSOR_Y				0x8358	/* cursor y position            */
-#define DC_ICON_Y				0x835C	/* HACK - 1.3 definition        */
-#define DC_SS_LINE_CMP			0x835C	/* line compare value           */
-#define DC_CURSOR_COLOR			0x8360	/* cursor colors                        */
-#define DC_ICON_COLOR			0x8364	/* icon colors                          */
-#define DC_BORDER_COLOR			0x8368	/* border color                         */
-#define DC_PAL_ADDRESS			0x8370	/* palette address                      */
-#define DC_PAL_DATA				0x8374	/* palette data                         */
-#define DC_DFIFO_DIAG			0x8378	/* display FIFO diagnostic      */
-#define DC_CFIFO_DIAG			0x837C	/* compression FIF0 diagnostic  */
+#define DC_CURSOR_X				0x8350  /* cursor x position            */
+#define DC_ICON_X				0x8354  /* HACK - 1.3 definition        */
+#define DC_V_LINE_CNT			0x8354  /* vertical line counter        */
+#define DC_CURSOR_Y				0x8358  /* cursor y position            */
+#define DC_ICON_Y				0x835C  /* HACK - 1.3 definition        */
+#define DC_SS_LINE_CMP			0x835C  /* line compare value           */
+#define DC_CURSOR_COLOR			0x8360  /* cursor colors                        */
+#define DC_ICON_COLOR			0x8364  /* icon colors                          */
+#define DC_BORDER_COLOR			0x8368  /* border color                         */
+#define DC_PAL_ADDRESS			0x8370  /* palette address                      */
+#define DC_PAL_DATA				0x8374  /* palette data                         */
+#define DC_DFIFO_DIAG			0x8378  /* display FIFO diagnostic      */
+#define DC_CFIFO_DIAG			0x837C  /* compression FIF0 diagnostic  */
 
 /* PALETTE LOCATIONS */
 
@@ -273,86 +273,86 @@
 
 /* UNLOCK VALUE */
 
-#define DC_UNLOCK_VALUE		0x00004758	/* used to unlock DC regs       */
+#define DC_UNLOCK_VALUE		0x00004758      /* used to unlock DC regs       */
 
 /* "DC_GENERAL_CFG" BIT DEFINITIONS */
 
-#define DC_GCFG_DFLE		0x00000001	/* display FIFO load enable */
-#define DC_GCFG_CURE		0x00000002	/* cursor enable                        */
-#define DC_GCFG_VCLK_DIV	0x00000004	/* vid clock divisor            */
-#define DC_GCFG_PLNO		0x00000004	/* planar offset LSB            */
-#define DC_GCFG_PPC			0x00000008	/* pixel pan compatibility  */
-#define DC_GCFG_CMPE		0x00000010	/* compression enable       */
-#define DC_GCFG_DECE		0x00000020	/* decompression enable     */
-#define DC_GCFG_DCLK_MASK	0x000000C0	/* dotclock multiplier      */
-#define DC_GCFG_DCLK_POS	6	/* dotclock multiplier      */
-#define DC_GCFG_DFHPSL_MASK	0x00000F00	/* FIFO high-priority start */
-#define DC_GCFG_DFHPSL_POS	8	/* FIFO high-priority start */
-#define DC_GCFG_DFHPEL_MASK	0x0000F000	/* FIFO high-priority end   */
-#define DC_GCFG_DFHPEL_POS	12	/* FIFO high-priority end   */
-#define DC_GCFG_CIM_MASK	0x00030000	/* compressor insert mode   */
-#define DC_GCFG_CIM_POS		16	/* compressor insert mode   */
-#define DC_GCFG_FDTY		0x00040000	/* frame dirty mode         */
-#define DC_GCFG_RTPM		0x00080000	/* real-time perf. monitor  */
-#define DC_GCFG_DAC_RS_MASK	0x00700000	/* DAC register selects     */
-#define DC_GCFG_DAC_RS_POS	20	/* DAC register selects     */
-#define DC_GCFG_CKWR		0x00800000	/* clock write              */
-#define DC_GCFG_LDBL		0x01000000	/* line double              */
-#define DC_GCFG_DIAG		0x02000000	/* FIFO diagnostic mode     */
-#define DC_GCFG_CH4S		0x04000000	/* sparse refresh mode          */
-#define DC_GCFG_SSLC		0x08000000	/* enable line compare          */
-#define DC_GCFG_VIDE		0x10000000	/* video enable                     */
-#define DC_GCFG_DFCK		0x20000000	/* divide flat-panel clock - rev 2.3 down */
-#define DC_GCFG_VRDY		0x20000000	/* video port speed - rev 2.4 up  */
-#define DC_GCFG_DPCK		0x40000000	/* divide pixel clock       */
-#define DC_GCFG_DDCK		0x80000000	/* divide dot clock         */
+#define DC_GCFG_DFLE		0x00000001      /* display FIFO load enable */
+#define DC_GCFG_CURE		0x00000002      /* cursor enable                        */
+#define DC_GCFG_VCLK_DIV	0x00000004      /* vid clock divisor            */
+#define DC_GCFG_PLNO		0x00000004      /* planar offset LSB            */
+#define DC_GCFG_PPC			0x00000008      /* pixel pan compatibility  */
+#define DC_GCFG_CMPE		0x00000010      /* compression enable       */
+#define DC_GCFG_DECE		0x00000020      /* decompression enable     */
+#define DC_GCFG_DCLK_MASK	0x000000C0      /* dotclock multiplier      */
+#define DC_GCFG_DCLK_POS	6       /* dotclock multiplier      */
+#define DC_GCFG_DFHPSL_MASK	0x00000F00      /* FIFO high-priority start */
+#define DC_GCFG_DFHPSL_POS	8       /* FIFO high-priority start */
+#define DC_GCFG_DFHPEL_MASK	0x0000F000      /* FIFO high-priority end   */
+#define DC_GCFG_DFHPEL_POS	12      /* FIFO high-priority end   */
+#define DC_GCFG_CIM_MASK	0x00030000      /* compressor insert mode   */
+#define DC_GCFG_CIM_POS		16      /* compressor insert mode   */
+#define DC_GCFG_FDTY		0x00040000      /* frame dirty mode         */
+#define DC_GCFG_RTPM		0x00080000      /* real-time perf. monitor  */
+#define DC_GCFG_DAC_RS_MASK	0x00700000      /* DAC register selects     */
+#define DC_GCFG_DAC_RS_POS	20      /* DAC register selects     */
+#define DC_GCFG_CKWR		0x00800000      /* clock write              */
+#define DC_GCFG_LDBL		0x01000000      /* line double              */
+#define DC_GCFG_DIAG		0x02000000      /* FIFO diagnostic mode     */
+#define DC_GCFG_CH4S		0x04000000      /* sparse refresh mode          */
+#define DC_GCFG_SSLC		0x08000000      /* enable line compare          */
+#define DC_GCFG_VIDE		0x10000000      /* video enable                     */
+#define DC_GCFG_DFCK		0x20000000      /* divide flat-panel clock - rev 2.3 down */
+#define DC_GCFG_VRDY		0x20000000      /* video port speed - rev 2.4 up  */
+#define DC_GCFG_DPCK		0x40000000      /* divide pixel clock       */
+#define DC_GCFG_DDCK		0x80000000      /* divide dot clock         */
 
 /* "DC_TIMING_CFG" BIT DEFINITIONS */
 
-#define DC_TCFG_FPPE		0x00000001	/* flat-panel power enable  */
-#define DC_TCFG_HSYE		0x00000002	/* horizontal sync enable   */
-#define DC_TCFG_VSYE		0x00000004	/* vertical sync enable     */
-#define DC_TCFG_BLKE		0x00000008	/* blank enable                         */
-#define DC_TCFG_DDCK		0x00000010	/* DDC clock                */
-#define DC_TCFG_TGEN		0x00000020	/* timing generator enable  */
-#define DC_TCFG_VIEN		0x00000040	/* vertical interrupt enable */
-#define DC_TCFG_BLNK		0x00000080	/* blink enable             */
-#define DC_TCFG_CHSP		0x00000100	/* horizontal sync polarity */
-#define DC_TCFG_CVSP		0x00000200	/* vertical sync polarity   */
-#define DC_TCFG_FHSP		0x00000400	/* panel horz sync polarity */
-#define DC_TCFG_FVSP		0x00000800	/* panel vert sync polarity */
-#define DC_TCFG_FCEN		0x00001000	/* flat-panel centering     */
-#define DC_TCFG_CDCE		0x00002000	/* HACK - 1.3 definition        */
-#define DC_TCFG_PLNR		0x00002000	/* planar mode enable           */
-#define DC_TCFG_INTL		0x00004000	/* interlace scan           */
-#define DC_TCFG_PXDB		0x00008000	/* pixel double             */
-#define DC_TCFG_BKRT		0x00010000	/* blink rate               */
-#define DC_TCFG_PSD_MASK	0x000E0000	/* power sequence delay     */
-#define DC_TCFG_PSD_POS		17	/* power sequence delay     */
-#define DC_TCFG_DDCI		0x08000000	/* DDC input (RO)           */
-#define DC_TCFG_SENS		0x10000000	/* monitor sense (RO)       */
-#define DC_TCFG_DNA			0x20000000	/* display not active (RO)  */
-#define DC_TCFG_VNA			0x40000000	/* vertical not active (RO) */
-#define DC_TCFG_VINT		0x80000000	/* vertical interrupt (RO)  */
+#define DC_TCFG_FPPE		0x00000001      /* flat-panel power enable  */
+#define DC_TCFG_HSYE		0x00000002      /* horizontal sync enable   */
+#define DC_TCFG_VSYE		0x00000004      /* vertical sync enable     */
+#define DC_TCFG_BLKE		0x00000008      /* blank enable                         */
+#define DC_TCFG_DDCK		0x00000010      /* DDC clock                */
+#define DC_TCFG_TGEN		0x00000020      /* timing generator enable  */
+#define DC_TCFG_VIEN		0x00000040      /* vertical interrupt enable */
+#define DC_TCFG_BLNK		0x00000080      /* blink enable             */
+#define DC_TCFG_CHSP		0x00000100      /* horizontal sync polarity */
+#define DC_TCFG_CVSP		0x00000200      /* vertical sync polarity   */
+#define DC_TCFG_FHSP		0x00000400      /* panel horz sync polarity */
+#define DC_TCFG_FVSP		0x00000800      /* panel vert sync polarity */
+#define DC_TCFG_FCEN		0x00001000      /* flat-panel centering     */
+#define DC_TCFG_CDCE		0x00002000      /* HACK - 1.3 definition        */
+#define DC_TCFG_PLNR		0x00002000      /* planar mode enable           */
+#define DC_TCFG_INTL		0x00004000      /* interlace scan           */
+#define DC_TCFG_PXDB		0x00008000      /* pixel double             */
+#define DC_TCFG_BKRT		0x00010000      /* blink rate               */
+#define DC_TCFG_PSD_MASK	0x000E0000      /* power sequence delay     */
+#define DC_TCFG_PSD_POS		17      /* power sequence delay     */
+#define DC_TCFG_DDCI		0x08000000      /* DDC input (RO)           */
+#define DC_TCFG_SENS		0x10000000      /* monitor sense (RO)       */
+#define DC_TCFG_DNA			0x20000000      /* display not active (RO)  */
+#define DC_TCFG_VNA			0x40000000      /* vertical not active (RO) */
+#define DC_TCFG_VINT		0x80000000      /* vertical interrupt (RO)  */
 
 /* "DC_OUTPUT_CFG" BIT DEFINITIONS */
 
-#define DC_OCFG_8BPP		0x00000001	/* 8/16 bpp select          */
-#define DC_OCFG_555			0x00000002	/* 16 bpp format            */
-#define DC_OCFG_PCKE		0x00000004	/* PCLK enable              */
-#define DC_OCFG_FRME		0x00000008	/* frame rate mod enable    */
-#define DC_OCFG_DITE		0x00000010	/* dither enable            */
-#define DC_OCFG_2PXE		0x00000020	/* 2 pixel enable           */
-#define DC_OCFG_2XCK		0x00000040	/* 2 x pixel clock          */
-#define DC_OCFG_2IND		0x00000080	/* 2 index enable           */
-#define DC_OCFG_34ADD		0x00000100	/* 3- or 4-bit add          */
-#define DC_OCFG_FRMS		0x00000200	/* frame rate mod select    */
-#define DC_OCFG_CKSL		0x00000400	/* clock select             */
-#define DC_OCFG_PRMP		0x00000800	/* palette re-map           */
-#define DC_OCFG_PDEL		0x00001000	/* panel data enable low    */
-#define DC_OCFG_PDEH		0x00002000	/* panel data enable high   */
-#define DC_OCFG_CFRW		0x00004000	/* comp line buffer r/w sel */
-#define DC_OCFG_DIAG		0x00008000	/* comp line buffer diag    */
+#define DC_OCFG_8BPP		0x00000001      /* 8/16 bpp select          */
+#define DC_OCFG_555			0x00000002      /* 16 bpp format            */
+#define DC_OCFG_PCKE		0x00000004      /* PCLK enable              */
+#define DC_OCFG_FRME		0x00000008      /* frame rate mod enable    */
+#define DC_OCFG_DITE		0x00000010      /* dither enable            */
+#define DC_OCFG_2PXE		0x00000020      /* 2 pixel enable           */
+#define DC_OCFG_2XCK		0x00000040      /* 2 x pixel clock          */
+#define DC_OCFG_2IND		0x00000080      /* 2 index enable           */
+#define DC_OCFG_34ADD		0x00000100      /* 3- or 4-bit add          */
+#define DC_OCFG_FRMS		0x00000200      /* frame rate mod select    */
+#define DC_OCFG_CKSL		0x00000400      /* clock select             */
+#define DC_OCFG_PRMP		0x00000800      /* palette re-map           */
+#define DC_OCFG_PDEL		0x00001000      /* panel data enable low    */
+#define DC_OCFG_PDEH		0x00002000      /* panel data enable high   */
+#define DC_OCFG_CFRW		0x00004000      /* comp line buffer r/w sel */
+#define DC_OCFG_DIAG		0x00008000      /* comp line buffer diag    */
 
 #define MC_MEM_CNTRL1       0x00008400
 #define MC_DR_ADD			0x00008418
@@ -360,9 +360,9 @@
 
 /* MC_MEM_CNTRL1 BIT DEFINITIONS */
 
-#define MC_XBUSARB          0x00000008	/* 0 = GP priority < CPU priority */
-											/* 1 = GP priority = CPU priority */
-											/* GXm databook V2.0 is wrong ! */
+#define MC_XBUSARB          0x00000008  /* 0 = GP priority < CPU priority */
+                                                                                        /* 1 = GP priority = CPU priority */
+                                                                                        /* GXm databook V2.0 is wrong ! */
 /*----------*/
 /*  CS5530  */
 /*----------*/
@@ -478,8 +478,8 @@
 #define SC1200_TVOUT_HORZ_SYNC				0x804
 #define SC1200_TVOUT_VERT_SYNC				0x808
 #define SC1200_TVOUT_LINE_END				0x80C
-#define SC1200_TVOUT_VERT_DOWNSCALE			0x810	/* REV. A & B */
-#define SC1200_TVOUT_HORZ_PRE_ENCODER_SCALE 0x810	/* REV. C */
+#define SC1200_TVOUT_VERT_DOWNSCALE			0x810   /* REV. A & B */
+#define SC1200_TVOUT_HORZ_PRE_ENCODER_SCALE 0x810       /* REV. C */
 #define SC1200_TVOUT_HORZ_SCALING			0x814
 #define SC1200_TVOUT_DEBUG                  0x818
 #define SC1200_TVENC_TIM_CTRL_1				0xC00
@@ -578,7 +578,7 @@
 
 #define SC1200_CURSOR_COLOR_KEY_OFFSET_POS  24
 #define SC1200_CURSOR_COLOR_BITS            23
-#define SC1200_COLOR_MASK                   0x00FFFFFF	/* 24 significant bits */
+#define SC1200_COLOR_MASK                   0x00FFFFFF  /* 24 significant bits */
 
 /* ALPHA COLOR BIT DEFINITION (REGISTERS 0x68, 0x78, AND 0x88) */
 
@@ -847,80 +847,80 @@
 /*  SECOND GENERATION GRAPHICS UNIT (REDCLOUD)  */
 /*----------------------------------------------*/
 
-#define MGP_DST_OFFSET			0x0000	/* dst address                          */
-#define MGP_SRC_OFFSET			0x0004	/* src address                          */
-#define MGP_VEC_ERR				0x0004	/* vector diag/axial errors     */
-#define MGP_STRIDE				0x0008	/* src and dst strides          */
-#define MGP_WID_HEIGHT			0x000C	/* width and height of BLT      */
-#define MGP_VEC_LEN				0x000C	/* vector length/init error */
-#define MGP_SRC_COLOR_FG		0x0010	/* src mono data fgcolor        */
-#define MGP_SRC_COLOR_BG		0x0014	/* src mono data bkcolor        */
-#define MGP_PAT_COLOR_0			0x0018	/* pattern color 0                      */
-#define MGP_PAT_COLOR_1			0x001C	/* pattern color 1                      */
-#define MGP_PAT_COLOR_2			0x0020	/* pattern color 2                      */
-#define MGP_PAT_COLOR_3			0x0024	/* pattern color 3                      */
-#define MGP_PAT_COLOR_4			0x0028	/* pattern color 4                      */
-#define MGP_PAT_COLOR_5			0x002C	/* pattern color 5                      */
-#define MGP_PAT_DATA_0			0x0030	/* pattern data 0                       */
-#define MGP_PAT_DATA_1			0x0034	/* pattern data 1                       */
-#define MGP_RASTER_MODE			0x0038	/* raster operation                     */
-#define MGP_VECTOR_MODE			0x003C	/* render vector                        */
-#define MGP_BLT_MODE			0x0040	/* render BLT                           */
-#define MGP_BLT_STATUS			0x0044	/* BLT status register          */
-#define MGP_RESET				0x0044	/* reset register (write)       */
-#define MGP_HST_SOURCE			0x0048	/* host src data (bitmap)       */
-#define MGP_BASE_OFFSET			0x004C	/* base render offset           */
+#define MGP_DST_OFFSET			0x0000  /* dst address                          */
+#define MGP_SRC_OFFSET			0x0004  /* src address                          */
+#define MGP_VEC_ERR				0x0004  /* vector diag/axial errors     */
+#define MGP_STRIDE				0x0008  /* src and dst strides          */
+#define MGP_WID_HEIGHT			0x000C  /* width and height of BLT      */
+#define MGP_VEC_LEN				0x000C  /* vector length/init error */
+#define MGP_SRC_COLOR_FG		0x0010  /* src mono data fgcolor        */
+#define MGP_SRC_COLOR_BG		0x0014  /* src mono data bkcolor        */
+#define MGP_PAT_COLOR_0			0x0018  /* pattern color 0                      */
+#define MGP_PAT_COLOR_1			0x001C  /* pattern color 1                      */
+#define MGP_PAT_COLOR_2			0x0020  /* pattern color 2                      */
+#define MGP_PAT_COLOR_3			0x0024  /* pattern color 3                      */
+#define MGP_PAT_COLOR_4			0x0028  /* pattern color 4                      */
+#define MGP_PAT_COLOR_5			0x002C  /* pattern color 5                      */
+#define MGP_PAT_DATA_0			0x0030  /* pattern data 0                       */
+#define MGP_PAT_DATA_1			0x0034  /* pattern data 1                       */
+#define MGP_RASTER_MODE			0x0038  /* raster operation                     */
+#define MGP_VECTOR_MODE			0x003C  /* render vector                        */
+#define MGP_BLT_MODE			0x0040  /* render BLT                           */
+#define MGP_BLT_STATUS			0x0044  /* BLT status register          */
+#define MGP_RESET				0x0044  /* reset register (write)       */
+#define MGP_HST_SOURCE			0x0048  /* host src data (bitmap)       */
+#define MGP_BASE_OFFSET			0x004C  /* base render offset           */
 
 /* MGP_RASTER_MODE DEFINITIONS */
 
-#define MGP_RM_BPPFMT_332		    0x00000000	/* 8 BPP, 3:3:2                         */
-#define MGP_RM_BPPFMT_4444		    0x40000000	/* 16 BPP, 4:4:4:4                      */
-#define MGP_RM_BPPFMT_1555		    0x50000000	/* 16 BPP, 1:5:5:5                      */
-#define MGP_RM_BPPFMT_565		    0x60000000	/* 16 BPP, 5:6:5                        */
-#define MGP_RM_BPPFMT_8888		    0x80000000	/* 32 BPP, 8:8:8:8                      */
-#define MGP_RM_ALPHA_EN_MASK        0x00C00000	/* Alpha enable             */
-#define MGP_RM_ALPHA_TO_RGB         0x00400000	/* Alpha applies to RGB     */
-#define MGP_RM_ALPHA_TO_ALPHA       0x00800000	/* Alpha applies to alpha   */
-#define MGP_RM_ALPHA_OP_MASK        0x00300000	/* Alpha operation          */
-#define MGP_RM_ALPHA_TIMES_A        0x00000000	/* Alpha * A                */
-#define MGP_RM_BETA_TIMES_B         0x00100000	/* (1-alpha) * B            */
-#define MGP_RM_A_PLUS_BETA_B        0x00200000	/* A + (1-alpha) * B        */
-#define MGP_RM_ALPHA_A_PLUS_BETA_B  0x00300000	/* alpha * A + (1 - alpha)B */
-#define MGP_RM_ALPHA_SELECT         0x000E0000	/* Alpha Select             */
-#define MGP_RM_SELECT_ALPHA_A       0x00000000	/* Alpha from channel A     */
-#define MGP_RM_SELECT_ALPHA_B       0x00020000	/* Alpha from channel B     */
-#define MGP_RM_SELECT_ALPHA_R       0x00040000	/* Registered alpha         */
-#define MGP_RM_SELECT_ALPHA_1       0x00060000	/* Constant 1               */
-#define MGP_RM_SELECT_ALPHA_CHAN_A  0x00080000	/* RGB Values from A        */
-#define MGP_RM_SELECT_ALPHA_CHAN_B  0x000A0000	/* RGB Values from B        */
-#define MGP_RM_DEST_FROM_CHAN_A     0x00010000	/* Alpha channel select     */
-#define MGP_RM_PAT_FLAGS		    0x00000700	/* pattern related bits         */
-#define MGP_RM_PAT_MONO			    0x00000100	/* monochrome pattern           */
-#define MGP_RM_PAT_COLOR		    0x00000200	/* color pattern                        */
-#define MGP_RM_PAT_TRANS		    0x00000400	/* pattern transparency         */
-#define MGP_RM_SRC_TRANS		    0x00000800	/* source transparency          */
+#define MGP_RM_BPPFMT_332		    0x00000000  /* 8 BPP, 3:3:2                         */
+#define MGP_RM_BPPFMT_4444		    0x40000000  /* 16 BPP, 4:4:4:4                      */
+#define MGP_RM_BPPFMT_1555		    0x50000000  /* 16 BPP, 1:5:5:5                      */
+#define MGP_RM_BPPFMT_565		    0x60000000  /* 16 BPP, 5:6:5                        */
+#define MGP_RM_BPPFMT_8888		    0x80000000  /* 32 BPP, 8:8:8:8                      */
+#define MGP_RM_ALPHA_EN_MASK        0x00C00000  /* Alpha enable             */
+#define MGP_RM_ALPHA_TO_RGB         0x00400000  /* Alpha applies to RGB     */
+#define MGP_RM_ALPHA_TO_ALPHA       0x00800000  /* Alpha applies to alpha   */
+#define MGP_RM_ALPHA_OP_MASK        0x00300000  /* Alpha operation          */
+#define MGP_RM_ALPHA_TIMES_A        0x00000000  /* Alpha * A                */
+#define MGP_RM_BETA_TIMES_B         0x00100000  /* (1-alpha) * B            */
+#define MGP_RM_A_PLUS_BETA_B        0x00200000  /* A + (1-alpha) * B        */
+#define MGP_RM_ALPHA_A_PLUS_BETA_B  0x00300000  /* alpha * A + (1 - alpha)B */
+#define MGP_RM_ALPHA_SELECT         0x000E0000  /* Alpha Select             */
+#define MGP_RM_SELECT_ALPHA_A       0x00000000  /* Alpha from channel A     */
+#define MGP_RM_SELECT_ALPHA_B       0x00020000  /* Alpha from channel B     */
+#define MGP_RM_SELECT_ALPHA_R       0x00040000  /* Registered alpha         */
+#define MGP_RM_SELECT_ALPHA_1       0x00060000  /* Constant 1               */
+#define MGP_RM_SELECT_ALPHA_CHAN_A  0x00080000  /* RGB Values from A        */
+#define MGP_RM_SELECT_ALPHA_CHAN_B  0x000A0000  /* RGB Values from B        */
+#define MGP_RM_DEST_FROM_CHAN_A     0x00010000  /* Alpha channel select     */
+#define MGP_RM_PAT_FLAGS		    0x00000700  /* pattern related bits         */
+#define MGP_RM_PAT_MONO			    0x00000100  /* monochrome pattern           */
+#define MGP_RM_PAT_COLOR		    0x00000200  /* color pattern                        */
+#define MGP_RM_PAT_TRANS		    0x00000400  /* pattern transparency         */
+#define MGP_RM_SRC_TRANS		    0x00000800  /* source transparency          */
 
 /* MGP_VECTOR_MODE DEFINITIONS */
 
-#define MGP_VM_DST_REQ			0x00000008	/* dst data required            */
-#define MGP_VM_THROTTLE			0x00000010	/* sync to VBLANK                   */
+#define MGP_VM_DST_REQ			0x00000008      /* dst data required            */
+#define MGP_VM_THROTTLE			0x00000010      /* sync to VBLANK                   */
 
 /* MGP_BLT_MODE DEFINITIONS */
 
-#define MGP_BM_SRC_FB			0x00000001	/* src = frame buffer               */
-#define MGP_BM_SRC_HOST			0x00000002	/* src = host register              */
-#define MGP_BM_DST_REQ			0x00000004	/* dst data required                */
-#define MGP_BM_SRC_MONO			0x00000040	/* monochrome source data   */
-#define MGP_BM_SRC_BP_MONO      0x00000080	/* Byte-packed monochrome   */
-#define MGP_BM_NEG_YDIR			0x00000100	/* negative Y direction             */
-#define MGP_BM_NEG_XDIR			0x00000200	/* negative X direction             */
-#define MGP_BM_THROTTLE			0x00000400	/* sync to VBLANK                   */
+#define MGP_BM_SRC_FB			0x00000001      /* src = frame buffer               */
+#define MGP_BM_SRC_HOST			0x00000002      /* src = host register              */
+#define MGP_BM_DST_REQ			0x00000004      /* dst data required                */
+#define MGP_BM_SRC_MONO			0x00000040      /* monochrome source data   */
+#define MGP_BM_SRC_BP_MONO      0x00000080      /* Byte-packed monochrome   */
+#define MGP_BM_NEG_YDIR			0x00000100      /* negative Y direction             */
+#define MGP_BM_NEG_XDIR			0x00000200      /* negative X direction             */
+#define MGP_BM_THROTTLE			0x00000400      /* sync to VBLANK                   */
 
 /* MGP_BLT_STATUS DEFINITIONS */
 
-#define MGP_BS_BLT_BUSY			0x00000001	/* GP is not idle                   */
-#define MGP_BS_BLT_PENDING		0x00000004	/* second BLT is pending        */
-#define MGP_BS_HALF_EMPTY		0x00000008	/* src FIFO half empty              */
+#define MGP_BS_BLT_BUSY			0x00000001      /* GP is not idle                   */
+#define MGP_BS_BLT_PENDING		0x00000004      /* second BLT is pending        */
+#define MGP_BS_HALF_EMPTY		0x00000008      /* src FIFO half empty              */
 
 /* ALPHA BLENDING MODES       */
 
@@ -930,48 +930,48 @@
 /*  SECOND GENERATION DISPLAY CONTROLLER (REDCLOUD)  */
 /*---------------------------------------------------*/
 
-#define MDC_UNLOCK              0x00000000	/* Unlock register               */
-#define MDC_GENERAL_CFG         0x00000004	/* Config registers              */
+#define MDC_UNLOCK              0x00000000      /* Unlock register               */
+#define MDC_GENERAL_CFG         0x00000004      /* Config registers              */
 #define MDC_DISPLAY_CFG         0x00000008
-#define MDC_GFX_SCL             0x0000000C	/* Graphics scaling              */
+#define MDC_GFX_SCL             0x0000000C      /* Graphics scaling              */
 
-#define MDC_FB_ST_OFFSET        0x00000010	/* Frame buffer start offset     */
-#define MDC_CB_ST_OFFSET        0x00000014	/* Compression start offset      */
-#define MDC_CURS_ST_OFFSET      0x00000018	/* Cursor buffer start offset    */
-#define MDC_ICON_ST_OFFSET      0x0000001C	/* Icon buffer start offset      */
-#define MDC_VID_Y_ST_OFFSET     0x00000020	/* Video Y Buffer start offset   */
-#define MDC_VID_U_ST_OFFSET     0x00000024	/* Video U Buffer start offset   */
-#define MDC_VID_V_ST_OFFSET     0x00000028	/* Video V Buffer start offset   */
-#define MDC_LINE_SIZE           0x00000030	/* Video, CB, and FB line sizes  */
-#define MDC_GFX_PITCH           0x00000034	/* FB and DB skip counts         */
-#define MDC_VID_YUV_PITCH       0x00000038	/* Y, U and V buffer skip counts */
+#define MDC_FB_ST_OFFSET        0x00000010      /* Frame buffer start offset     */
+#define MDC_CB_ST_OFFSET        0x00000014      /* Compression start offset      */
+#define MDC_CURS_ST_OFFSET      0x00000018      /* Cursor buffer start offset    */
+#define MDC_ICON_ST_OFFSET      0x0000001C      /* Icon buffer start offset      */
+#define MDC_VID_Y_ST_OFFSET     0x00000020      /* Video Y Buffer start offset   */
+#define MDC_VID_U_ST_OFFSET     0x00000024      /* Video U Buffer start offset   */
+#define MDC_VID_V_ST_OFFSET     0x00000028      /* Video V Buffer start offset   */
+#define MDC_LINE_SIZE           0x00000030      /* Video, CB, and FB line sizes  */
+#define MDC_GFX_PITCH           0x00000034      /* FB and DB skip counts         */
+#define MDC_VID_YUV_PITCH       0x00000038      /* Y, U and V buffer skip counts */
 
-#define MDC_H_ACTIVE_TIMING     0x00000040	/* Horizontal timings            */
+#define MDC_H_ACTIVE_TIMING     0x00000040      /* Horizontal timings            */
 #define MDC_H_BLANK_TIMING      0x00000044
 #define MDC_H_SYNC_TIMING       0x00000048
-#define MDC_V_ACTIVE_TIMING     0x00000050	/* Vertical Timings              */
+#define MDC_V_ACTIVE_TIMING     0x00000050      /* Vertical Timings              */
 #define MDC_V_BLANK_TIMING      0x00000054
 #define MDC_V_SYNC_TIMING       0x00000058
 
-#define MDC_CURSOR_X            0x00000060	/* Cursor X position             */
-#define MDC_CURSOR_Y            0x00000064	/* Cursor Y Position             */
-#define MDC_ICON_X              0x00000068	/* Icon X Position               */
-#define MDC_LINE_CNT_STATUS     0x0000006C	/* Icon Y Position               */
+#define MDC_CURSOR_X            0x00000060      /* Cursor X position             */
+#define MDC_CURSOR_Y            0x00000064      /* Cursor Y Position             */
+#define MDC_ICON_X              0x00000068      /* Icon X Position               */
+#define MDC_LINE_CNT_STATUS     0x0000006C      /* Icon Y Position               */
 
-#define MDC_PAL_ADDRESS         0x00000070	/* Palette Address               */
-#define MDC_PAL_DATA            0x00000074	/* Palette Data                  */
-#define MDC_DFIFO_DIAG          0x00000078	/* Display FIFO diagnostic       */
-#define MDC_CFIFO_DIAG          0x0000007C	/* Compression FIFO diagnostic   */
+#define MDC_PAL_ADDRESS         0x00000070      /* Palette Address               */
+#define MDC_PAL_DATA            0x00000074      /* Palette Data                  */
+#define MDC_DFIFO_DIAG          0x00000078      /* Display FIFO diagnostic       */
+#define MDC_CFIFO_DIAG          0x0000007C      /* Compression FIFO diagnostic   */
 
-#define MDC_VID_DS_DELTA        0x00000080	/* Vertical Downscaling fraction */
+#define MDC_VID_DS_DELTA        0x00000080      /* Vertical Downscaling fraction */
 
-#define MDC_PHY_MEM_OFFSET      0x00000084	/* VG Base Address Register      */
-#define MDC_DV_CTL              0x00000088	/* Dirty-Valid Control Register  */
-#define MDC_DV_ACC              0x0000008C	/* Dirty-Valid RAM Access        */
+#define MDC_PHY_MEM_OFFSET      0x00000084      /* VG Base Address Register      */
+#define MDC_DV_CTL              0x00000088      /* Dirty-Valid Control Register  */
+#define MDC_DV_ACC              0x0000008C      /* Dirty-Valid RAM Access        */
 
 /* UNLOCK VALUE */
 
-#define MDC_UNLOCK_VALUE		0x00004758	/* used to unlock DC regs       */
+#define MDC_UNLOCK_VALUE		0x00004758      /* used to unlock DC regs       */
 
 /* VG MBUS DEVICE SMI MSR FIELDS */
 
@@ -1267,7 +1267,7 @@
 #define RCDF_CURSOR_COLOR_KEY_ENABLE      0x20000000
 #define RCDF_CURSOR_COLOR_KEY_OFFSET_POS  24
 #define RCDF_CURSOR_COLOR_BITS            23
-#define RCDF_COLOR_MASK                   0x00FFFFFF	/* 24 significant bits */
+#define RCDF_COLOR_MASK                   0x00FFFFFF    /* 24 significant bits */
 
 /* ALPHA COLOR BIT DEFINITION (REGISTERS 0x68, 0x78, AND 0x88) */
 
@@ -1286,23 +1286,23 @@
 
 /* GEODELINK DEVICE MSR REGISTER SUMMARY */
 
-#define MBD_MSR_CAP         0x2000	/* Device Capabilities                   */
-#define MBD_MSR_CONFIG      0x2001	/* Device Master Configuration Register  */
-#define MBD_MSR_SMI         0x2002	/* MBus Device SMI Register              */
-#define MBD_MSR_ERROR       0x2003	/* MBus Device Error                     */
-#define MBD_MSR_PM          0x2004	/* MBus Device Power Management Register */
-#define MBD_MSR_DIAG        0x2005	/* Mbus Device Diagnostic Register       */
+#define MBD_MSR_CAP         0x2000      /* Device Capabilities                   */
+#define MBD_MSR_CONFIG      0x2001      /* Device Master Configuration Register  */
+#define MBD_MSR_SMI         0x2002      /* MBus Device SMI Register              */
+#define MBD_MSR_ERROR       0x2003      /* MBus Device Error                     */
+#define MBD_MSR_PM          0x2004      /* MBus Device Power Management Register */
+#define MBD_MSR_DIAG        0x2005      /* Mbus Device Diagnostic Register       */
 
 /* DISPLAY FILTER MBD_MSR_DIAG DEFINITIONS */
 
-#define RCDF_MBD_DIAG_SEL0        0x00007FFF	/* Lower 32-bits of Diag Bus Select     */
-#define RCDF_MBD_DIAG_EN0         0x00008000	/* Enable for lower 32-bits of diag bus */
-#define RCDF_MBD_DIAG_SEL1        0x7FFF0000	/* Upper 32-bits of Diag Bus Select     */
-#define RCDF_MBD_DIAG_EN1         0x80000000	/* Enable for upper 32-bits of diag bus */
+#define RCDF_MBD_DIAG_SEL0        0x00007FFF    /* Lower 32-bits of Diag Bus Select     */
+#define RCDF_MBD_DIAG_EN0         0x00008000    /* Enable for lower 32-bits of diag bus */
+#define RCDF_MBD_DIAG_SEL1        0x7FFF0000    /* Upper 32-bits of Diag Bus Select     */
+#define RCDF_MBD_DIAG_EN1         0x80000000    /* Enable for upper 32-bits of diag bus */
 
 /* DISPLAY FILTER MBD_MSR_CONFIG DEFINITIONS */
 
-#define RCDF_CONFIG_FMT_MASK      0x00000038	/* Output Format */
+#define RCDF_CONFIG_FMT_MASK      0x00000038    /* Output Format */
 #define RCDF_CONFIG_FMT_CRT       0x00000000
 #define RCDF_CONFIG_FMT_FP        0x00000008
 
@@ -1355,4 +1355,3 @@
 #define MCP_DOTPLL_BYPASS         0x00008000
 
 /* END OF FILE */
-

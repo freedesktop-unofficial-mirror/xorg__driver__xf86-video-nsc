@@ -186,7 +186,7 @@
 #ifdef XFreeXDGA
 #define _XF86_DGA_SERVER_
 #include <X11/extensions/xf86dgaproto.h>
-#endif /* XFreeXDGA */
+#endif                          /* XFreeXDGA */
 
 #include "globals.h"
 #include "opaque.h"
@@ -234,19 +234,19 @@ extern void GX2SetupChipsetFPtr(ScrnInfoPtr pScrn);
 
 #if !defined(STB_X)
 extern unsigned char *XpressROMPtr;
-#endif /* STB_X */
+#endif                          /* STB_X */
 
 /* driver record contains the functions needed by the server after loading
  * the driver module.
  */
 _X_EXPORT DriverRec NSC = {
-   NSC_VERSION_CURRENT,
-   NSC_DRIVER_NAME,
-   NscIdentify,
-   NscProbe,
-   NscAvailableOptions,
-   NULL,
-   0
+    NSC_VERSION_CURRENT,
+    NSC_DRIVER_NAME,
+    NscIdentify,
+    NscProbe,
+    NscAvailableOptions,
+    NULL,
+    0
 };
 
 /* Existing Processor Models */
@@ -264,110 +264,108 @@ _X_EXPORT DriverRec NSC = {
 #define PCI_CHIP_REDCLOUD 0x0030
 
 /* National Chip Models */
-typedef struct _DEVICE_MODEL
-{
-   int DeviceId;
-   int Model;
-}
-DeviceModel;
+typedef struct _DEVICE_MODEL {
+    int DeviceId;
+    int Model;
+} DeviceModel;
 
 DeviceModel ChipModel[] = {
-   {PCI_CHIP_5530, GX1},
-   {PCI_CHIP_SC1200, GX1},
-   {PCI_CHIP_SC1400, GX1},
-   {PCI_CHIP_REDCLOUD, GX2},
-   {-1, 0}
+    {PCI_CHIP_5530, GX1},
+    {PCI_CHIP_SC1200, GX1},
+    {PCI_CHIP_SC1400, GX1},
+    {PCI_CHIP_REDCLOUD, GX2},
+    {-1, 0}
 };
 
 /* Supported chipsets */
 SymTabRec GeodeChipsets[] = {
-   {PCI_CHIP_5530, "5530"},
-   {PCI_CHIP_SC1200, "SC1200"},
-   {PCI_CHIP_SC1400, "SC1400"},
-   {PCI_CHIP_REDCLOUD, "REDCLOUD"},
-   {-1, NULL}
+    {PCI_CHIP_5530, "5530"},
+    {PCI_CHIP_SC1200, "SC1200"},
+    {PCI_CHIP_SC1400, "SC1400"},
+    {PCI_CHIP_REDCLOUD, "REDCLOUD"},
+    {-1, NULL}
 };
 
 PciChipsets GeodePCIchipsets[] = {
-   {PCI_CHIP_5530, PCI_CHIP_5530, RES_SHARED_VGA},
-   {PCI_CHIP_SC1200, PCI_CHIP_SC1200, RES_SHARED_VGA},
-   {PCI_CHIP_SC1400, PCI_CHIP_SC1400, RES_SHARED_VGA},
-   {PCI_CHIP_REDCLOUD, PCI_CHIP_REDCLOUD, RES_SHARED_VGA},
-   {-1, -1, RES_UNDEFINED},
+    {PCI_CHIP_5530, PCI_CHIP_5530, RES_SHARED_VGA},
+    {PCI_CHIP_SC1200, PCI_CHIP_SC1200, RES_SHARED_VGA},
+    {PCI_CHIP_SC1400, PCI_CHIP_SC1400, RES_SHARED_VGA},
+    {PCI_CHIP_REDCLOUD, PCI_CHIP_REDCLOUD, RES_SHARED_VGA},
+    {-1, -1, RES_UNDEFINED},
 };
 
 OptionInfoRec GeodeOptions[] = {
-   {OPTION_SW_CURSOR, "SWcursor", OPTV_BOOLEAN, {0}, FALSE},
-   {OPTION_HW_CURSOR, "HWcursor", OPTV_BOOLEAN, {0}, FALSE},
-   {OPTION_NOCOMPRESSION, "NoCompression", OPTV_BOOLEAN, {0}, FALSE},
-   {OPTION_NOACCEL, "NoAccel", OPTV_BOOLEAN, {0}, FALSE},
-   {OPTION_TV_SUPPORT, "TV", OPTV_ANYSTR, {0}, FALSE},
-   {OPTION_TV_OUTPUT, "TV_Output", OPTV_ANYSTR, {0}, FALSE},
-   {OPTION_TV_OVERSCAN, "TVOverscan", OPTV_ANYSTR, {0}, FALSE},
-   {OPTION_SHADOW_FB, "ShadowFB", OPTV_BOOLEAN, {0}, FALSE},
-   {OPTION_ROTATE, "Rotate", OPTV_ANYSTR, {0}, FALSE},
-   {OPTION_FLATPANEL, "FlatPanel", OPTV_BOOLEAN, {0}, FALSE},
-   {OPTION_COLOR_KEY, "ColorKey", OPTV_INTEGER, {0}, FALSE},
-   {OPTION_OSM_IMG_BUFS, "OSMImageBuffers", OPTV_INTEGER, {0}, FALSE},
-   {-1, NULL, OPTV_NONE, {0}, FALSE}
+    {OPTION_SW_CURSOR, "SWcursor", OPTV_BOOLEAN, {0}, FALSE},
+    {OPTION_HW_CURSOR, "HWcursor", OPTV_BOOLEAN, {0}, FALSE},
+    {OPTION_NOCOMPRESSION, "NoCompression", OPTV_BOOLEAN, {0}, FALSE},
+    {OPTION_NOACCEL, "NoAccel", OPTV_BOOLEAN, {0}, FALSE},
+    {OPTION_TV_SUPPORT, "TV", OPTV_ANYSTR, {0}, FALSE},
+    {OPTION_TV_OUTPUT, "TV_Output", OPTV_ANYSTR, {0}, FALSE},
+    {OPTION_TV_OVERSCAN, "TVOverscan", OPTV_ANYSTR, {0}, FALSE},
+    {OPTION_SHADOW_FB, "ShadowFB", OPTV_BOOLEAN, {0}, FALSE},
+    {OPTION_ROTATE, "Rotate", OPTV_ANYSTR, {0}, FALSE},
+    {OPTION_FLATPANEL, "FlatPanel", OPTV_BOOLEAN, {0}, FALSE},
+    {OPTION_COLOR_KEY, "ColorKey", OPTV_INTEGER, {0}, FALSE},
+    {OPTION_OSM_IMG_BUFS, "OSMImageBuffers", OPTV_INTEGER, {0}, FALSE},
+    {-1, NULL, OPTV_NONE, {0}, FALSE}
 };
 
 /* List of symbols from other modules that this module references.The purpose
 * is that to avoid unresolved symbol warnings
 */
 const char *nscVgahwSymbols[] = {
-   "vgaHWGetHWRec",
-   "vgaHWUnlock",
-   "vgaHWInit",
-   "vgaHWSave",
-   "vgaHWRestore",
-   "vgaHWProtect",
-   "vgaHWGetIOBase",
-   "vgaHWMapMem",
-   "vgaHWLock",
-   "vgaHWFreeHWRec",
-   "vgaHWSaveScreen",
-   NULL
+    "vgaHWGetHWRec",
+    "vgaHWUnlock",
+    "vgaHWInit",
+    "vgaHWSave",
+    "vgaHWRestore",
+    "vgaHWProtect",
+    "vgaHWGetIOBase",
+    "vgaHWMapMem",
+    "vgaHWLock",
+    "vgaHWFreeHWRec",
+    "vgaHWSaveScreen",
+    NULL
 };
 
 const char *nscVbeSymbols[] = {
-   "VBEInit",
-   "vbeDoEDID",
-   "vbeFree",
-   NULL
+    "VBEInit",
+    "vbeDoEDID",
+    "vbeFree",
+    NULL
 };
 
 const char *nscInt10Symbols[] = {
-   "xf86ExecX86int10",
-   "xf86InitInt10",
-   "xf86Int10AllocPages",
-   "xf86Int10Addr",
-   NULL
+    "xf86ExecX86int10",
+    "xf86InitInt10",
+    "xf86Int10AllocPages",
+    "xf86Int10Addr",
+    NULL
 };
 
 const char *nscFbSymbols[] = {
-   "fbScreenInit",
-   "fbPictureInit",
-   NULL
+    "fbScreenInit",
+    "fbPictureInit",
+    NULL
 };
 
 const char *nscXaaSymbols[] = {
-   "XAADestroyInfoRec",
-   "XAACreateInfoRec",
-   "XAAInit",
-   NULL
+    "XAADestroyInfoRec",
+    "XAACreateInfoRec",
+    "XAAInit",
+    NULL
 };
 
 const char *nscRamdacSymbols[] = {
-   "xf86InitCursor",
-   "xf86CreateCursorInfoRec",
-   "xf86DestroyCursorInfoRec",
-   NULL
+    "xf86InitCursor",
+    "xf86CreateCursorInfoRec",
+    "xf86DestroyCursorInfoRec",
+    NULL
 };
 
 const char *nscShadowSymbols[] = {
-   "ShadowFBInit",
-   NULL
+    "ShadowFBInit",
+    NULL
 };
 
 #ifdef XFree86LOADER
@@ -377,16 +375,16 @@ const char *nscShadowSymbols[] = {
 static MODULESETUPPROTO(NscSetup);
 
 static XF86ModuleVersionInfo NscVersionRec = {
-   "nsc",
-   MODULEVENDORSTRING,
-   MODINFOSTRING1,
-   MODINFOSTRING2,
-   XORG_VERSION_CURRENT,
-   NSC_VERSION_MAJOR, NSC_VERSION_MINOR, NSC_PATCHLEVEL,
-   ABI_CLASS_VIDEODRV,			/* This is a video driver */
-   ABI_VIDEODRV_VERSION,
-   MOD_CLASS_VIDEODRV,
-   {0, 0, 0, 0}
+    "nsc",
+    MODULEVENDORSTRING,
+    MODINFOSTRING1,
+    MODINFOSTRING2,
+    XORG_VERSION_CURRENT,
+    NSC_VERSION_MAJOR, NSC_VERSION_MINOR, NSC_PATCHLEVEL,
+    ABI_CLASS_VIDEODRV,         /* This is a video driver */
+    ABI_VIDEODRV_VERSION,
+    MOD_CLASS_VIDEODRV,
+    {0, 0, 0, 0}
 };
 
 /*
@@ -416,27 +414,27 @@ _X_EXPORT XF86ModuleData nscModuleData = { &NscVersionRec, NscSetup, NULL };
 static pointer
 NscSetup(pointer Module, pointer Options, int *ErrorMajor, int *ErrorMinor)
 {
-   static Bool Initialised = FALSE;
+    static Bool Initialised = FALSE;
 
-   if (!Initialised) {
-      Initialised = TRUE;
-      xf86AddDriver(&NSC, Module, 0);
-      /* Tell the loader about symbols from other modules that this
-       * module might refer to.
-       */
-      LoaderRefSymLists(nscVgahwSymbols, nscVbeSymbols,
-			nscFbSymbols,
-			nscXaaSymbols,
-			nscInt10Symbols, nscRamdacSymbols, nscShadowSymbols,
-			NULL);
-      return (pointer) TRUE;
-   }
-   /*The return value must be non-NULL on success */
-   if (ErrorMajor)
-      *ErrorMajor = LDR_ONCEONLY;
-   return NULL;
+    if (!Initialised) {
+        Initialised = TRUE;
+        xf86AddDriver(&NSC, Module, 0);
+        /* Tell the loader about symbols from other modules that this
+         * module might refer to.
+         */
+        LoaderRefSymLists(nscVgahwSymbols, nscVbeSymbols,
+                          nscFbSymbols,
+                          nscXaaSymbols,
+                          nscInt10Symbols, nscRamdacSymbols, nscShadowSymbols,
+                          NULL);
+        return (pointer) TRUE;
+    }
+    /*The return value must be non-NULL on success */
+    if (ErrorMajor)
+        *ErrorMajor = LDR_ONCEONLY;
+    return NULL;
 }
-#endif /*End of XFree86Loader */
+#endif                          /*End of XFree86Loader */
 
 /*-------------------------------------------------------------------------
  * NscIdentify.
@@ -456,9 +454,9 @@ NscSetup(pointer Module, pointer Options, int *ErrorMajor, int *ErrorMinor)
 static void
 NscIdentify(int flags)
 {
-   xf86PrintChipsets(NSC_NAME,
-		     "Nsc family driver (version " NSC_VERSION_NAME ") "
-		     "for chipsets", GeodeChipsets);
+    xf86PrintChipsets(NSC_NAME,
+                      "Nsc family driver (version " NSC_VERSION_NAME ") "
+                      "for chipsets", GeodeChipsets);
 }
 
 /*----------------------------------------------------------------------------
@@ -479,7 +477,7 @@ NscIdentify(int flags)
 static const OptionInfoRec *
 NscAvailableOptions(int chipid, int busid)
 {
-   return GeodeOptions;
+    return GeodeOptions;
 }
 
 /*----------------------------------------------------------------------------
@@ -504,91 +502,93 @@ NscAvailableOptions(int chipid, int busid)
 static Bool
 NscProbe(DriverPtr drv, int flags)
 {
-   Bool foundScreen = FALSE;
-   int numDevSections, numUsed;
-   GDevPtr *devSections = NULL;
-   int *usedChips = NULL;
-   int i;
+    Bool foundScreen = FALSE;
+    int numDevSections, numUsed;
+    GDevPtr *devSections = NULL;
+    int *usedChips = NULL;
+    int i;
 
-   GeodeDebug(("NscProbe: Probing for supported devices!\n"));
-   /*
-    * * Find the config file Device sections that match this
-    * * driver, and return if there are none.
-    */
-   if ((numDevSections = xf86MatchDevice(NSC_NAME, &devSections)) <= 0) {
-      GeodeDebug(("NscProbe: failed 1!\n"));
-      return FALSE;
-   }
-   GeodeDebug(("NscProbe: Before MatchPciInstances!\n"));
-   /* PCI BUS */
+    GeodeDebug(("NscProbe: Probing for supported devices!\n"));
+    /*
+     * * Find the config file Device sections that match this
+     * * driver, and return if there are none.
+     */
+    if ((numDevSections = xf86MatchDevice(NSC_NAME, &devSections)) <= 0) {
+        GeodeDebug(("NscProbe: failed 1!\n"));
+        return FALSE;
+    }
+    GeodeDebug(("NscProbe: Before MatchPciInstances!\n"));
+    /* PCI BUS */
 #ifndef XSERVER_LIBPCIACCESS
-   if (xf86GetPciVideoInfo()) {
+    if (xf86GetPciVideoInfo()) {
 #endif
-      numUsed = xf86MatchPciInstances(NSC_NAME, PCI_VENDOR_ID_NS,
-				      GeodeChipsets, GeodePCIchipsets,
-				      devSections, numDevSections,
-				      drv, &usedChips);
-      if (numUsed <= 0) {
-	 /* Check for old CYRIX vendor ID (5530) */
-	 numUsed = xf86MatchPciInstances(NSC_NAME,
-					 PCI_VENDOR_ID_CYRIX,
-					 GeodeChipsets, GeodePCIchipsets,
-					 devSections, numDevSections,
-					 drv, &usedChips);
-      }
+        numUsed = xf86MatchPciInstances(NSC_NAME, PCI_VENDOR_ID_NS,
+                                        GeodeChipsets, GeodePCIchipsets,
+                                        devSections, numDevSections,
+                                        drv, &usedChips);
+        if (numUsed <= 0) {
+            /* Check for old CYRIX vendor ID (5530) */
+            numUsed = xf86MatchPciInstances(NSC_NAME,
+                                            PCI_VENDOR_ID_CYRIX,
+                                            GeodeChipsets, GeodePCIchipsets,
+                                            devSections, numDevSections,
+                                            drv, &usedChips);
+        }
 
-      GeodeDebug(("NscProbe: MatchPCI (%d)!\n", numUsed));
+        GeodeDebug(("NscProbe: MatchPCI (%d)!\n", numUsed));
 
-      if (numUsed > 0) {
-	 if (flags & PROBE_DETECT)
-	    foundScreen = TRUE;
-	 else {
-	    /* Durango only supports one instance, */
-	    /* so take the first one */
-	    for (i = 0; i < numUsed; i++) {
-	       /* Allocate a ScrnInfoRec  */
-	       ScrnInfoPtr pScrn = xf86AllocateScreen(drv, 0);
+        if (numUsed > 0) {
+            if (flags & PROBE_DETECT)
+                foundScreen = TRUE;
+            else {
+                /* Durango only supports one instance, */
+                /* so take the first one */
+                for (i = 0; i < numUsed; i++) {
+                    /* Allocate a ScrnInfoRec  */
+                    ScrnInfoPtr pScrn = xf86AllocateScreen(drv, 0);
 
-	       EntityInfoPtr pEnt = xf86GetEntityInfo(usedChips[i]);
-	       PciChipsets *p_id;
+                    EntityInfoPtr pEnt = xf86GetEntityInfo(usedChips[i]);
+                    PciChipsets *p_id;
 
-	       for (p_id = GeodePCIchipsets; p_id->numChipset != -1; p_id++) {
-		  if (pEnt->chipset == p_id->numChipset) {
-		     CPUDetected = GX1;
-		     if (pEnt->chipset == PCI_CHIP_REDCLOUD)
-			CPUDetected = GX2;
-		     break;
-		  }
-	       }
-	       free(pEnt);
-	       GeodeDebug(("NscProbe: CPUDetected %d!\n", CPUDetected));
+                    for (p_id = GeodePCIchipsets; p_id->numChipset != -1;
+                         p_id++) {
+                        if (pEnt->chipset == p_id->numChipset) {
+                            CPUDetected = GX1;
+                            if (pEnt->chipset == PCI_CHIP_REDCLOUD)
+                                CPUDetected = GX2;
+                            break;
+                        }
+                    }
+                    free(pEnt);
+                    GeodeDebug(("NscProbe: CPUDetected %d!\n", CPUDetected));
 
-	       pScrn->driverName = NSC_DRIVER_NAME;
-	       pScrn->name = NSC_NAME;
-	       pScrn->Probe = NscProbe;
+                    pScrn->driverName = NSC_DRIVER_NAME;
+                    pScrn->name = NSC_NAME;
+                    pScrn->Probe = NscProbe;
 
-	       if (CPUDetected == GX1) {
-		  GX1SetupChipsetFPtr(pScrn);
-	       } else {			/* GX2 */
-		  GX2SetupChipsetFPtr(pScrn);
-	       }
+                    if (CPUDetected == GX1) {
+                        GX1SetupChipsetFPtr(pScrn);
+                    }
+                    else {      /* GX2 */
+                        GX2SetupChipsetFPtr(pScrn);
+                    }
 
-	       foundScreen = TRUE;
-	       xf86ConfigActivePciEntity(pScrn,
-					 usedChips[i],
-					 GeodePCIchipsets,
-					 NULL, NULL, NULL, NULL, NULL);
-	    }
-	 }
-      }
+                    foundScreen = TRUE;
+                    xf86ConfigActivePciEntity(pScrn,
+                                              usedChips[i],
+                                              GeodePCIchipsets,
+                                              NULL, NULL, NULL, NULL, NULL);
+                }
+            }
+        }
 #ifndef XSERVER_LIBPCIACCESS
-   }
+    }
 #endif
 
-   if (usedChips)
-      free(usedChips);
-   if (devSections)
-      free(devSections);
-   GeodeDebug(("NscProbe: result (%d)!\n", foundScreen));
-   return foundScreen;
+    if (usedChips)
+        free(usedChips);
+    if (devSections)
+        free(devSections);
+    GeodeDebug(("NscProbe: result (%d)!\n", foundScreen));
+    return foundScreen;
 }

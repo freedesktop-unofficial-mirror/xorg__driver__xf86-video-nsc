@@ -156,71 +156,66 @@
 
 /* STRUCTURE DEFINITION */
 
-typedef struct tagDISPLAYMODE
-{
-   /* DISPLAY MODE FLAGS */
-   /* Specify valid color depths and the refresh rate. */
+typedef struct tagDISPLAYMODE {
+    /* DISPLAY MODE FLAGS */
+    /* Specify valid color depths and the refresh rate. */
 
-   unsigned long flags;
+    unsigned long flags;
 
-   /* TIMINGS */
+    /* TIMINGS */
 
-   unsigned short hactive;
-   unsigned short hblankstart;
-   unsigned short hsyncstart;
-   unsigned short hsyncend;
-   unsigned short hblankend;
-   unsigned short htotal;
+    unsigned short hactive;
+    unsigned short hblankstart;
+    unsigned short hsyncstart;
+    unsigned short hsyncend;
+    unsigned short hblankend;
+    unsigned short htotal;
 
-   unsigned short vactive;
-   unsigned short vblankstart;
-   unsigned short vsyncstart;
-   unsigned short vsyncend;
-   unsigned short vblankend;
-   unsigned short vtotal;
+    unsigned short vactive;
+    unsigned short vblankstart;
+    unsigned short vsyncstart;
+    unsigned short vsyncend;
+    unsigned short vblankend;
+    unsigned short vtotal;
 
-   /* CLOCK FREQUENCY */
+    /* CLOCK FREQUENCY */
 
-   unsigned long frequency;
+    unsigned long frequency;
 
-}
-DISPLAYMODE;
+} DISPLAYMODE;
 
 /* For Fixed timings */
-typedef struct tagFIXEDTIMINGS
-{
-   /* DISPLAY MODE FLAGS */
-   /* Specify valid color depths and the refresh rate. */
+typedef struct tagFIXEDTIMINGS {
+    /* DISPLAY MODE FLAGS */
+    /* Specify valid color depths and the refresh rate. */
 
-   int panelresx;
-   int panelresy;
-   unsigned short xres;
-   unsigned short yres;
+    int panelresx;
+    int panelresy;
+    unsigned short xres;
+    unsigned short yres;
 
-   /* TIMINGS */
+    /* TIMINGS */
 
-   unsigned short hactive;
-   unsigned short hblankstart;
-   unsigned short hsyncstart;
-   unsigned short hsyncend;
-   unsigned short hblankend;
-   unsigned short htotal;
+    unsigned short hactive;
+    unsigned short hblankstart;
+    unsigned short hsyncstart;
+    unsigned short hsyncend;
+    unsigned short hblankend;
+    unsigned short htotal;
 
-   unsigned short vactive;
-   unsigned short vblankstart;
-   unsigned short vsyncstart;
-   unsigned short vsyncend;
-   unsigned short vblankend;
-   unsigned short vtotal;
+    unsigned short vactive;
+    unsigned short vblankstart;
+    unsigned short vsyncstart;
+    unsigned short vsyncend;
+    unsigned short vblankend;
+    unsigned short vtotal;
 
-   /* CLOCK FREQUENCY */
+    /* CLOCK FREQUENCY */
 
-   unsigned long frequency;
+    unsigned long frequency;
 
-}
-FIXEDTIMINGS;
+} FIXEDTIMINGS;
 
-#endif /* !_gfx_mode_h */
+#endif                          /* !_gfx_mode_h */
 
 /* END OF FILE */
-

@@ -127,7 +127,6 @@
  *
  * END_NSC_LIC_GPL */
 
-
 /* Version is in the format of MMmmpp
  * where in MM is the Major version, mm is the minor version
  * and pp is the patch number (0 - 99)
@@ -137,9 +136,7 @@
 
 #if 0
 
-This file contains specific revision info SINCE THE LAST RELEASE.  It is not meant to 
-be a comprehensive record of all additions.  
-
+This file contains specific revision info SINCE THE LAST RELEASE.
+    It is not meant to be a comprehensive record of all additions.
 #endif
 /* END OF FILE */
-

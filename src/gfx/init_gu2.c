@@ -154,18 +154,18 @@ unsigned long
 gfx_get_core_freq(void)
 #endif
 {
-   unsigned long value;
+    unsigned long value;
 
-   /* CPU SPEED IS REPORTED BY A VSM IN VSA II */
-   /* Virtual Register Class = 0x12 (Sysinfo)  */
-   /* CPU Speed Register     = 0x01            */
+    /* CPU SPEED IS REPORTED BY A VSM IN VSA II */
+    /* Virtual Register Class = 0x12 (Sysinfo)  */
+    /* CPU Speed Register     = 0x01            */
 
-   OUTW(0xAC1C, 0xFC53);
-   OUTW(0xAC1C, 0x1201);
+    OUTW(0xAC1C, 0xFC53);
+    OUTW(0xAC1C, 0x1201);
 
-   value = (unsigned long)(INW(0xAC1E));
+    value = (unsigned long) (INW(0xAC1E));
 
-   return (value);
+    return (value);
 }
 
 /*-----------------------------------------------------------------------------
@@ -182,7 +182,7 @@ unsigned long
 gfx_get_cpu_register_base(void)
 #endif
 {
-   return gfx_pci_config_read(0x80000918);
+    return gfx_pci_config_read(0x80000918);
 }
 
 /*-----------------------------------------------------------------------------
@@ -199,7 +199,7 @@ unsigned long
 gfx_get_graphics_register_base(void)
 #endif
 {
-   return gfx_pci_config_read(0x80000914);
+    return gfx_pci_config_read(0x80000914);
 }
 
 /*-----------------------------------------------------------------------------
@@ -216,7 +216,7 @@ unsigned long
 gfx_get_frame_buffer_base(void)
 #endif
 {
-   return gfx_pci_config_read(0x80000910);
+    return gfx_pci_config_read(0x80000910);
 }
 
 /*-----------------------------------------------------------------------------
@@ -233,18 +233,18 @@ unsigned long
 gfx_get_frame_buffer_size(void)
 #endif
 {
-   unsigned long value;
+    unsigned long value;
 
-   /* FRAME BUFFER SIZE IS REPORTED BY A VSM IN VSA II */
-   /* Virtual Register Class     = 0x02                */
-   /* VG_MEM_SIZE (512KB units)  = 0x00                */
+    /* FRAME BUFFER SIZE IS REPORTED BY A VSM IN VSA II */
+    /* Virtual Register Class     = 0x02                */
+    /* VG_MEM_SIZE (512KB units)  = 0x00                */
 
-   OUTW(0xAC1C, 0xFC53);
-   OUTW(0xAC1C, 0x0200);
+    OUTW(0xAC1C, 0xFC53);
+    OUTW(0xAC1C, 0x0200);
 
-   value = (unsigned long)(INW(0xAC1E)) & 0xFFl;
+    value = (unsigned long) (INW(0xAC1E)) & 0xFFl;
 
-   return (value << 19);
+    return (value << 19);
 }
 
 /*-----------------------------------------------------------------------------
@@ -261,7 +261,7 @@ unsigned long
 gfx_get_vid_register_base(void)
 #endif
 {
-   return gfx_pci_config_read(0x8000091C);
+    return gfx_pci_config_read(0x8000091C);
 }
 
 /* END OF FILE */

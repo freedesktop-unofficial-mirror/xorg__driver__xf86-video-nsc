@@ -159,23 +159,23 @@
 #define GFX(func) Gal_##func
 #define GFX2(func) Gal2_##func
 #define OPTACCEL(func) func
-#else /* STB_X */
+#else                           /* STB_X */
 #define GFX(func) gfx_##func
 #define GFX2(func) gfx2_##func
 
 #if defined(OPT_ACCEL)
 #define OPTACCEL(func) OPT##func
-#else /* OPT_ACCEL */
+#else                           /* OPT_ACCEL */
 #define OPTACCEL(func) func
-#endif /* OPT_ACCEL */
+#endif                          /* OPT_ACCEL */
 
-#endif /* STB_X */
+#endif                          /* STB_X */
 
 #define GEODEPTR(p) ((GeodePtr)((p)->driverPrivate))
 
 #define DebugPort(_Val) gfx_outb(0x84, (_Val));
 
-#define DEFAULT_NUM_OF_BUF 20		/* default # of buffers */
+#define DEFAULT_NUM_OF_BUF 20   /* default # of buffers */
 
 #if defined(MYDBG)
 #define DEBUGMSG(cond, drv_msg) if((cond)) xf86DrvMsg drv_msg
@@ -193,7 +193,7 @@ unsigned char DCount = 0;
 void
 gfx_outb(unsigned short port, unsigned char data)
 {
-   __asm__ volatile ("outb %0,%1"::"a" (data), "d"(port));
+    __asm__ volatile ("outb %0,%1"::"a" (data), "d"(port));
 }
 #endif
 #else
@@ -227,212 +227,200 @@ extern void gfx_outd(unsigned short port, unsigned long data);
 #include "gfx_regs.h"
 #include "panel.h"
 
-typedef struct __TVPARAMS
-{
-   unsigned int dwFlags;
-   unsigned short wWidth;
-   unsigned short wHeight;
-   unsigned short wStandard;
-   unsigned short wType;
-   unsigned short wOutput;
-   unsigned short wResolution;
-   Bool bState;
-}
-TVPARAMS, *PTVPARAMS;
+typedef struct __TVPARAMS {
+    unsigned int dwFlags;
+    unsigned short wWidth;
+    unsigned short wHeight;
+    unsigned short wStandard;
+    unsigned short wType;
+    unsigned short wOutput;
+    unsigned short wResolution;
+    Bool bState;
+} TVPARAMS, *PTVPARAMS;
 
-typedef struct __DISPLAYTIMING
-{
-   unsigned int dwDotClock;
-   unsigned short wPitch;
-   unsigned short wBpp;
-   unsigned short wHTotal;
-   unsigned short wHActive;
-   unsigned short wHSyncStart;
-   unsigned short wHSyncEnd;
-   unsigned short wHBlankStart;
-   unsigned short wHBlankEnd;
-   unsigned short wVTotal;
-   unsigned short wVActive;
-   unsigned short wVSyncStart;
-   unsigned short wVSyncEnd;
-   unsigned short wVBlankStart;
-   unsigned short wVBlankEnd;
-   unsigned short wPolarity;
-}
-DISPLAYTIMING, *PDISPLAYTIMING;
+typedef struct __DISPLAYTIMING {
+    unsigned int dwDotClock;
+    unsigned short wPitch;
+    unsigned short wBpp;
+    unsigned short wHTotal;
+    unsigned short wHActive;
+    unsigned short wHSyncStart;
+    unsigned short wHSyncEnd;
+    unsigned short wHBlankStart;
+    unsigned short wHBlankEnd;
+    unsigned short wVTotal;
+    unsigned short wVActive;
+    unsigned short wVSyncStart;
+    unsigned short wVSyncEnd;
+    unsigned short wVBlankStart;
+    unsigned short wVBlankEnd;
+    unsigned short wPolarity;
+} DISPLAYTIMING, *PDISPLAYTIMING;
 
 /* TV Timings */
-typedef struct __TVTIMING
-{
-   unsigned long HorzTim;
-   unsigned long HorzSync;
-   unsigned long VertSync;
-   unsigned long LineEnd;
-   unsigned long VertDownscale;
-   unsigned long HorzScaling;
-   unsigned long TimCtrl1;
-   unsigned long TimCtrl2;
-   unsigned long Subfreq;
-   unsigned long DispPos;
-   unsigned long DispSize;
-   unsigned long Debug;
-   unsigned long DacCtrl;
-   unsigned int DotClock;
-}
-TVTIMING, *PTVTIMING;
+typedef struct __TVTIMING {
+    unsigned long HorzTim;
+    unsigned long HorzSync;
+    unsigned long VertSync;
+    unsigned long LineEnd;
+    unsigned long VertDownscale;
+    unsigned long HorzScaling;
+    unsigned long TimCtrl1;
+    unsigned long TimCtrl2;
+    unsigned long Subfreq;
+    unsigned long DispPos;
+    unsigned long DispSize;
+    unsigned long Debug;
+    unsigned long DacCtrl;
+    unsigned int DotClock;
+} TVTIMING, *PTVTIMING;
 
-#endif /* STB_X */
+#endif                          /* STB_X */
 
-typedef struct _VESARec
-{
-   xf86Int10InfoPtr pInt;
-}
-VESARec, *VESAPtr;
+typedef struct _VESARec {
+    xf86Int10InfoPtr pInt;
+} VESARec, *VESAPtr;
 
-typedef struct
-{
-   /* Private struct for the server */
-   unsigned long cpu_version;		/* [7:0] Type:1=GXLV,2=SC1400 */
-   /* [15:8] Major version */
-   /* [23:16] Minor version */
-   unsigned long vid_version;		/* [7:0] Type:1=CS5530,2=SC1400 */
+typedef struct {
+    /* Private struct for the server */
+    unsigned long cpu_version;  /* [7:0] Type:1=GXLV,2=SC1400 */
+    /* [15:8] Major version */
+    /* [23:16] Minor version */
+    unsigned long vid_version;  /* [7:0] Type:1=CS5530,2=SC1400 */
 
-   EntityInfoPtr pEnt;
-   ScreenBlockHandlerProcPtr BlockHandler;	/* needed for video */
-   int DetectedChipSet;
-   int Chipset;
-   unsigned long FBLinearAddr;
-   unsigned char *FBBase;
-   unsigned long FBSize;
-   unsigned int cpu_reg_size;
-   unsigned int gp_reg_size;
-   unsigned int vid_reg_size;
-   int Pitch;
-   Bool HWCursor;
-   Bool NoAccel;
-   unsigned long VideoKey;
+    EntityInfoPtr pEnt;
+    ScreenBlockHandlerProcPtr BlockHandler;     /* needed for video */
+    int DetectedChipSet;
+    int Chipset;
+    unsigned long FBLinearAddr;
+    unsigned char *FBBase;
+    unsigned long FBSize;
+    unsigned int cpu_reg_size;
+    unsigned int gp_reg_size;
+    unsigned int vid_reg_size;
+    int Pitch;
+    Bool HWCursor;
+    Bool NoAccel;
+    unsigned long VideoKey;
 
-   Bool TVSupport;
+    Bool TVSupport;
 #if defined(STB_X)
-   GAL_TVPARAMS TvParam;
+    GAL_TVPARAMS TvParam;
 #else
-   TVPARAMS TvParam;
-#endif					/* STB_X */
+    TVPARAMS TvParam;
+#endif                          /* STB_X */
 
-   int TVOx, TVOy, TVOw, TVOh;
-   Bool TV_Overscan_On;
+    int TVOx, TVOy, TVOw, TVOh;
+    Bool TV_Overscan_On;
 
-   Bool Panel;
+    Bool Panel;
 
-   /* Flatpanel support from Bios */
-   int FPBX;				/* xres */
-   int FPBY;				/* yres */
-   int FPBB;				/* bpp */
-   int FPBF;				/* freq */
+    /* Flatpanel support from Bios */
+    int FPBX;                   /* xres */
+    int FPBY;                   /* yres */
+    int FPBB;                   /* bpp */
+    int FPBF;                   /* freq */
 
-   int Rotate;
-   Bool ShadowFB;
-   unsigned char *ShadowPtr;
-   int ShadowPitch;
-   void (*PointerMoved) (int index, int x, int y);
-   /* CloseScreen function.        */
-   CloseScreenProcPtr CloseScreen;
+    int Rotate;
+    Bool ShadowFB;
+    unsigned char *ShadowPtr;
+    int ShadowPitch;
+    void (*PointerMoved) (int index, int x, int y);
+    /* CloseScreen function.        */
+    CloseScreenProcPtr CloseScreen;
 
-   Bool Compression;
-   unsigned int CBOffset;
-   unsigned int CBPitch;
-   unsigned int CBSize;
-   unsigned long CursorStartOffset;
-   unsigned int CursorSize;
-   xf86CursorInfoPtr CursorInfo;
-   int CursorXHot;
-   int CursorYHot;
-   unsigned long OffscreenStartOffset;
-   unsigned int OffscreenSize;
+    Bool Compression;
+    unsigned int CBOffset;
+    unsigned int CBPitch;
+    unsigned int CBSize;
+    unsigned long CursorStartOffset;
+    unsigned int CursorSize;
+    xf86CursorInfoPtr CursorInfo;
+    int CursorXHot;
+    int CursorYHot;
+    unsigned long OffscreenStartOffset;
+    unsigned int OffscreenSize;
 
-	/***Image Write structures ***/
+        /***Image Write structures ***/
 
-   /* offset in video memory for ImageWrite Buffers */
-   unsigned char **AccelImageWriteBufferOffsets;
-   int NoOfImgBuffers;
-   FBAreaPtr CompressionArea;
-   FBAreaPtr AccelImgArea;
+    /* offset in video memory for ImageWrite Buffers */
+    unsigned char **AccelImageWriteBufferOffsets;
+    int NoOfImgBuffers;
+    FBAreaPtr CompressionArea;
+    FBAreaPtr AccelImgArea;
 /*****************************************/
 /* Saved Console State */
 #if defined(STB_X)
-   GAL_VGAMODEDATA FBgfxVgaRegs;
-   GAL_DISPLAYTIMING FBgfxdisplaytiming;
-   GAL_TVTIMING FBgfxtvtiming;
+    GAL_VGAMODEDATA FBgfxVgaRegs;
+    GAL_DISPLAYTIMING FBgfxdisplaytiming;
+    GAL_TVTIMING FBgfxtvtiming;
 #else
-   gfx_vga_struct FBgfxVgaRegs;
-   DISPLAYTIMING FBgfxdisplaytiming;
-   TVTIMING FBtvtiming;
-#endif					/* STB_X */
-   int FBVGAActive;
-   unsigned int FBTVActive;
-   unsigned int FBTVEnabled;
-   unsigned long FBDisplayOffset;
+    gfx_vga_struct FBgfxVgaRegs;
+    DISPLAYTIMING FBgfxdisplaytiming;
+    TVTIMING FBtvtiming;
+#endif                          /* STB_X */
+    int FBVGAActive;
+    unsigned int FBTVActive;
+    unsigned int FBTVEnabled;
+    unsigned long FBDisplayOffset;
 
-   VESAPtr vesa;
+    VESAPtr vesa;
 
-   /* compression */
-   int FBCompressionEnable;
-   unsigned long FBCompressionOffset;
-   unsigned short FBCompressionPitch;
-   unsigned short FBCompressionSize;
+    /* compression */
+    int FBCompressionEnable;
+    unsigned long FBCompressionOffset;
+    unsigned short FBCompressionPitch;
+    unsigned short FBCompressionSize;
 
-   /* Save the Cursor offset of the FB */
-   unsigned long FBCursorOffset;
+    /* Save the Cursor offset of the FB */
+    unsigned long FBCursorOffset;
 /*****************************************/
 
-   XAAInfoRecPtr AccelInfoRec;
+    XAAInfoRecPtr AccelInfoRec;
 
-   DGAModePtr DGAModes;
-   int numDGAModes;
-   Bool DGAactive;
-   int DGAViewportStatus;
+    DGAModePtr DGAModes;
+    int numDGAModes;
+    Bool DGAactive;
+    int DGAViewportStatus;
 /*****************************************/
-   int video_x;
-   int video_y;
-   short video_w;
-   short video_h;
-   short video_srcw;
-   short video_srch;
-   short video_dstw;
-   short video_dsth;
-   int video_id;
-   int video_offset;
-   ScrnInfoPtr video_scrnptr;
-   BOOL OverlayON;
+    int video_x;
+    int video_y;
+    short video_w;
+    short video_h;
+    short video_srcw;
+    short video_srch;
+    short video_dstw;
+    short video_dsth;
+    int video_id;
+    int video_offset;
+    ScrnInfoPtr video_scrnptr;
+    BOOL OverlayON;
 
-   int videoKey;
-   XF86VideoAdaptorPtr adaptor;
-   int OverlaySkewX;
-   int OverlaySkewY;
-   int VideoZoomMax;
-}
-GeodeRec, *GeodePtr;
+    int videoKey;
+    XF86VideoAdaptorPtr adaptor;
+    int OverlaySkewX;
+    int OverlaySkewY;
+    int VideoZoomMax;
+} GeodeRec, *GeodePtr;
 
 /* option flags are self-explanatory */
-typedef enum
-{
-   OPTION_SW_CURSOR,
-   OPTION_HW_CURSOR,
-   OPTION_NOCOMPRESSION,
-   OPTION_NOACCEL,
-   OPTION_TV_SUPPORT,
-   OPTION_TV_OUTPUT,
-   OPTION_TV_OVERSCAN,
-   OPTION_SHADOW_FB,
-   OPTION_ROTATE,
-   OPTION_FLATPANEL,
-   OPTION_FLATPANEL_INFO,
-   OPTION_FLATPANEL_IN_BIOS,
-   OPTION_COLOR_KEY,
-   OPTION_OSM,
-   OPTION_OSM_IMG_BUFS,
-   OPTION_DONT_PROGRAM
-}
-GeodeOpts;
+typedef enum {
+    OPTION_SW_CURSOR,
+    OPTION_HW_CURSOR,
+    OPTION_NOCOMPRESSION,
+    OPTION_NOACCEL,
+    OPTION_TV_SUPPORT,
+    OPTION_TV_OUTPUT,
+    OPTION_TV_OVERSCAN,
+    OPTION_SHADOW_FB,
+    OPTION_ROTATE,
+    OPTION_FLATPANEL,
+    OPTION_FLATPANEL_INFO,
+    OPTION_FLATPANEL_IN_BIOS,
+    OPTION_COLOR_KEY,
+    OPTION_OSM,
+    OPTION_OSM_IMG_BUFS,
+    OPTION_DONT_PROGRAM
+} GeodeOpts;
 
-#endif /* _NSC_GEODE_H_ */
+#endif                          /* _NSC_GEODE_H_ */

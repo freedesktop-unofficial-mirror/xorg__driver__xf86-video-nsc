@@ -145,8 +145,8 @@ int
 gfx_set_tv_format(TVStandardType format, GfxOnTVType resolution)
 #endif
 {
-   /* ### ADD ### IMPLEMENTATION */
-   return (0);
+    /* ### ADD ### IMPLEMENTATION */
+    return (0);
 }
 
 /*-----------------------------------------------------------------------------
@@ -164,8 +164,8 @@ int
 gfx_set_tv_output(int output)
 #endif
 {
-   /* ### ADD ### IMPLEMENTATION */
-   return (0);
+    /* ### ADD ### IMPLEMENTATION */
+    return (0);
 }
 
 /*-----------------------------------------------------------------------------
@@ -183,8 +183,8 @@ int
 gfx_set_tv_defaults(int format)
 #endif
 {
-   /* ### ADD ### IMPLEMENTATION */
-   return (0);
+    /* ### ADD ### IMPLEMENTATION */
+    return (0);
 }
 
 /*-----------------------------------------------------------------------------
@@ -201,8 +201,8 @@ int
 gfx_set_tv_enable(int enable)
 #endif
 {
-   /* ### ADD ### IMPLEMENTATION */
-   return (0);
+    /* ### ADD ### IMPLEMENTATION */
+    return (0);
 }
 
 /*-----------------------------------------------------------------------------
@@ -220,8 +220,8 @@ int
 gfx_set_tv_cc_enable(int enable)
 #endif
 {
-   /* ### ADD ### IMPLEMENTATION */
-   return (0);
+    /* ### ADD ### IMPLEMENTATION */
+    return (0);
 }
 
 /*-----------------------------------------------------------------------------
@@ -239,8 +239,8 @@ int
 gfx_set_tv_cc_data(unsigned char data1, unsigned char data2)
 #endif
 {
-   /* ### ADD ### IMPLEMENTATION */
-   return (0);
+    /* ### ADD ### IMPLEMENTATION */
+    return (0);
 }
 
 /* END OF FILE */

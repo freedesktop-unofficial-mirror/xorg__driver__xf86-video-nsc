@@ -157,59 +157,59 @@
 #include "config.h"
 #endif
 
-#define GFX_DISPLAY_DYNAMIC			1	/* runtime selection */
-#define GFX_DISPLAY_GU1				1	/* 1st generation display controller */
-#define GFX_DISPLAY_GU2				1	/* 2nd generation display controller */
+#define GFX_DISPLAY_DYNAMIC			1       /* runtime selection */
+#define GFX_DISPLAY_GU1				1       /* 1st generation display controller */
+#define GFX_DISPLAY_GU2				1       /* 2nd generation display controller */
 
-#define GFX_INIT_DYNAMIC            1	/* runtime selection */
-#define GFX_INIT_GU1                1	/* Geode family      */
-#define GFX_INIT_GU2                1	/* Redcloud          */
+#define GFX_INIT_DYNAMIC            1   /* runtime selection */
+#define GFX_INIT_GU1                1   /* Geode family      */
+#define GFX_INIT_GU2                1   /* Redcloud          */
 
-#define GFX_MSR_DYNAMIC             1	/* runtime selection */
-#define GFX_MSR_REDCLOUD            1	/* Redcloud          */
+#define GFX_MSR_DYNAMIC             1   /* runtime selection */
+#define GFX_MSR_REDCLOUD            1   /* Redcloud          */
 
-#define GFX_2DACCEL_DYNAMIC			1	/* runtime selection */
-#define GFX_2DACCEL_GU1				1	/* 1st generation 2D accelerator */
-#define GFX_2DACCEL_GU2				1	/* 2nd generation 2D accelerator */
+#define GFX_2DACCEL_DYNAMIC			1       /* runtime selection */
+#define GFX_2DACCEL_GU1				1       /* 1st generation 2D accelerator */
+#define GFX_2DACCEL_GU2				1       /* 2nd generation 2D accelerator */
 
-#define GFX_VIDEO_DYNAMIC			1	/* runtime selection */
-#define GFX_VIDEO_CS5530			1	/* support for CS5530 */
-#define GFX_VIDEO_SC1200			1	/* support for SC1200 */
-#define GFX_VIDEO_REDCLOUD          1	/* support for Redcloud */
+#define GFX_VIDEO_DYNAMIC			1       /* runtime selection */
+#define GFX_VIDEO_CS5530			1       /* support for CS5530 */
+#define GFX_VIDEO_SC1200			1       /* support for SC1200 */
+#define GFX_VIDEO_REDCLOUD          1   /* support for Redcloud */
 
-#define GFX_VIP_DYNAMIC				1	/* runtime selection */
-#define GFX_VIP_SC1200				1	/* support for SC1200 */
+#define GFX_VIP_DYNAMIC				1       /* runtime selection */
+#define GFX_VIP_SC1200				1       /* support for SC1200 */
 
-#define GFX_DECODER_DYNAMIC			1	/* runtime selection */
-#define GFX_DECODER_SAA7114			1	/* Philips SAA7114 decoder */
+#define GFX_DECODER_DYNAMIC			1       /* runtime selection */
+#define GFX_DECODER_SAA7114			1       /* Philips SAA7114 decoder */
 
-#define GFX_TV_DYNAMIC				1	/* runtime selection */
-#define GFX_TV_FS451				0	/* Focus Enhancements FS450 */
-#define GFX_TV_SC1200				1	/* SC1200 integrated TV encoder */
+#define GFX_TV_DYNAMIC				1       /* runtime selection */
+#define GFX_TV_FS451				0       /* Focus Enhancements FS450 */
+#define GFX_TV_SC1200				1       /* SC1200 integrated TV encoder */
 
-#define GFX_I2C_DYNAMIC				1	/* runtime selection */
-#define GFX_I2C_ACCESS				1	/* support for ACCESS.BUS */
-#define GFX_I2C_GPIO				1	/* support for CS5530 GPIOs */
+#define GFX_I2C_DYNAMIC				1       /* runtime selection */
+#define GFX_I2C_ACCESS				1       /* support for ACCESS.BUS */
+#define GFX_I2C_GPIO				1       /* support for CS5530 GPIOs */
 
-#define GFX_VGA_DYNAMIC				1	/* runtime selection */
-#define GFX_VGA_GU1					1	/* 1st generation graphics unit */
+#define GFX_VGA_DYNAMIC				1       /* runtime selection */
+#define GFX_VGA_GU1					1       /* 1st generation graphics unit */
 
-#define FB4MB						1	/* Set to use 4Mb video ram for Pyramid */
+#define FB4MB						1       /* Set to use 4Mb video ram for Pyramid */
 
-#define GFX_NO_IO_IN_WAIT_MACROS    1	/* Set to remove I/O accesses in GP bit testing */
+#define GFX_NO_IO_IN_WAIT_MACROS    1   /* Set to remove I/O accesses in GP bit testing */
 
 /* ROUTINES TO READ VALUES
  * These are routines used by Darwin or other diagnostics to read the 
  * current state of the hardware.  Display drivers or embedded applications can 
  * reduce the size of the Durango code by not including these routines. 
  */
-#define GFX_READ_ROUTINES			1	/* add routines to read values */
+#define GFX_READ_ROUTINES			1       /* add routines to read values */
 
 /* HEADER FILE FOR DURANGO ROUTINE DEFINITIONS
  * Needed since some of the Durango routines call other Durango routines.
  * Also defines the size of chipset array (GFX_CSPTR_SIZE).
  */
-#include "gfx_rtns.h"			/* routine definitions */
+#include "gfx_rtns.h"           /* routine definitions */
 
 /* VARIABLES USED FOR RUNTIME SELECTION
  * If part of the graphics subsystem is declared as dynamic, then the 
@@ -276,25 +276,25 @@ int gfx_vga_type = 0;
 /*       the WRITE_REG* macros are modified to subtract 0x8000 from  */
 /*       the offset.                                                 */
 
-unsigned char *gfx_virt_regptr = (unsigned char *)0x40000000;
-unsigned char *gfx_virt_fbptr = (unsigned char *)0x40800000;
-unsigned char *gfx_virt_vidptr = (unsigned char *)0x40010000;
-unsigned char *gfx_virt_vipptr = (unsigned char *)0x40015000;
-unsigned char *gfx_virt_spptr = (unsigned char *)0x40000000;
-unsigned char *gfx_virt_gpptr = (unsigned char *)0x40000000;
+unsigned char *gfx_virt_regptr = (unsigned char *) 0x40000000;
+unsigned char *gfx_virt_fbptr = (unsigned char *) 0x40800000;
+unsigned char *gfx_virt_vidptr = (unsigned char *) 0x40010000;
+unsigned char *gfx_virt_vipptr = (unsigned char *) 0x40015000;
+unsigned char *gfx_virt_spptr = (unsigned char *) 0x40000000;
+unsigned char *gfx_virt_gpptr = (unsigned char *) 0x40000000;
 
 /* DEFINE PHYSICAL ADDRESSES */
 
-unsigned char *gfx_phys_regptr = (unsigned char *)0x40000000;
-unsigned char *gfx_phys_fbptr = (unsigned char *)0x40800000;
-unsigned char *gfx_phys_vidptr = (unsigned char *)0x40010000;
-unsigned char *gfx_phys_vipptr = (unsigned char *)0x40015000;
+unsigned char *gfx_phys_regptr = (unsigned char *) 0x40000000;
+unsigned char *gfx_phys_fbptr = (unsigned char *) 0x40800000;
+unsigned char *gfx_phys_vidptr = (unsigned char *) 0x40010000;
+unsigned char *gfx_phys_vipptr = (unsigned char *) 0x40015000;
 
 /* HEADER FILE FOR GRAPHICS REGISTER DEFINITIONS 
  * This contains only constant definitions, so it should be able to be 
  * included in any software project as is.
  */
-#include "gfx_regs.h"			/* graphics register definitions */
+#include "gfx_regs.h"           /* graphics register definitions */
 
 /* HEADER FILE FOR REGISTER ACCESS MACROS
  * This file contains the definitions of the WRITE_REG32 and similar macros
@@ -304,7 +304,7 @@ unsigned char *gfx_phys_vipptr = (unsigned char *)0x40015000;
  * should not be included and the project must define the macros itself.
  * (A project may define WRITE_REG32 to call a routine, for example).
  */
-#include "gfx_defs.h"			/* register access macros */
+#include "gfx_defs.h"           /* register access macros */
 
 /* IO MACROS AND ROUTINES
  * These macros must be defined before the initialization or I2C 
@@ -329,71 +329,71 @@ void gfx_outd(unsigned short port, unsigned long data);
 unsigned char
 gfx_inb(unsigned short port)
 {
-   return inb(port);
+    return inb(port);
 }
 
 unsigned short
 gfx_inw(unsigned short port)
 {
-   return inw(port);
+    return inw(port);
 }
 
 unsigned long
 gfx_ind(unsigned short port)
 {
-   return inl(port);
+    return inl(port);
 }
 
 void
 gfx_outb(unsigned short port, unsigned char data)
 {
-   outb(port, data);
+    outb(port, data);
 }
 
 void
 gfx_outw(unsigned short port, unsigned short data)
 {
-   outw(port, data);
+    outw(port, data);
 }
 
 void
 gfx_outd(unsigned short port, unsigned long data)
 {
-   outl(port, data);
+    outl(port, data);
 }
 
 #ifdef __i386__
 extern unsigned long nsc_asm_msr_vsa_rd(unsigned long, unsigned long *,
-					unsigned long *);
+                                        unsigned long *);
 extern unsigned long nsc_asm_msr_vsa_wr(unsigned long, unsigned long,
-					unsigned long);
+                                        unsigned long);
 #endif
 
 void
 gfx_msr_asm_read(unsigned short msrReg, unsigned long msrAddr,
-		 unsigned long *ptrHigh, unsigned long *ptrLow)
+                 unsigned long *ptrHigh, unsigned long *ptrLow)
 {
 #ifdef __i386__
-   unsigned long addr, val1, val2;
+    unsigned long addr, val1, val2;
 
-   addr = msrAddr | (unsigned long)msrReg;
-   nsc_asm_msr_vsa_rd(addr, &val2, &val1);
-   *ptrHigh = val2;
-   *ptrLow = val1;
+    addr = msrAddr | (unsigned long) msrReg;
+    nsc_asm_msr_vsa_rd(addr, &val2, &val1);
+    *ptrHigh = val2;
+    *ptrLow = val1;
 #endif
 }
 
 void
 gfx_msr_asm_write(unsigned short msrReg, unsigned long msrAddr,
-		  unsigned long *ptrHigh, unsigned long *ptrLow)
+                  unsigned long *ptrHigh, unsigned long *ptrLow)
 {
 #ifdef __i386__
-   unsigned long addr, val1, val2;
+    unsigned long addr, val1, val2;
 
-   val2 = *ptrHigh;
-   val1 = *ptrLow;
-   addr = (msrAddr & 0xFFFF0000) | (unsigned long)msrReg;
-   nsc_asm_msr_vsa_wr(addr, val2, val1);
+    val2 = *ptrHigh;
+    val1 = *ptrLow;
+    addr = (msrAddr & 0xFFFF0000) | (unsigned long) msrReg;
+    nsc_asm_msr_vsa_wr(addr, val2, val1);
 #endif
 }
 
@@ -416,43 +416,43 @@ gfx_msr_asm_write(unsigned short msrReg, unsigned long msrAddr,
  * the project does not use graphics acceleration (direct frame buffer
  * access only), then this file does not need to be included. 
  */
-#include "gfx_rndr.c"			/* graphics engine routines */
+#include "gfx_rndr.c"           /* graphics engine routines */
 
 /* INCLUDE DISPLAY CONTROLLER ROUTINES 
  * These routines are used if the display mode is set directly.  If the 
  * project uses VGA registers to set a display mode, then these files
  * do not need to be included.
  */
-#include "gfx_mode.h"			/* display mode tables */
-#include "gfx_disp.c"			/* display controller routines */
+#include "gfx_mode.h"           /* display mode tables */
+#include "gfx_disp.c"           /* display controller routines */
 
 /* INCLUDE VIDEO OVERLAY ROUTINES
  * These routines control the video overlay hardware. 
  */
-#include "gfx_vid.c"			/* video overlay routines */
+#include "gfx_vid.c"            /* video overlay routines */
 
 /* VIDEO PORT AND VIDEO DECODER ROUTINES
  * These routines rely on the I2C routines.
  */
-#include "gfx_vip.c"			/* video port routines */
-#include "gfx_dcdr.c"			/* video decoder routines */
+#include "gfx_vip.c"            /* video port routines */
+#include "gfx_dcdr.c"           /* video decoder routines */
 
 /* I2C BUS ACCESS ROUTINES
  * These routines are used by the video decoder and possibly an 
  * external TV encoer. 
  */
-#include "gfx_i2c.c"			/* I2C bus access routines */
+#include "gfx_i2c.c"            /* I2C bus access routines */
 
 /* TV ENCODER ROUTINES
  * This file does not need to be included if the system does not
  * support TV output.
  */
-#include "gfx_tv.c"			/* TV encoder routines */
+#include "gfx_tv.c"             /* TV encoder routines */
 
 /* VGA ROUTINES
  * This file is used if setting display modes using VGA registers.
  */
-#include "gfx_vga.c"			/* VGA routines */
+#include "gfx_vga.c"            /* VGA routines */
 
 /* Hardware Register reading functions */
 #include "nsc_regacc.c"

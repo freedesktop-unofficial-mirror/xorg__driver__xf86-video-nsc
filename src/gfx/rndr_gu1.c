@@ -148,53 +148,53 @@
 void gu1_set_bpp(unsigned short bpp);
 void gu1_set_solid_pattern(unsigned long color);
 void gu1_set_mono_pattern(unsigned long bgcolor, unsigned long fgcolor,
-			  unsigned long data0, unsigned long data1,
-			  unsigned char transparency);
+                          unsigned long data0, unsigned long data1,
+                          unsigned char transparency);
 void gu1_set_color_pattern(unsigned long bgcolor, unsigned long fgcolor,
-			   unsigned long data0, unsigned long data1,
-			   unsigned long data2, unsigned long data3,
-			   unsigned char transparency);
+                           unsigned long data0, unsigned long data1,
+                           unsigned long data2, unsigned long data3,
+                           unsigned char transparency);
 void gu1_load_color_pattern_line(short y, unsigned long *pattern_8x8);
 void gu1_set_solid_source(unsigned long color);
 void gu1_set_mono_source(unsigned long bgcolor, unsigned long fgcolor,
-			 unsigned short transparent);
+                         unsigned short transparent);
 void gu1_set_pattern_flags(unsigned short flags);
 void gu1_set_raster_operation(unsigned char rop);
 void gu1_pattern_fill(unsigned short x, unsigned short y,
-		      unsigned short width, unsigned short height);
+                      unsigned short width, unsigned short height);
 void gu1_color_pattern_fill(unsigned short x, unsigned short y,
-			    unsigned short width, unsigned short height,
-			    unsigned long *pattern);
+                            unsigned short width, unsigned short height,
+                            unsigned long *pattern);
 void gu1_screen_to_screen_blt(unsigned short srcx, unsigned short srcy,
-			      unsigned short dstx, unsigned short dsty,
-			      unsigned short width, unsigned short height);
+                              unsigned short dstx, unsigned short dsty,
+                              unsigned short width, unsigned short height);
 void gu1_screen_to_screen_xblt(unsigned short srcx, unsigned short srcy,
-			       unsigned short dstx, unsigned short dsty,
-			       unsigned short width, unsigned short height,
-			       unsigned long color);
+                               unsigned short dstx, unsigned short dsty,
+                               unsigned short width, unsigned short height,
+                               unsigned long color);
 void gu1_color_bitmap_to_screen_blt(unsigned short srcx, unsigned short srcy,
-				    unsigned short dstx, unsigned short dsty,
-				    unsigned short width,
-				    unsigned short height,
-				    unsigned char *data, long pitch);
+                                    unsigned short dstx, unsigned short dsty,
+                                    unsigned short width,
+                                    unsigned short height,
+                                    unsigned char *data, long pitch);
 void gu1_color_bitmap_to_screen_xblt(unsigned short srcx, unsigned short srcy,
-				     unsigned short dstx, unsigned short dsty,
-				     unsigned short width,
-				     unsigned short height,
-				     unsigned char *data, long pitch,
-				     unsigned long color);
+                                     unsigned short dstx, unsigned short dsty,
+                                     unsigned short width,
+                                     unsigned short height,
+                                     unsigned char *data, long pitch,
+                                     unsigned long color);
 void gu1_mono_bitmap_to_screen_blt(unsigned short srcx, unsigned short srcy,
-				   unsigned short dstx, unsigned short dsty,
-				   unsigned short width,
-				   unsigned short height, unsigned char *data,
-				   short pitch);
+                                   unsigned short dstx, unsigned short dsty,
+                                   unsigned short width,
+                                   unsigned short height, unsigned char *data,
+                                   short pitch);
 void gu1_text_blt(unsigned short dstx, unsigned short dsty,
-		  unsigned short width, unsigned short height,
-		  unsigned char *data);
+                  unsigned short width, unsigned short height,
+                  unsigned char *data);
 void gu1_bresenham_line(unsigned short x, unsigned short y,
-			unsigned short length, unsigned short initerr,
-			unsigned short axialerr, unsigned short diagerr,
-			unsigned short flags);
+                        unsigned short length, unsigned short initerr,
+                        unsigned short axialerr, unsigned short diagerr,
+                        unsigned short flags);
 void gu1_wait_until_idle(void);
 
 #if GFX_NO_IO_IN_WAIT_MACROS
@@ -210,8 +210,8 @@ void gu1_wait_until_idle(void);
 void gu1_detect_blt_buffer_base(void);
 int gu1_test_blt_pending(void);
 void gu1_solid_fill(unsigned short x, unsigned short y,
-		    unsigned short width, unsigned short height,
-		    unsigned long color);
+                    unsigned short width, unsigned short height,
+                    unsigned long color);
 
 /*---------------------------------------------------------------------------
  * GFX_SET_BPP
@@ -229,37 +229,38 @@ void
 gfx_set_bpp(unsigned short bpp)
 #endif
 {
-   int control = 0;
-   unsigned short pitch = gfx_get_display_pitch();
+    int control = 0;
+    unsigned short pitch = gfx_get_display_pitch();
 
-   GFXbpp = bpp;
+    GFXbpp = bpp;
 
-   /* DETECT BASE ADDRESSES FOR BLT BUFFERS */
-   /* Different for 2K or 3K of scratchpad.  Also need to calculate */
-   /* the number of pixels that can fit in a BLT buffer - need to */
-   /* subtract 16 for alignment considerations.  The 2K case, for */
-   /* example, is 816 bytes wide, allowing 800 pixels in 8 BPP, which */
-   /* means rendering operations won't be split for 800x600. */
+    /* DETECT BASE ADDRESSES FOR BLT BUFFERS */
+    /* Different for 2K or 3K of scratchpad.  Also need to calculate */
+    /* the number of pixels that can fit in a BLT buffer - need to */
+    /* subtract 16 for alignment considerations.  The 2K case, for */
+    /* example, is 816 bytes wide, allowing 800 pixels in 8 BPP, which */
+    /* means rendering operations won't be split for 800x600. */
 
-   gu1_detect_blt_buffer_base();
-   GFXbufferWidthPixels = GFXbb1Base - GFXbb0Base - 16;
-   if (bpp > 8) {
-      /* If 16bpp, divide GFXbufferWidthPixels by 2 */
-      GFXbufferWidthPixels >>= 1;
-   }
+    gu1_detect_blt_buffer_base();
+    GFXbufferWidthPixels = GFXbb1Base - GFXbb0Base - 16;
+    if (bpp > 8) {
+        /* If 16bpp, divide GFXbufferWidthPixels by 2 */
+        GFXbufferWidthPixels >>= 1;
+    }
 
-   /* SET THE GRAPHICS CONTROLLER BPP AND PITCH */
-   if (bpp > 8) {
-      /* Set the 16bpp bit if necessary */
-      control = BC_16BPP;
-   }
-   if ((gfx_cpu_version == GFX_CPU_PYRAMID) && (pitch > 2048)) {
-      control |= BC_FB_WIDTH_4096;
-   } else if (pitch > 1024) {
-      control |= BC_FB_WIDTH_2048;
-   }
-   GFX_WAIT_BUSY;
-   WRITE_REG32(GP_BLIT_STATUS, control);
+    /* SET THE GRAPHICS CONTROLLER BPP AND PITCH */
+    if (bpp > 8) {
+        /* Set the 16bpp bit if necessary */
+        control = BC_16BPP;
+    }
+    if ((gfx_cpu_version == GFX_CPU_PYRAMID) && (pitch > 2048)) {
+        control |= BC_FB_WIDTH_4096;
+    }
+    else if (pitch > 1024) {
+        control |= BC_FB_WIDTH_2048;
+    }
+    GFX_WAIT_BUSY;
+    WRITE_REG32(GP_BLIT_STATUS, control);
 }
 
 /*
@@ -279,23 +280,23 @@ void
 gfx_set_solid_source(unsigned long color)
 #endif
 {
-   /* CLEAR TRANSPARENCY FLAG */
+    /* CLEAR TRANSPARENCY FLAG */
 
-   GFXsourceFlags = 0;
+    GFXsourceFlags = 0;
 
-   /* FORMAT 8 BPP COLOR */
-   /* GX requires 8BPP color data be duplicated into bits [15:8]. */
+    /* FORMAT 8 BPP COLOR */
+    /* GX requires 8BPP color data be duplicated into bits [15:8]. */
 
-   if (GFXbpp == 8) {
-      color &= 0x00FF;
-      color |= (color << 8);
-   }
+    if (GFXbpp == 8) {
+        color &= 0x00FF;
+        color |= (color << 8);
+    }
 
-   /* POLL UNTIL ABLE TO WRITE THE SOURCE COLOR */
+    /* POLL UNTIL ABLE TO WRITE THE SOURCE COLOR */
 
-   GFX_WAIT_PENDING;
-   WRITE_REG16(GP_SRC_COLOR_0, (unsigned short)color);
-   WRITE_REG16(GP_SRC_COLOR_1, (unsigned short)color);
+    GFX_WAIT_PENDING;
+    WRITE_REG16(GP_SRC_COLOR_0, (unsigned short) color);
+    WRITE_REG16(GP_SRC_COLOR_1, (unsigned short) color);
 }
 
 /*
@@ -310,32 +311,32 @@ gfx_set_solid_source(unsigned long color)
 #if GFX_2DACCEL_DYNAMIC
 void
 gu1_set_mono_source(unsigned long bgcolor, unsigned long fgcolor,
-		    unsigned short transparent)
+                    unsigned short transparent)
 #else
 void
 gfx_set_mono_source(unsigned long bgcolor, unsigned long fgcolor,
-		    unsigned short transparent)
+                    unsigned short transparent)
 #endif
 {
-   /* SET TRANSPARENCY FLAG */
+    /* SET TRANSPARENCY FLAG */
 
-   GFXsourceFlags = transparent ? RM_SRC_TRANSPARENT : 0;
+    GFXsourceFlags = transparent ? RM_SRC_TRANSPARENT : 0;
 
-   /* FORMAT 8 BPP COLOR */
-   /* GX requires 8BPP color data be duplicated into bits [15:8]. */
+    /* FORMAT 8 BPP COLOR */
+    /* GX requires 8BPP color data be duplicated into bits [15:8]. */
 
-   if (GFXbpp == 8) {
-      bgcolor &= 0x00FF;
-      bgcolor |= (bgcolor << 8);
-      fgcolor &= 0x00FF;
-      fgcolor |= (fgcolor << 8);
-   }
+    if (GFXbpp == 8) {
+        bgcolor &= 0x00FF;
+        bgcolor |= (bgcolor << 8);
+        fgcolor &= 0x00FF;
+        fgcolor |= (fgcolor << 8);
+    }
 
-   /* POLL UNTIL ABLE TO WRITE THE SOURCE COLOR */
+    /* POLL UNTIL ABLE TO WRITE THE SOURCE COLOR */
 
-   GFX_WAIT_PENDING;
-   WRITE_REG16(GP_SRC_COLOR_0, (unsigned short)bgcolor);
-   WRITE_REG16(GP_SRC_COLOR_1, (unsigned short)fgcolor);
+    GFX_WAIT_PENDING;
+    WRITE_REG16(GP_SRC_COLOR_0, (unsigned short) bgcolor);
+    WRITE_REG16(GP_SRC_COLOR_1, (unsigned short) fgcolor);
 }
 
 /*
@@ -358,31 +359,31 @@ void
 gfx_set_solid_pattern(unsigned long color)
 #endif
 {
-   /* CLEAR TRANSPARENCY FLAG */
+    /* CLEAR TRANSPARENCY FLAG */
 
-   GFXsourceFlags = 0;
+    GFXsourceFlags = 0;
 
-   /* SET PATTERN FLAGS */
+    /* SET PATTERN FLAGS */
 
-   GFXpatternFlags = 0;
+    GFXpatternFlags = 0;
 
-   /* FORMAT 8 BPP COLOR */
-   /* GX requires 8BPP color data be duplicated into bits [15:8]. */
+    /* FORMAT 8 BPP COLOR */
+    /* GX requires 8BPP color data be duplicated into bits [15:8]. */
 
-   if (GFXbpp == 8) {
-      color &= 0x00FF;
-      color |= (color << 8);
-   }
+    if (GFXbpp == 8) {
+        color &= 0x00FF;
+        color |= (color << 8);
+    }
 
-   /* SAVE THE REFORMATTED COLOR FOR LATER */
-   /* Used to call the "GFX_solid_fill" routine for special cases. */
+    /* SAVE THE REFORMATTED COLOR FOR LATER */
+    /* Used to call the "GFX_solid_fill" routine for special cases. */
 
-   GFXsavedColor = color;
+    GFXsavedColor = color;
 
-   /* POLL UNTIL ABLE TO WRITE THE PATTERN COLOR */
+    /* POLL UNTIL ABLE TO WRITE THE PATTERN COLOR */
 
-   GFX_WAIT_PENDING;
-   WRITE_REG16(GP_PAT_COLOR_0, (unsigned short)color);
+    GFX_WAIT_PENDING;
+    WRITE_REG16(GP_PAT_COLOR_0, (unsigned short) color);
 }
 
 /*
@@ -395,41 +396,41 @@ gfx_set_solid_pattern(unsigned long color)
 #if GFX_2DACCEL_DYNAMIC
 void
 gu1_set_mono_pattern(unsigned long bgcolor, unsigned long fgcolor,
-		     unsigned long data0, unsigned long data1,
-		     unsigned char transparent)
+                     unsigned long data0, unsigned long data1,
+                     unsigned char transparent)
 #else
 void
 gfx_set_mono_pattern(unsigned long bgcolor, unsigned long fgcolor,
-		     unsigned long data0, unsigned long data1,
-		     unsigned char transparent)
+                     unsigned long data0, unsigned long data1,
+                     unsigned char transparent)
 #endif
 {
-   /* CLEAR TRANSPARENCY FLAG */
+    /* CLEAR TRANSPARENCY FLAG */
 
-   GFXsourceFlags = 0;
+    GFXsourceFlags = 0;
 
-   /* SET PATTERN FLAGS */
+    /* SET PATTERN FLAGS */
 
-   GFXpatternFlags = transparent ? RM_PAT_MONO | RM_PAT_TRANSPARENT :
-	 RM_PAT_MONO;
+    GFXpatternFlags = transparent ? RM_PAT_MONO | RM_PAT_TRANSPARENT :
+        RM_PAT_MONO;
 
-   /* FORMAT 8 BPP COLOR */
-   /* GXm requires 8BPP color data be duplicated into bits [15:8]. */
+    /* FORMAT 8 BPP COLOR */
+    /* GXm requires 8BPP color data be duplicated into bits [15:8]. */
 
-   if (GFXbpp == 8) {
-      bgcolor &= 0x00FF;
-      bgcolor |= (bgcolor << 8);
-      fgcolor &= 0x00FF;
-      fgcolor |= (fgcolor << 8);
-   }
+    if (GFXbpp == 8) {
+        bgcolor &= 0x00FF;
+        bgcolor |= (bgcolor << 8);
+        fgcolor &= 0x00FF;
+        fgcolor |= (fgcolor << 8);
+    }
 
-   /* POLL UNTIL ABLE TO WRITE THE PATTERN COLORS AND DATA */
+    /* POLL UNTIL ABLE TO WRITE THE PATTERN COLORS AND DATA */
 
-   GFX_WAIT_PENDING;
-   WRITE_REG16(GP_PAT_COLOR_0, (unsigned short)bgcolor);
-   WRITE_REG16(GP_PAT_COLOR_1, (unsigned short)fgcolor);
-   WRITE_REG32(GP_PAT_DATA_0, data0);
-   WRITE_REG32(GP_PAT_DATA_1, data1);
+    GFX_WAIT_PENDING;
+    WRITE_REG16(GP_PAT_COLOR_0, (unsigned short) bgcolor);
+    WRITE_REG16(GP_PAT_COLOR_1, (unsigned short) fgcolor);
+    WRITE_REG32(GP_PAT_DATA_0, data0);
+    WRITE_REG32(GP_PAT_DATA_1, data1);
 }
 
 /*
@@ -442,48 +443,48 @@ gfx_set_mono_pattern(unsigned long bgcolor, unsigned long fgcolor,
 #if GFX_2DACCEL_DYNAMIC
 void
 gu1_set_color_pattern(unsigned long bgcolor, unsigned long fgcolor,
-		      unsigned long data0, unsigned long data1,
-		      unsigned long data2, unsigned long data3,
-		      unsigned char transparent)
+                      unsigned long data0, unsigned long data1,
+                      unsigned long data2, unsigned long data3,
+                      unsigned char transparent)
 #else
 void
 gfx_set_color_pattern(unsigned long bgcolor, unsigned long fgcolor,
-		      unsigned long data0, unsigned long data1,
-		      unsigned long data2, unsigned long data3,
-		      unsigned char transparent)
+                      unsigned long data0, unsigned long data1,
+                      unsigned long data2, unsigned long data3,
+                      unsigned char transparent)
 #endif
 {
-   /* CLEAR TRANSPARENCY FLAG */
+    /* CLEAR TRANSPARENCY FLAG */
 
-   GFXsourceFlags = 0;
+    GFXsourceFlags = 0;
 
-   /* SET PATTERN FLAGS */
+    /* SET PATTERN FLAGS */
 
-   GFXpatternFlags = transparent ? RM_PAT_MONO | RM_PAT_TRANSPARENT :
-	 RM_PAT_MONO;
+    GFXpatternFlags = transparent ? RM_PAT_MONO | RM_PAT_TRANSPARENT :
+        RM_PAT_MONO;
 
-   GFXpatternFlags |= RM_PAT_COLOR;
-   /* FORMAT 8 BPP COLOR */
-   /* GXm requires 8BPP color data be duplicated into bits [15:8]. */
+    GFXpatternFlags |= RM_PAT_COLOR;
+    /* FORMAT 8 BPP COLOR */
+    /* GXm requires 8BPP color data be duplicated into bits [15:8]. */
 
-   if (GFXbpp == 8) {
-      bgcolor &= 0x00FF;
-      bgcolor |= (bgcolor << 8);
-      fgcolor &= 0x00FF;
-      fgcolor |= (fgcolor << 8);
-   }
+    if (GFXbpp == 8) {
+        bgcolor &= 0x00FF;
+        bgcolor |= (bgcolor << 8);
+        fgcolor &= 0x00FF;
+        fgcolor |= (fgcolor << 8);
+    }
 
-   /* POLL UNTIL ABLE TO WRITE THE PATTERN COLORS AND DATA */
+    /* POLL UNTIL ABLE TO WRITE THE PATTERN COLORS AND DATA */
 
-   GFX_WAIT_PENDING;
-   WRITE_REG16(GP_PAT_COLOR_0, (unsigned short)bgcolor);
-   WRITE_REG16(GP_PAT_COLOR_1, (unsigned short)fgcolor);
-   WRITE_REG32(GP_PAT_DATA_0, data0);
-   WRITE_REG32(GP_PAT_DATA_1, data1);
-   if (GFXbpp > 8) {
-      WRITE_REG32(GP_PAT_DATA_2, data2);
-      WRITE_REG32(GP_PAT_DATA_3, data3);
-   }
+    GFX_WAIT_PENDING;
+    WRITE_REG16(GP_PAT_COLOR_0, (unsigned short) bgcolor);
+    WRITE_REG16(GP_PAT_COLOR_1, (unsigned short) fgcolor);
+    WRITE_REG32(GP_PAT_DATA_0, data0);
+    WRITE_REG32(GP_PAT_DATA_1, data1);
+    if (GFXbpp > 8) {
+        WRITE_REG32(GP_PAT_DATA_2, data2);
+        WRITE_REG32(GP_PAT_DATA_3, data3);
+    }
 }
 
 /*
@@ -501,30 +502,30 @@ void
 gfx_load_color_pattern_line(short y, unsigned long *pattern_8x8)
 #endif
 {
-   /* CLEAR TRANSPARENCY FLAG */
+    /* CLEAR TRANSPARENCY FLAG */
 
-   GFXsourceFlags = 0;
+    GFXsourceFlags = 0;
 
-   /* SET PATTERN FLAGS */
+    /* SET PATTERN FLAGS */
 
-   GFXpatternFlags = RM_PAT_COLOR;
+    GFXpatternFlags = RM_PAT_COLOR;
 
-   y &= 7;
+    y &= 7;
 
-   if (GFXbpp > 8)
-      pattern_8x8 += (y << 2);
-   else
-      pattern_8x8 += (y << 1);
+    if (GFXbpp > 8)
+        pattern_8x8 += (y << 2);
+    else
+        pattern_8x8 += (y << 1);
 
-   /* POLL UNTIL ABLE TO WRITE THE PATTERN COLORS AND DATA */
+    /* POLL UNTIL ABLE TO WRITE THE PATTERN COLORS AND DATA */
 
-   GFX_WAIT_PENDING;
-   WRITE_REG32(GP_PAT_DATA_0, pattern_8x8[0]);
-   WRITE_REG32(GP_PAT_DATA_1, pattern_8x8[1]);
-   if (GFXbpp > 8) {
-      WRITE_REG32(GP_PAT_DATA_2, pattern_8x8[2]);
-      WRITE_REG32(GP_PAT_DATA_3, pattern_8x8[3]);
-   }
+    GFX_WAIT_PENDING;
+    WRITE_REG32(GP_PAT_DATA_0, pattern_8x8[0]);
+    WRITE_REG32(GP_PAT_DATA_1, pattern_8x8[1]);
+    if (GFXbpp > 8) {
+        WRITE_REG32(GP_PAT_DATA_2, pattern_8x8[2]);
+        WRITE_REG32(GP_PAT_DATA_3, pattern_8x8[3]);
+    }
 }
 
 /*
@@ -543,30 +544,30 @@ void
 gfx_set_raster_operation(unsigned char rop)
 #endif
 {
-   unsigned short rop16;
+    unsigned short rop16;
 
-   /* GENERATE 16-BIT VERSION OF ROP WITH PATTERN FLAGS */
+    /* GENERATE 16-BIT VERSION OF ROP WITH PATTERN FLAGS */
 
-   rop16 = (unsigned short)rop | GFXpatternFlags;
-   if ((rop & 0x33) ^ ((rop >> 2) & 0x33))
-      rop16 |= GFXsourceFlags;
+    rop16 = (unsigned short) rop | GFXpatternFlags;
+    if ((rop & 0x33) ^ ((rop >> 2) & 0x33))
+        rop16 |= GFXsourceFlags;
 
-   /* SAVE ROP FOR LATER COMPARISONS */
-   /* Need to have the pattern flags included */
+    /* SAVE ROP FOR LATER COMPARISONS */
+    /* Need to have the pattern flags included */
 
-   GFXsavedRop = rop16;
+    GFXsavedRop = rop16;
 
-   /* SET FLAG INDICATING ROP REQUIRES DESTINATION DATA */
-   /* True if even bits (0:2:4:6) do not equal the correspinding */
-   /* even bits (1:3:5:7). */
+    /* SET FLAG INDICATING ROP REQUIRES DESTINATION DATA */
+    /* True if even bits (0:2:4:6) do not equal the correspinding */
+    /* even bits (1:3:5:7). */
 
-   GFXusesDstData = ((rop & 0x55) ^ ((rop >> 1) & 0x55));
+    GFXusesDstData = ((rop & 0x55) ^ ((rop >> 1) & 0x55));
 
-   /* POLL UNTIL ABLE TO WRITE THE PATTERN COLOR */
-   /* Only one operation can be pending at a time. */
+    /* POLL UNTIL ABLE TO WRITE THE PATTERN COLOR */
+    /* Only one operation can be pending at a time. */
 
-   GFX_WAIT_PENDING;
-   WRITE_REG16(GP_RASTER_MODE, rop16);
+    GFX_WAIT_PENDING;
+    WRITE_REG16(GP_RASTER_MODE, rop16);
 }
 
 /*
@@ -595,47 +596,47 @@ gfx_set_raster_operation(unsigned char rop)
 */
 void
 gu1_solid_fill(unsigned short x, unsigned short y,
-	       unsigned short width, unsigned short height,
-	       unsigned long color)
+               unsigned short width, unsigned short height, unsigned long color)
 {
-   unsigned short section;
+    unsigned short section;
 
-   /* POLL UNTIL ABLE TO WRITE TO THE REGISTERS */
-   /* Only one operation can be pending at a time. */
+    /* POLL UNTIL ABLE TO WRITE TO THE REGISTERS */
+    /* Only one operation can be pending at a time. */
 
-   GFX_WAIT_PENDING;
+    GFX_WAIT_PENDING;
 
-   /* SET REGISTERS TO DRAW RECTANGLE */
+    /* SET REGISTERS TO DRAW RECTANGLE */
 
-   WRITE_REG16(GP_DST_XCOOR, x);
-   WRITE_REG16(GP_DST_YCOOR, y);
-   WRITE_REG16(GP_HEIGHT, height);
-   WRITE_REG16(GP_RASTER_MODE, 0x00F0);	/* PATCOPY */
-   WRITE_REG16(GP_PAT_COLOR_0, (unsigned short)color);
+    WRITE_REG16(GP_DST_XCOOR, x);
+    WRITE_REG16(GP_DST_YCOOR, y);
+    WRITE_REG16(GP_HEIGHT, height);
+    WRITE_REG16(GP_RASTER_MODE, 0x00F0);        /* PATCOPY */
+    WRITE_REG16(GP_PAT_COLOR_0, (unsigned short) color);
 
-   /* CHECK WIDTH FOR GX BUG WORKAROUND */
+    /* CHECK WIDTH FOR GX BUG WORKAROUND */
 
-   if (width <= 16) {
-      /* OK TO DRAW SMALL RECTANGLE IN ONE PASS */
+    if (width <= 16) {
+        /* OK TO DRAW SMALL RECTANGLE IN ONE PASS */
 
-      WRITE_REG16(GP_WIDTH, width);
-      WRITE_REG16(GP_BLIT_MODE, 0);
-   } else {
-      /* DRAW FIRST PART OF RECTANGLE */
-      /* Get to a 16 pixel boundary. */
+        WRITE_REG16(GP_WIDTH, width);
+        WRITE_REG16(GP_BLIT_MODE, 0);
+    }
+    else {
+        /* DRAW FIRST PART OF RECTANGLE */
+        /* Get to a 16 pixel boundary. */
 
-      section = 0x10 - (x & 0x0F);
-      WRITE_REG16(GP_WIDTH, section);
-      WRITE_REG16(GP_BLIT_MODE, 0);
+        section = 0x10 - (x & 0x0F);
+        WRITE_REG16(GP_WIDTH, section);
+        WRITE_REG16(GP_BLIT_MODE, 0);
 
-      /* POLL UNTIL ABLE TO LOAD THE SECOND RECTANGLE */
+        /* POLL UNTIL ABLE TO LOAD THE SECOND RECTANGLE */
 
-      GFX_WAIT_PENDING;
-      WRITE_REG16(GP_DST_XCOOR, x + section);
-      WRITE_REG16(GP_DST_YCOOR, y);
-      WRITE_REG16(GP_WIDTH, width - section);
-      WRITE_REG16(GP_BLIT_MODE, 0);
-   }
+        GFX_WAIT_PENDING;
+        WRITE_REG16(GP_DST_XCOOR, x + section);
+        WRITE_REG16(GP_DST_YCOOR, y);
+        WRITE_REG16(GP_WIDTH, width - section);
+        WRITE_REG16(GP_BLIT_MODE, 0);
+    }
 }
 
 /*
@@ -656,90 +657,90 @@ gu1_solid_fill(unsigned short x, unsigned short y,
 #if GFX_2DACCEL_DYNAMIC
 void
 gu1_pattern_fill(unsigned short x, unsigned short y,
-		 unsigned short width, unsigned short height)
+                 unsigned short width, unsigned short height)
 #else
 void
 gfx_pattern_fill(unsigned short x, unsigned short y,
-		 unsigned short width, unsigned short height)
+                 unsigned short width, unsigned short height)
 #endif
 {
-   unsigned short section, buffer_width, blit_mode;
+    unsigned short section, buffer_width, blit_mode;
 
-   /* CHECK IF OPTIMIZED SOLID CASES */
-   /* Check all 16 bits of the ROP to include solid pattern flags. */
+    /* CHECK IF OPTIMIZED SOLID CASES */
+    /* Check all 16 bits of the ROP to include solid pattern flags. */
 
-   switch (GFXsavedRop) {
-      /* CHECK FOR SPECIAL CASES WITHOUT DESTINATION DATA */
-      /* Need hardware workaround for fast "burst write" cases. */
+    switch (GFXsavedRop) {
+        /* CHECK FOR SPECIAL CASES WITHOUT DESTINATION DATA */
+        /* Need hardware workaround for fast "burst write" cases. */
 
-   case 0x00F0:
-      gu1_solid_fill(x, y, width, height, (unsigned short)GFXsavedColor);
-      break;
-   case 0x000F:
-      gu1_solid_fill(x, y, width, height, (unsigned short)~GFXsavedColor);
-      break;
-   case 0x0000:
-      gu1_solid_fill(x, y, width, height, 0x0000);
-      break;
-   case 0x00FF:
-      gu1_solid_fill(x, y, width, height, 0xFFFF);
-      break;
+    case 0x00F0:
+        gu1_solid_fill(x, y, width, height, (unsigned short) GFXsavedColor);
+        break;
+    case 0x000F:
+        gu1_solid_fill(x, y, width, height, (unsigned short) ~GFXsavedColor);
+        break;
+    case 0x0000:
+        gu1_solid_fill(x, y, width, height, 0x0000);
+        break;
+    case 0x00FF:
+        gu1_solid_fill(x, y, width, height, 0xFFFF);
+        break;
 
-      /* REMAINING CASES REQUIRE DESTINATION DATA OR NOT SOLID COLOR */
+        /* REMAINING CASES REQUIRE DESTINATION DATA OR NOT SOLID COLOR */
 
-   default:
+    default:
 
-      /* DETERMINE BLT MODE VALUE */
-      /* Still here for non-solid patterns without destination data. */
+        /* DETERMINE BLT MODE VALUE */
+        /* Still here for non-solid patterns without destination data. */
 
-      blit_mode = GFXusesDstData ? BM_READ_DST_FB0 : 0;
+        blit_mode = GFXusesDstData ? BM_READ_DST_FB0 : 0;
 
-      /* SET SOURCE EXPANSION MODE */
-      /* If the ROP requires source data, then the source data is all 1's */
-      /* and then expanded into the desired color in GP_SRC_COLOR_1. */
+        /* SET SOURCE EXPANSION MODE */
+        /* If the ROP requires source data, then the source data is all 1's */
+        /* and then expanded into the desired color in GP_SRC_COLOR_1. */
 
-      blit_mode |= BM_SOURCE_EXPAND;
+        blit_mode |= BM_SOURCE_EXPAND;
 
-      /* POLL UNTIL ABLE TO WRITE TO THE REGISTERS */
-      /* Write the registers that do not change for each section. */
+        /* POLL UNTIL ABLE TO WRITE TO THE REGISTERS */
+        /* Write the registers that do not change for each section. */
 
-      GFX_WAIT_PENDING;
-      WRITE_REG16(GP_HEIGHT, height);
+        GFX_WAIT_PENDING;
+        WRITE_REG16(GP_HEIGHT, height);
 
-      /* SINCE ONLY DESTINATION DATA, WE CAN USE BOTH BB0 AND BB1. */
-      /* Therefore, width available = BLT buffer width * 2. */
+        /* SINCE ONLY DESTINATION DATA, WE CAN USE BOTH BB0 AND BB1. */
+        /* Therefore, width available = BLT buffer width * 2. */
 
-      buffer_width = GFXbufferWidthPixels << 1;
+        buffer_width = GFXbufferWidthPixels << 1;
 
-      /* REPEAT UNTIL FINISHED WITH RECTANGLE */
-      /* Perform BLT in vertical sections, as wide as the BLT buffer */
-      /* allows.  Hardware does not split the operations, so */
-      /* software must do it to avoid large scanlines that would */
-      /* overflow the BLT buffers. */
+        /* REPEAT UNTIL FINISHED WITH RECTANGLE */
+        /* Perform BLT in vertical sections, as wide as the BLT buffer */
+        /* allows.  Hardware does not split the operations, so */
+        /* software must do it to avoid large scanlines that would */
+        /* overflow the BLT buffers. */
 
-      while (width > 0) {
-	 /* DETERMINE WIDTH OF SECTION */
+        while (width > 0) {
+            /* DETERMINE WIDTH OF SECTION */
 
-	 if (width > buffer_width)
-	    section = buffer_width;
-	 else
-	    section = width;
+            if (width > buffer_width)
+                section = buffer_width;
+            else
+                section = width;
 
-	 /* POLL UNTIL ABLE TO WRITE TO THE REGISTERS */
+            /* POLL UNTIL ABLE TO WRITE TO THE REGISTERS */
 
-	 GFX_WAIT_PENDING;
-	 WRITE_REG16(GP_DST_XCOOR, x);
-	 WRITE_REG16(GP_DST_YCOOR, y);
-	 WRITE_REG16(GP_WIDTH, section);
-	 WRITE_REG16(GP_BLIT_MODE, blit_mode);
+            GFX_WAIT_PENDING;
+            WRITE_REG16(GP_DST_XCOOR, x);
+            WRITE_REG16(GP_DST_YCOOR, y);
+            WRITE_REG16(GP_WIDTH, section);
+            WRITE_REG16(GP_BLIT_MODE, blit_mode);
 
-	 /* ADJUST PARAMETERS FOR NEXT SECTION */
+            /* ADJUST PARAMETERS FOR NEXT SECTION */
 
-	 width -= section;
-	 x += section;
-      }
-      break;
-   }
+            width -= section;
+            x += section;
+        }
+        break;
+    }
 }
 
 /*
@@ -761,113 +762,115 @@ gfx_pattern_fill(unsigned short x, unsigned short y,
 #if GFX_2DACCEL_DYNAMIC
 void
 gu1_color_pattern_fill(unsigned short x, unsigned short y,
-		       unsigned short width, unsigned short height,
-		       unsigned long *pattern)
+                       unsigned short width, unsigned short height,
+                       unsigned long *pattern)
 #else
 void
 gfx_color_pattern_fill(unsigned short x, unsigned short y,
-		       unsigned short width, unsigned short height,
-		       unsigned long *pattern)
+                       unsigned short width, unsigned short height,
+                       unsigned long *pattern)
 #endif
 {
-   unsigned short blit_mode, passes, cur_y, pat_y, i;
-   unsigned short buffer_width, line_width;
-   unsigned short bpp_shift, section, cur_x;
+    unsigned short blit_mode, passes, cur_y, pat_y, i;
+    unsigned short buffer_width, line_width;
+    unsigned short bpp_shift, section, cur_x;
 
-   /* SET APPROPRIATE INCREMENT */
+    /* SET APPROPRIATE INCREMENT */
 
-   bpp_shift = (GFXbpp > 8) ? 2 : 1;
+    bpp_shift = (GFXbpp > 8) ? 2 : 1;
 
-   /* SET DESTINATION REQUIRED */
+    /* SET DESTINATION REQUIRED */
 
-   blit_mode = GFXusesDstData ? BM_READ_DST_FB0 : 0;
+    blit_mode = GFXusesDstData ? BM_READ_DST_FB0 : 0;
 
-   /* SET SOURCE EXPANSION */
+    /* SET SOURCE EXPANSION */
 
-   blit_mode |= BM_SOURCE_EXPAND;
+    blit_mode |= BM_SOURCE_EXPAND;
 
-   /* OVERRIDE RASTER MODE TO FORCE A COLOR PATTERN */
+    /* OVERRIDE RASTER MODE TO FORCE A COLOR PATTERN */
 
-   GFX_WAIT_PENDING;
-   WRITE_REG16(GP_RASTER_MODE,
-	       (GFXsavedRop & ~RM_PAT_MASK & ~RM_PAT_TRANSPARENT) |
-	       RM_PAT_COLOR);
+    GFX_WAIT_PENDING;
+    WRITE_REG16(GP_RASTER_MODE,
+                (GFXsavedRop & ~RM_PAT_MASK & ~RM_PAT_TRANSPARENT) |
+                RM_PAT_COLOR);
 
-   /* WRITE THE REGISTERS THAT DO NOT CHANGE         */
-   /* If destination data is required, the width and */
-   /* x position will be overwritten.                */
+    /* WRITE THE REGISTERS THAT DO NOT CHANGE         */
+    /* If destination data is required, the width and */
+    /* x position will be overwritten.                */
 
-   WRITE_REG16(GP_HEIGHT, 1);
-   WRITE_REG16(GP_WIDTH, width);
-   WRITE_REG16(GP_DST_XCOOR, x);
+    WRITE_REG16(GP_HEIGHT, 1);
+    WRITE_REG16(GP_WIDTH, width);
+    WRITE_REG16(GP_DST_XCOOR, x);
 
-   /* THE ENTIRE PATTERN WILL NOT BE DRAWN IF THE HEIGHT IS LESS THAN 8 */
+    /* THE ENTIRE PATTERN WILL NOT BE DRAWN IF THE HEIGHT IS LESS THAN 8 */
 
-   passes = (height < 8) ? height : 8;
+    passes = (height < 8) ? height : 8;
 
-   /* SINCE ONLY DESTINATION DATA, WE CAN USE BOTH BB0 AND BB1. */
-   /* Therefore, width available = BLT buffer width * 2. */
+    /* SINCE ONLY DESTINATION DATA, WE CAN USE BOTH BB0 AND BB1. */
+    /* Therefore, width available = BLT buffer width * 2. */
 
-   buffer_width = GFXbufferWidthPixels << 1;
+    buffer_width = GFXbufferWidthPixels << 1;
 
-   for (i = 0; i < passes; i++) {
-      pat_y = ((y + i) & 7) << bpp_shift;
-      cur_y = y + i;
+    for (i = 0; i < passes; i++) {
+        pat_y = ((y + i) & 7) << bpp_shift;
+        cur_y = y + i;
 
-      /* WRITE THE PATTERN DATA FOR THE ACTIVE LINE */
+        /* WRITE THE PATTERN DATA FOR THE ACTIVE LINE */
 
-      GFX_WAIT_PENDING;
-      WRITE_REG32(GP_PAT_DATA_0, pattern[pat_y]);
-      WRITE_REG32(GP_PAT_DATA_1, pattern[pat_y + 1]);
+        GFX_WAIT_PENDING;
+        WRITE_REG32(GP_PAT_DATA_0, pattern[pat_y]);
+        WRITE_REG32(GP_PAT_DATA_1, pattern[pat_y + 1]);
 
-      if (GFXbpp > 8) {
-	 WRITE_REG32(GP_PAT_DATA_2, pattern[pat_y + 2]);
-	 WRITE_REG32(GP_PAT_DATA_3, pattern[pat_y + 3]);
-      }
+        if (GFXbpp > 8) {
+            WRITE_REG32(GP_PAT_DATA_2, pattern[pat_y + 2]);
+            WRITE_REG32(GP_PAT_DATA_3, pattern[pat_y + 3]);
+        }
 
-      /* SPLIT BLT LINE INTO SECTIONS IF REQUIRED              */
-      /* If no destination data is required, we can ignore     */
-      /* the BLT buffers.  Otherwise, we must separate the BLT */
-      /* so as not to overflow the buffers                     */
+        /* SPLIT BLT LINE INTO SECTIONS IF REQUIRED              */
+        /* If no destination data is required, we can ignore     */
+        /* the BLT buffers.  Otherwise, we must separate the BLT */
+        /* so as not to overflow the buffers                     */
 
-      if (blit_mode & BM_READ_DST_BB0) {
-	 line_width = width;
-	 cur_x = x;
+        if (blit_mode & BM_READ_DST_BB0) {
+            line_width = width;
+            cur_x = x;
 
-	 while (line_width) {
-	    section = (line_width > buffer_width) ? buffer_width : line_width;
-	    cur_y = y + i;
+            while (line_width) {
+                section =
+                    (line_width > buffer_width) ? buffer_width : line_width;
+                cur_y = y + i;
 
-	    GFX_WAIT_PENDING;
-	    WRITE_REG16(GP_DST_XCOOR, cur_x);
-	    WRITE_REG16(GP_WIDTH, section);
+                GFX_WAIT_PENDING;
+                WRITE_REG16(GP_DST_XCOOR, cur_x);
+                WRITE_REG16(GP_WIDTH, section);
 
-	    while (cur_y < y + height) {
-	       GFX_WAIT_PENDING;
-	       WRITE_REG16(GP_DST_YCOOR, cur_y);
-	       WRITE_REG16(GP_BLIT_MODE, blit_mode);
-	       cur_y += 8;
-	    }
+                while (cur_y < y + height) {
+                    GFX_WAIT_PENDING;
+                    WRITE_REG16(GP_DST_YCOOR, cur_y);
+                    WRITE_REG16(GP_BLIT_MODE, blit_mode);
+                    cur_y += 8;
+                }
 
-	    cur_x += section;
-	    line_width -= section;
-	 }
+                cur_x += section;
+                line_width -= section;
+            }
 
-      } else {
-	 while (cur_y < y + height) {
-	    GFX_WAIT_PENDING;
-	    WRITE_REG16(GP_DST_YCOOR, cur_y);
-	    WRITE_REG16(GP_BLIT_MODE, blit_mode);
-	    cur_y += 8;
-	 }
-      }
+        }
+        else {
+            while (cur_y < y + height) {
+                GFX_WAIT_PENDING;
+                WRITE_REG16(GP_DST_YCOOR, cur_y);
+                WRITE_REG16(GP_BLIT_MODE, blit_mode);
+                cur_y += 8;
+            }
+        }
 
-   }
+    }
 
-   /* RESTORE ORIGINAL ROP AND FLAGS */
+    /* RESTORE ORIGINAL ROP AND FLAGS */
 
-   GFX_WAIT_PENDING;
-   WRITE_REG16(GP_RASTER_MODE, GFXsavedRop);
+    GFX_WAIT_PENDING;
+    WRITE_REG16(GP_RASTER_MODE, GFXsavedRop);
 
 }
 
@@ -889,97 +892,98 @@ gfx_color_pattern_fill(unsigned short x, unsigned short y,
 #if GFX_2DACCEL_DYNAMIC
 void
 gu1_screen_to_screen_blt(unsigned short srcx, unsigned short srcy,
-			 unsigned short dstx, unsigned short dsty,
-			 unsigned short width, unsigned short height)
+                         unsigned short dstx, unsigned short dsty,
+                         unsigned short width, unsigned short height)
 #else
 void
 gfx_screen_to_screen_blt(unsigned short srcx, unsigned short srcy,
-			 unsigned short dstx, unsigned short dsty,
-			 unsigned short width, unsigned short height)
+                         unsigned short dstx, unsigned short dsty,
+                         unsigned short width, unsigned short height)
 #endif
 {
-   unsigned short section, buffer_width;
-   unsigned short blit_mode;
+    unsigned short section, buffer_width;
+    unsigned short blit_mode;
 
-   /* CHECK IF RASTER OPERATION REQUIRES DESTINATION DATA */
+    /* CHECK IF RASTER OPERATION REQUIRES DESTINATION DATA */
 
-   blit_mode = GFXusesDstData ? BM_READ_DST_FB1 | BM_READ_SRC_FB :
-	 BM_READ_SRC_FB;
+    blit_mode = GFXusesDstData ? BM_READ_DST_FB1 | BM_READ_SRC_FB :
+        BM_READ_SRC_FB;
 
-   /* CHECK Y DIRECTION */
-   /* Hardware has support for negative Y direction. */
+    /* CHECK Y DIRECTION */
+    /* Hardware has support for negative Y direction. */
 
-   if (dsty > srcy) {
-      blit_mode |= BM_REVERSE_Y;
-      srcy += height - 1;
-      dsty += height - 1;
-   }
+    if (dsty > srcy) {
+        blit_mode |= BM_REVERSE_Y;
+        srcy += height - 1;
+        dsty += height - 1;
+    }
 
-   /* CHECK X DIRECTION */
-   /* Hardware does not support negative X direction since at the time */
-   /* of development all supported resolutions could fit a scanline of */
-   /* data at once into the BLT buffers (using both BB0 and BB1).  This */
-   /* code is more generic to allow for any size BLT buffer. */
+    /* CHECK X DIRECTION */
+    /* Hardware does not support negative X direction since at the time */
+    /* of development all supported resolutions could fit a scanline of */
+    /* data at once into the BLT buffers (using both BB0 and BB1).  This */
+    /* code is more generic to allow for any size BLT buffer. */
 
-   if (dstx > srcx) {
-      srcx += width;
-      dstx += width;
-   }
+    if (dstx > srcx) {
+        srcx += width;
+        dstx += width;
+    }
 
-   /* POLL UNTIL ABLE TO WRITE TO THE REGISTERS */
-   /* Write the registers that do not change for each section. */
+    /* POLL UNTIL ABLE TO WRITE TO THE REGISTERS */
+    /* Write the registers that do not change for each section. */
 
-   GFX_WAIT_PENDING;
-   WRITE_REG16(GP_HEIGHT, height);
+    GFX_WAIT_PENDING;
+    WRITE_REG16(GP_HEIGHT, height);
 
-   /* CHECK AVAILABLE BLT BUFFER SIZE */
-   /* Can use both BLT buffers if no destination data is required. */
+    /* CHECK AVAILABLE BLT BUFFER SIZE */
+    /* Can use both BLT buffers if no destination data is required. */
 
-   buffer_width = GFXusesDstData ? GFXbufferWidthPixels :
-	 GFXbufferWidthPixels << 1;
+    buffer_width = GFXusesDstData ? GFXbufferWidthPixels :
+        GFXbufferWidthPixels << 1;
 
-   /* REPEAT UNTIL FINISHED WITH RECTANGLE */
-   /* Perform BLT in vertical sections, as wide as the BLT buffer allows. */
-   /* Hardware does not split the operations, so software must do it to */
-   /* avoid large scanlines that would overflow the BLT buffers. */
+    /* REPEAT UNTIL FINISHED WITH RECTANGLE */
+    /* Perform BLT in vertical sections, as wide as the BLT buffer allows. */
+    /* Hardware does not split the operations, so software must do it to */
+    /* avoid large scanlines that would overflow the BLT buffers. */
 
-   while (width > 0) {
-      /* CHECK WIDTH OF CURRENT SECTION */
+    while (width > 0) {
+        /* CHECK WIDTH OF CURRENT SECTION */
 
-      if (width > buffer_width)
-	 section = buffer_width;
-      else
-	 section = width;
+        if (width > buffer_width)
+            section = buffer_width;
+        else
+            section = width;
 
-      /* PROGRAM REGISTERS THAT ARE THE SAME FOR EITHER X DIRECTION */
+        /* PROGRAM REGISTERS THAT ARE THE SAME FOR EITHER X DIRECTION */
 
-      GFX_WAIT_PENDING;
-      WRITE_REG16(GP_SRC_YCOOR, srcy);
-      WRITE_REG16(GP_DST_YCOOR, dsty);
-      WRITE_REG16(GP_WIDTH, section);
+        GFX_WAIT_PENDING;
+        WRITE_REG16(GP_SRC_YCOOR, srcy);
+        WRITE_REG16(GP_DST_YCOOR, dsty);
+        WRITE_REG16(GP_WIDTH, section);
 
-      /* CHECK X DIRECTION */
+        /* CHECK X DIRECTION */
 
-      if (dstx > srcx) {
-	 /* NEGATIVE X DIRECTION */
-	 /* Still positive X direction within the section. */
+        if (dstx > srcx) {
+            /* NEGATIVE X DIRECTION */
+            /* Still positive X direction within the section. */
 
-	 srcx -= section;
-	 dstx -= section;
-	 WRITE_REG16(GP_SRC_XCOOR, srcx);
-	 WRITE_REG16(GP_DST_XCOOR, dstx);
-	 WRITE_REG16(GP_BLIT_MODE, blit_mode);
-      } else {
-	 /* POSITIVE X DIRECTION */
+            srcx -= section;
+            dstx -= section;
+            WRITE_REG16(GP_SRC_XCOOR, srcx);
+            WRITE_REG16(GP_DST_XCOOR, dstx);
+            WRITE_REG16(GP_BLIT_MODE, blit_mode);
+        }
+        else {
+            /* POSITIVE X DIRECTION */
 
-	 WRITE_REG16(GP_SRC_XCOOR, srcx);
-	 WRITE_REG16(GP_DST_XCOOR, dstx);
-	 WRITE_REG16(GP_BLIT_MODE, blit_mode);
-	 dstx += section;
-	 srcx += section;
-      }
-      width -= section;
-   }
+            WRITE_REG16(GP_SRC_XCOOR, srcx);
+            WRITE_REG16(GP_DST_XCOOR, dstx);
+            WRITE_REG16(GP_BLIT_MODE, blit_mode);
+            dstx += section;
+            srcx += section;
+        }
+        width -= section;
+    }
 }
 
 /*
@@ -1001,123 +1005,124 @@ gfx_screen_to_screen_blt(unsigned short srcx, unsigned short srcy,
 #if GFX_2DACCEL_DYNAMIC
 void
 gu1_screen_to_screen_xblt(unsigned short srcx, unsigned short srcy,
-			  unsigned short dstx, unsigned short dsty,
-			  unsigned short width, unsigned short height,
-			  unsigned long color)
+                          unsigned short dstx, unsigned short dsty,
+                          unsigned short width, unsigned short height,
+                          unsigned long color)
 #else
 void
 gfx_screen_to_screen_xblt(unsigned short srcx, unsigned short srcy,
-			  unsigned short dstx, unsigned short dsty,
-			  unsigned short width, unsigned short height,
-			  unsigned long color)
+                          unsigned short dstx, unsigned short dsty,
+                          unsigned short width, unsigned short height,
+                          unsigned long color)
 #endif
 {
-   unsigned short section, buffer_width;
-   unsigned short blit_mode = BM_READ_SRC_FB;
+    unsigned short section, buffer_width;
+    unsigned short blit_mode = BM_READ_SRC_FB;
 
-   /* CHECK Y DIRECTION */
-   /* Hardware has support for negative Y direction. */
+    /* CHECK Y DIRECTION */
+    /* Hardware has support for negative Y direction. */
 
-   if (dsty > srcy) {
-      blit_mode |= BM_REVERSE_Y;
-      srcy += height - 1;
-      dsty += height - 1;
-   }
+    if (dsty > srcy) {
+        blit_mode |= BM_REVERSE_Y;
+        srcy += height - 1;
+        dsty += height - 1;
+    }
 
-   /* CHECK X DIRECTION */
-   /* Hardware does not support negative X direction since at the time */
-   /* of development all supported resolutions could fit a scanline of */
-   /* data at once into the BLT buffers (using both BB0 and BB1).  This */
-   /* code is more generic to allow for any size BLT buffer. */
+    /* CHECK X DIRECTION */
+    /* Hardware does not support negative X direction since at the time */
+    /* of development all supported resolutions could fit a scanline of */
+    /* data at once into the BLT buffers (using both BB0 and BB1).  This */
+    /* code is more generic to allow for any size BLT buffer. */
 
-   if (dstx > srcx) {
-      srcx += width;
-      dstx += width;
-   }
+    if (dstx > srcx) {
+        srcx += width;
+        dstx += width;
+    }
 
-   /* CALCULATE BLT BUFFER SIZE */
-   /* Need to use BB1 to store the BLT buffer data. */
+    /* CALCULATE BLT BUFFER SIZE */
+    /* Need to use BB1 to store the BLT buffer data. */
 
-   buffer_width = GFXbufferWidthPixels;
+    buffer_width = GFXbufferWidthPixels;
 
-   /* WRITE TRANSPARENCY COLOR TO BLT BUFFER 1 */
+    /* WRITE TRANSPARENCY COLOR TO BLT BUFFER 1 */
 
-   if (GFXbpp == 8) {
-      color &= 0x00FF;
-      color |= (color << 8);
-   }
-   color = (color & 0x0000FFFF) | (color << 16);
+    if (GFXbpp == 8) {
+        color &= 0x00FF;
+        color |= (color << 8);
+    }
+    color = (color & 0x0000FFFF) | (color << 16);
 
-   /* WAIT UNTIL PIPELINE IS NOT BUSY BEFORE LOADING DATA INTO BB1 */
-   /* Need to make sure any previous BLT using BB1 is complete. */
-   /* Only need to load 32 bits of BB1 for the 1 pixel BLT that follows. */
+    /* WAIT UNTIL PIPELINE IS NOT BUSY BEFORE LOADING DATA INTO BB1 */
+    /* Need to make sure any previous BLT using BB1 is complete. */
+    /* Only need to load 32 bits of BB1 for the 1 pixel BLT that follows. */
 
-   GFX_WAIT_BUSY;
-   WRITE_SCRATCH32(GFXbb1Base, color);
+    GFX_WAIT_BUSY;
+    WRITE_SCRATCH32(GFXbb1Base, color);
 
-   /* DO BOGUS BLT TO LATCH DATA FROM BB1 */
-   /* Already know graphics pipeline is idle. */
-   /* Only need to latch data into the holding registers for the current */
-   /* data from BB1.  A 1 pixel wide BLT will suffice. */
+    /* DO BOGUS BLT TO LATCH DATA FROM BB1 */
+    /* Already know graphics pipeline is idle. */
+    /* Only need to latch data into the holding registers for the current */
+    /* data from BB1.  A 1 pixel wide BLT will suffice. */
 
-   WRITE_REG32(GP_DST_XCOOR, 0);
-   WRITE_REG32(GP_SRC_XCOOR, 0);
-   WRITE_REG32(GP_WIDTH, 0x00010001);
-   WRITE_REG16(GP_RASTER_MODE, 0x00CC);
-   WRITE_REG16(GP_BLIT_MODE, BM_READ_SRC_FB | BM_READ_DST_BB1);
+    WRITE_REG32(GP_DST_XCOOR, 0);
+    WRITE_REG32(GP_SRC_XCOOR, 0);
+    WRITE_REG32(GP_WIDTH, 0x00010001);
+    WRITE_REG16(GP_RASTER_MODE, 0x00CC);
+    WRITE_REG16(GP_BLIT_MODE, BM_READ_SRC_FB | BM_READ_DST_BB1);
 
-   /* WRITE REGISTERS FOR REAL SCREEN TO SCREEN BLT */
+    /* WRITE REGISTERS FOR REAL SCREEN TO SCREEN BLT */
 
-   GFX_WAIT_PENDING;
-   WRITE_REG16(GP_HEIGHT, height);
-   WRITE_REG16(GP_RASTER_MODE, 0x10C6);
-   WRITE_REG32(GP_PAT_COLOR_0, 0xFFFFFFFF);
+    GFX_WAIT_PENDING;
+    WRITE_REG16(GP_HEIGHT, height);
+    WRITE_REG16(GP_RASTER_MODE, 0x10C6);
+    WRITE_REG32(GP_PAT_COLOR_0, 0xFFFFFFFF);
 
-   /* REPEAT UNTIL FINISHED WITH RECTANGLE */
-   /* Perform BLT in vertical sections, as wide as the BLT buffer allows. */
-   /* Hardware does not split the operations, so software must do it to */
-   /* avoid large scanlines that would overflow the BLT buffers. */
+    /* REPEAT UNTIL FINISHED WITH RECTANGLE */
+    /* Perform BLT in vertical sections, as wide as the BLT buffer allows. */
+    /* Hardware does not split the operations, so software must do it to */
+    /* avoid large scanlines that would overflow the BLT buffers. */
 
-   while (width > 0) {
-      /* CHECK WIDTH OF CURRENT SECTION */
+    while (width > 0) {
+        /* CHECK WIDTH OF CURRENT SECTION */
 
-      if (width > buffer_width)
-	 section = buffer_width;
-      else
-	 section = width;
+        if (width > buffer_width)
+            section = buffer_width;
+        else
+            section = width;
 
-      /* PROGRAM REGISTERS THAT ARE THE SAME FOR EITHER X DIRECTION */
+        /* PROGRAM REGISTERS THAT ARE THE SAME FOR EITHER X DIRECTION */
 
-      GFX_WAIT_PENDING;
-      WRITE_REG16(GP_SRC_YCOOR, srcy);
-      WRITE_REG16(GP_DST_YCOOR, dsty);
-      WRITE_REG16(GP_WIDTH, section);
+        GFX_WAIT_PENDING;
+        WRITE_REG16(GP_SRC_YCOOR, srcy);
+        WRITE_REG16(GP_DST_YCOOR, dsty);
+        WRITE_REG16(GP_WIDTH, section);
 
-      /* CHECK X DIRECTION */
-      /* Again, this must be done in software, and can be removed if the */
-      /* display driver knows that the BLT buffers will always be large  */
-      /* enough to contain an entire scanline of a screen to screen BLT. */
+        /* CHECK X DIRECTION */
+        /* Again, this must be done in software, and can be removed if the */
+        /* display driver knows that the BLT buffers will always be large  */
+        /* enough to contain an entire scanline of a screen to screen BLT. */
 
-      if (dstx > srcx) {
-	 /* NEGATIVE X DIRECTION */
-	 /* Still positive X direction within the section. */
+        if (dstx > srcx) {
+            /* NEGATIVE X DIRECTION */
+            /* Still positive X direction within the section. */
 
-	 srcx -= section;
-	 dstx -= section;
-	 WRITE_REG16(GP_SRC_XCOOR, srcx);
-	 WRITE_REG16(GP_DST_XCOOR, dstx);
-	 WRITE_REG16(GP_BLIT_MODE, blit_mode);
-      } else {
-	 /* POSITIVE X DIRECTION */
+            srcx -= section;
+            dstx -= section;
+            WRITE_REG16(GP_SRC_XCOOR, srcx);
+            WRITE_REG16(GP_DST_XCOOR, dstx);
+            WRITE_REG16(GP_BLIT_MODE, blit_mode);
+        }
+        else {
+            /* POSITIVE X DIRECTION */
 
-	 WRITE_REG16(GP_SRC_XCOOR, srcx);
-	 WRITE_REG16(GP_DST_XCOOR, dstx);
-	 WRITE_REG16(GP_BLIT_MODE, blit_mode);
-	 dstx += section;
-	 srcx += section;
-      }
-      width -= section;
-   }
+            WRITE_REG16(GP_SRC_XCOOR, srcx);
+            WRITE_REG16(GP_DST_XCOOR, dstx);
+            WRITE_REG16(GP_BLIT_MODE, blit_mode);
+            dstx += section;
+            srcx += section;
+        }
+        width -= section;
+    }
 }
 
 /*
@@ -1145,91 +1150,91 @@ gfx_screen_to_screen_xblt(unsigned short srcx, unsigned short srcy,
 #if GFX_2DACCEL_DYNAMIC
 void
 gu1_color_bitmap_to_screen_blt(unsigned short srcx, unsigned short srcy,
-			       unsigned short dstx, unsigned short dsty,
-			       unsigned short width, unsigned short height,
-			       unsigned char *data, long pitch)
+                               unsigned short dstx, unsigned short dsty,
+                               unsigned short width, unsigned short height,
+                               unsigned char *data, long pitch)
 #else
 void
 gfx_color_bitmap_to_screen_blt(unsigned short srcx, unsigned short srcy,
-			       unsigned short dstx, unsigned short dsty,
-			       unsigned short width, unsigned short height,
-			       unsigned char *data, long pitch)
+                               unsigned short dstx, unsigned short dsty,
+                               unsigned short width, unsigned short height,
+                               unsigned char *data, long pitch)
 #endif
 {
-   unsigned short section, buffer_width;
-   unsigned short blit_mode = BM_READ_SRC_BB0;
-   unsigned short temp_height;
-   unsigned long dword_bytes_needed, bytes_extra;
-   unsigned long bpp_shift;
-   long array_offset;
+    unsigned short section, buffer_width;
+    unsigned short blit_mode = BM_READ_SRC_BB0;
+    unsigned short temp_height;
+    unsigned long dword_bytes_needed, bytes_extra;
+    unsigned long bpp_shift;
+    long array_offset;
 
-   /* CHECK SIZE OF BLT BUFFER */
+    /* CHECK SIZE OF BLT BUFFER */
 
-   buffer_width = GFXbufferWidthPixels;
+    buffer_width = GFXbufferWidthPixels;
 
-   /* CHECK IF RASTER OPERATION REQUIRES DESTINATION DATA */
-   /* If no destination data, we have twice the room for  */
-   /* source data.                                        */
+    /* CHECK IF RASTER OPERATION REQUIRES DESTINATION DATA */
+    /* If no destination data, we have twice the room for  */
+    /* source data.                                        */
 
-   if (GFXusesDstData)
-      blit_mode |= BM_READ_DST_FB1;
-   else
-      buffer_width <<= 1;
+    if (GFXusesDstData)
+        blit_mode |= BM_READ_DST_FB1;
+    else
+        buffer_width <<= 1;
 
-   /* SET THE SCRATCHPAD BASE */
+    /* SET THE SCRATCHPAD BASE */
 
-   SET_SCRATCH_BASE(GFXbb0Base);
+    SET_SCRATCH_BASE(GFXbb0Base);
 
-   /* POLL UNTIL ABLE TO WRITE TO THE REGISTERS                */
-   /* Write the registers that do not change for each section. */
+    /* POLL UNTIL ABLE TO WRITE TO THE REGISTERS                */
+    /* Write the registers that do not change for each section. */
 
-   GFX_WAIT_PENDING;
-   WRITE_REG16(GP_HEIGHT, 1);
+    GFX_WAIT_PENDING;
+    WRITE_REG16(GP_HEIGHT, 1);
 
-   bpp_shift = (GFXbpp + 7) >> 4;
+    bpp_shift = (GFXbpp + 7) >> 4;
 
-   while (width > 0) {
-      if (width > buffer_width)
-	 section = buffer_width;
-      else
-	 section = width;
+    while (width > 0) {
+        if (width > buffer_width)
+            section = buffer_width;
+        else
+            section = width;
 
-      dword_bytes_needed = (section << bpp_shift) & ~3l;
-      bytes_extra = (section << bpp_shift) & 3l;
+        dword_bytes_needed = (section << bpp_shift) & ~3l;
+        bytes_extra = (section << bpp_shift) & 3l;
 
-      temp_height = height;
+        temp_height = height;
 
-      /* WRITE THE REGISTERS FOR EACH SECTION                          */
-      /* The GX hardware will auto-increment the Y coordinate, meaning */
-      /* that we don't have to.                                        */
+        /* WRITE THE REGISTERS FOR EACH SECTION                          */
+        /* The GX hardware will auto-increment the Y coordinate, meaning */
+        /* that we don't have to.                                        */
 
-      WRITE_REG16(GP_WIDTH, section);
-      WRITE_REG16(GP_DST_XCOOR, dstx);
-      WRITE_REG16(GP_DST_YCOOR, dsty);
+        WRITE_REG16(GP_WIDTH, section);
+        WRITE_REG16(GP_DST_XCOOR, dstx);
+        WRITE_REG16(GP_DST_YCOOR, dsty);
 
-      /* CALCULATE THE BITMAP OFFSET */
+        /* CALCULATE THE BITMAP OFFSET */
 
-      array_offset =
-	    (unsigned long)srcy *(long)pitch + ((long)srcx << bpp_shift);
+        array_offset =
+            (unsigned long) srcy *(long) pitch + ((long) srcx << bpp_shift);
 
-      while (temp_height--) {
-	 GFX_WAIT_PIPELINE;
+        while (temp_height--) {
+            GFX_WAIT_PIPELINE;
 
-	 /* WRITE ALL DATA TO THE BLT BUFFERS */
-	 /* The WRITE_SCRATCH_STRING macro assumes that the data begins at the */
-	 /* scratchpad offset set by the SET_SCRATCH_BASE macro.               */
+            /* WRITE ALL DATA TO THE BLT BUFFERS */
+            /* The WRITE_SCRATCH_STRING macro assumes that the data begins at the */
+            /* scratchpad offset set by the SET_SCRATCH_BASE macro.               */
 
-	 WRITE_SCRATCH_STRING(dword_bytes_needed, bytes_extra, data,
-			      array_offset);
-	 WRITE_REG16(GP_BLIT_MODE, blit_mode);
+            WRITE_SCRATCH_STRING(dword_bytes_needed, bytes_extra, data,
+                                 array_offset);
+            WRITE_REG16(GP_BLIT_MODE, blit_mode);
 
-	 array_offset += pitch;
-      }
+            array_offset += pitch;
+        }
 
-      width -= section;
-      srcx += section;
-      dstx += section;
-   }
+        width -= section;
+        srcx += section;
+        dstx += section;
+    }
 }
 
 /*
@@ -1255,112 +1260,112 @@ gfx_color_bitmap_to_screen_blt(unsigned short srcx, unsigned short srcy,
 #if GFX_2DACCEL_DYNAMIC
 void
 gu1_color_bitmap_to_screen_xblt(unsigned short srcx, unsigned short srcy,
-				unsigned short dstx, unsigned short dsty,
-				unsigned short width, unsigned short height,
-				unsigned char *data, long pitch,
-				unsigned long color)
+                                unsigned short dstx, unsigned short dsty,
+                                unsigned short width, unsigned short height,
+                                unsigned char *data, long pitch,
+                                unsigned long color)
 #else
 void
 gfx_color_bitmap_to_screen_xblt(unsigned short srcx, unsigned short srcy,
-				unsigned short dstx, unsigned short dsty,
-				unsigned short width, unsigned short height,
-				unsigned char *data, long pitch,
-				unsigned long color)
+                                unsigned short dstx, unsigned short dsty,
+                                unsigned short width, unsigned short height,
+                                unsigned char *data, long pitch,
+                                unsigned long color)
 #endif
 {
-   unsigned short section, buffer_width;
-   unsigned short temp_height;
-   unsigned long dword_bytes_needed, bytes_extra;
-   unsigned long bpp_shift;
-   long array_offset;
+    unsigned short section, buffer_width;
+    unsigned short temp_height;
+    unsigned long dword_bytes_needed, bytes_extra;
+    unsigned long bpp_shift;
+    long array_offset;
 
-   /* CHECK SIZE OF BLT BUFFER */
+    /* CHECK SIZE OF BLT BUFFER */
 
-   buffer_width = GFXbufferWidthPixels;
+    buffer_width = GFXbufferWidthPixels;
 
-   /* WRITE TRANSPARENCY COLOR TO BLT BUFFER 1 */
+    /* WRITE TRANSPARENCY COLOR TO BLT BUFFER 1 */
 
-   if (GFXbpp == 8) {
-      color &= 0x00FF;
-      color |= (color << 8);
-   }
-   color = (color & 0x0000FFFF) | (color << 16);
+    if (GFXbpp == 8) {
+        color &= 0x00FF;
+        color |= (color << 8);
+    }
+    color = (color & 0x0000FFFF) | (color << 16);
 
-   /* WAIT UNTIL PIPELINE IS NOT BUSY BEFORE LOADING DATA INTO BB1 */
-   /* Need to make sure any previous BLT using BB1 is complete. */
-   /* Only need to load 32 bits of BB1 for the 1 pixel BLT that follows. */
+    /* WAIT UNTIL PIPELINE IS NOT BUSY BEFORE LOADING DATA INTO BB1 */
+    /* Need to make sure any previous BLT using BB1 is complete. */
+    /* Only need to load 32 bits of BB1 for the 1 pixel BLT that follows. */
 
-   GFX_WAIT_PIPELINE;
-   GFX_WAIT_PENDING;
-   WRITE_SCRATCH32(GFXbb1Base, color);
+    GFX_WAIT_PIPELINE;
+    GFX_WAIT_PENDING;
+    WRITE_SCRATCH32(GFXbb1Base, color);
 
-   /* DO BOGUS BLT TO LATCH DATA FROM BB1 */
-   /* Already know graphics pipeline is idle. */
-   /* Only need to latch data into the holding registers for the current */
-   /* data from BB1.  A 1 pixel wide BLT will suffice. */
+    /* DO BOGUS BLT TO LATCH DATA FROM BB1 */
+    /* Already know graphics pipeline is idle. */
+    /* Only need to latch data into the holding registers for the current */
+    /* data from BB1.  A 1 pixel wide BLT will suffice. */
 
-   WRITE_REG32(GP_DST_XCOOR, 0);
-   WRITE_REG32(GP_SRC_XCOOR, 0);
-   WRITE_REG32(GP_WIDTH, 0x00010001);
-   WRITE_REG16(GP_RASTER_MODE, 0x00CC);
-   WRITE_REG16(GP_BLIT_MODE, BM_READ_SRC_FB | BM_READ_DST_BB1);
+    WRITE_REG32(GP_DST_XCOOR, 0);
+    WRITE_REG32(GP_SRC_XCOOR, 0);
+    WRITE_REG32(GP_WIDTH, 0x00010001);
+    WRITE_REG16(GP_RASTER_MODE, 0x00CC);
+    WRITE_REG16(GP_BLIT_MODE, BM_READ_SRC_FB | BM_READ_DST_BB1);
 
-   /* POLL UNTIL ABLE TO WRITE TO THE REGISTERS */
-   /* Write the registers that do not change for each section. */
+    /* POLL UNTIL ABLE TO WRITE TO THE REGISTERS */
+    /* Write the registers that do not change for each section. */
 
-   GFX_WAIT_PENDING;
-   WRITE_REG16(GP_HEIGHT, 1);
-   WRITE_REG16(GP_RASTER_MODE, 0x10C6);
-   WRITE_REG32(GP_PAT_COLOR_0, 0xFFFFFFFF);
+    GFX_WAIT_PENDING;
+    WRITE_REG16(GP_HEIGHT, 1);
+    WRITE_REG16(GP_RASTER_MODE, 0x10C6);
+    WRITE_REG32(GP_PAT_COLOR_0, 0xFFFFFFFF);
 
-   bpp_shift = (GFXbpp + 7) >> 4;
+    bpp_shift = (GFXbpp + 7) >> 4;
 
-   /* SET THE SCRATCHPAD BASE */
+    /* SET THE SCRATCHPAD BASE */
 
-   SET_SCRATCH_BASE(GFXbb0Base);
+    SET_SCRATCH_BASE(GFXbb0Base);
 
-   while (width > 0) {
-      if (width > buffer_width)
-	 section = buffer_width;
-      else
-	 section = width;
+    while (width > 0) {
+        if (width > buffer_width)
+            section = buffer_width;
+        else
+            section = width;
 
-      dword_bytes_needed = (section << bpp_shift) & ~3l;
-      bytes_extra = (section << bpp_shift) & 3l;
+        dword_bytes_needed = (section << bpp_shift) & ~3l;
+        bytes_extra = (section << bpp_shift) & 3l;
 
-      temp_height = height;
+        temp_height = height;
 
-      /* WRITE THE REGISTERS FOR EACH SECTION                          */
-      /* The GX hardware will auto-increment the Y coordinate, meaning */
-      /* that we don't have to.                                        */
+        /* WRITE THE REGISTERS FOR EACH SECTION                          */
+        /* The GX hardware will auto-increment the Y coordinate, meaning */
+        /* that we don't have to.                                        */
 
-      WRITE_REG16(GP_WIDTH, section);
-      WRITE_REG16(GP_DST_XCOOR, dstx);
-      WRITE_REG16(GP_DST_YCOOR, dsty);
+        WRITE_REG16(GP_WIDTH, section);
+        WRITE_REG16(GP_DST_XCOOR, dstx);
+        WRITE_REG16(GP_DST_YCOOR, dsty);
 
-      /* CALCULATE THE BITMAP OFFSET */
+        /* CALCULATE THE BITMAP OFFSET */
 
-      array_offset =
-	    (unsigned long)srcy *(long)pitch + ((long)srcx << bpp_shift);
+        array_offset =
+            (unsigned long) srcy *(long) pitch + ((long) srcx << bpp_shift);
 
-      while (temp_height--) {
-	 GFX_WAIT_PIPELINE;
+        while (temp_height--) {
+            GFX_WAIT_PIPELINE;
 
-	 /* WRITE ALL DATA TO THE BLT BUFFERS */
-	 /* The WRITE_SCRATCH_STRING macro assumes that the data begins at the */
-	 /* scratchpad offset set by the SET_SCRATCH_BASE macro.               */
+            /* WRITE ALL DATA TO THE BLT BUFFERS */
+            /* The WRITE_SCRATCH_STRING macro assumes that the data begins at the */
+            /* scratchpad offset set by the SET_SCRATCH_BASE macro.               */
 
-	 WRITE_SCRATCH_STRING(dword_bytes_needed, bytes_extra, data,
-			      array_offset);
-	 WRITE_REG16(GP_BLIT_MODE, BM_READ_SRC_BB0);
+            WRITE_SCRATCH_STRING(dword_bytes_needed, bytes_extra, data,
+                                 array_offset);
+            WRITE_REG16(GP_BLIT_MODE, BM_READ_SRC_BB0);
 
-	 array_offset += pitch;
-      }
+            array_offset += pitch;
+        }
 
-      width -= section;
-      srcx += section;
-      dstx += section;
-   }
+        width -= section;
+        srcx += section;
+        dstx += section;
+    }
 }
 
 /*
@@ -1382,106 +1387,107 @@ gfx_color_bitmap_to_screen_xblt(unsigned short srcx, unsigned short srcy,
 #if GFX_2DACCEL_DYNAMIC
 void
 gu1_mono_bitmap_to_screen_blt(unsigned short srcx, unsigned short srcy,
-			      unsigned short dstx, unsigned short dsty,
-			      unsigned short width, unsigned short height,
-			      unsigned char *data, short pitch)
+                              unsigned short dstx, unsigned short dsty,
+                              unsigned short width, unsigned short height,
+                              unsigned char *data, short pitch)
 #else
 void
 gfx_mono_bitmap_to_screen_blt(unsigned short srcx, unsigned short srcy,
-			      unsigned short dstx, unsigned short dsty,
-			      unsigned short width, unsigned short height,
-			      unsigned char *data, short pitch)
+                              unsigned short dstx, unsigned short dsty,
+                              unsigned short width, unsigned short height,
+                              unsigned char *data, short pitch)
 #endif
 {
-   unsigned short section, buffer_width;
-   unsigned short blit_mode = BM_READ_SRC_BB0 | BM_SOURCE_EXPAND;
-   unsigned short temp_height;
-   unsigned long dword_bytes_needed, bytes_extra;
-   long array_offset;
+    unsigned short section, buffer_width;
+    unsigned short blit_mode = BM_READ_SRC_BB0 | BM_SOURCE_EXPAND;
+    unsigned short temp_height;
+    unsigned long dword_bytes_needed, bytes_extra;
+    long array_offset;
 
-   /* CHECK IF RASTER OPERATION REQUIRES DESTINATION DATA        */
-   /* If no destination data, the source data will always fit.   */
-   /* So, in that event we will set the buffer width to a        */
-   /* fictitiously large value such that the BLT is never split. */
+    /* CHECK IF RASTER OPERATION REQUIRES DESTINATION DATA        */
+    /* If no destination data, the source data will always fit.   */
+    /* So, in that event we will set the buffer width to a        */
+    /* fictitiously large value such that the BLT is never split. */
 
-   if (GFXusesDstData) {
-      buffer_width = GFXbufferWidthPixels;
-      blit_mode |= BM_READ_DST_FB1;
-   } else
-      buffer_width = 3200;
+    if (GFXusesDstData) {
+        buffer_width = GFXbufferWidthPixels;
+        blit_mode |= BM_READ_DST_FB1;
+    }
+    else
+        buffer_width = 3200;
 
-   /* CHECK IF DATA ALREADY IN BLIT BUFFER */
-   /* If the pointer is NULL, data for the full BLT is already there */
-   /* WARNING: This could cause problems if destination data is */
-   /* involved and it overflows the BLT buffer.  Need to remove */
-   /* this option and change the drivers to use a temporary buffer. */
+    /* CHECK IF DATA ALREADY IN BLIT BUFFER */
+    /* If the pointer is NULL, data for the full BLT is already there */
+    /* WARNING: This could cause problems if destination data is */
+    /* involved and it overflows the BLT buffer.  Need to remove */
+    /* this option and change the drivers to use a temporary buffer. */
 
-   if (!data) {
-      GFX_WAIT_PENDING;
-      WRITE_REG16(GP_SRC_XCOOR, srcx & 7);
-      WRITE_REG16(GP_DST_XCOOR, dstx);
-      WRITE_REG16(GP_DST_YCOOR, dsty);
-      WRITE_REG16(GP_WIDTH, width);
-      WRITE_REG16(GP_HEIGHT, height);
-      WRITE_REG16(GP_BLIT_MODE, blit_mode);
-      return;
-   }
+    if (!data) {
+        GFX_WAIT_PENDING;
+        WRITE_REG16(GP_SRC_XCOOR, srcx & 7);
+        WRITE_REG16(GP_DST_XCOOR, dstx);
+        WRITE_REG16(GP_DST_YCOOR, dsty);
+        WRITE_REG16(GP_WIDTH, width);
+        WRITE_REG16(GP_HEIGHT, height);
+        WRITE_REG16(GP_BLIT_MODE, blit_mode);
+        return;
+    }
 
-   /* SET THE SCRATCHPAD BASE */
+    /* SET THE SCRATCHPAD BASE */
 
-   SET_SCRATCH_BASE(GFXbb0Base);
+    SET_SCRATCH_BASE(GFXbb0Base);
 
-   /* POLL UNTIL ABLE TO WRITE TO THE REGISTERS */
-   /* Write the registers that do not change for each section. */
+    /* POLL UNTIL ABLE TO WRITE TO THE REGISTERS */
+    /* Write the registers that do not change for each section. */
 
-   GFX_WAIT_PENDING;
-   WRITE_REG16(GP_HEIGHT, 1);
+    GFX_WAIT_PENDING;
+    WRITE_REG16(GP_HEIGHT, 1);
 
-   while (width > 0) {
-      if (width > buffer_width)
-	 section = buffer_width;
-      else
-	 section = width;
+    while (width > 0) {
+        if (width > buffer_width)
+            section = buffer_width;
+        else
+            section = width;
 
-      /* CALCULATE BYTES NEEDED */
-      /* Add 1 for possible alignment issues. */
+        /* CALCULATE BYTES NEEDED */
+        /* Add 1 for possible alignment issues. */
 
-      dword_bytes_needed = ((section + 7 + (srcx & 7)) >> 3) & ~3l;
-      bytes_extra = ((section + 7 + (srcx & 7)) >> 3) & 3l;
+        dword_bytes_needed = ((section + 7 + (srcx & 7)) >> 3) & ~3l;
+        bytes_extra = ((section + 7 + (srcx & 7)) >> 3) & 3l;
 
-      temp_height = height;
+        temp_height = height;
 
-      /* WRITE THE REGISTERS FOR EACH SECTION                          */
-      /* The GX hardware will auto-increment the Y coordinate, meaning */
-      /* that we don't have to.                                        */
+        /* WRITE THE REGISTERS FOR EACH SECTION                          */
+        /* The GX hardware will auto-increment the Y coordinate, meaning */
+        /* that we don't have to.                                        */
 
-      WRITE_REG16(GP_WIDTH, section);
-      WRITE_REG16(GP_DST_XCOOR, dstx);
-      WRITE_REG16(GP_DST_YCOOR, dsty);
-      WRITE_REG16(GP_SRC_XCOOR, srcx & 7);
+        WRITE_REG16(GP_WIDTH, section);
+        WRITE_REG16(GP_DST_XCOOR, dstx);
+        WRITE_REG16(GP_DST_YCOOR, dsty);
+        WRITE_REG16(GP_SRC_XCOOR, srcx & 7);
 
-      /* CALCULATE THE BITMAP OFFSET */
+        /* CALCULATE THE BITMAP OFFSET */
 
-      array_offset = (unsigned long)srcy *(long)pitch + ((long)srcx >> 3);
+        array_offset = (unsigned long) srcy *(long) pitch + ((long) srcx >> 3);
 
-      while (temp_height--) {
-	 GFX_WAIT_PIPELINE;
+        while (temp_height--) {
+            GFX_WAIT_PIPELINE;
 
-	 /* WRITE ALL DATA TO THE BLT BUFFERS */
-	 /* The WRITE_SCRATCH_STRING macro assumes that the data begins at the */
-	 /* scratchpad offset set by the SET_SCRATCH_BASE macro.               */
+            /* WRITE ALL DATA TO THE BLT BUFFERS */
+            /* The WRITE_SCRATCH_STRING macro assumes that the data begins at the */
+            /* scratchpad offset set by the SET_SCRATCH_BASE macro.               */
 
-	 WRITE_SCRATCH_STRING(dword_bytes_needed, bytes_extra, data,
-			      array_offset);
-	 WRITE_REG16(GP_BLIT_MODE, blit_mode);
+            WRITE_SCRATCH_STRING(dword_bytes_needed, bytes_extra, data,
+                                 array_offset);
+            WRITE_REG16(GP_BLIT_MODE, blit_mode);
 
-	 array_offset += pitch;
-      }
+            array_offset += pitch;
+        }
 
-      width -= section;
-      srcx += section;
-      dstx += section;
-   }
+        width -= section;
+        srcx += section;
+        dstx += section;
+    }
 }
 
 /*
@@ -1500,61 +1506,61 @@ gfx_mono_bitmap_to_screen_blt(unsigned short srcx, unsigned short srcy,
 #if GFX_2DACCEL_DYNAMIC
 void
 gu1_text_blt(unsigned short dstx, unsigned short dsty, unsigned short width,
-	     unsigned short height, unsigned char *data)
+             unsigned short height, unsigned char *data)
 #else
 void
 gfx_text_blt(unsigned short dstx, unsigned short dsty, unsigned short width,
-	     unsigned short height, unsigned char *data)
+             unsigned short height, unsigned char *data)
 #endif
 {
-   unsigned long dword_bytes_needed, bytes_extra;
-   long pitch, buffer_bytes, data_bytes;
+    unsigned long dword_bytes_needed, bytes_extra;
+    long pitch, buffer_bytes, data_bytes;
 
-   /* CALCULATE DATA SIZE */
+    /* CALCULATE DATA SIZE */
 
-   pitch = (width + 7) >> 3;
-   data_bytes = (long)height *pitch;
+    pitch = (width + 7) >> 3;
+    data_bytes = (long) height *pitch;
 
-   /* CHECK FOR SIMPLE CASE */
-   /* This routine is designed to render a source copy text glyph.  If destination */
-   /* data is required or the source data will not fit, we will punt the operation */
-   /* to the more versatile (and slow) mono bitmap routine.                        */
+    /* CHECK FOR SIMPLE CASE */
+    /* This routine is designed to render a source copy text glyph.  If destination */
+    /* data is required or the source data will not fit, we will punt the operation */
+    /* to the more versatile (and slow) mono bitmap routine.                        */
 
-   if (GFXbpp > 8)
-      buffer_bytes = GFXbufferWidthPixels << 1;
-   else
-      buffer_bytes = GFXbufferWidthPixels;
+    if (GFXbpp > 8)
+        buffer_bytes = GFXbufferWidthPixels << 1;
+    else
+        buffer_bytes = GFXbufferWidthPixels;
 
-   if (GFXusesDstData || data_bytes > buffer_bytes) {
-      gfx_mono_bitmap_to_screen_blt(0, 0, dstx, dsty, width, height, data,
-				    (short)pitch);
-      return;
-   }
+    if (GFXusesDstData || data_bytes > buffer_bytes) {
+        gfx_mono_bitmap_to_screen_blt(0, 0, dstx, dsty, width, height, data,
+                                      (short) pitch);
+        return;
+    }
 
-   /* SET THE SCRATCHPAD BASE */
+    /* SET THE SCRATCHPAD BASE */
 
-   SET_SCRATCH_BASE(GFXbb0Base);
+    SET_SCRATCH_BASE(GFXbb0Base);
 
-   /* POLL UNTIL ABLE TO WRITE TO THE REGISTERS */
+    /* POLL UNTIL ABLE TO WRITE TO THE REGISTERS */
 
-   dword_bytes_needed = data_bytes & ~3l;
-   bytes_extra = data_bytes & 3l;
+    dword_bytes_needed = data_bytes & ~3l;
+    bytes_extra = data_bytes & 3l;
 
-   GFX_WAIT_PENDING;
-   WRITE_REG16(GP_HEIGHT, height);
-   WRITE_REG16(GP_WIDTH, width);
-   WRITE_REG16(GP_DST_XCOOR, dstx);
-   WRITE_REG16(GP_DST_YCOOR, dsty);
-   WRITE_REG16(GP_SRC_XCOOR, 0);
+    GFX_WAIT_PENDING;
+    WRITE_REG16(GP_HEIGHT, height);
+    WRITE_REG16(GP_WIDTH, width);
+    WRITE_REG16(GP_DST_XCOOR, dstx);
+    WRITE_REG16(GP_DST_YCOOR, dsty);
+    WRITE_REG16(GP_SRC_XCOOR, 0);
 
-   /* WRITE ALL DATA TO THE BLT BUFFERS */
-   /* The WRITE_SCRATCH_STRING macro assumes that the data begins at the */
-   /* scratchpad offset set by the SET_SCRATCH_BASE macro.               */
+    /* WRITE ALL DATA TO THE BLT BUFFERS */
+    /* The WRITE_SCRATCH_STRING macro assumes that the data begins at the */
+    /* scratchpad offset set by the SET_SCRATCH_BASE macro.               */
 
-   GFX_WAIT_PIPELINE;
+    GFX_WAIT_PIPELINE;
 
-   WRITE_SCRATCH_STRING(dword_bytes_needed, bytes_extra, data, 0);
-   WRITE_REG16(GP_BLIT_MODE, BM_READ_SRC_BB0 | BM_SOURCE_TEXT);
+    WRITE_SCRATCH_STRING(dword_bytes_needed, bytes_extra, data, 0);
+    WRITE_REG16(GP_BLIT_MODE, BM_READ_SRC_BB0 | BM_SOURCE_TEXT);
 }
 
 /*
@@ -1579,37 +1585,37 @@ gfx_text_blt(unsigned short dstx, unsigned short dsty, unsigned short width,
 #if GFX_2DACCEL_DYNAMIC
 void
 gu1_bresenham_line(unsigned short x, unsigned short y,
-		   unsigned short length, unsigned short initerr,
-		   unsigned short axialerr, unsigned short diagerr,
-		   unsigned short flags)
+                   unsigned short length, unsigned short initerr,
+                   unsigned short axialerr, unsigned short diagerr,
+                   unsigned short flags)
 #else
 void
 gfx_bresenham_line(unsigned short x, unsigned short y,
-		   unsigned short length, unsigned short initerr,
-		   unsigned short axialerr, unsigned short diagerr,
-		   unsigned short flags)
+                   unsigned short length, unsigned short initerr,
+                   unsigned short axialerr, unsigned short diagerr,
+                   unsigned short flags)
 #endif
 {
-   unsigned short vector_mode = flags;
+    unsigned short vector_mode = flags;
 
-   if (GFXusesDstData)
-      vector_mode |= VM_READ_DST_FB;
+    if (GFXusesDstData)
+        vector_mode |= VM_READ_DST_FB;
 
-   /* CHECK NULL LENGTH */
+    /* CHECK NULL LENGTH */
 
-   if (!length)
-      return;
+    if (!length)
+        return;
 
-   /* LOAD THE REGISTERS FOR THE VECTOR */
+    /* LOAD THE REGISTERS FOR THE VECTOR */
 
-   GFX_WAIT_PENDING;
-   WRITE_REG16(GP_DST_XCOOR, x);
-   WRITE_REG16(GP_DST_YCOOR, y);
-   WRITE_REG16(GP_VECTOR_LENGTH, length);
-   WRITE_REG16(GP_INIT_ERROR, initerr);
-   WRITE_REG16(GP_AXIAL_ERROR, axialerr);
-   WRITE_REG16(GP_DIAG_ERROR, diagerr);
-   WRITE_REG16(GP_VECTOR_MODE, vector_mode);
+    GFX_WAIT_PENDING;
+    WRITE_REG16(GP_DST_XCOOR, x);
+    WRITE_REG16(GP_DST_YCOOR, y);
+    WRITE_REG16(GP_VECTOR_LENGTH, length);
+    WRITE_REG16(GP_INIT_ERROR, initerr);
+    WRITE_REG16(GP_AXIAL_ERROR, axialerr);
+    WRITE_REG16(GP_DIAG_ERROR, diagerr);
+    WRITE_REG16(GP_VECTOR_MODE, vector_mode);
 }
 
 /*---------------------------------------------------------------------------
@@ -1627,7 +1633,7 @@ void
 gfx_wait_until_idle(void)
 #endif
 {
-   GFX_WAIT_BUSY;
+    GFX_WAIT_BUSY;
 }
 
 /*---------------------------------------------------------------------------
@@ -1648,10 +1654,10 @@ int
 gfx_test_blt_pending(void)
 #endif
 {
-   if (READ_REG16(GP_BLIT_STATUS) & BS_BLIT_PENDING)
-      return (1);
-   else
-      return (0);
+    if (READ_REG16(GP_BLIT_STATUS) & BS_BLIT_PENDING)
+        return (1);
+    else
+        return (0);
 }
 
 /*---------------------------------------------------------------------------
@@ -1715,36 +1721,36 @@ gfx_test_blt_pending(void)
 void
 gu1_detect_blt_buffer_base(void)
 {
-   /* ASSUME 2K */
+    /* ASSUME 2K */
 
-   GFXbb0Base = BB0_BASE_2K;
-   GFXbb1Base = BB1_BASE_2K;
+    GFXbb0Base = BB0_BASE_2K;
+    GFXbb1Base = BB1_BASE_2K;
 
-   /* CHECK IF SCRATCHPAD IS SET TO 3K OR 4K */
-   /* Boot code should still set 3K values for 4K. */
+    /* CHECK IF SCRATCHPAD IS SET TO 3K OR 4K */
+    /* Boot code should still set 3K values for 4K. */
 
-   if (gfx_gxm_config_read(GXM_CONFIG_GCR) & 0x08) {
-      /* WRITE DATA TO 3K LOCATION */
+    if (gfx_gxm_config_read(GXM_CONFIG_GCR) & 0x08) {
+        /* WRITE DATA TO 3K LOCATION */
 
-      GFX_WAIT_BUSY;
-      WRITE_SCRATCH32(BB0_BASE_3K, 0xFEEDFACE);
+        GFX_WAIT_BUSY;
+        WRITE_SCRATCH32(BB0_BASE_3K, 0xFEEDFACE);
 
-      /* HAVE THE GRAPHICS UNIT STORE SOMETHING IN BB0 */
+        /* HAVE THE GRAPHICS UNIT STORE SOMETHING IN BB0 */
 
-      WRITE_REG32(GP_DST_XCOOR, 0x00000000);	/* AT (0,0) */
-      WRITE_REG32(GP_WIDTH, 0x00010004);	/* 4x1 BLT */
-      WRITE_REG16(GP_RASTER_MODE, 0x00AA);	/* KEEP DST */
-      WRITE_REG16(GP_BLIT_MODE, BM_READ_DST_FB0);	/* STORE IN BB0 */
+        WRITE_REG32(GP_DST_XCOOR, 0x00000000);  /* AT (0,0) */
+        WRITE_REG32(GP_WIDTH, 0x00010004);      /* 4x1 BLT */
+        WRITE_REG16(GP_RASTER_MODE, 0x00AA);    /* KEEP DST */
+        WRITE_REG16(GP_BLIT_MODE, BM_READ_DST_FB0);     /* STORE IN BB0 */
 
-      /* CHECK 3K LOCATION */
-      /* Breaks if data happened to be 0xFEEDFACE - unlikely. */
+        /* CHECK 3K LOCATION */
+        /* Breaks if data happened to be 0xFEEDFACE - unlikely. */
 
-      GFX_WAIT_BUSY;
-      if (READ_SCRATCH32(BB0_BASE_3K) != 0xFEEDFACE) {
-	 GFXbb0Base = BB0_BASE_3K;
-	 GFXbb1Base = BB1_BASE_3K;
-      }
-   }
+        GFX_WAIT_BUSY;
+        if (READ_SCRATCH32(BB0_BASE_3K) != 0xFEEDFACE) {
+            GFXbb0Base = BB0_BASE_3K;
+            GFXbb1Base = BB1_BASE_3K;
+        }
+    }
 }
 
 /* END OF FILE */

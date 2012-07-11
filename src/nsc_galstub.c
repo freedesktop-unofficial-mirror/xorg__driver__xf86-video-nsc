@@ -151,10 +151,10 @@
 #include "xf86PciInfo.h"
 #include "xf86Pci.h"
 #include "xf86cmap.h"
-#include "asm/page.h"			/* #define for PAGE_* */
+#include "asm/page.h"           /* #define for PAGE_* */
 
 #define makedev(major, minor) ((((unsigned int) (major)) << 8) \
 				| ((unsigned int) (minor)))
 
 #include "nsc_galfns.c"
-#endif /* STB_X */
+#endif                          /* STB_X */

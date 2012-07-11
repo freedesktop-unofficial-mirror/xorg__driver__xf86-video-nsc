@@ -135,31 +135,24 @@
 /* MSR DEFINITIONS */
 
 typedef enum DevStatus
-{ FOUND, NOT_KNOWN, REQ_NOT_FOUND, REQ_NOT_INSTALLED }
-DEV_STATUS;
+    { FOUND, NOT_KNOWN, REQ_NOT_FOUND, REQ_NOT_INSTALLED } DEV_STATUS;
 
-typedef struct msr
-{
-   DEV_STATUS Present;			/* Node enumeration status                              */
-   unsigned char Id;			/* Device ID (from MSR specs)                           */
-   unsigned long Address;		/* Address - 32-bit MBus address at which 'Id' is found */
-}
-MSR;
+typedef struct msr {
+    DEV_STATUS Present;         /* Node enumeration status                              */
+    unsigned char Id;           /* Device ID (from MSR specs)                           */
+    unsigned long Address;      /* Address - 32-bit MBus address at which 'Id' is found */
+} MSR;
 
-typedef struct mValue
-{
-   unsigned long high;
-   unsigned long low;
-}
-Q_WORD;
+typedef struct mValue {
+    unsigned long high;
+    unsigned long low;
+} Q_WORD;
 
-typedef struct mbusNode
-{
-   unsigned long address;
-   unsigned int deviceId;
-   unsigned int claimed;
-}
-MBUS_NODE;
+typedef struct mbusNode {
+    unsigned long address;
+    unsigned int deviceId;
+    unsigned int claimed;
+} MBUS_NODE;
 
 /* MSR ARRAY INDEXES */
 /* These are indexes into the array of MBus devices. These     */
@@ -230,19 +223,15 @@ MBUS_NODE;
 
 /* TV DEFINITIONS */
 
-typedef enum TVStandardType
-{
-   TV_STANDARD_NTSC = 1,
-   TV_STANDARD_PAL
-}
-TVStandardType;
+typedef enum TVStandardType {
+    TV_STANDARD_NTSC = 1,
+    TV_STANDARD_PAL
+} TVStandardType;
 
-typedef enum GfxOnTVType
-{
-   GFX_ON_TV_SQUARE_PIXELS = 1,
-   GFX_ON_TV_NO_SCALING
-}
-GfxOnTVType;
+typedef enum GfxOnTVType {
+    GFX_ON_TV_SQUARE_PIXELS = 1,
+    GFX_ON_TV_NO_SCALING
+} GfxOnTVType;
 
 #define CRT_DISABLE 0x00
 #define CRT_ENABLE  0x01
@@ -301,19 +290,15 @@ GfxOnTVType;
 #define VIDEO_DOWNSCALE_KEEP_1_OF 0x1
 #define VIDEO_DOWNSCALE_DROP_1_OF 0x2
 
-typedef enum VideoSourceType
-{/* The source from which the video processor shows full screen video */
-   VIDEO_SOURCE_MEMORY = 1,
-   VIDEO_SOURCE_DVIP
-}
-VideoSourceType;
+typedef enum VideoSourceType {  /* The source from which the video processor shows full screen video */
+    VIDEO_SOURCE_MEMORY = 1,
+    VIDEO_SOURCE_DVIP
+} VideoSourceType;
 
-typedef enum VbiSourceType
-{/* The source from which the video processor takes VBI */
-   VBI_SOURCE_MEMORY = 1,
-   VBI_SOURCE_DVIP
-}
-VbiSourceType;
+typedef enum VbiSourceType {    /* The source from which the video processor takes VBI */
+    VBI_SOURCE_MEMORY = 1,
+    VBI_SOURCE_DVIP
+} VbiSourceType;
 
 /* GENLOCK DEFINITIONS */
 
@@ -389,17 +374,15 @@ VbiSourceType;
 #define GFX_APS_TRIGGER_AGC_2_LINE 2
 #define GFX_APS_TRIGGER_AGC_4_LINE 3
 
-typedef struct
-{
-   int xsize;
-   int ysize;
-   int hz;
-   int clock;
-   unsigned char miscOutput;
-   unsigned char stdCRTCregs[GFX_STD_CRTC_REGS];
-   unsigned char extCRTCregs[GFX_EXT_CRTC_REGS];
-}
-gfx_vga_struct;
+typedef struct {
+    int xsize;
+    int ysize;
+    int hz;
+    int clock;
+    unsigned char miscOutput;
+    unsigned char stdCRTCregs[GFX_STD_CRTC_REGS];
+    unsigned char extCRTCregs[GFX_EXT_CRTC_REGS];
+} gfx_vga_struct;
 
 /* POSSIBLE STATUS VALUES */
 
@@ -421,19 +404,17 @@ gfx_vga_struct;
 
 /* CHIP NAME AND REVISION */
 
-typedef enum ChipType
-{
-   CHIP_NOT_DETECTED,
-   SC1200_REV_A,
-   SC1200_REV_B1_B2,
-   SC1200_REV_B3,
-   SC1200_REV_C1,
-   SC1200_REV_D1,
-   SC1200_REV_D1_1,
-   SC1200_REV_D2_MVD,			/* Macrovision disabled */
-   SC1200_REV_D2_MVE,			/* Macrovision enabled  */
-   SC1200_FUTURE_REV
-}
-ChipType;
+typedef enum ChipType {
+    CHIP_NOT_DETECTED,
+    SC1200_REV_A,
+    SC1200_REV_B1_B2,
+    SC1200_REV_B3,
+    SC1200_REV_C1,
+    SC1200_REV_D1,
+    SC1200_REV_D1_1,
+    SC1200_REV_D2_MVD,          /* Macrovision disabled */
+    SC1200_REV_D2_MVE,          /* Macrovision enabled  */
+    SC1200_FUTURE_REV
+} ChipType;
 
-#endif /* !_gfx_type_h */
+#endif                          /* !_gfx_type_h */

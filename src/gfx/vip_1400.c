@@ -27,31 +27,32 @@ int
 gfx_set_vip_enable(int enable)
 #endif
 {
-   unsigned long mcr, value;
+    unsigned long mcr, value;
 
-   value = READ_VIP32(SC1400_VIP_CONTROL);
+    value = READ_VIP32(SC1400_VIP_CONTROL);
 
-   if (enable) {
-      /* CONFIGURE MCR FOR VIDEO INPUT MODE */
+    if (enable) {
+        /* CONFIGURE MCR FOR VIDEO INPUT MODE */
 
-      mcr = IND(SC1400_CB_BASE_ADDR + SC1400_CB_MISC_CONFIG);
-      mcr |= (SC1400_MCR_VPOUT_CK_SELECT | SC1400_MCR_VPOUT_CK_SOURCE);
-      mcr &= ~SC1400_MCR_VPOUT_MODE;
-      mcr |= SC1400_MCR_VPIN_CCIR656;
-      mcr &= ~SC1400_MCR_GENLOCK_CONTINUE;
-      OUTD(SC1400_CB_BASE_ADDR + SC1400_CB_MISC_CONFIG, mcr);
+        mcr = IND(SC1400_CB_BASE_ADDR + SC1400_CB_MISC_CONFIG);
+        mcr |= (SC1400_MCR_VPOUT_CK_SELECT | SC1400_MCR_VPOUT_CK_SOURCE);
+        mcr &= ~SC1400_MCR_VPOUT_MODE;
+        mcr |= SC1400_MCR_VPIN_CCIR656;
+        mcr &= ~SC1400_MCR_GENLOCK_CONTINUE;
+        OUTD(SC1400_CB_BASE_ADDR + SC1400_CB_MISC_CONFIG, mcr);
 
-      /* ENABLE CAPTURE */
-      /* Hardcode config values for now. */
+        /* ENABLE CAPTURE */
+        /* Hardcode config values for now. */
 
-      WRITE_VIP32(SC1400_VIP_CONFIG, 0x30012);
-      value |= 0x103;
-   } else {
-      value &= ~(0x102);
-   }
+        WRITE_VIP32(SC1400_VIP_CONFIG, 0x30012);
+        value |= 0x103;
+    }
+    else {
+        value &= ~(0x102);
+    }
 
-   WRITE_VIP32(SC1400_VIP_CONTROL, value);
-   return (0);
+    WRITE_VIP32(SC1400_VIP_CONTROL, value);
+    return (0);
 }
 
 /*-----------------------------------------------------------------------------
@@ -69,11 +70,11 @@ int
 gfx_set_vip_base(unsigned long even, unsigned long odd)
 #endif
 {
-   // TRUE OFFSET IS SPECIFIED, NEED TO SET BIT 23 FOR HARDWARE
+    // TRUE OFFSET IS SPECIFIED, NEED TO SET BIT 23 FOR HARDWARE
 
-   WRITE_VIP32(SC1400_VIP_EVEN_BASE, even | 0x00800000);
-   WRITE_VIP32(SC1400_VIP_ODD_BASE, odd | 0x00800000);
-   return (0);
+    WRITE_VIP32(SC1400_VIP_EVEN_BASE, even | 0x00800000);
+    WRITE_VIP32(SC1400_VIP_ODD_BASE, odd | 0x00800000);
+    return (0);
 }
 
 /*-----------------------------------------------------------------------------
@@ -90,8 +91,8 @@ int
 gfx_set_vip_pitch(unsigned long pitch)
 #endif
 {
-   WRITE_VIP32(SC1400_VIP_PITCH, pitch & 0x0000FFFC);
-   return (0);
+    WRITE_VIP32(SC1400_VIP_PITCH, pitch & 0x0000FFFC);
+    return (0);
 }
 
 /*-----------------------------------------------------------------------------
@@ -108,15 +109,15 @@ int
 gfx_set_vbi_enable(int enable)
 #endif
 {
-   unsigned long value;
+    unsigned long value;
 
-   value = READ_VIP32(SC1400_VIP_CONTROL);
-   if (enable)
-      value |= SC1400_VIP_VBI_CAPTURE_EN;
-   else
-      value &= ~SC1400_VIP_VBI_CAPTURE_EN;
-   WRITE_VIP32(SC1400_VIP_CONTROL, value);
-   return (0);
+    value = READ_VIP32(SC1400_VIP_CONTROL);
+    if (enable)
+        value |= SC1400_VIP_VBI_CAPTURE_EN;
+    else
+        value &= ~SC1400_VIP_VBI_CAPTURE_EN;
+    WRITE_VIP32(SC1400_VIP_CONTROL, value);
+    return (0);
 }
 
 /*-----------------------------------------------------------------------------
@@ -133,11 +134,11 @@ int
 gfx_set_vbi_base(unsigned long even, unsigned long odd)
 #endif
 {
-   // TRUE OFFSET IS SPECIFIED, NEED TO SET BIT 23 FOR HARDWARE
+    // TRUE OFFSET IS SPECIFIED, NEED TO SET BIT 23 FOR HARDWARE
 
-   WRITE_VIP32(SC1400_VBI_EVEN_BASE, even | 0x00800000);
-   WRITE_VIP32(SC1400_VBI_ODD_BASE, odd | 0x00800000);
-   return (0);
+    WRITE_VIP32(SC1400_VBI_EVEN_BASE, even | 0x00800000);
+    WRITE_VIP32(SC1400_VBI_ODD_BASE, odd | 0x00800000);
+    return (0);
 }
 
 /*-----------------------------------------------------------------------------
@@ -154,8 +155,8 @@ int
 gfx_set_vbi_pitch(unsigned long pitch)
 #endif
 {
-   WRITE_VIP32(SC1400_VBI_PITCH, pitch & 0x0000FFFC);
-   return (0);
+    WRITE_VIP32(SC1400_VBI_PITCH, pitch & 0x0000FFFC);
+    return (0);
 }
 
 /*************************************************************/
@@ -176,9 +177,9 @@ int
 gfx_get_vip_enable(void)
 #endif
 {
-   if (READ_VIP32(SC1400_VIP_CONTROL) & 0x00000100)
-      return (1);
-   return (0);
+    if (READ_VIP32(SC1400_VIP_CONTROL) & 0x00000100)
+        return (1);
+    return (0);
 }
 
 /*-----------------------------------------------------------------------------
@@ -193,11 +194,11 @@ unsigned long
 gfx_get_vip_base(int odd)
 #endif
 {
-   // MASK BIT 23 AND ABOVE TO MAKE IT A TRUE OFFSET
+    // MASK BIT 23 AND ABOVE TO MAKE IT A TRUE OFFSET
 
-   if (odd)
-      return (READ_VIP32(SC1400_VIP_ODD_BASE) & 0x007FFFFF);
-   return (READ_VIP32(SC1400_VIP_EVEN_BASE) & 0x007FFFFF);
+    if (odd)
+        return (READ_VIP32(SC1400_VIP_ODD_BASE) & 0x007FFFFF);
+    return (READ_VIP32(SC1400_VIP_EVEN_BASE) & 0x007FFFFF);
 }
 
 /*-----------------------------------------------------------------------------
@@ -212,7 +213,7 @@ unsigned long
 gfx_get_vip_pitch(void)
 #endif
 {
-   return (READ_VIP32(SC1400_VIP_PITCH) & 0x0000FFFF);
+    return (READ_VIP32(SC1400_VIP_PITCH) & 0x0000FFFF);
 }
 
 /*-----------------------------------------------------------------------------
@@ -227,9 +228,9 @@ int
 gfx_get_vbi_enable(void)
 #endif
 {
-   if (READ_VIP32(SC1400_VIP_CONTROL) & 0x00000200)
-      return (1);
-   return (0);
+    if (READ_VIP32(SC1400_VIP_CONTROL) & 0x00000200)
+        return (1);
+    return (0);
 }
 
 /*-----------------------------------------------------------------------------
@@ -244,11 +245,11 @@ unsigned long
 gfx_get_vbi_base(int odd)
 #endif
 {
-   // MASK BIT 23 AND ABOVE TO MAKE IT A TRUE OFFSET
+    // MASK BIT 23 AND ABOVE TO MAKE IT A TRUE OFFSET
 
-   if (odd)
-      return (READ_VIP32(SC1400_VBI_ODD_BASE) & 0x007FFFFF);
-   return (READ_VIP32(SC1400_VBI_EVEN_BASE) & 0x007FFFFF);
+    if (odd)
+        return (READ_VIP32(SC1400_VBI_ODD_BASE) & 0x007FFFFF);
+    return (READ_VIP32(SC1400_VBI_EVEN_BASE) & 0x007FFFFF);
 }
 
 /*-----------------------------------------------------------------------------
@@ -263,9 +264,9 @@ unsigned long
 gfx_get_vbi_pitch(void)
 #endif
 {
-   return (READ_VIP32(SC1400_VBI_PITCH) & 0x0000FFFF);
+    return (READ_VIP32(SC1400_VBI_PITCH) & 0x0000FFFF);
 }
 
-#endif /* GFX_READ_ROUTINES */
+#endif                          /* GFX_READ_ROUTINES */
 
 /* END OF FILE */

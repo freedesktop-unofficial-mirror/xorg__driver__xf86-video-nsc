@@ -156,77 +156,80 @@ unsigned long gfx_read_vid32(unsigned long offset);
 unsigned long gfx_read_vip32(unsigned long offset);
 void gfx_write_vip32(unsigned long offset, unsigned long value);
 void gfx_mono_bitmap_to_screen_blt_swp(unsigned short srcx,
-				       unsigned short srcy,
-				       unsigned short dstx,
-				       unsigned short dsty,
-				       unsigned short width,
-				       unsigned short height,
-				       unsigned char *data, short pitch);
+                                       unsigned short srcy,
+                                       unsigned short dstx,
+                                       unsigned short dsty,
+                                       unsigned short width,
+                                       unsigned short height,
+                                       unsigned char *data, short pitch);
 unsigned int GetVideoMemSize(void);
 
 /* ROUTINES added accessing hardware reg */
 void
 gfx_write_reg8(unsigned long offset, unsigned char value)
 {
-   WRITE_REG8(offset, value);
+    WRITE_REG8(offset, value);
 }
 
 void
 gfx_write_reg16(unsigned long offset, unsigned short value)
 {
-   WRITE_REG16(offset, value);
+    WRITE_REG16(offset, value);
 }
 
 void
 gfx_write_reg32(unsigned long offset, unsigned long value)
 {
-   WRITE_REG32(offset, value);
+    WRITE_REG32(offset, value);
 }
+
 unsigned short
 gfx_read_reg16(unsigned long offset)
 {
-   unsigned short value;
+    unsigned short value;
 
-   value = READ_REG16(offset);
-   return value;
+    value = READ_REG16(offset);
+    return value;
 }
+
 unsigned long
 gfx_read_reg32(unsigned long offset)
 {
-   unsigned long value;
+    unsigned long value;
 
-   value = READ_REG32(offset);
-   return value;
+    value = READ_REG32(offset);
+    return value;
 }
 
 void
 gfx_write_vid32(unsigned long offset, unsigned long value)
 {
-   WRITE_VID32(offset, value);
+    WRITE_VID32(offset, value);
 }
+
 unsigned long
 gfx_read_vid32(unsigned long offset)
 {
-   unsigned long value;
+    unsigned long value;
 
-   value = READ_VID32(offset);
-   return value;
+    value = READ_VID32(offset);
+    return value;
 }
 
 /*Addition for the VIP code */
 unsigned long
 gfx_read_vip32(unsigned long offset)
 {
-   unsigned long value;
+    unsigned long value;
 
-   value = READ_VIP32(offset);
-   return value;
+    value = READ_VIP32(offset);
+    return value;
 }
 
 void
 gfx_write_vip32(unsigned long offset, unsigned long value)
 {
-   WRITE_VIP32(offset, value);
+    WRITE_VIP32(offset, value);
 }
 
 #define SWAP_BITS_IN_BYTES(v) \
@@ -244,182 +247,184 @@ gfx_write_vip32(unsigned long offset, unsigned long value)
 
 void
 gfx_mono_bitmap_to_screen_blt_swp(unsigned short srcx, unsigned short srcy,
-				  unsigned short dstx, unsigned short dsty,
-				  unsigned short width, unsigned short height,
-				  unsigned char *data, short pitch)
+                                  unsigned short dstx, unsigned short dsty,
+                                  unsigned short width, unsigned short height,
+                                  unsigned char *data, short pitch)
 {
-   unsigned long dstoffset, size, bytes;
-   unsigned long offset, temp_offset, temp1 = 0, temp2 = 0;
-   unsigned long i, j = 0, fifo_lines, dwords_extra, bytes_extra;
-   unsigned long shift = 0;
+    unsigned long dstoffset, size, bytes;
+    unsigned long offset, temp_offset, temp1 = 0, temp2 = 0;
+    unsigned long i, j = 0, fifo_lines, dwords_extra, bytes_extra;
+    unsigned long shift = 0;
 
-   size = (((unsigned long)width) << 16) | height;
+    size = (((unsigned long) width) << 16) | height;
 
-   /* CALCULATE STARTING OFFSETS */
+    /* CALCULATE STARTING OFFSETS */
 
-   offset = (unsigned long)srcy *pitch + ((unsigned long)srcx >> 3);
+    offset = (unsigned long) srcy *pitch + ((unsigned long) srcx >> 3);
 
-   dstoffset = (unsigned long)dsty *gu2_pitch +
-	 (((unsigned long)dstx) << gu2_xshift);
+    dstoffset = (unsigned long) dsty *gu2_pitch +
+        (((unsigned long) dstx) << gu2_xshift);
 
-   /* CHECK IF PATTERN ORIGINS NEED TO BE SET */
+    /* CHECK IF PATTERN ORIGINS NEED TO BE SET */
 
-   if (GFXpatternFlags) {
-      /* COMBINE X AND Y PATTERN ORIGINS WITH OFFSET */
+    if (GFXpatternFlags) {
+        /* COMBINE X AND Y PATTERN ORIGINS WITH OFFSET */
 
-      dstoffset |= ((unsigned long)(dstx & 7)) << 26;
-      dstoffset |= ((unsigned long)(dsty & 7)) << 29;
-   }
+        dstoffset |= ((unsigned long) (dstx & 7)) << 26;
+        dstoffset |= ((unsigned long) (dsty & 7)) << 29;
+    }
 
-   bytes = ((srcx & 7) + width + 7) >> 3;
-   fifo_lines = bytes >> 5;
-   dwords_extra = (bytes & 0x0000001Cl) >> 2;
-   bytes_extra = bytes & 0x00000003l;
+    bytes = ((srcx & 7) + width + 7) >> 3;
+    fifo_lines = bytes >> 5;
+    dwords_extra = (bytes & 0x0000001Cl) >> 2;
+    bytes_extra = bytes & 0x00000003l;
 
-   /* POLL UNTIL ABLE TO WRITE TO THE REGISTERS */
-   /* Put off poll for as long as possible (do most calculations first).   */
-   /* The source offset is always 0 since we allow misaligned dword reads. */
-   /* Need to wait for busy instead of pending, since hardware clears      */
-   /* the host data FIFO at the beginning of a BLT.                        */
+    /* POLL UNTIL ABLE TO WRITE TO THE REGISTERS */
+    /* Put off poll for as long as possible (do most calculations first).   */
+    /* The source offset is always 0 since we allow misaligned dword reads. */
+    /* Need to wait for busy instead of pending, since hardware clears      */
+    /* the host data FIFO at the beginning of a BLT.                        */
 
-   GU2_WAIT_PENDING;
-   WRITE_GP32(MGP_RASTER_MODE, gu2_rop32);
-   WRITE_GP32(MGP_SRC_OFFSET, ((unsigned long)srcx & 7) << 26);
-   WRITE_GP32(MGP_DST_OFFSET, dstoffset);
-   WRITE_GP32(MGP_WID_HEIGHT, size);
-   WRITE_GP32(MGP_STRIDE, gu2_pitch);
-   WRITE_GP16(MGP_BLT_MODE, gu2_blt_mode | MGP_BM_SRC_HOST | MGP_BM_SRC_MONO);
+    GU2_WAIT_PENDING;
+    WRITE_GP32(MGP_RASTER_MODE, gu2_rop32);
+    WRITE_GP32(MGP_SRC_OFFSET, ((unsigned long) srcx & 7) << 26);
+    WRITE_GP32(MGP_DST_OFFSET, dstoffset);
+    WRITE_GP32(MGP_WID_HEIGHT, size);
+    WRITE_GP32(MGP_STRIDE, gu2_pitch);
+    WRITE_GP16(MGP_BLT_MODE, gu2_blt_mode | MGP_BM_SRC_HOST | MGP_BM_SRC_MONO);
 
-   /* WAIT FOR BLT TO BE LATCHED */
+    /* WAIT FOR BLT TO BE LATCHED */
 
-   GU2_WAIT_PENDING;
+    GU2_WAIT_PENDING;
 
-   /* WRITE ALL OF THE DATA TO THE HOST SOURCE REGISTER */
+    /* WRITE ALL OF THE DATA TO THE HOST SOURCE REGISTER */
 
-   while (height--) {
-      temp_offset = offset;
+    while (height--) {
+        temp_offset = offset;
 
-      /* WRITE ALL FULL FIFO LINES */
+        /* WRITE ALL FULL FIFO LINES */
 
-      for (i = 0; i < fifo_lines; i++) {
-	 GU2_WAIT_HALF_EMPTY;
-	 WRITE_GPREG_STRING32_SWP(MGP_HST_SOURCE, 8, j, data, temp_offset,
-				  temp1);
-	 temp_offset += 32;
-      }
+        for (i = 0; i < fifo_lines; i++) {
+            GU2_WAIT_HALF_EMPTY;
+            WRITE_GPREG_STRING32_SWP(MGP_HST_SOURCE, 8, j, data, temp_offset,
+                                     temp1);
+            temp_offset += 32;
+        }
 
-      /* WRITE ALL FULL DWORDS */
+        /* WRITE ALL FULL DWORDS */
 
-      GU2_WAIT_HALF_EMPTY;
-      if (dwords_extra) {
-	 WRITE_GPREG_STRING32_SWP(MGP_HST_SOURCE, dwords_extra, i, data,
-				  temp_offset, temp1);
-	 temp_offset += (dwords_extra << 2);
-      }
+        GU2_WAIT_HALF_EMPTY;
+        if (dwords_extra) {
+            WRITE_GPREG_STRING32_SWP(MGP_HST_SOURCE, dwords_extra, i, data,
+                                     temp_offset, temp1);
+            temp_offset += (dwords_extra << 2);
+        }
 
-      /* WRITE REMAINING BYTES */
+        /* WRITE REMAINING BYTES */
 
-      shift = 0;
-      if (bytes_extra)
-	 WRITE_GPREG_STRING8(MGP_HST_SOURCE, bytes_extra, shift, i, data,
-			     temp_offset, temp1, temp2);
+        shift = 0;
+        if (bytes_extra)
+            WRITE_GPREG_STRING8(MGP_HST_SOURCE, bytes_extra, shift, i, data,
+                                temp_offset, temp1, temp2);
 
-      offset += pitch;
-   }
+        offset += pitch;
+    }
 }
+
 unsigned int
 GetVideoMemSize(void)
 {
-   unsigned int graphicsMemBaseAddr;
-   unsigned int totalMem = 0;
-   int i;
-   unsigned int graphicsMemMask, graphicsMemShift;
+    unsigned int graphicsMemBaseAddr;
+    unsigned int totalMem = 0;
+    int i;
+    unsigned int graphicsMemMask, graphicsMemShift;
 
-   /* Read graphics base address. */
+    /* Read graphics base address. */
 
-   graphicsMemBaseAddr = gfx_read_reg32(0x8414);
+    graphicsMemBaseAddr = gfx_read_reg32(0x8414);
 
-   if (1) {
-      unsigned int mcBankCfg = gfx_read_reg32(0x8408);
-      unsigned int dimmShift = 4;
+    if (1) {
+        unsigned int mcBankCfg = gfx_read_reg32(0x8408);
+        unsigned int dimmShift = 4;
 
-      graphicsMemMask = 0x7FF;
-      graphicsMemShift = 19;
+        graphicsMemMask = 0x7FF;
+        graphicsMemShift = 19;
 
-      /* Calculate total memory size for GXm. */
+        /* Calculate total memory size for GXm. */
 
-      for (i = 0; i < 2; i++) {
-	 if (((mcBankCfg >> dimmShift) & 0x7) != 0x7) {
-	    switch ((mcBankCfg >> (dimmShift + 4)) & 0x7) {
-	    case 0:
-	       totalMem += 0x400000;
-	       break;
-	    case 1:
-	       totalMem += 0x800000;
-	       break;
-	    case 2:
-	       totalMem += 0x1000000;
-	       break;
-	    case 3:
-	       totalMem += 0x2000000;
-	       break;
-	    case 4:
-	       totalMem += 0x4000000;
-	       break;
-	    case 5:
-	       totalMem += 0x8000000;
-	       break;
-	    case 6:
-	       totalMem += 0x10000000;
-	       break;
-	    case 7:
-	       totalMem += 0x20000000;
-	       break;
-	    default:
-	       break;
-	    }
-	 }
-	 dimmShift += 16;
-      }
-   } else {
-      unsigned int mcMemCntrl1 = gfx_read_reg32(0x8400);
-      unsigned int bankSizeShift = 12;
+        for (i = 0; i < 2; i++) {
+            if (((mcBankCfg >> dimmShift) & 0x7) != 0x7) {
+                switch ((mcBankCfg >> (dimmShift + 4)) & 0x7) {
+                case 0:
+                    totalMem += 0x400000;
+                    break;
+                case 1:
+                    totalMem += 0x800000;
+                    break;
+                case 2:
+                    totalMem += 0x1000000;
+                    break;
+                case 3:
+                    totalMem += 0x2000000;
+                    break;
+                case 4:
+                    totalMem += 0x4000000;
+                    break;
+                case 5:
+                    totalMem += 0x8000000;
+                    break;
+                case 6:
+                    totalMem += 0x10000000;
+                    break;
+                case 7:
+                    totalMem += 0x20000000;
+                    break;
+                default:
+                    break;
+                }
+            }
+            dimmShift += 16;
+        }
+    }
+    else {
+        unsigned int mcMemCntrl1 = gfx_read_reg32(0x8400);
+        unsigned int bankSizeShift = 12;
 
-      graphicsMemMask = 0x3FF;
-      graphicsMemShift = 17;
+        graphicsMemMask = 0x3FF;
+        graphicsMemShift = 17;
 
-      /* Calculate total memory size for GX. */
+        /* Calculate total memory size for GX. */
 
-      for (i = 0; i < 4; i++) {
-	 switch ((mcMemCntrl1 >> bankSizeShift) & 0x7) {
-	 case 1:
-	    totalMem += 0x200000;
-	    break;
-	 case 2:
-	    totalMem += 0x400000;
-	    break;
-	 case 3:
-	    totalMem += 0x800000;
-	    break;
-	 case 4:
-	    totalMem += 0x1000000;
-	    break;
-	 case 5:
-	    totalMem += 0x2000000;
-	    break;
-	 default:
-	    break;
-	 }
-	 bankSizeShift += 3;
-      }
-   }
+        for (i = 0; i < 4; i++) {
+            switch ((mcMemCntrl1 >> bankSizeShift) & 0x7) {
+            case 1:
+                totalMem += 0x200000;
+                break;
+            case 2:
+                totalMem += 0x400000;
+                break;
+            case 3:
+                totalMem += 0x800000;
+                break;
+            case 4:
+                totalMem += 0x1000000;
+                break;
+            case 5:
+                totalMem += 0x2000000;
+                break;
+            default:
+                break;
+            }
+            bankSizeShift += 3;
+        }
+    }
 
-   /* Calculate graphics memory base address */
+    /* Calculate graphics memory base address */
 
-   graphicsMemBaseAddr &= graphicsMemMask;
-   graphicsMemBaseAddr <<= graphicsMemShift;
+    graphicsMemBaseAddr &= graphicsMemMask;
+    graphicsMemBaseAddr <<= graphicsMemShift;
 
-   return (totalMem - graphicsMemBaseAddr);
+    return (totalMem - graphicsMemBaseAddr);
 }
 
 /* END OF FILE */

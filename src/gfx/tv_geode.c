@@ -30,24 +30,24 @@ int
 gfx_set_tv_defaults(int format)
 #endif
 {
-   /* SET DEFAULTS FOR NTSC */
+    /* SET DEFAULTS FOR NTSC */
 
-   WRITE_VID32(SC1400_TVOUT_HORZ_TIM, 0x00790359);
-   WRITE_VID32(SC1400_TVOUT_HORZ_SYNC, 0x03580350);
-   WRITE_VID32(SC1400_TVOUT_VERT_SYNC, 0x0A002001);
-   WRITE_VID32(SC1400_TVOUT_LINE_END, 0x039C00F0);
-   WRITE_VID32(SC1400_TVOUT_VERT_DOWNSCALE, 0xFFFFFFFF);
-   WRITE_VID32(SC1400_TVOUT_HORZ_SCALING, 0x10220700);
-   WRITE_VID32(SC1400_TVOUT_EMMA_BYPASS, 0x0002D0F0);
-   WRITE_VID32(SC1400_TVENC_TIM_CTRL_1, 0xA2E03000);
-   WRITE_VID32(SC1400_TVENC_TIM_CTRL_2, 0x1FF20000);
-   WRITE_VID32(SC1400_TVENC_TIM_CTRL_3, 0x00000000);
-   WRITE_VID32(SC1400_TVENC_SUB_FREQ, 0x21F12000);
-   WRITE_VID32(SC1400_TVENC_DISP_POS, 0x00030071);
-   WRITE_VID32(SC1400_TVENC_DISP_SIZE, 0x00EF02CF);
+    WRITE_VID32(SC1400_TVOUT_HORZ_TIM, 0x00790359);
+    WRITE_VID32(SC1400_TVOUT_HORZ_SYNC, 0x03580350);
+    WRITE_VID32(SC1400_TVOUT_VERT_SYNC, 0x0A002001);
+    WRITE_VID32(SC1400_TVOUT_LINE_END, 0x039C00F0);
+    WRITE_VID32(SC1400_TVOUT_VERT_DOWNSCALE, 0xFFFFFFFF);
+    WRITE_VID32(SC1400_TVOUT_HORZ_SCALING, 0x10220700);
+    WRITE_VID32(SC1400_TVOUT_EMMA_BYPASS, 0x0002D0F0);
+    WRITE_VID32(SC1400_TVENC_TIM_CTRL_1, 0xA2E03000);
+    WRITE_VID32(SC1400_TVENC_TIM_CTRL_2, 0x1FF20000);
+    WRITE_VID32(SC1400_TVENC_TIM_CTRL_3, 0x00000000);
+    WRITE_VID32(SC1400_TVENC_SUB_FREQ, 0x21F12000);
+    WRITE_VID32(SC1400_TVENC_DISP_POS, 0x00030071);
+    WRITE_VID32(SC1400_TVENC_DISP_SIZE, 0x00EF02CF);
 
-   /* ### ADD ### DEFAULTS FOR PAL */
-   return (0);
+    /* ### ADD ### DEFAULTS FOR PAL */
+    return (0);
 }
 
 /*-----------------------------------------------------------------------------
@@ -64,15 +64,15 @@ int
 gfx_set_tv_enable(int enable)
 #endif
 {
-   unsigned long value;
+    unsigned long value;
 
-   value = READ_VID32(SC1400_DISPLAY_CONFIG);
-   if (enable)
-      value |= SC1400_DCFG_TVOUT_EN;
-   else
-      value &= ~(SC1400_DCFG_TVOUT_EN);
-   WRITE_VID32(SC1400_DISPLAY_CONFIG, value);
-   return (0);
+    value = READ_VID32(SC1400_DISPLAY_CONFIG);
+    if (enable)
+        value |= SC1400_DCFG_TVOUT_EN;
+    else
+        value &= ~(SC1400_DCFG_TVOUT_EN);
+    WRITE_VID32(SC1400_DISPLAY_CONFIG, value);
+    return (0);
 }
 
 /*-----------------------------------------------------------------------------
@@ -90,14 +90,14 @@ int
 gfx_set_tv_cc_enable(int enable)
 #endif
 {
-   unsigned long value;
+    unsigned long value;
 
-   value = READ_VID32(SC1400_TVENC_CC_CONTROL);
-   value &= ~(0x0005F);
-   if (enable)
-      value |= 0x51;
-   WRITE_VID32(SC1400_TVENC_CC_CONTROL, value);
-   return (0);
+    value = READ_VID32(SC1400_TVENC_CC_CONTROL);
+    value &= ~(0x0005F);
+    if (enable)
+        value |= 0x51;
+    WRITE_VID32(SC1400_TVENC_CC_CONTROL, value);
+    return (0);
 }
 
 /*-----------------------------------------------------------------------------
@@ -115,11 +115,11 @@ int
 gfx_set_tv_cc_data(unsigned char data1, unsigned char data2)
 #endif
 {
-   unsigned long value;
+    unsigned long value;
 
-   value = data1 | (((unsigned long)data2) << 8);
-   WRITE_VID32(SC1400_TVENC_CC_DATA, value);
-   return (0);
+    value = data1 | (((unsigned long) data2) << 8);
+    WRITE_VID32(SC1400_TVENC_CC_DATA, value);
+    return (0);
 }
 
 /* END OF FILE */

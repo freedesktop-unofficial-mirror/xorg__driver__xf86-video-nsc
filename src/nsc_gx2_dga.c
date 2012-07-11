@@ -159,7 +159,7 @@
 /* forward declarations */
 Bool GX2DGAInit(ScreenPtr pScreen);
 static Bool GX2_OpenFramebuffer(ScrnInfoPtr, char **, unsigned char **,
-				int *, int *, int *);
+                                int *, int *, int *);
 static void GX2_CloseFramebuffer(ScrnInfoPtr pScrn);
 static Bool GX2_SetMode(ScrnInfoPtr, DGAModePtr);
 static int GX2_GetViewport(ScrnInfoPtr);
@@ -172,15 +172,15 @@ extern Bool GX2SwitchMode(int, DisplayModePtr, int);
 extern void GX2AccelSync(ScrnInfoPtr pScreenInfo);
 
 static DGAFunctionRec GX2DGAFuncs = {
-   GX2_OpenFramebuffer,
-   GX2_CloseFramebuffer,
-   GX2_SetMode,
-   GX2_SetViewport,
-   GX2_GetViewport,
-   GX2AccelSync,
-   GX2_FillRect,
-   GX2_BlitRect,
-   NULL
+    GX2_OpenFramebuffer,
+    GX2_CloseFramebuffer,
+    GX2_SetMode,
+    GX2_SetViewport,
+    GX2_GetViewport,
+    GX2AccelSync,
+    GX2_FillRect,
+    GX2_BlitRect,
+    NULL
 };
 
 /*----------------------------------------------------------------------------
@@ -201,94 +201,96 @@ static DGAFunctionRec GX2DGAFuncs = {
 Bool
 GX2DGAInit(ScreenPtr pScreen)
 {
-   ScrnInfoPtr pScrn = xf86Screens[pScreen->myNum];
-   GeodePtr pGeode = GEODEPTR(pScrn);
-   DGAModePtr modes = NULL, newmodes = NULL, currentMode;
-   DisplayModePtr pMode, firstMode;
-   int Bpp = pScrn->bitsPerPixel >> 3;
-   int num = 0;
-   Bool oneMore;
+    ScrnInfoPtr pScrn = xf86Screens[pScreen->myNum];
+    GeodePtr pGeode = GEODEPTR(pScrn);
+    DGAModePtr modes = NULL, newmodes = NULL, currentMode;
+    DisplayModePtr pMode, firstMode;
+    int Bpp = pScrn->bitsPerPixel >> 3;
+    int num = 0;
+    Bool oneMore;
 
-   pMode = firstMode = pScrn->modes;
-   DEBUGMSG(0, (0, X_NONE, "GX2DGAInit %d\n", Bpp));
-   while (pMode) {
+    pMode = firstMode = pScrn->modes;
+    DEBUGMSG(0, (0, X_NONE, "GX2DGAInit %d\n", Bpp));
+    while (pMode) {
 
-      /* redundant but it can be used in future:if(0). */
-      if (0) {				/*pScrn->displayWidth != pMode->HDisplay */
-	 /* memory is allocated for dga to
-	  *setup the viewport and mode parameters
-	  */
-	 newmodes = realloc(modes, (num + 2) * sizeof(DGAModeRec));
-	 oneMore = TRUE;
-      } else {
-	 /* one record is allocated here */
-	 newmodes = realloc(modes, (num + 1) * sizeof(DGAModeRec));
-	 oneMore = FALSE;
-      }
-      if (!newmodes) {
-	 free(modes);
-	 return FALSE;
-      }
-      modes = newmodes;
+        /* redundant but it can be used in future:if(0). */
+        if (0) {                /*pScrn->displayWidth != pMode->HDisplay */
+            /* memory is allocated for dga to
+             *setup the viewport and mode parameters
+             */
+            newmodes = realloc(modes, (num + 2) * sizeof(DGAModeRec));
+            oneMore = TRUE;
+        }
+        else {
+            /* one record is allocated here */
+            newmodes = realloc(modes, (num + 1) * sizeof(DGAModeRec));
+            oneMore = FALSE;
+        }
+        if (!newmodes) {
+            free(modes);
+            return FALSE;
+        }
+        modes = newmodes;
 
-    SECOND_PASS:			/* DGA mode flgas and viewport parametrs are set here. */
+ SECOND_PASS:                  /* DGA mode flgas and viewport parametrs are set here. */
 
-      currentMode = modes + num;
-      num++;
-      currentMode->mode = pMode;
-      currentMode->flags = DGA_CONCURRENT_ACCESS | DGA_PIXMAP_AVAILABLE;
-      currentMode->flags |= DGA_FILL_RECT | DGA_BLIT_RECT;
-      if (pMode->Flags & V_DBLSCAN)
-	 currentMode->flags |= DGA_DOUBLESCAN;
-      if (pMode->Flags & V_INTERLACE)
-	 currentMode->flags |= DGA_INTERLACED;
-      currentMode->byteOrder = pScrn->imageByteOrder;
-      currentMode->depth = pScrn->depth;
-      currentMode->bitsPerPixel = pScrn->bitsPerPixel;
-      currentMode->red_mask = pScrn->mask.red;
-      currentMode->green_mask = pScrn->mask.green;
-      currentMode->blue_mask = pScrn->mask.blue;
-      currentMode->visualClass = (Bpp == 1) ? PseudoColor : TrueColor;
-      currentMode->viewportWidth = pMode->HDisplay;
-      currentMode->viewportHeight = pMode->VDisplay;
-      currentMode->xViewportStep = 1;
-      currentMode->yViewportStep = 1;
-      currentMode->viewportFlags = DGA_FLIP_RETRACE;
-      currentMode->offset = 0;
-      currentMode->address = pGeode->FBBase;
-      if (oneMore) {			/* first one is narrow width */
-	 currentMode->bytesPerScanline = ((pMode->HDisplay * Bpp) + 3) & ~3L;
-	 currentMode->imageWidth = pMode->HDisplay;
-	 currentMode->imageHeight = pMode->VDisplay;
-	 currentMode->pixmapWidth = currentMode->imageWidth;
-	 currentMode->pixmapHeight = currentMode->imageHeight;
-	 currentMode->maxViewportX = currentMode->imageWidth -
-	       currentMode->viewportWidth;
-	 /* this might need to get clamped to some maximum */
-	 currentMode->maxViewportY = currentMode->imageHeight -
-	       currentMode->viewportHeight;
-	 oneMore = FALSE;
-	 goto SECOND_PASS;
-      } else {
-	 currentMode->bytesPerScanline =
-	       ((pScrn->displayWidth * Bpp) + 3) & ~3L;
-	 currentMode->imageWidth = pScrn->displayWidth;
-	 currentMode->imageHeight = pMode->VDisplay;
-	 currentMode->pixmapWidth = currentMode->imageWidth;
-	 currentMode->pixmapHeight = currentMode->imageHeight;
-	 currentMode->maxViewportX = currentMode->imageWidth -
-	       currentMode->viewportWidth;
-	 /* this might need to get clamped to some maximum */
-	 currentMode->maxViewportY = currentMode->imageHeight -
-	       currentMode->viewportHeight;
-      }
-      pMode = pMode->next;
-      if (pMode == firstMode)
-	 break;
-   }
-   pGeode->numDGAModes = num;
-   pGeode->DGAModes = modes;
-   return DGAInit(pScreen, &GX2DGAFuncs, modes, num);
+        currentMode = modes + num;
+        num++;
+        currentMode->mode = pMode;
+        currentMode->flags = DGA_CONCURRENT_ACCESS | DGA_PIXMAP_AVAILABLE;
+        currentMode->flags |= DGA_FILL_RECT | DGA_BLIT_RECT;
+        if (pMode->Flags & V_DBLSCAN)
+            currentMode->flags |= DGA_DOUBLESCAN;
+        if (pMode->Flags & V_INTERLACE)
+            currentMode->flags |= DGA_INTERLACED;
+        currentMode->byteOrder = pScrn->imageByteOrder;
+        currentMode->depth = pScrn->depth;
+        currentMode->bitsPerPixel = pScrn->bitsPerPixel;
+        currentMode->red_mask = pScrn->mask.red;
+        currentMode->green_mask = pScrn->mask.green;
+        currentMode->blue_mask = pScrn->mask.blue;
+        currentMode->visualClass = (Bpp == 1) ? PseudoColor : TrueColor;
+        currentMode->viewportWidth = pMode->HDisplay;
+        currentMode->viewportHeight = pMode->VDisplay;
+        currentMode->xViewportStep = 1;
+        currentMode->yViewportStep = 1;
+        currentMode->viewportFlags = DGA_FLIP_RETRACE;
+        currentMode->offset = 0;
+        currentMode->address = pGeode->FBBase;
+        if (oneMore) {          /* first one is narrow width */
+            currentMode->bytesPerScanline = ((pMode->HDisplay * Bpp) + 3) & ~3L;
+            currentMode->imageWidth = pMode->HDisplay;
+            currentMode->imageHeight = pMode->VDisplay;
+            currentMode->pixmapWidth = currentMode->imageWidth;
+            currentMode->pixmapHeight = currentMode->imageHeight;
+            currentMode->maxViewportX = currentMode->imageWidth -
+                currentMode->viewportWidth;
+            /* this might need to get clamped to some maximum */
+            currentMode->maxViewportY = currentMode->imageHeight -
+                currentMode->viewportHeight;
+            oneMore = FALSE;
+            goto SECOND_PASS;
+        }
+        else {
+            currentMode->bytesPerScanline =
+                ((pScrn->displayWidth * Bpp) + 3) & ~3L;
+            currentMode->imageWidth = pScrn->displayWidth;
+            currentMode->imageHeight = pMode->VDisplay;
+            currentMode->pixmapWidth = currentMode->imageWidth;
+            currentMode->pixmapHeight = currentMode->imageHeight;
+            currentMode->maxViewportX = currentMode->imageWidth -
+                currentMode->viewportWidth;
+            /* this might need to get clamped to some maximum */
+            currentMode->maxViewportY = currentMode->imageHeight -
+                currentMode->viewportHeight;
+        }
+        pMode = pMode->next;
+        if (pMode == firstMode)
+            break;
+    }
+    pGeode->numDGAModes = num;
+    pGeode->DGAModes = modes;
+    return DGAInit(pScreen, &GX2DGAFuncs, modes, num);
 }
 
 /*----------------------------------------------------------------------------
@@ -309,45 +311,46 @@ GX2DGAInit(ScreenPtr pScreen)
 static Bool
 GX2_SetMode(ScrnInfoPtr pScrn, DGAModePtr pMode)
 {
-   static int OldDisplayWidth[MAXSCREENS];
-   int index = pScrn->pScreen->myNum;
-   GeodePtr pGeode = GEODEPTR(pScrn);
+    static int OldDisplayWidth[MAXSCREENS];
+    int index = pScrn->pScreen->myNum;
+    GeodePtr pGeode = GEODEPTR(pScrn);
 
-   DEBUGMSG(0, (0, X_NONE, "GX2_SetMode\n"));
-   if (!pMode) {
-      /* restore the original mode
-       * * put the ScreenParameters back
-       */
-      pScrn->displayWidth = OldDisplayWidth[index];
-      DEBUGMSG(0,
-	       (0, X_NONE, "GX2_SetMode !pMode %d\n", pScrn->displayWidth));
-      GX2SwitchMode(index, pScrn->currentMode, 0);
-      pGeode->DGAactive = FALSE;
-   } else {
-      if (!pGeode->DGAactive) {		/* save the old parameters */
-	 OldDisplayWidth[index] = pScrn->displayWidth;
-	 pGeode->DGAactive = TRUE;
-	 DEBUGMSG(0,
-		  (0, X_NONE, "GX2_SetMode pMode+ NA %d\n",
-		   pScrn->displayWidth));
-      }
-      pScrn->displayWidth = pMode->bytesPerScanline /
-	    (pMode->bitsPerPixel >> 3);
-      DEBUGMSG(0,
-	       (0, X_NONE, "GX2_SetMode pMode+  %d\n", pScrn->displayWidth));
-      GX2SwitchMode(index, pMode->mode, 0);
-   }
-   /* enable/disable Compression */
-   if (pGeode->Compression) {
-      GFX(set_compression_enable(!pGeode->DGAactive));
-   }
+    DEBUGMSG(0, (0, X_NONE, "GX2_SetMode\n"));
+    if (!pMode) {
+        /* restore the original mode
+         * * put the ScreenParameters back
+         */
+        pScrn->displayWidth = OldDisplayWidth[index];
+        DEBUGMSG(0,
+                 (0, X_NONE, "GX2_SetMode !pMode %d\n", pScrn->displayWidth));
+        GX2SwitchMode(index, pScrn->currentMode, 0);
+        pGeode->DGAactive = FALSE;
+    }
+    else {
+        if (!pGeode->DGAactive) {       /* save the old parameters */
+            OldDisplayWidth[index] = pScrn->displayWidth;
+            pGeode->DGAactive = TRUE;
+            DEBUGMSG(0,
+                     (0, X_NONE, "GX2_SetMode pMode+ NA %d\n",
+                      pScrn->displayWidth));
+        }
+        pScrn->displayWidth = pMode->bytesPerScanline /
+            (pMode->bitsPerPixel >> 3);
+        DEBUGMSG(0,
+                 (0, X_NONE, "GX2_SetMode pMode+  %d\n", pScrn->displayWidth));
+        GX2SwitchMode(index, pMode->mode, 0);
+    }
+    /* enable/disable Compression */
+    if (pGeode->Compression) {
+        GFX(set_compression_enable(!pGeode->DGAactive));
+    }
 
-   /* enable/disable cursor */
-   if (pGeode->HWCursor) {
-      GFX(set_cursor_enable(!pGeode->DGAactive));
-   }
+    /* enable/disable cursor */
+    if (pGeode->HWCursor) {
+        GFX(set_cursor_enable(!pGeode->DGAactive));
+    }
 
-   return TRUE;
+    return TRUE;
 }
 
 /*----------------------------------------------------------------------------
@@ -368,9 +371,9 @@ GX2_SetMode(ScrnInfoPtr pScrn, DGAModePtr pMode)
 static int
 GX2_GetViewport(ScrnInfoPtr pScrn)
 {
-   GeodePtr pGeode = GEODEPTR(pScrn);
+    GeodePtr pGeode = GEODEPTR(pScrn);
 
-   return pGeode->DGAViewportStatus;
+    return pGeode->DGAViewportStatus;
 }
 
 /*----------------------------------------------------------------------------
@@ -392,10 +395,10 @@ GX2_GetViewport(ScrnInfoPtr pScrn)
 static void
 GX2_SetViewport(ScrnInfoPtr pScrn, int x, int y, int flags)
 {
-   GeodePtr pGeode = GEODEPTR(pScrn);
+    GeodePtr pGeode = GEODEPTR(pScrn);
 
-   GX2AdjustFrame(pScrn->pScreen->myNum, x, y, flags);
-   pGeode->DGAViewportStatus = 0;	/*GX2AdjustFrame loops until finished */
+    GX2AdjustFrame(pScrn->pScreen->myNum, x, y, flags);
+    pGeode->DGAViewportStatus = 0;      /*GX2AdjustFrame loops until finished */
 }
 
 /*----------------------------------------------------------------------------
@@ -418,16 +421,15 @@ GX2_SetViewport(ScrnInfoPtr pScrn, int x, int y, int flags)
 *----------------------------------------------------------------------------
 */
 static void
-GX2_FillRect(ScrnInfoPtr pScrn, int x, int y,
-	     int w, int h, unsigned long color)
+GX2_FillRect(ScrnInfoPtr pScrn, int x, int y, int w, int h, unsigned long color)
 {
-   GeodePtr pGeode = GEODEPTR(pScrn);
+    GeodePtr pGeode = GEODEPTR(pScrn);
 
-   if (pGeode->AccelInfoRec) {
-      (*pGeode->AccelInfoRec->SetupForSolidFill) (pScrn, color, GXcopy, ~0);
-      (*pGeode->AccelInfoRec->SubsequentSolidFillRect) (pScrn, x, y, w, h);
-      SET_SYNC_FLAG(pGeode->AccelInfoRec);
-   }
+    if (pGeode->AccelInfoRec) {
+        (*pGeode->AccelInfoRec->SetupForSolidFill) (pScrn, color, GXcopy, ~0);
+        (*pGeode->AccelInfoRec->SubsequentSolidFillRect) (pScrn, x, y, w, h);
+        SET_SYNC_FLAG(pGeode->AccelInfoRec);
+    }
 }
 
 /*----------------------------------------------------------------------------
@@ -453,21 +455,21 @@ GX2_FillRect(ScrnInfoPtr pScrn, int x, int y,
 */
 static void
 GX2_BlitRect(ScrnInfoPtr pScrn,
-	     int srcx, int srcy, int w, int h, int dstx, int dsty)
+             int srcx, int srcy, int w, int h, int dstx, int dsty)
 {
-   GeodePtr pGeode = GEODEPTR(pScrn);
+    GeodePtr pGeode = GEODEPTR(pScrn);
 
-   if (pGeode->AccelInfoRec) {
-      int xdir = ((srcx < dstx) && (srcy == dsty)) ? -1 : 1;
-      int ydir = (srcy < dsty) ? -1 : 1;
+    if (pGeode->AccelInfoRec) {
+        int xdir = ((srcx < dstx) && (srcy == dsty)) ? -1 : 1;
+        int ydir = (srcy < dsty) ? -1 : 1;
 
-      (*pGeode->AccelInfoRec->SetupForScreenToScreenCopy)
-	    (pScrn, xdir, ydir, GXcopy, ~0, -1);
-      (*pGeode->AccelInfoRec->SubsequentScreenToScreenCopy) (pScrn, srcx,
-							     srcy, dstx, dsty,
-							     w, h);
-      SET_SYNC_FLAG(pGeode->AccelInfoRec);
-   }
+        (*pGeode->AccelInfoRec->SetupForScreenToScreenCopy)
+            (pScrn, xdir, ydir, GXcopy, ~0, -1);
+        (*pGeode->AccelInfoRec->SubsequentScreenToScreenCopy) (pScrn, srcx,
+                                                               srcy, dstx, dsty,
+                                                               w, h);
+        SET_SYNC_FLAG(pGeode->AccelInfoRec);
+    }
 }
 
 /*----------------------------------------------------------------------------
@@ -491,17 +493,17 @@ GX2_BlitRect(ScrnInfoPtr pScrn,
 */
 static Bool
 GX2_OpenFramebuffer(ScrnInfoPtr pScrn,
-		    char **name, unsigned char **mem,
-		    int *size, int *offset, int *flags)
+                    char **name, unsigned char **mem,
+                    int *size, int *offset, int *flags)
 {
-   GeodePtr pGeode = GEODEPTR(pScrn);
+    GeodePtr pGeode = GEODEPTR(pScrn);
 
-   *name = NULL;			/* no special device */
-   *mem = (unsigned char *)pGeode->FBLinearAddr;
-   *size = pGeode->FBSize;
-   *offset = 0;
-   *flags = DGA_NEED_ROOT;
-   return TRUE;
+    *name = NULL;               /* no special device */
+    *mem = (unsigned char *) pGeode->FBLinearAddr;
+    *size = pGeode->FBSize;
+    *offset = 0;
+    *flags = DGA_NEED_ROOT;
+    return TRUE;
 }
 
 static void

@@ -141,6 +141,6 @@
 
 #if GFX_VGA_DYNAMIC
 
-#endif /* GFX_DISPLAY_DYNAMIC */
+#endif                          /* GFX_DISPLAY_DYNAMIC */
 
 /* END OF FILE */
