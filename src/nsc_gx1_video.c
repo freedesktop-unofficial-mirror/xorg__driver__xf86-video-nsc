@@ -378,17 +378,15 @@ GX1SetColorkey(ScrnInfoPtr pScrn, GeodePortPrivPtr pPriv)
         break;
     default:
         red = (pPriv->colorKey & pScrn->mask.red) >> pScrn->offset.red << (8 -
-                                                                           pScrn->weight.red);
-        green =
-            (pPriv->colorKey & pScrn->mask.green) >> pScrn->offset.green << (8 -
-                                                                             pScrn->
-                                                                             weight.
-                                                                             green);
-        blue =
-            (pPriv->colorKey & pScrn->mask.blue) >> pScrn->offset.blue << (8 -
                                                                            pScrn->
                                                                            weight.
-                                                                           blue);
+                                                                           red);
+        green =
+            (pPriv->colorKey & pScrn->mask.green) >> pScrn->offset.green << (8 -
+                                                                             pScrn->weight.green);
+        blue =
+            (pPriv->colorKey & pScrn->mask.blue) >> pScrn->offset.blue << (8 -
+                                                                           pScrn->weight.blue);
         break;
     }
     GFX(set_video_color_key((blue | (green << 8) | (red << 16)), 0xFCFCFC,

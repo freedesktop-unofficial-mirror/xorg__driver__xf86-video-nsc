@@ -493,8 +493,8 @@ GX2PreInit(ScrnInfoPtr pScreenInfo, int flags)
 #endif
         pGeode->Chipset = pGeode->pEnt->chipset;
         pScreenInfo->chipset = (char *) xf86TokenToString(GeodeChipsets,
-                                                          pGeode->pEnt->
-                                                          chipset);
+                                                          pGeode->
+                                                          pEnt->chipset);
     }
 
     if (flags & PROBE_DETECT) {

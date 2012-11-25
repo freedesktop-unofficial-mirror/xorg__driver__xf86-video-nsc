@@ -345,8 +345,7 @@ gfx_inb(unsigned short port)
     unsigned char data;
 
     _asm {
-    pushf mov dx, port in al, dx mov data, al popf}
-    return (data);
+    pushf mov dx, port in al, dx mov data, al popf} return (data);
 }
 
 unsigned short
@@ -355,8 +354,7 @@ gfx_inw(unsigned short port)
     unsigned short data;
 
     _asm {
-    pushf mov dx, port in ax, dx mov data, ax popf}
-    return (data);
+    pushf mov dx, port in ax, dx mov data, ax popf} return (data);
 }
 
 unsigned long
@@ -365,31 +363,22 @@ gfx_ind(unsigned short port)
     unsigned long data;
 
     _asm {
-    pushf mov dx, port in eax, dx mov data, eax popf}
-    return (data);
+    pushf mov dx, port in eax, dx mov data, eax popf} return (data);
 }
 
 void
 gfx_outb(unsigned short port, unsigned char data)
 {
     _asm {
-    pushf mov al, data mov dx, port out dx, al popf}
-}
-
-void
+pushf mov al, data mov dx, port out dx, al popf}} void
 gfx_outw(unsigned short port, unsigned short data)
 {
     _asm {
-    pushf mov ax, data mov dx, port out dx, ax popf}
-}
-
-void
+pushf mov ax, data mov dx, port out dx, ax popf}} void
 gfx_outd(unsigned short port, unsigned long data)
 {
     _asm {
-    pushf mov eax, data mov dx, port out dx, eax popf}
-}
-
+pushf mov eax, data mov dx, port out dx, eax popf}}
 #elif defined(OS_VXWORKS) || defined (OS_LINUX) /* VxWorks and Linux */
 
 #if defined(OS_LINUX)

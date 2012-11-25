@@ -484,8 +484,8 @@ GX1PreInit(ScrnInfoPtr pScreenInfo, int flags)
 #endif
         pGeode->Chipset = pGeode->pEnt->chipset;
         pScreenInfo->chipset = (char *) xf86TokenToString(GeodeChipsets,
-                                                          pGeode->pEnt->
-                                                          chipset);
+                                                          pGeode->
+                                                          pEnt->chipset);
     }
 
     if (flags & PROBE_DETECT) {
@@ -2113,8 +2113,8 @@ GX1ScreenInit(int scrnIndex, ScreenPtr pScreen, int argc, char **argv)
                                                     (pGeode->Pitch *
                                                      pGeode->TVOy) +
                                                     (pGeode->TVOx <<
-                                                     ((pScreenInfo->
-                                                       depth >> 3) - 1)));
+                                                     ((pScreenInfo->depth >> 3)
+                                                      - 1)));
         GeodeDebug(("->memPhysBase (%X)!\n", pScreenInfo->memPhysBase));
     }
     else {
@@ -2300,8 +2300,8 @@ GX1ValidMode(int scrnIndex, DisplayModePtr pMode, Bool Verbose, int flags)
 #else
             ret = gfx_is_tv_display_mode_supported(pMode->CrtcHDisplay,
                                                    pMode->CrtcVDisplay,
-                                                   (TVStandardType) pGeode->
-                                                   TvParam.wStandard);
+                                                   (TVStandardType)
+                                                   pGeode->TvParam.wStandard);
 #endif
         }
     }

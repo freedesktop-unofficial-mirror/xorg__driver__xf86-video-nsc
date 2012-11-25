@@ -136,7 +136,7 @@
 
 #if 0
 
-This file contains specific revision info SINCE THE LAST RELEASE.
-    It is not meant to be a comprehensive record of all additions.
+This file contains specific revision info SINCE THE LAST RELEASE.It is not meant
+    to be a comprehensive record of all additions.
 #endif
 /* END OF FILE */
